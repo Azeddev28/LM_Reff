@@ -19,20 +19,20 @@ import {
 
 const pagesSection = [
   {
-    href: "/dashboard",
+    href: "/",
     icon: Sliders,
     title: "Dashboard",
     children: [
       {
-        href: "/dashboard/default",
+        href: "/",
         title: "Default",
       },
       {
-        href: "/dashboard/analytics",
+        href: "/analytics",
         title: "Analytics",
       },
       {
-        href: "/dashboard/saas",
+        href: "/saas",
         title: "SaaS",
       },
     ],

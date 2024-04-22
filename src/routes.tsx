@@ -113,22 +113,22 @@ const GoogleMaps = async(() => import("./pages/maps/GoogleMaps"));
 const VectorMaps = async(() => import("./pages/maps/VectorMaps"));
 
 const routes = [
+  // {
+  //   path: "/",
+  //   element: <PresentationLayout />,
+  //   children: [
+  //     {
+  //       path: "",
+  //       element: <Landing />,
+  //     },
+  //   ],
+  // },   //TODO : Delete these files 
   {
     path: "/",
-    element: <PresentationLayout />,
+    element: <DashboardLayout  />,
     children: [
       {
-        path: "",
-        element: <Landing />,
-      },
-    ],
-  },
-  {
-    path: "dashboard",
-    element: <DashboardLayout />,
-    children: [
-      {
-        path: "default",
+        path: "/",
         element: <Default />,
       },
       {
