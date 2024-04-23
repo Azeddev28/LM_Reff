@@ -1,20 +1,24 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-
-import useAuth from "../../hooks/useAuth";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 interface AuthGuardType {
   children: React.ReactNode;
 }
 
-// For routes that can only be accessed by authenticated users
 function AuthGuard({ children }: AuthGuardType) {
-  const { isAuthenticated, isInitialized } = useAuth();
+  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+  const navigate = useNavigate();
 
-  if (isInitialized && !isAuthenticated) {
-    return <Navigate to="/auth/sign-in" />;
-  }
-
+  useEffect(() => {
+    
+    if (!isAuthenticated) {
+      navigate("/auth/sign-in");
+    } else {
+      navigate("/");
+    }
+  }, [isAuthenticated]);
+     
   return <React.Fragment>{children}</React.Fragment>;
 }
 

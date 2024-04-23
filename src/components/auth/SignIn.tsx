@@ -1,9 +1,11 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+// import React from "react";
+// import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
+// import isAuthenticated from '../../redux/slices/authSlice';
+import {setAuthentication} from '../../redux/slices/authSlice';
 
 import {
   Alert as MuiAlert,
@@ -13,17 +15,18 @@ import {
   TextField as MuiTextField,
 } from "@mui/material";
 import { spacing } from "@mui/system";
-
-import useAuth from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
+// import useAuth from "../../hooks/useAuth";
 
 const Alert = styled(MuiAlert)(spacing);
 
 const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
 
 function SignIn() {
-  const navigate = useNavigate();
-  const { signIn } = useAuth();
-
+  // const navigate = useNavigate();
+  const dispatch=useDispatch();
+  // const { signIn } = useAuth();
+   
   return (
     <Formik
       initialValues={{
@@ -40,9 +43,11 @@ function SignIn() {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await signIn(values.email, values.password);
+        
+          dispatch(setAuthentication(true))
+          // await signIn(values.email, values.password);
 
-          navigate("/private");
+          // navigate("/private");
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 
@@ -104,6 +109,7 @@ function SignIn() {
             fullWidth
             variant="contained"
             color="primary"
+        
             disabled={isSubmitting}
           >
             Sign in

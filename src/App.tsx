@@ -11,12 +11,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "./i18n";
 import createTheme from "./theme";
 import routes from "./routes";
-
+import AuthGuard from '../src/components/guards/AuthGuard'
 import useTheme from "./hooks/useTheme";
 import { store } from "./redux/store";
 import createEmotionCache from "./utils/createEmotionCache";
 
-import { AuthProvider } from "./contexts/JWTContext";
+// import { AuthProvider } from "./contexts/JWTContext";
 // import { AuthProvider } from "./contexts/FirebaseAuthContext";
 // import { AuthProvider } from "./contexts/Auth0Context";
 // import { AuthProvider } from "./contexts/CognitoContext";
@@ -38,7 +38,10 @@ function App({ emotionCache = clientSideEmotionCache }) {
         <Provider store={store}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <MuiThemeProvider theme={createTheme(theme)}>
-              <AuthProvider>{content}</AuthProvider>
+              {/* {content} */}
+              
+              {/* <AuthProvider>{content}</AuthProvider> */}
+              <AuthGuard>{content}</AuthGuard>
             </MuiThemeProvider>
           </LocalizationProvider>
         </Provider>
