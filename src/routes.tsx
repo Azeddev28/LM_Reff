@@ -10,7 +10,7 @@ import async from "./components/Async";
 import AuthLayout from "./layouts/Auth";
 import DashboardLayout from "./layouts/Dashboard";
 import DocLayout from "./layouts/Doc";
-import PresentationLayout from "./layouts/Presentation";
+
 
 // Guards
 import AuthGuard from "./components/guards/AuthGuard";
@@ -113,16 +113,7 @@ const GoogleMaps = async(() => import("./pages/maps/GoogleMaps"));
 const VectorMaps = async(() => import("./pages/maps/VectorMaps"));
 
 const routes = [
-  // {
-  //   path: "/",
-  //   element: <PresentationLayout />,
-  //   children: [
-  //     {
-  //       path: "",
-  //       element: <Landing />,
-  //     },
-  //   ],
-  // },   //TODO : Delete these files 
+  
   {
     path: "/",
     element: <DashboardLayout  />,

@@ -93,7 +93,7 @@ const Doc: React.FC<DocType> = ({ children }) => {
           <Outlet />
         </MainContent>
       </AppContent>
-      <Settings />
+     
     </Root>
   );
 };

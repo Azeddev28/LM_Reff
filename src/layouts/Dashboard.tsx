@@ -105,7 +105,7 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
         </MainContent>
         <Footer />
       </AppContent>
-      <Settings />
+   
     </Root>
     </MuiThemeProvider>
   );
