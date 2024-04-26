@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { NavLink } from "react-router-dom";
-import ReferralLogo from "../../../public/Images/ReferralLogo.png";
+import ReferralLogo from "/Images/ReferralLogo.png";
 import { Box, Chip, Drawer as MuiDrawer, ListItemButton } from "@mui/material";
 // import { ReactComponent as Logo } from "../../vendor/logo.svg";
 import { SidebarItemsType } from "../../types/sidebar";
