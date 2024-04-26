@@ -11,6 +11,7 @@ import {
   AppBar as MuiAppBar,
   IconButton as MuiIconButton,
   Toolbar,
+  Typography,
 } from "@mui/material";
 
 import { Menu as MenuIcon } from "@mui/icons-material";
@@ -98,20 +99,19 @@ const Navbar: React.FC<NavbarProps> = ({ onDrawerToggle }) => {
                 <MenuIcon />
               </IconButton>
             </Grid>
+            <Grid item xs />
             <Grid item>
-              <Search>
+              <Typography variant='h4'>Luminary Health Providers</Typography>
+              {/* <Search>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
-                {/* @ts-expect-error t can be null */}
-                <Input placeholder={t("Search")} />
-              </Search>
+                
+                <Input placeholder={("Search")} />
+              </Search>  */}
             </Grid>
             <Grid item xs />
             <Grid item>
-              <NavbarMessagesDropdown />
-              <NavbarNotificationsDropdown />
-              <NavbarLanguagesDropdown />
               <NavbarUserDropdown />
             </Grid>
           </Grid>
