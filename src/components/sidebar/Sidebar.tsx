@@ -2,10 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { NavLink } from "react-router-dom";
 import ReferralLogo from "../../../public/Images/ReferralLogo.png";
-import { green } from "@mui/material/colors";
-
 import { Box, Chip, Drawer as MuiDrawer, ListItemButton } from "@mui/material";
-
 // import { ReactComponent as Logo } from "../../vendor/logo.svg";
 import { SidebarItemsType } from "../../types/sidebar";
 import Footer from "./SidebarFooter";
@@ -76,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <Drawer variant="permanent" {...rest}>
       <Brand component={NavLink as any} to="/">
-         <LogoImage src={ReferralLogo} alt="logo-imahe" />
+         <LogoImage src={ReferralLogo} alt="logo-image" />
       </Brand>
       <SidebarNav items={items} />
       {!!showFooter && <Footer />}
