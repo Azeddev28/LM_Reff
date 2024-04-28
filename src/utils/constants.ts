@@ -107,6 +107,71 @@ export const REFERRAL_ROWS_DATA=[
     }
 ]
 
+export const REFERRAL_DETAIL={
+    // Referral Receipt Date
+    patient_name:{
+     key:"Patient Name",
+     value:"",   
+    },
+    dob:{
+        key:"Patient Date of Birth",
+        value:""
+    },
+    practice_name:{
+        key:"Practice Name",
+        value:""
+    },
+    assigned_provider:{
+        key:"Assigned Provider",
+        value:""
+    },
+    "specialty":{
+        key:"Specialty",
+        value:"",
+    },
+    // "Referring Party" missing in backend data
+    "referral_description":{
+        key:"Referral Description",
+        value:"",
+    },
+     "preop_consult_scheduled_date":{
+        key:"Scheduled Consult Date",
+        value:"",
+     },
+     "preop_consult_completed":{
+        key:"Did patient show up to pre-op consult?",
+        value:"",
+     },
+     preop_consult_notes:{
+        key:"Consult Notes",
+        value:"",
+     },
+     op_scheduled_date:{
+      key:"Scheduled Surgery Date",
+      value:"",
+     },
+     intended_procedure:{
+        key:"Intended Procedure (CPT Codes)",
+        value:"",
+     },
+     facility:{
+        key:"Facility",
+        value:"",
+     },
+     travel_required:{
+        key:"Is Travel Required?",
+        value:"",
+     },
+     op_completed:{
+        key:"Was the surgery completed?",
+        value:"",
+     },
+     // 3 Procedure Notes
+     // 4 Post Op Consult Date
+     // 5 Did patient show up to post-op consult?
+     // 6 Post Op Consult Notes    
+
+}
 
 export const REFERRAL_HEADER_DATA=[
     "Patient Name",
