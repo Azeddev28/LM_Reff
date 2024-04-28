@@ -107,7 +107,7 @@ export const REFERRAL_ROWS_DATA=[
     }
 ]
 
-export const REFERRAL_DETAIL={
+export const REFERRAL_DETAIL_DATA={
     // Referral Receipt Date
     patient_name:{
      key:"Patient Name",
