@@ -1,4 +1,4 @@
-import { getRoute } from "../../api/BackendRoutes";
+import { getRoute } from "../../api/backendRoutes";
 import { getRequest } from "../../axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { REFERRAL_ROWS_DATA } from "../../utils/constants";

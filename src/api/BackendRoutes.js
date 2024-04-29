@@ -10,6 +10,7 @@ const ROUTES = {
   // userRoles: "users/user-roles/",
   // http://3.6.94.153/api/referrals/    // Referral List url
   // http://3.6.94.153/api/referrals/referral-detail/{uuid}/
+  loginRoute: "auth/login/"
 };
 
 export const getRoute = (routeKey) => ROUTES[routeKey];

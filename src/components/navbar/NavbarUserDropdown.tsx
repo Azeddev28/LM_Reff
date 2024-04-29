@@ -2,7 +2,6 @@ import React,{useEffect} from "react";
 import styled from "@emotion/styled";
 import { Power } from "react-feather";
 import { useDispatch , useSelector } from "react-redux";
-import {setAuthentication} from '../../redux/slices/authSlice';
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -11,6 +10,7 @@ import {
   MenuItem,
   IconButton as MuiIconButton,
 } from "@mui/material";
+import { setAuthenticated } from "../../redux/slices/authSlice";
 
 // import useAuth from "../../hooks/useAuth";
 
@@ -44,7 +44,7 @@ function NavbarUserDropdown() {
   }, [isAuthenticated]);
 
   const handleSignOut = async () => {
-    dispatch(setAuthentication(false))
+    dispatch(setAuthenticated(false))
     
     // await signOut();
     // navigate("/auth/sign-in");
