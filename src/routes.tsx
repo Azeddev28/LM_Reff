@@ -4,6 +4,7 @@ import Claims from "./pages/Claims";
 import EmployerList from "./pages/EmployerList";
 import Auth from "./layouts/Auth";
 import SignIn from "./pages/auth/SignIn";
+import DetailPage from "./pages/Referrals/[detailPage]";
 
 const routes = [
   {
@@ -27,7 +28,11 @@ const routes = [
   {
     path:"auth/sign-in",
     element:<Auth><SignIn/></Auth>
-  }
+  },
+  {
+    path: "/:id", // Dynamic route
+    element: <DashboardLayout><DetailPage /></DashboardLayout>,
+  },
   
 ];
 

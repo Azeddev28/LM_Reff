@@ -103,7 +103,7 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
           {children}
           <Outlet />
         </MainContent>
-        <Footer />
+        {/* <Footer /> */}
       </AppContent>
    
     </Root>
