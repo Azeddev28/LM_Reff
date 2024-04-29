@@ -24,7 +24,6 @@ export const fetchEmployerList = createAsyncThunk(
 export const fetchReferralDetail = createAsyncThunk(
   "data/fetchReferralDetail",
   async (requestData) => {
-    console.log("idd", requestData);
     return getRequest(`http://3.6.94.153/api/referrals/detail/${requestData}`);
   }
 );

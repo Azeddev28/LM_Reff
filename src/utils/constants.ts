@@ -166,6 +166,15 @@ export const REFERRAL_DETAIL_DATA={
         key:"Was the surgery completed?",
         value:"",
      },
+     preop_consult_attachment:{
+        key:"preop-consult notes.pdf",
+        value:"",
+     },
+     op_notes_attachment:{
+        key:"operating notes.pdf",
+        value:"",
+     }
+
      // 3 Procedure Notes
      // 4 Post Op Consult Date
      // 5 Did patient show up to post-op consult?
