@@ -29,7 +29,7 @@ const referrals = useSelector((state) => state.referral.referralList);
       placeHolder="Search by Patient Name"
       />
       <TableWrapper>
-      <PaginatedTable rowsData={REFERRAL_ROWS_DATA} headerData={REFERRAL_HEADER_DATA}/>
+      <PaginatedTable rowsData={referrals} headerData={REFERRAL_HEADER_DATA}/>
       </TableWrapper>
     </div>
   )

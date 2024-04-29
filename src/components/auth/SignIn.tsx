@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 // import isAuthenticated from '../../redux/slices/authSlice';
-import {setAuthentication} from '../../redux/slices/authSlice';
 
 import {
   Alert as MuiAlert,
@@ -16,6 +15,7 @@ import {
 } from "@mui/material";
 import { spacing } from "@mui/system";
 import { useDispatch } from "react-redux";
+import { login } from "../../redux/slices/authSlice";
 // import useAuth from "../../hooks/useAuth";
 
 const Alert = styled(MuiAlert)(spacing);
@@ -30,8 +30,8 @@ function SignIn() {
   return (
     <Formik
       initialValues={{
-        email: "demo@bootlab.io",
-        password: "unsafepassword",
+        email: "",
+        password: "",
         submit: false,
       }}
       validationSchema={Yup.object().shape({
@@ -42,18 +42,12 @@ function SignIn() {
         password: Yup.string().max(255).required("Password is required"),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        console.log(values.email)
         try {
-        
-          dispatch(setAuthentication(true))
-          // await signIn(values.email, values.password);
-
-          // navigate("/private");
-        } catch (error: any) {
-          const message = error.message || "Something went wrong";
-
-          setStatus({ success: false });
-          setErrors({ submit: message });
-          setSubmitting(false);
+          await dispatch(login({email: values.email, password: values.password}));
+          // Handle navigation or other actions upon successful login
+        } catch (error) {
+          // Handle errors if login fails
         }
       }}
     >
