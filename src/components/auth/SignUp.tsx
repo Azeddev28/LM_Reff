@@ -11,15 +11,15 @@ import {
 } from "@mui/material";
 import { spacing } from "@mui/system";
 
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 
 const Alert = styled(MuiAlert)(spacing);
 
 const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
 
 function SignUp() {
-  const navigate = useNavigate();
-  const { signUp } = useAuth();
+  // const navigate = useNavigate();
+  // const { signUp } = useAuth();
 
   return (
     <Formik
@@ -50,13 +50,14 @@ function SignUp() {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          signUp(
-            values.email,
-            values.password,
-            values.firstName,
-            values.lastName
-          );
-          navigate("/auth/sign-in");
+         
+          // signUp(
+          //   values.email,
+          //   values.password,
+          //   values.firstName,
+          //   values.lastName
+          // );
+          // navigate("/auth/sign-in");
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 

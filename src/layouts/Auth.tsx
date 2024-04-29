@@ -28,7 +28,7 @@ const Auth: React.FC<AuthType> = ({ children }) => {
       <GlobalStyle />
       {children}
       <Outlet />
-      <Settings />
+      
     </Root>
   );
 };

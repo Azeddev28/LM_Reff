@@ -15,7 +15,7 @@ import Navbar from "../components/navbar/Navbar";
 import dashboardItems from "../components/sidebar/dashboardItems";
 import Sidebar from "../components/sidebar/Sidebar";
 import Footer from "../components/Footer";
-import Settings from "../components/Settings";
+
 
 const drawerWidth = 258;
 
@@ -105,7 +105,7 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
         </MainContent>
         <Footer />
       </AppContent>
-      <Settings />
+   
     </Root>
     </MuiThemeProvider>
   );

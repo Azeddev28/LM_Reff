@@ -1,6 +1,8 @@
-import React from "react";
+import React,{useEffect} from "react";
 import styled from "@emotion/styled";
 import { Power } from "react-feather";
+import { useDispatch , useSelector } from "react-redux";
+import {setAuthentication} from '../../redux/slices/authSlice';
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -10,7 +12,7 @@ import {
   IconButton as MuiIconButton,
 } from "@mui/material";
 
-import useAuth from "../../hooks/useAuth";
+// import useAuth from "../../hooks/useAuth";
 
 const IconButton = styled(MuiIconButton)`
   svg {
@@ -22,7 +24,9 @@ const IconButton = styled(MuiIconButton)`
 function NavbarUserDropdown() {
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
   const navigate = useNavigate();
-  const { signOut } = useAuth();
+  const dispatch=useDispatch();
+  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+  // const { signOut } = useAuth();
 
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
@@ -32,10 +36,22 @@ function NavbarUserDropdown() {
     setAnchorMenu(null);
   };
 
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/auth/sign-in");
+    }
+  }, [isAuthenticated]);
+
   const handleSignOut = async () => {
-    await signOut();
-    navigate("/auth/sign-in");
+    dispatch(setAuthentication(false))
+    
+    // await signOut();
+    // navigate("/auth/sign-in");
   };
+
+
+
 
   return (
     <React.Fragment>
