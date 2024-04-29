@@ -1,13 +1,10 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { withTheme } from "@emotion/react";
-import { darken } from "polished";
-import { Search as SearchIcon } from "react-feather";
-import { useTranslation } from "react-i18next";
+import { darken } from "polished"; // Import the darken function from polished
 
 import {
   Grid,
-  InputBase,
   AppBar as MuiAppBar,
   IconButton as MuiIconButton,
   Toolbar,
@@ -61,14 +58,11 @@ const SearchIconWrapper = styled.div`
   }
 `;
 
-
-
 type NavbarProps = {
   onDrawerToggle: React.MouseEventHandler<HTMLElement>;
 };
 
 const Navbar: React.FC<NavbarProps> = ({ onDrawerToggle }) => {
-  const { t } = useTranslation();
   return (
     <React.Fragment>
       <AppBar position="sticky" elevation={0}>
@@ -87,13 +81,6 @@ const Navbar: React.FC<NavbarProps> = ({ onDrawerToggle }) => {
             <Grid item xs />
             <Grid item>
               <Typography variant='h4'>Luminary Health Providers</Typography>
-              {/* <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                
-                <Input placeholder={("Search")} />
-              </Search>  */}
             </Grid>
             <Grid item xs />
             <Grid item>
