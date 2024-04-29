@@ -1,5 +1,4 @@
-// import React from "react";
-// import { useNavigate } from "react-router-dom";
+import React from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
@@ -14,19 +13,20 @@ import {
   TextField as MuiTextField,
 } from "@mui/material";
 import { spacing } from "@mui/system";
-import { useDispatch } from "react-redux";
+import { useDispatch ,useSelector } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
-// import useAuth from "../../hooks/useAuth";
+
 
 const Alert = styled(MuiAlert)(spacing);
 
-const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
+const TextField= styled(MuiTextField)(({ }) => ({ 
+  margin:'16px 0px'
+}));
+
 
 function SignIn() {
-  // const navigate = useNavigate();
   const dispatch=useDispatch();
-  // const { signIn } = useAuth();
-   
+  const {loading,error}=useSelector((state)=>state.auth)
   return (
     <Formik
       initialValues={{
@@ -42,12 +42,12 @@ function SignIn() {
         password: Yup.string().max(255).required("Password is required"),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        console.log(values.email)
+        
         try {
           await dispatch(login({email: values.email, password: values.password}));
-          // Handle navigation or other actions upon successful login
+          
         } catch (error) {
-          // Handle errors if login fails
+         console.log("Error",error)
         }
       }}
     >

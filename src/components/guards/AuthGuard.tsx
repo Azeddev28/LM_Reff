@@ -1,23 +1,26 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { getAccessToken } from "../../redux/slices/authSlice";
 
 interface AuthGuardType {
   children: React.ReactNode;
 }
-
+// TODO : authentication needs to be check
 function AuthGuard({ children }: AuthGuardType) {
-  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    
-    if (!isAuthenticated) {
-      navigate("/auth/sign-in");
-    } else {
+  const accessToken = useSelector(getAccessToken);
+ 
+  useEffect(() => { 
+    if (accessToken !==null) {
+      console.log("accessToken",accessToken);
       navigate("/");
+      
+    } else {
+      navigate("/auth/sign-in");
+      
     }
-  }, [isAuthenticated]);
+  }, [accessToken]);
      
   return <React.Fragment>{children}</React.Fragment>;
 }

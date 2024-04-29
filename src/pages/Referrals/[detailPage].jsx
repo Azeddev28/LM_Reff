@@ -2,15 +2,64 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
+import SwitchButton from '../../components/Buttons/SwitchButton';
 import { fetchReferralDetail } from '../../redux/slices/referralSlice';
 import { REFERRAL_DETAIL_DATA } from '../../utils/constants';
 import { Typography } from '@mui/material';
-import { display } from '@mui/system';
 
-const Card = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '10px',
+
+const Container=styled('div')(({})=>({
+  display:'flex',
+  flexDirection:"row",
+  gap:"20px",
+  flex:1,
+}));
+
+const Column=styled('div')(({})=>({
+  width: '33.33%' ,
+  display:'flex',
+  gap:'10px' ,
+  flexDirection:'column' ,
+  border:'1px solid black' 
+}))
+
+const HeadingWrapper= styled('div')(({  }) => ({
+  height:"120px", 
+  verticalAlign:'center',
+  borderBottom:'1px solid black',
+  display:"flex",
+  justifyContent:"center",
+  alignItems:"center"
+}));
+
+const Card = styled('div')(({  }) => ({
+  height:'110px' , 
+  border:'1px solid black' , 
+  display:'flex',
+  gap:'10px' ,
+  flexDirection:'column' ,
+  padding:'10px 16px',
+  margin:'0px 30px'
+}));
+
+const ContentWrapper= styled('div')(({  }) => ({
+  padding:'20px 0px',
+  display:'flex',
+  flexDirection:'column',
+  gap:'10px',
+ 
+}));
+
+
+const Label= styled('p')(({  }) => ({
+  fontSize:'16px',
+  fontWeight:600,
+  margin:'0px !important',
+}));
+const Value=styled('p')(({  }) => ({
+  fontSize:'14px',
+  fontWeight:500,
+  margin:'0px !important',
 }));
 
 const DetailPage = () => {
@@ -25,7 +74,6 @@ const DetailPage = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    // Create a new object instead of mutating the existing one
     const updatedDetailData = {};
     for (const key in REFERRAL_DETAIL_DATA) {
       if (REFERRAL_DETAIL_DATA.hasOwnProperty(key)) {
@@ -38,42 +86,65 @@ const DetailPage = () => {
     setDetailData(updatedDetailData);
   }, [referralDetail]);
 
-  console.log('detailData', detailData);
+ 
   const referralDetailData=Object.values(detailData);
-  console.log("REferrak ?Data ",referralDetailData);
+  console.log("Referral Data ",referralDetailData);
   return (
-    <div style={{display:"flex",flexDirection:"row",gap:"20px" , flex:1}}>
-    <div style={{  width: '33.33%' , display:'flex', gap:'10px' ,flexDirection:'column'  , border:'1px solid black' }}>
-      <div style={{height:"100px", verticalAlign:'center',borderBottom:'1px solid black',paddingTop:'10px'}}>
-      <Typography variant='h3' >Referral Information</Typography>
-      </div>
-      {referralDetailData.slice(0,6).map((item, index) => (
-        <div key={index} style={{height:'80px' , border:'1px solid black' ,  display:'flex', gap:'10px' , flexDirection:'column' , padding:'10px 16px'}}>
-          <Typography variant="h6">{item.key}</Typography>
-          <Typography variant="h6">{item.value}</Typography>
-        </div>
+    <Container>
+    <Column>
+      <HeadingWrapper>
+      <Typography variant='h3'>Referral Information</Typography>
+      </HeadingWrapper>
+      <ContentWrapper>
+      {referralDetailData.slice(6,13).map((item, index) => (
+        <Card key={index}>
+          <Label>{item.key}</Label>
+          {typeof item.value === "boolean" ? (
+              <SwitchButton
+                checked={item.value}
+                color="primary"
+              />
+      ) : (
+        <Value variant="h6">{item.value}</Value>
+      )}
+        </Card>
       ))}
-    </div>
-    <div style={{width: '33.33%' ,  display:'flex', gap:'10px' , flexDirection:'column'}}>
+      </ContentWrapper>
+    </Column>
+    <Column>
+      <HeadingWrapper>
     <Typography variant='h3'>Referral Information</Typography>
+    </HeadingWrapper>
+    <ContentWrapper>
     {referralDetailData.slice(7,13).map((item, index) => (
-      <div key={index} style={{height:'80px' , border:'1px solid black'  ,  display:'flex', gap:'10px' , flexDirection:'column' ,padding:'10px 16px'}}>
-        <Typography variant="h6">{item.key}</Typography>
-        <Typography variant="h6">{item.value}</Typography>
-      </div>
+      <Card key={index} >
+        <Label>{item.key}</Label>
+        {typeof item.value === "boolean" ? (
+              <SwitchButton
+                checked={item.value}
+                color="primary"
+              />
+      ) : (
+        <Value variant="h6">{item.value}</Value>
+      )}
+      </Card>
     ))}
+    </ContentWrapper>
     
-  </div>
-  <div style={{width: '33.33%' , display:'flex', gap:'10px' , flexDirection:'column'}}>
+  </Column>
+  <Column>
+  <HeadingWrapper>
     <Typography variant='h3'>Attachments</Typography>
+    </HeadingWrapper>
+    <ContentWrapper>
     {referralDetailData.slice(14,16).map((item, index) => (
-      <div key={index} style={{height:'80px' , border:'1px solid black' , display:'flex', gap:'10px',flexDirection:'column' ,padding:'10px 16px'}}>
-        <Typography variant="h6">{item.key}</Typography>
-        {/* <Typography variant="h6">{item.value}</Typography> */}
-      </div>
+      <Card key={index} >
+       <Label>{item.key}</Label>
+      </Card>
     ))}
-    </div>
-  </div>
+    </ContentWrapper>
+    </Column>
+  </Container>
   );
 };
 
