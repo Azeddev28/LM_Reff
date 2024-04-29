@@ -3,11 +3,14 @@ import styled from "@emotion/styled";
 import { Outlet, useLocation } from "react-router-dom";
 
 import { Box, CssBaseline, Paper as MuiPaper } from "@mui/material";
+import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { spacing } from "@mui/system";
 
 import GlobalStyle from "../components/GlobalStyle";
+import createTheme from "../theme";
+import { THEMES } from "../constants";
 import Navbar from "../components/navbar/Navbar";
 import dashboardItems from "../components/sidebar/dashboardItems";
 import Sidebar from "../components/sidebar/Sidebar";
@@ -71,10 +74,13 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
   const isLgUp = useMediaQuery(theme.breakpoints.up("lg"));
 
   return (
+    <MuiThemeProvider theme={createTheme(THEMES.LIGHT)}>
     <Root>
       <CssBaseline />
       <GlobalStyle />
+      
       <Drawer>
+
         <Box sx={{ display: { xs: "block", lg: "none" } }}>
           <Sidebar
             PaperProps={{ style: { width: drawerWidth } }}
@@ -101,6 +107,7 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
       </AppContent>
       <Settings />
     </Root>
+    </MuiThemeProvider>
   );
 };
 
