@@ -11,13 +11,13 @@ export const fetchReferrals = createAsyncThunk(
 );
 
 export const fetchClaims = createAsyncThunk("data/fetchClaims", async () => {
-  return getRequest(getRoute("industriesList"));
+  return getRequest("http://3.6.94.153/api/claims");
 });
 
 export const fetchEmployerList = createAsyncThunk(
   "data/fetchEmployerList",
   async () => {
-    return getRequest(getRoute("countriesList"));
+    return getRequest("http://3.6.94.153/api/users/employer-list/");
   }
 );
 
