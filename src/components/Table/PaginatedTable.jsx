@@ -77,7 +77,7 @@ const PaginatedTable = ({ headerData, rowsData, fetchData }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
+      {/* <TablePagination
         component="div"
         count={totalPages}
         page={page}
@@ -88,7 +88,7 @@ const PaginatedTable = ({ headerData, rowsData, fetchData }) => {
           IconComponent: ArrowDropDownIcon,
           disabled: true
         }}
-      />
+      /> */}
     </Paper>
   );
 };
