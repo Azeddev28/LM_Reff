@@ -74,3 +74,14 @@ export const putRequest = (route, data) => {
       return failedResponse(error);
     });
 };
+
+export const patchRequest = (route, data) => {
+  return axiosInstance
+    .patch(route, data)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return failedResponse(error);
+    });
+};

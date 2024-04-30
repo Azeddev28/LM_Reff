@@ -19,7 +19,7 @@ useEffect(() => {
   
 }, [dispatch]);
 
-const referrals = useSelector((state) => state.referral.referralList);
+const referrals = useSelector((state) => state.referral.referralData.results);
 
 console.log("referrals",referrals);
 

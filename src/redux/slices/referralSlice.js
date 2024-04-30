@@ -1,12 +1,12 @@
 import { getRoute } from "../../api/backendRoutes";
-import { getRequest } from "../../axios";
+import { getRequest, patchRequest } from "../../axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { REFERRAL_ROWS_DATA } from "../../utils/constants";
 
 export const fetchReferrals = createAsyncThunk(
   "data/fetchReferrals",
   async () => {
-    return getRequest("http://3.6.94.153/api/referrals/");
+    return getRequest("http://3.6.94.153/api/referrals");
   }
 );
 
@@ -23,16 +23,29 @@ export const fetchEmployerList = createAsyncThunk(
 
 export const fetchReferralDetail = createAsyncThunk(
   "data/fetchReferralDetail",
-  async (requestData) => {
-    return getRequest(`http://3.6.94.153/api/referrals/detail/${requestData}`);
+  async (id) => {
+    return getRequest(`http://3.6.94.153/api/referrals/detail/${id}`);
   }
 );
+
+// export const updateReferalDetail = createAsyncThunk(
+//   "data/updateReferalDetail",
+//   async (id, formData) => {
+//     console.log("Data", formData);
+//     return patchRequest(
+//       `http://3.6.94.153/api/referrals/update/${id}`,
+//       formData
+//     );
+//   }
+// );
+
+//3.6.94.153/api/referrals/detail/38a46fa3-c9c7-4454-a136-a6d28edd7176/
 
 // Define a data slice using createSlice
 export const referralSlice = createSlice({
   name: "referral",
   initialState: {
-    referralList: [],
+    referralData: {},
     claims: [],
     employerList: [],
     referralDetail: [],
@@ -54,8 +67,8 @@ export const referralSlice = createSlice({
       state.error = action.payload;
     },
     // Reducers for updating state with fetched data
-    setReferralList: (state, action) => {
-      state.referralList = action.payload;
+    setreferralData: (state, action) => {
+      state.referralData = action.payload;
     },
     setClaims: (state, action) => {
       state.claims = action.payload;
@@ -69,19 +82,19 @@ export const referralSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Handle actions for fetching companies
+      // Handle actions for fetching Referrals
       .addCase(fetchReferrals.pending, (state) => {
         state.loading = true;
       })
       .addCase(fetchReferrals.fulfilled, (state, action) => {
         state.loading = false;
-        state.referralList = action.payload;
+        state.referralData = action.payload;
       })
       .addCase(fetchReferrals.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
-      // Handle actions for fetching industries
+      // Handle actions for fetching Claims
       .addCase(fetchClaims.pending, (state) => {
         state.loading = true;
       })
@@ -93,7 +106,7 @@ export const referralSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      // Handle actions for fetching countries
+      // Handle actions for fetching Employer List
       .addCase(fetchEmployerList.pending, (state) => {
         state.loading = true;
       })
@@ -105,7 +118,7 @@ export const referralSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      // Handle actions for fetching languages
+      // Handle actions for fetching Employer List
       .addCase(fetchReferralDetail.pending, (state) => {
         state.loading = true;
       })
@@ -117,13 +130,24 @@ export const referralSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
       });
+    // for   patch request in REferral Details
+    // .addCase(updateReferalDetail.pending, (state) => {
+    //   state.loading = true;
+    // })
+    // .addCase(updateReferalDetail.fulfilled, (state, action) => {
+    //   state.loading = false;
+    // })
+    // .addCase(updateReferalDetail.rejected, (state, action) => {
+    //   state.loading = false;
+    //   state.error = action.error.message;
+    // });    TODO: have to fix this in redux
   },
 });
 export const {
   setLoading,
   setLoadingFalse,
   setError,
-  setReferralList,
+  setreferralData,
   setClaims,
   setEmployerList,
   setReferralDetail,

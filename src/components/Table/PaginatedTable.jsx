@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,30 +7,31 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { fetchReferrals } from "../../redux/slices/referralSlice";
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useLocation, useNavigate } from "react-router-dom";
 
-const PaginatedTable = ({ headerData, rowsData }) => {
+const PaginatedTable = ({ headerData, rowsData, fetchData }) => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  
+  const [totalPages, setTotalPages] = useState(0);
+  console.log("RowsData",rowsData);
   const navigate = useNavigate();
   const location = useLocation();
- 
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(rowsData?.length / 5));
+  }, [rowsData]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    // fetchReferrals(newPage);
   };
 
   const extractKeys = () => {
     let keys = [];
-    rowsData.forEach((obj) => {
+    rowsData?.forEach((obj) => {
       keys = keys.concat(Object.keys(obj));
     });
     return Array.from(new Set(keys)); // Get unique keys
@@ -40,22 +41,16 @@ const PaginatedTable = ({ headerData, rowsData }) => {
 
   const extractRowValues = (obj, keys) => {
     return keys
-        .filter(key => obj.hasOwnProperty(key))
-        .map(key => ({ key, value: obj[key] }));
-     
-};
+      .filter(key => obj.hasOwnProperty(key))
+      .map(key => ({ key, value: obj[key] }));
+  };
 
-const handleDetailPage = (data) => {
-  const id=data.uuid;
-  // dispatch(fetchReferralDetail(id));
-  const currentUrl = location.pathname;
-  navigate(`${currentUrl}${id}`,{state:{data:id}});
- 
-  // console.log("Id",id);
-  // const currentUrl = location.pathname;
-  
-};
-  
+  const handleDetailPage = (data) => {
+    const id = data.uuid;
+    const currentUrl = location.pathname;
+    navigate(`${currentUrl}${id}`, { state: { data: id } });
+  };
+
   return (
     <Paper>
       <TableContainer>
@@ -68,15 +63,14 @@ const handleDetailPage = (data) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsPerPage > 0
-              ? rowsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            {(rowsData?.length > 0
+              ? rowsData?.slice(page * 5, page * 5 + 5)
               : rowsData
-            ).map((obj, index) => (       
+            )?.map((obj, index) => (
               <TableRow key={index} onClick={() => (handleDetailPage(obj))}>
                 {extractRowValues(obj, keys)?.map((item, index) => (
-                    item.key !=="uuid" && 
-                    
-                    <TableCell  key={index}>{item.value}</TableCell>
+                  item.key !== "uuid" && 
+                  <TableCell key={index}>{item.value}</TableCell>
                 ))}
               </TableRow>
             ))}
@@ -84,13 +78,16 @@ const handleDetailPage = (data) => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={rowsData.length}
-        rowsPerPage={rowsPerPage}
+        count={totalPages}
         page={page}
         onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        rowsPerPageOptions={[]}
+        labelRowsPerPage={<div>Rows per page</div>}
+        SelectProps={{
+          IconComponent: ArrowDropDownIcon,
+          disabled: true
+        }}
       />
     </Paper>
   );

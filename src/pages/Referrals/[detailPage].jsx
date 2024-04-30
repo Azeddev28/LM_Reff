@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import SwitchButton from '../../components/Buttons/SwitchButton';
 import { fetchReferralDetail } from '../../redux/slices/referralSlice';
 import { REFERRAL_DETAIL_DATA } from '../../utils/constants';
-import { Typography } from '@mui/material';
-
+import { Typography , Button } from '@mui/material';
+import {patchRequest } from "../../axios";
 
 const Container=styled('div')(({})=>({
   display:'flex',
@@ -56,21 +56,45 @@ const Label= styled('p')(({  }) => ({
   fontWeight:600,
   margin:'0px !important',
 }));
+
 const Value=styled('p')(({  }) => ({
   fontSize:'14px',
   fontWeight:500,
   margin:'0px !important',
 }));
 
+const ButtonWrapper=styled('div')(({  }) => ({
+   display:'flex',
+   flexDirection:'row',
+   gap:"15px",
+}));
+
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
+
+
+
+
+
 const DetailPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [detailData, setDetailData] = useState([]);
-
   const referralDetail = useSelector((state) => state.referral.referralDetail);
-
+  const handleViewFile =(fileLink)=>{
+    window.open(fileLink, '_blank');
+  }
   useEffect(() => {
-    dispatch(fetchReferralDetail(id));
+    dispatch(fetchReferralDetail());
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -86,6 +110,17 @@ const DetailPage = () => {
     setDetailData(updatedDetailData);
   }, [referralDetail]);
 
+
+ // File upload
+ const handleFileChange = async (event,fileType) => {
+  const file = event.target.files[0];
+  console.log("File",file);
+  console.log("Filetype",fileType);
+  const formData = new FormData();
+  formData.append(fileType, file);
+  patchRequest(`http://3.6.94.153/api/referrals/update/${id}`,formData);
+  // dispatch(updateReferalDetail(id,formData)); // TODO: have to fix this in redux
+};
  
   const referralDetailData=Object.values(detailData);
   console.log("Referral Data ",referralDetailData);
@@ -140,6 +175,27 @@ const DetailPage = () => {
     {referralDetailData.slice(14,16).map((item, index) => (
       <Card key={index} >
        <Label>{item.key}</Label>
+       <ButtonWrapper>
+       <Button variant="outlined" size="medium" onClick={()=>handleViewFile(item.value)}>
+          View 
+        </Button>
+         <Button
+            component="label"
+            role={undefined}
+            variant="contained"
+            tabIndex={-1}        
+    >
+      Upload file
+      <VisuallyHiddenInput 
+         type="file" 
+          onClick={(e) => {
+                const attachmentType = item.key === 'preop-consult notes.pdf' ? 'preop_consult_attachment' : 'op_notes_attachment';
+                handleFileChange(e, attachmentType);
+  }} 
+/>
+
+    </Button>
+       </ButtonWrapper>
       </Card>
     ))}
     </ContentWrapper>
