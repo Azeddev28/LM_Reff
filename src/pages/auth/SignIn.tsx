@@ -33,7 +33,6 @@ function SignIn() {
   return (
     <React.Fragment>
       <Wrapper>
-        
          <Typography component="h2" variant="h2" align="center">
            Sign in to your account to continue
          </Typography>

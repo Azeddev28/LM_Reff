@@ -28,7 +28,7 @@ const Brand = styled(ListItemButton)<{
   justify-content: center;
   cursor: pointer;
   flex-grow: 0;
-
+ 
   ${(props) => props.theme.breakpoints.up("sm")} {
     min-height: 64px;
   }
@@ -41,7 +41,7 @@ const Brand = styled(ListItemButton)<{
 
 
 const LogoImage = styled('img')(({  }) => ({
-  width: '65%', // Adjust this as per your requirement
+  width: '60%', // Adjust this as per your requirement
   height: 'auto', // Adjust this as per your requirement
   objectFit:'cover',
  
@@ -75,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({
          <LogoImage src={ReferralLogo} alt="logo-image" />
       </Brand>
       <SidebarNav items={items} />
-      {!!showFooter && <Footer />}
+      {/* {!!showFooter && <Footer />} */}
     </Drawer>
   );
 };

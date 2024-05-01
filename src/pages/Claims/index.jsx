@@ -4,7 +4,8 @@ import  {REFERRAL_ROWS_DATA,CLAIMS_HEADER_DATA} from '../../utils/constants';
 import PaginatedTable from "../../components/Table/PaginatedTable";
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "@emotion/styled";
-import { fetchClaims } from "../../redux/slices/referralSlice";
+import { useGetClaimsQuery } from "../../redux/slices/referralAPiSlice";
+// import { fetchClaims } from "../../redux/slices/referralSlice";
 
 
 const TableWrapper=styled('div')(({})=>({
@@ -12,19 +13,21 @@ const TableWrapper=styled('div')(({})=>({
  }));
 
 const Claims = () => {
-  const dispatch = useDispatch();
   const [claimList,setClaimList]=useState([]);
-useEffect(() => {
-  dispatch(fetchClaims());
-  
-}, [dispatch]);
+  const {
+    data: claims,
+    isLoading,
+    isSuccess,
+    isError,
+    error
+  } = useGetClaimsQuery('http://3.6.94.153/api/claims');
+ console.log("claims",claims);
 
-let claims;
- claims = useSelector((state) => state.referral.claims.results);
-
- useEffect(()=>{
-  setClaimList(claims);
-},[claims]);
+  useEffect(() => {
+    if (isSuccess && claims) {
+      setClaimList(claims);
+    }
+  }, [isSuccess, claims]);
 
   return (
     <div>
@@ -33,7 +36,7 @@ let claims;
       placeHolder="Search by Patient Name"
       />
       <TableWrapper>
-      <PaginatedTable rowsData={claimList} headerData={CLAIMS_HEADER_DATA}/>
+      <PaginatedTable response={claimList}  isLoading={isLoading} headerData={CLAIMS_HEADER_DATA}/>
       </TableWrapper>
     </div>
   )

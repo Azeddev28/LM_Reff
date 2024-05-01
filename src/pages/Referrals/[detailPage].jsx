@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 import styled from '@emotion/styled';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import SwitchButton from '../../components/Buttons/SwitchButton';
-import { fetchReferralDetail } from '../../redux/slices/referralSlice';
+import {useGetReferralDetailQuery} from "../../redux/slices/referralAPiSlice"
 import { REFERRAL_DETAIL_DATA } from '../../utils/constants';
 import { Typography , Button } from '@mui/material';
 import {patchRequest } from "../../axios";
@@ -13,6 +14,7 @@ const Container=styled('div')(({})=>({
   flexDirection:"row",
   gap:"20px",
   flex:1,
+  border:'1px solid red',
 }));
 
 const Column=styled('div')(({})=>({
@@ -87,17 +89,31 @@ const VisuallyHiddenInput = styled('input')({
 
 const DetailPage = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const [referralDetail,setReferralDetail]=useState([]);
   const [detailData, setDetailData] = useState([]);
-  const referralDetail = useSelector((state) => state.referral.referralDetail);
+  const [switchValue, setSwitchValue] = useState(false);
+  const handleSwitchChange = (newValue) => {
+    setSwitchValue(newValue);
+  };
   const handleViewFile =(fileLink)=>{
     window.open(fileLink, '_blank');
   }
-  useEffect(() => {
-    dispatch(fetchReferralDetail());
-  }, [dispatch, id]);
+  // useEffect(() => {
+    const {
+      data: referralData,
+      isLoading,
+      isSuccess,
+      isError,
+      error
+    } = useGetReferralDetailQuery(id);
+   
+
+  useEffect(()=>{
+  setReferralDetail(referralData);
+  },[referralData])
 
   useEffect(() => {
+    if(isSuccess){
     const updatedDetailData = {};
     for (const key in REFERRAL_DETAIL_DATA) {
       if (REFERRAL_DETAIL_DATA.hasOwnProperty(key)) {
@@ -108,6 +124,7 @@ const DetailPage = () => {
       }
     }
     setDetailData(updatedDetailData);
+  }
   }, [referralDetail]);
 
 
@@ -124,84 +141,90 @@ const DetailPage = () => {
  
   const referralDetailData=Object.values(detailData);
   console.log("Referral Data ",referralDetailData);
-  return (
-    <Container>
-    <Column>
+  return(
+      isLoading ?  (<CircularProgress disableShrink />):(
+      <div>
+      <Typography>Referral Details</Typography>
+      <Container>
+       
+        <Column>
+          <HeadingWrapper>
+          <Typography variant='h3'>Referral Information</Typography>
+          </HeadingWrapper>
+          <ContentWrapper>
+          {referralDetailData.slice(6,13).map((item, index) => (
+            <Card key={index}>
+              <Label>{item.key}</Label>
+              {typeof item.value === "boolean" ? (
+                  // <SwitchButton
+                  //   checked={item.value}
+                  //   color="primary"
+                  // />
+                  <SwitchButton value={switchValue ? "Yes" : "No"} onChange={handleSwitchChange} />
+          ) : (
+            <Value variant="h6">{item.value}</Value>
+          )}
+            </Card>
+          ))}
+          </ContentWrapper>
+        </Column>
+        <Column>
+          <HeadingWrapper>
+        <Typography variant='h3'>Referral Information</Typography>
+        </HeadingWrapper>
+        <ContentWrapper>
+        {referralDetailData.slice(7,13).map((item, index) => (
+          <Card key={index} >
+            <Label>{item.key}</Label>
+            {typeof item.value === "boolean" ? (
+                  <SwitchButton
+                    checked={item.value}
+                    color="primary"
+                  />
+          ) : (
+            <Value variant="h6">{item.value}</Value>
+          )}
+          </Card>
+        ))}
+        </ContentWrapper>
+        
+      </Column>
+      <Column>
       <HeadingWrapper>
-      <Typography variant='h3'>Referral Information</Typography>
-      </HeadingWrapper>
-      <ContentWrapper>
-      {referralDetailData.slice(6,13).map((item, index) => (
-        <Card key={index}>
-          <Label>{item.key}</Label>
-          {typeof item.value === "boolean" ? (
-              <SwitchButton
-                checked={item.value}
-                color="primary"
-              />
-      ) : (
-        <Value variant="h6">{item.value}</Value>
-      )}
-        </Card>
-      ))}
-      </ContentWrapper>
-    </Column>
-    <Column>
-      <HeadingWrapper>
-    <Typography variant='h3'>Referral Information</Typography>
-    </HeadingWrapper>
-    <ContentWrapper>
-    {referralDetailData.slice(7,13).map((item, index) => (
-      <Card key={index} >
-        <Label>{item.key}</Label>
-        {typeof item.value === "boolean" ? (
-              <SwitchButton
-                checked={item.value}
-                color="primary"
-              />
-      ) : (
-        <Value variant="h6">{item.value}</Value>
-      )}
-      </Card>
-    ))}
-    </ContentWrapper>
+        <Typography variant='h3'>Attachments</Typography>
+        </HeadingWrapper>
+        <ContentWrapper>
+        {referralDetailData.slice(14,16).map((item, index) => (
+          <Card key={index} >
+           <Label>{item.key}</Label>
+           <ButtonWrapper>
+           <Button variant="outlined" size="medium" onClick={()=>handleViewFile(item.value)}>
+              View 
+            </Button>
+             <Button
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}        
+        >
+          Upload file
+          <VisuallyHiddenInput 
+             type="file" 
+              onClick={(e) => {
+                    const attachmentType = item.key === 'preop-consult notes.pdf' ? 'preop_consult_attachment' : 'op_notes_attachment';
+                    handleFileChange(e, attachmentType);
+      }} 
+    />
     
-  </Column>
-  <Column>
-  <HeadingWrapper>
-    <Typography variant='h3'>Attachments</Typography>
-    </HeadingWrapper>
-    <ContentWrapper>
-    {referralDetailData.slice(14,16).map((item, index) => (
-      <Card key={index} >
-       <Label>{item.key}</Label>
-       <ButtonWrapper>
-       <Button variant="outlined" size="medium" onClick={()=>handleViewFile(item.value)}>
-          View 
         </Button>
-         <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}        
-    >
-      Upload file
-      <VisuallyHiddenInput 
-         type="file" 
-          onClick={(e) => {
-                const attachmentType = item.key === 'preop-consult notes.pdf' ? 'preop_consult_attachment' : 'op_notes_attachment';
-                handleFileChange(e, attachmentType);
-  }} 
-/>
-
-    </Button>
-       </ButtonWrapper>
-      </Card>
-    ))}
-    </ContentWrapper>
-    </Column>
-  </Container>
-  );
+           </ButtonWrapper>
+          </Card>
+        ))}
+        </ContentWrapper>
+        </Column>
+      </Container>
+      </div>)
+      )
 };
 
 export default DetailPage;

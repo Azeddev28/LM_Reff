@@ -1,33 +1,37 @@
 import React, { useState, useEffect } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import TablePagination from "@mui/material/TablePagination";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { fetchReferrals } from "../../redux/slices/referralSlice";
-import { useDispatch, useSelector } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
+import {Table ,TableBody,TableCell,TableContainer, TableHead,TableRow,Paper,Box , Button} from "@mui/material";
+// import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
-const PaginatedTable = ({ headerData, rowsData, fetchData }) => {
-  const [page, setPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  console.log("RowsData",rowsData);
+const PaginatedTable = ({ headerData, response, fetchData ,loading }) => {
+  console.log("Response",response);
+  const [nextPageUrl,setNextPageUrl]=useState("");
+  const [previousPageUrl,setPreviuosPageUrl]=useState("");
+  const [count,setCount]=useState();
+  const [rowsData,setRowsData]=useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
   const location = useLocation();
+ 
+  useEffect(()=>{
+    setRowsData(response?.results);
+    setNextPageUrl(response?.next);
+    setPreviuosPageUrl(response?.previous);
+    setCount(response?.count);
+    // setTotalPages(response?.count);
+  },[response])
 
   useEffect(() => {
-    setTotalPages(Math.ceil(rowsData?.length / 5));
+    if (count) {
+      setTotalPages(Math.ceil(count / 2));
+    } else {
+      setTotalPages(0);
+    }
   }, [rowsData]);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-    // fetchReferrals(newPage);
-  };
+   
 
   const extractKeys = () => {
     let keys = [];
@@ -51,8 +55,27 @@ const PaginatedTable = ({ headerData, rowsData, fetchData }) => {
     navigate(`${currentUrl}${id}`, { state: { data: id } });
   };
 
+  const handleClickPreviuos =()=>{
+    console.log("page",page)
+    console.log("totalPages",totalPages);
+   if (page > 1){
+    console.log("less than 1");
+    setPage(page - 1)
+   }
+     
+       
+  }
+
+  const handleClickNext =()=>{
+    if (page <= totalPages) {
+      setPage(page + 1)}
+      
+    // console.log('next',nextPageUrl);
+}
+  console.log("responseData",rowsData);
   return (
-    <Paper>
+   loading ? (<CircularProgress/>) :
+    (<Paper>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -63,10 +86,7 @@ const PaginatedTable = ({ headerData, rowsData, fetchData }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {(rowsData?.length > 0
-              ? rowsData?.slice(page * 5, page * 5 + 5)
-              : rowsData
-            )?.map((obj, index) => (
+            {rowsData?.map((obj, index) => (
               <TableRow key={index} onClick={() => (handleDetailPage(obj))}>
                 {extractRowValues(obj, keys)?.map((item, index) => (
                   item.key !== "uuid" && 
@@ -77,20 +97,28 @@ const PaginatedTable = ({ headerData, rowsData, fetchData }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        component="div"
-        count={totalPages}
-        page={page}
-        onPageChange={handleChangePage}
-        rowsPerPageOptions={[]}
-        labelRowsPerPage={<div>Rows per page</div>}
-        SelectProps={{
-          IconComponent: ArrowDropDownIcon,
-          disabled: true
-        }}
-      />
-    </Paper>
-  );
+      <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
+      <Button
+        variant="contained"
+        color="primary"
+        disabled={page === 1}
+        onClick={handleClickPreviuos}
+      >
+        Back
+      </Button>
+      <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
+      <Button
+        variant="contained"
+        color="primary"
+        disabled={page === totalPages}
+        onClick={handleClickNext}
+      >
+        Next
+      </Button>
+    </Box>
+    </Paper>)
+ 
+);
 };
 
 export default PaginatedTable;

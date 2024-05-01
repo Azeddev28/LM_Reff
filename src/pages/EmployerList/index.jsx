@@ -21,8 +21,8 @@ useEffect(() => {
 
 // const employerList = useSelector((state) => state.referral.employerList.results);
 let employes;
-employes = useSelector((state) => state.referral.employerList.results);
-
+employes = useSelector((state) => state.referral.employerList);
+ console.log("employes",employes);
  useEffect(()=>{
   setEmployerData(employes);
 },[employes]);
@@ -38,7 +38,7 @@ employes = useSelector((state) => state.referral.employerList.results);
       placeHolder="Search by Employer Name"
       />
       <TableWrapper>
-      <PaginatedTable rowsData={employerData} headerData={EMPLOYER_HEADER_DATA}/>
+      <PaginatedTable response={employerData} headerData={EMPLOYER_HEADER_DATA}/>
       </TableWrapper>
     </div>
   )
