@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress';
+import {CircularProgress,Divider } from '@mui/material';
 import styled from '@emotion/styled';
 import { useDispatch } from 'react-redux';
 import SwitchButton from '../../components/Buttons/SwitchButton';
@@ -8,6 +8,18 @@ import {useGetReferralDetailQuery} from "../../redux/slices/referralAPiSlice"
 import { REFERRAL_DETAIL_DATA } from '../../utils/constants';
 import { Typography , Button } from '@mui/material';
 import {patchRequest } from "../../axios";
+
+
+
+const Heading=styled('Typography')(({})=>({
+  color: 'rgba(0, 0, 0, 0.87)',
+  fontFamily: 'Nunito',
+  fontSize: 24,
+  fontStyle: 'normal',
+  fontWeight: 600,
+  lineHeight: "28.8px", /* 120% */
+  margin:"44px 0px 46px 0px"
+}));
 
 const Container=styled('div')(({})=>({
   display:'flex',
@@ -69,6 +81,12 @@ const ButtonWrapper=styled('div')(({  }) => ({
    display:'flex',
    flexDirection:'row',
    gap:"15px",
+}));
+
+const CutomizedDivider=styled('Divider')(({  }) => ({
+  marginTop:'40px',
+  marginBottom:'40px',
+  background:'pink',
 }));
 
 const VisuallyHiddenInput = styled('input')({
@@ -144,13 +162,15 @@ const DetailPage = () => {
   return(
       isLoading ?  (<CircularProgress disableShrink />):(
       <div>
-      <Typography>Referral Details</Typography>
+      <Heading>Referral Details</Heading>
+      <CutomizedDivider orientation="vertical" variant="middle" flexItem />
       <Container>
        
         <Column>
           <HeadingWrapper>
           <Typography variant='h3'>Referral Information</Typography>
           </HeadingWrapper>
+          
           <ContentWrapper>
           {referralDetailData.slice(6,13).map((item, index) => (
             <Card key={index}>

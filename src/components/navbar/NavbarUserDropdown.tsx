@@ -59,9 +59,9 @@ function NavbarUserDropdown() {
           aria-owns={anchorMenu ? "menu-appbar" : undefined}
           aria-haspopup="true"
           onClick={toggleMenu}
-          
+          color="inherit"
           size="large"
-          sx={{color:"#9E9E9E"}}
+  
         >
           <Power />
         </IconButton>
