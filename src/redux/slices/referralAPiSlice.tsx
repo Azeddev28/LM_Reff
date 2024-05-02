@@ -17,11 +17,15 @@ export const referralApi = createApi({
     }),  
     getReferralDetail: builder.query({
         query: (id) => `http://3.6.94.153/api/referrals/detail/${id}`,
-      }),
+      }),  
+    resetPassword: builder.query({
+      query: () => '/auth/password/reset/',
+    }),  
   }),
 
 })
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetReferralsQuery ,useGetReferralDetailQuery,useGetClaimsQuery ,useGetEmployesQuery } = referralApi
+export const { useGetReferralsQuery ,useGetReferralDetailQuery,
+  useGetClaimsQuery ,useGetEmployesQuery,useResetPasswordQuery,useLazyResetPasswordQuery } = referralApi

@@ -19,23 +19,33 @@ const SwitchButton = ({ value, onChange }: SwitchButtonProps) => {
   };
 
   return (
-    <FormControl variant="standard" sx={{ borderBottom: 0 }}>
+    
     <Select
       labelId="demo-simple-select-standard-label"
       id="demo-simple-select-standard"
       value={checked ? "Yes" : "No"}
       onChange={handleChange}
-     
       sx={{
-        "& fieldset": {
-          border: "none",
-        },
+        boxShadow: "none",
+        ".MuiOutlinedInput-notchedOutline": { border: 0 },
+        "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+          {
+            border: 0,
+          },
+        "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+          {
+            border: 0,
+          },
+          '& .MuiSelect-select': {
+            padding:"0px",
+         }
+
       }}
     >
       <MenuItem value={"Yes"}>Yes</MenuItem>
       <MenuItem value={"No"}>No</MenuItem>
     </Select>
-    </FormControl>
+    
   );
 };
 

@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
-import {Table ,TableBody,TableCell,TableContainer, TableHead,TableRow,Paper,Box , Button} from "@mui/material";
-// import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
+import {Table ,TableBody,TableCell,TableContainer, TableHead,TableRow,Paper,Box , Button, Typography} from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-// import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
-import { useDispatch } from "react-redux";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import styled from "@emotion/styled";
-const PaginatedTable = ({ headerData, pageData , query }) => {
-  const [url, setUrl] = useState(pageData.url);
-  const { data, isLoading, isError, refetch } =query(url);
 
-  // const { data, isLoading, isError, refetch }  = useGetReferralsQuery(pageData.url)
+const Pagination= styled('div')(({ }) => ({ 
+  display:'flex',
+  justifyContent:'end',
+  alignItems:'center',
+  marginRight:'50px',
+  flexDirection:'row',
+  height:'40px',
+  gap:'10px',
+})); 
+
+const PaginatedTable = ({ headerData, pageData,query }) => { 
+  const [url, setUrl] = useState(pageData.url)
+  const targetUrl=pageData.search === null  ? pageData.url : `${pageData.url}?search=${pageData.search}`
+  const { data, isLoading, refetch } =query(url);
   const [count,setCount]=useState();
   const [changePage, setChangePage] = useState('');
   const [page, setPage] = useState(1);
@@ -20,19 +27,13 @@ const PaginatedTable = ({ headerData, pageData , query }) => {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
   const location = useLocation();
-  // const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    setUrl(targetUrl);
+    
+  },[targetUrl])
 
-  const Pagination= styled('div')(({theme }) => ({ 
-    display:'flex',
-    justifyContent:'end',
-    alignItems:'center',
-    marginRight:'50px',
-    // margin:'10px 0px',
-    flexDirection:'row',
-    height:'40px',
-   //  backgroundColor:theme.header.background,
-    gap:'10px',
- })); 
+
 
   useEffect(() => {
     if (data && changePage) {
@@ -84,14 +85,13 @@ const PaginatedTable = ({ headerData, pageData , query }) => {
   }
 
   const handleClickNext =()=>{
-    if (page <= totalPages) {
+    if (page < totalPages) {
       setPage(page + 1)}
       refetch()
       setChangePage('next')
-      // setPageInfo(useGetReferralsQuery(pageData.next))
-    // console.log('next',nextPageUrl);
+    
 }
-  console.log("responseData",pageInfo);
+ 
   return (
    isLoading ? (<CircularProgress/>) :
     (<Paper>
@@ -104,7 +104,7 @@ const PaginatedTable = ({ headerData, pageData , query }) => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
+         { count > 0  ? (<TableBody>
             {pageInfo?.results?.map((obj, index) => (
               <TableRow key={index} onClick={() => (handleDetailPage(obj))}>
                 {extractRowValues(obj, keys)?.map((item, index) => (
@@ -113,7 +113,7 @@ const PaginatedTable = ({ headerData, pageData , query }) => {
                 ))}
               </TableRow>
             ))}
-          </TableBody>
+          </TableBody>) : (<Typography>No Record Found</Typography>)}
         </Table>
       </TableContainer>
       <Pagination  >
@@ -125,16 +125,10 @@ const PaginatedTable = ({ headerData, pageData , query }) => {
       <ArrowForwardIosIcon  
         disabled={page === totalPages}
         onClick={handleClickNext} />
-      {/* <Button
-        variant="contained"
-        color="primary"
-        disabled={page === totalPages}
-        onClick={handleClickNext}
-      >
-        Next
-      </Button> */}
+      
     </Pagination>
-    </Paper>)
+    </Paper>) 
+    
  
 );
 };

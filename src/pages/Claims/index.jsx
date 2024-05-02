@@ -13,30 +13,17 @@ const TableWrapper=styled('div')(({})=>({
  }));
 
 const Claims = () => {
-//   const [claimList,setClaimList]=useState([]);
-//   const {
-//     data: claims,
-//     isLoading,
-//     isSuccess,
-//     isError,
-//     error
-//   } = useGetClaimsQuery('http://3.6.94.153/api/claims');
-//  console.log("claims",claims);
-
-//   useEffect(() => {
-//     if (isSuccess && claims) {
-//       setClaimList(claims);
-//     }
-//   }, [isSuccess, claims]);
+  const [searchValue, setSearchValue] = useState(null);
 
   return (
     <div>
       <DashboardHeader heading="Claims Dashboard" 
       subHeading="Greetings, {User Name}. Search for a patient to view the claim status"
       placeHolder="Search by Patient Name"
+      setSearchValue={setSearchValue}
       />
       <TableWrapper>
-      <PaginatedTable  pageData={{url: 'http://3.6.94.153/api/claims'}} headerData={CLAIMS_HEADER_DATA} query={useGetClaimsQuery}/>
+      <PaginatedTable query={useGetClaimsQuery} pageData={{url: 'http://3.6.94.153/api/claims',search:searchValue }} headerData={CLAIMS_HEADER_DATA} />
       </TableWrapper>
     </div>
   )

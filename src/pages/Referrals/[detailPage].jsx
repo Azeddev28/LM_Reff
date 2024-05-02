@@ -97,7 +97,7 @@ const Card = styled('div')(({value }) => ({
 }));
 
 const ContentWrapper= styled('div')(({  }) => ({
-  padding:'20px 0px',
+  padding:'20px 0px 0px 0px',
   display:'flex',
   flexDirection:'column',
   gap:'13px',
@@ -127,11 +127,7 @@ lineHeight: '21px',
 letterSpacing: 0.079,
 }));
 
-const ButtonWrapper=styled('div')(({  }) => ({
-   display:'flex',
-   flexDirection:'row',
-   gap:"15px",
-}));
+
 
 const MainWrapper=styled('div')(({  }) => ({
   display:'flex',
@@ -169,22 +165,37 @@ const FileUploadWrapper=styled('div')(({  }) => ({
 const FileUploadButton=styled('div')(({  }) => ({
   display:'flex',
   flexDirection:'row',
-  gap:'6px',
-  padding:'0px 15px',
+  gap:'10px',
   height:'36px',
   alignItems:'center',
 }));
 
-const DropArea=styled('section')(({  }) => ({
-  height:'185px',
+// const DropArea=styled('section')(({  }) => ({
+//   // height:'185px',
+//   display:'flex', 
+//   border:'1px solid rgba(0, 0, 0, 0.42)',
+//   borderRadius:'4px',
+//   background:'#F5F6F8',
+//   justifyContent:'center',
+//   alignItems:'end',
+  
+// }));
+
+const DescriptionWrapper=styled('div')(({  }) => ({
   display:'flex', 
-  border:'1px solid rgba(0, 0, 0, 0.42)',
-  borderRadius:'4px',
-  background:'#F5F6F8',
-  justifyContent:'center',
-  alignItems:'end',
-  padding:'0px 5% 10px 5%'
+  flexDirection:'column',
+  minHeight:'70px',
+  margin:'0px 25px',
+  gap:'12px',
 }));
+
+const ValueWrapper=styled('div')(({  }) => ({
+  borderRadius: 2,
+  border: '1px solid rgba(0, 0, 0, 0.42)',
+  background: '#F5F6F8',
+  padding:'9px 100px 7px 14px'
+}));
+
 
 
 const DropzoneText=styled('section')(({  }) => ({
@@ -204,20 +215,27 @@ const DropZoneContent=styled('section')(({  }) => ({
   display:'flex',
   flexDirection:'column',
   gap:'11px',
-  justifyContent:'center',
+  justifyContent:'end',
+  width:'100%',
   alignItems:'center',
+  borderRadius: 4,
+  padding:'0px 16px',
+  border: '1px solid rgba(0, 0, 0, 0.42)',
+  background: '#F5F6F8',
+  paddingBottom:'10px',
 }));
 
 const UploadButton=styled(Button)(({  }) => ({
   display:'flex',
   justifyContent:'start',
+  gap:"6px",
 }));
 
 const UploadedFileSection=styled('div')(({  }) => ({
     display:'flex',
     flexDirection:'column',
+    margin:'0px 25px',
     gap:'10px',
-    margin:'0px 25px'
 }));
 
 
@@ -248,7 +266,7 @@ const UploadedFile=styled('div')(({  }) => ({
   flexDirection:'row',
   gap:'16px',
   height:'55px',
-  padding:'0px 15px 0px 35px',
+  padding:'0px 5px 0px 13px',
   borderRadius: 4,
   background: '#D9D9D9',
   alignItems:'center',
@@ -329,24 +347,25 @@ const DetailPage = () => {
       <Container>
        
         <Column>
-          {/* <HeadingWrapper> */}
           <ColumnHeader variant='h3'>Referral Information</ColumnHeader>
-          {/* </HeadingWrapper> */}
-          
           <ContentWrapper>
           {referralDetailData.slice(0,6).map((item, index) => (
-            <Card key={index} value={item.value}>
+            item.key === "Referral Description" ?(
+              <DescriptionWrapper>
+                <Label>{item.key}</Label>
+                <ValueWrapper>
+                 {item.value}
+                </ValueWrapper>
+              </DescriptionWrapper>
+            ) :
+            (<Card key={index} value={item.value}>
               <Label>{item.key}</Label>
               {typeof item.value === "boolean" ? (
-                  // <SwitchButton
-                  //   checked={item.value}
-                  //   color="primary"
-                  // />
                   <SwitchButton value={switchValue ? "Yes" : "No"} onChange={handleSwitchChange} />
           ) : (
             <Value variant="h6">{item.value}</Value>
           )}
-            </Card>
+            </Card>)
           ))}
           </ContentWrapper>
           <CheckWrapper>
@@ -355,9 +374,9 @@ const DetailPage = () => {
 
         </Column>
         <Column>
-          {/* <HeadingWrapper> */}
+          
         <ColumnHeader>Referral Information</ColumnHeader>
-        {/* </HeadingWrapper> */}
+        
         <ContentWrapper>
         {referralDetailData.slice(7,13).map((item, index) => (
           <Card key={index} >
@@ -385,8 +404,8 @@ const DetailPage = () => {
          <FileUploadWrapper>
          <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
           {({getRootProps, getInputProps}) => (
-            <DropArea>
-              <div {...getRootProps()}>
+            <section>
+              <div {...getRootProps()}  style={{ height:'185px',width:'100%' , display:'flex' ,justifyContent:'end' }}>
                 <input {...getInputProps()} />
                  <DropZoneContent>
                   <CloudUploadIcon fontSize='large'/>
@@ -394,7 +413,7 @@ const DetailPage = () => {
                  </DropZoneContent>
                 
               </div>
-            </DropArea>
+            </section>
           )}
           </Dropzone>
           <UploadButton
@@ -441,33 +460,6 @@ const DetailPage = () => {
 
 
       </UploadedFileSection>
-
-        {/* {referralDetailData.slice(14,16).map((item, index) => (
-          <Card key={index} >
-           <Label>{item.key}</Label>
-           <ButtonWrapper>
-           <Button variant="outlined" size="medium" onClick={()=>handleViewFile(item.value)}>
-              View 
-            </Button>
-             <Button
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}        
-        >
-          Upload file
-          <VisuallyHiddenInput 
-             type="file" 
-              onClick={(e) => {
-                    const attachmentType = item.key === 'preop-consult notes.pdf' ? 'preop_consult_attachment' : 'op_notes_attachment';
-                    handleFileChange(e, attachmentType);
-      }} 
-    />
-    
-        </Button>
-           </ButtonWrapper>
-          </Card>
-        ))} */}
         </ContentWrapper>
         </Column>
       </Container>

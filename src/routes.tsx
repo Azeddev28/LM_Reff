@@ -4,6 +4,7 @@ import Claims from "./pages/Claims";
 import EmployerList from "./pages/EmployerList";
 import Auth from "./layouts/Auth";
 import SignIn from "./pages/auth/SignIn";
+import ResetPassword from "./pages/auth/ResetPassword";
 import DetailPage from "./pages/Referrals/[detailPage]";
 
 const routes = [
@@ -30,7 +31,11 @@ const routes = [
     element:<Auth><SignIn/></Auth>
   },
   {
-    path: "/:id", // Dynamic route
+    path:"auth/reset-password",
+    element:<Auth><ResetPassword/></Auth>
+  },
+  {
+    path: "/:id", 
     element: <DashboardLayout><DetailPage /></DashboardLayout>,
   },
   

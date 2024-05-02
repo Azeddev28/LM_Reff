@@ -2,10 +2,12 @@ import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import theme from '../../theme';
 import SearchIcon from '@mui/icons-material/Search';
+import { useState , ChangeEvent  } from "react";
 interface DashboardHeaderProps{
     heading:string,
     subHeading:string,
     placeHolder:string,
+    setSearchValue:React.Dispatch<React.SetStateAction<string | null>>
 }
 
 const Container= styled('div')(({theme }) => ({ 
@@ -44,14 +46,31 @@ const Input=styled('input')(({})=>({
 
  }));
 
-const DashboardHeader = ({heading,subHeading,placeHolder}:DashboardHeaderProps) => {
+
+
+
+const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:DashboardHeaderProps) => {
+  const [inputValue,setInputValue]=useState<string | null>(null);
+  
+  const handleInputValue=(event:ChangeEvent<HTMLInputElement>)=>{
+    setInputValue(event.target.value);
+  } 
+
+  const handleSearchValue=()=>{
+    setSearchValue(inputValue);
+   
+  }
+
+
+
+
   return (
     <Container>
       <Typography variant="h4">{heading}</Typography>
       <Typography>{subHeading}</Typography>
       <SearchBox>
-        <Input placeholder={placeHolder}/>
-        <SearchIcon fontSize="medium"/>
+        <Input placeholder={placeHolder} onChange={handleInputValue}/>
+        <SearchIcon fontSize="medium" onClick={handleSearchValue} />
       </SearchBox>
     </Container>
   )
