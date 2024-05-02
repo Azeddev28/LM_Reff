@@ -4,38 +4,44 @@ import {Table ,TableBody,TableCell,TableContainer, TableHead,TableRow,Paper,Box 
 // import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
+import { useDispatch } from "react-redux";
 
-const PaginatedTable = ({ headerData, response, fetchData ,loading }) => {
-  console.log("Response",response);
-  const [nextPageUrl,setNextPageUrl]=useState("");
-  const [previousPageUrl,setPreviuosPageUrl]=useState("");
+const PaginatedTable = ({ headerData, pageData }) => {
+  const [url, setUrl] = useState(pageData.url);
+  const { data, isLoading, isError, refetch } = useGetReferralsQuery(url);
+
+  // const { data, isLoading, isError, refetch }  = useGetReferralsQuery(pageData.url)
   const [count,setCount]=useState();
-  const [rowsData,setRowsData]=useState([]);
+  const [changePage, setChangePage] = useState('');
   const [page, setPage] = useState(1);
+  const [pageInfo, setPageInfo] = useState({});
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
   const location = useLocation();
- 
-  useEffect(()=>{
-    setRowsData(response?.results);
-    setNextPageUrl(response?.next);
-    setPreviuosPageUrl(response?.previous);
-    setCount(response?.count);
-    // setTotalPages(response?.count);
-  },[response])
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    if (data && changePage) {
+      // Update url to the value received from the API response
+      setUrl(data[changePage]);
+      setChangePage('')
+    }
+    setPageInfo(data);
+    setCount(data?.count);
+    // setTotalPages(response?.count);
     if (count) {
       setTotalPages(Math.ceil(count / 2));
     } else {
       setTotalPages(0);
     }
-  }, [rowsData]);
+    
+  }, [data, pageInfo, url, changePage]);
    
 
   const extractKeys = () => {
     let keys = [];
-    rowsData?.forEach((obj) => {
+    pageInfo?.results?.forEach((obj) => {
       keys = keys.concat(Object.keys(obj));
     });
     return Array.from(new Set(keys)); // Get unique keys
@@ -56,25 +62,25 @@ const PaginatedTable = ({ headerData, response, fetchData ,loading }) => {
   };
 
   const handleClickPreviuos =()=>{
-    console.log("page",page)
-    console.log("totalPages",totalPages);
    if (page > 1){
-    console.log("less than 1");
     setPage(page - 1)
    }
-     
+   refetch()
+   setChangePage('previous') 
        
   }
 
   const handleClickNext =()=>{
     if (page <= totalPages) {
       setPage(page + 1)}
-      
+      refetch()
+      setChangePage('next')
+      // setPageInfo(useGetReferralsQuery(pageData.next))
     // console.log('next',nextPageUrl);
 }
-  console.log("responseData",rowsData);
+  console.log("responseData",pageInfo);
   return (
-   loading ? (<CircularProgress/>) :
+   isLoading ? (<CircularProgress/>) :
     (<Paper>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -86,7 +92,7 @@ const PaginatedTable = ({ headerData, response, fetchData ,loading }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rowsData?.map((obj, index) => (
+            {pageInfo?.results?.map((obj, index) => (
               <TableRow key={index} onClick={() => (handleDetailPage(obj))}>
                 {extractRowValues(obj, keys)?.map((item, index) => (
                   item.key !== "uuid" && 
