@@ -293,9 +293,9 @@ const DetailPage = () => {
   const handleSwitchChange = (newValue) => {
     setSwitchValue(newValue);
   };
-  const handleViewFile =(fileLink)=>{
-    window.open(fileLink, '_blank');
-  }
+  // const handleViewFile =(fileLink)=>{
+  //   window.open(fileLink, '_blank');
+  // }
   
     const {
       data: referralData,
@@ -327,14 +327,11 @@ const DetailPage = () => {
 
 
  // File upload
- const handleFileChange = async (event,fileType) => {
-  const file = event.target.files[0];
-  console.log("File",file);
-  console.log("Filetype",fileType);
-  const formData = new FormData();
-  formData.append(fileType, file);
-  patchRequest(`http://3.6.94.153/api/referrals/update/${id}`,formData);
-  // dispatch(updateReferalDetail(id,formData)); // TODO: have to fix this in redux
+ const handleFileChange = (event) => {
+  const files = event.target.files;
+  // console.log("even.target",files);
+  // Do something with the selected files
+  console.log("Button Files",files);
 };
  
   const referralDetailData=Object.values(detailData);
@@ -397,9 +394,7 @@ const DetailPage = () => {
           </CheckWrapper>
       </Column>
       <Column>
-      {/* <HeadingWrapper> */}
         <ColumnHeader>Referral Attachments</ColumnHeader>
-        {/* </HeadingWrapper> */}
         <ContentWrapper>
          <FileUploadWrapper>
          <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
@@ -429,10 +424,8 @@ const DetailPage = () => {
           </FileUploadButton>
           <VisuallyHiddenInput 
              type="file" 
-              onClick={(e) => {
-                    const attachmentType = item.key === 'preop-consult notes.pdf' ? 'preop_consult_attachment' : 'op_notes_attachment';
-                    handleFileChange(e, attachmentType);
-      }} 
+             onChange={handleFileChange}
+      
     />
         </UploadButton>
       </FileUploadWrapper>

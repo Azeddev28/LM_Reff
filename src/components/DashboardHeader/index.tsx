@@ -54,9 +54,14 @@ const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:Dashbo
   
   const handleInputValue=(event:ChangeEvent<HTMLInputElement>)=>{
     setInputValue(event.target.value);
+    if(event.target.value === ''){
+     
+      setSearchValue(null);
+    }
   } 
 
   const handleSearchValue=()=>{
+
     setSearchValue(inputValue);
    
   }
@@ -70,7 +75,7 @@ const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:Dashbo
       <Typography>{subHeading}</Typography>
       <SearchBox>
         <Input placeholder={placeHolder} onChange={handleInputValue}/>
-        <SearchIcon fontSize="medium" onClick={handleSearchValue} />
+        <SearchIcon  style={{ cursor: 'pointer' }} fontSize="medium" onClick={handleSearchValue} />
       </SearchBox>
     </Container>
   )

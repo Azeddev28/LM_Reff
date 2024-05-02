@@ -13,7 +13,7 @@ function AuthGuard({ children }: AuthGuardType) {
  
   useEffect(() => { 
     if (accessToken !==null) {
-      console.log("accessToken",accessToken);
+     
       navigate("/");
       
     } else {

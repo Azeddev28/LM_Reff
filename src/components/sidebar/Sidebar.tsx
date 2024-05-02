@@ -33,9 +33,6 @@ const Brand = styled(ListItemButton)<{
     min-height: 64px;
   }
 
-  &:hover {
-    background-color: ${(props) => props.theme.sidebar.header.background};
-  }
 `;
 
 

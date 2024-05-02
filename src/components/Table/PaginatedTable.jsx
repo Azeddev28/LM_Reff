@@ -5,7 +5,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import styled from "@emotion/styled";
-
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+// import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 const Pagination= styled('div')(({ }) => ({ 
   display:'flex',
   justifyContent:'end',
@@ -15,6 +17,21 @@ const Pagination= styled('div')(({ }) => ({
   height:'40px',
   gap:'10px',
 })); 
+
+const Header=styled('div')(({ }) => ({ 
+  display:"flex",
+  flexDirection:'row',
+  gap:'10px',
+  alignItems:'center',
+})); 
+
+const Sorter=styled('div')(({ }) => ({ 
+  display:"flex",
+  flexDirection:'column',
+  gap:'0px'
+})); 
+
+
 
 const PaginatedTable = ({ headerData, pageData,query }) => { 
   const [url, setUrl] = useState(pageData.url)
@@ -100,7 +117,16 @@ const PaginatedTable = ({ headerData, pageData,query }) => {
           <TableHead>
             <TableRow>
               {headerData.map((key) => (
-                <TableCell key={key}>{key}</TableCell>
+                <TableCell key={key}>
+                  <Header >
+                  {key}
+                  <Sorter>
+                  <KeyboardArrowUpIcon  />
+                  {/* <HorizontalRuleIcon/> */}
+                  <KeyboardArrowDownIcon />
+                  </Sorter>
+                  </Header>
+                  </TableCell>
               ))}
             </TableRow>
           </TableHead>
@@ -113,7 +139,7 @@ const PaginatedTable = ({ headerData, pageData,query }) => {
                 ))}
               </TableRow>
             ))}
-          </TableBody>) : (<Typography>No Record Found</Typography>)}
+          </TableBody>) : (<Typography variant="h4" style={{margin:'20px auto' , textAlign:'center'}}>No Record Found</Typography>)}
         </Table>
       </TableContainer>
       <Pagination  >
