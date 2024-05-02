@@ -14,15 +14,9 @@ const TableWrapper = styled('div')(({ }) => ({
 }));
 
 const Referrals = () => {
-  const [referralList, setRefferalList] = useState([]);
-  const dispatch = useDispatch();
-  const {
-    data: referralsInfo,
-    isLoading,
-    isSuccess,
-    isError,
-    error
-  } = useGetReferralsQuery('http://3.6.94.153/api/referrals')
+  // const [referralList, setRefferalList] = useState([]);
+  // const dispatch = useDispatch();
+
   // useEffect(() => {
   //   dispatch(fetchReferrals());
   // }, [dispatch]);
@@ -33,10 +27,12 @@ const Referrals = () => {
   // }, [referralsInfo]);
 
   useEffect(() => {
-    if (isSuccess && referralsInfo) {
-      setRefferalList(referralsInfo);
-    }
-  }, [isSuccess, referralsInfo]);
+    // console.log(referralsInfo, "Ye")
+    // if (isSuccess && referralsInfo) {
+    //   setRefferalList(referralsInfo);
+    // }
+    // console.log(referralList)
+  }, []);
 
 
   // setRefferalList(referralsInfo?.results);
@@ -56,7 +52,7 @@ const Referrals = () => {
           placeHolder="Search by Patient Name"
         />
         <TableWrapper>
-          <PaginatedTable response={referralList} loading={isLoading} headerData={REFERRAL_HEADER_DATA} />
+          <PaginatedTable headerData={REFERRAL_HEADER_DATA} pageData={{url: 'http://3.6.94.153/api/referrals'}}/>
         </TableWrapper>
       </div>
     
