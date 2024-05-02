@@ -1,5 +1,6 @@
 import React,{ useEffect, useState } from "react";
 import DashboardHeader from "../../components/DashboardHeader";
+import { useGetEmployesQuery } from "../../redux/slices/referralAPiSlice";
 import  {REFERRAL_ROWS_DATA,EMPLOYER_HEADER_DATA} from '../../utils/constants';
 import PaginatedTable from "../../components/Table/PaginatedTable";
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,20 +13,20 @@ const TableWrapper=styled('div')(({})=>({
  }));
 
 const EmployerList = () => {
-const dispatch = useDispatch();
-const [employerData,setEmployerData]=useState([]);
-useEffect(() => {
-  dispatch(fetchEmployerList());
+// const dispatch = useDispatch();
+// const [employerData,setEmployerData]=useState([]);
+// useEffect(() => {
+//   dispatch(fetchEmployerList());
   
-}, [dispatch]);
+// }, [dispatch]);
 
-// const employerList = useSelector((state) => state.referral.employerList.results);
-let employes;
-employes = useSelector((state) => state.referral.employerList);
- console.log("employes",employes);
- useEffect(()=>{
-  setEmployerData(employes);
-},[employes]);
+// // const employerList = useSelector((state) => state.referral.employerList.results);
+// let employes;
+// employes = useSelector((state) => state.referral.employerList);
+//  console.log("employes",employes);
+//  useEffect(()=>{
+//   setEmployerData(employes);
+// },[employes]);
 
 
 
@@ -38,7 +39,7 @@ employes = useSelector((state) => state.referral.employerList);
       placeHolder="Search by Employer Name"
       />
       <TableWrapper>
-      <PaginatedTable response={employerData} headerData={EMPLOYER_HEADER_DATA}/>
+      <PaginatedTable   pageData={{url : 'http://3.6.94.153/api/users/employer-list'}}  query={useGetEmployesQuery}  headerData={EMPLOYER_HEADER_DATA}/>
       </TableWrapper>
     </div>
   )

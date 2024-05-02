@@ -12,6 +12,9 @@ export const referralApi = createApi({
     getClaims: builder.query({
         query: (url) => url,
       }),
+    getEmployes: builder.query({
+      query: (url) => url,
+    }),  
     getReferralDetail: builder.query({
         query: (id) => `http://3.6.94.153/api/referrals/detail/${id}`,
       }),
@@ -21,4 +24,4 @@ export const referralApi = createApi({
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetReferralsQuery ,useGetReferralDetailQuery,useGetClaimsQuery } = referralApi
+export const { useGetReferralsQuery ,useGetReferralDetailQuery,useGetClaimsQuery ,useGetEmployesQuery } = referralApi

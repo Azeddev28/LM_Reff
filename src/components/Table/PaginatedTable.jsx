@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import CircularProgress from '@mui/material/CircularProgress';
 import {Table ,TableBody,TableCell,TableContainer, TableHead,TableRow,Paper,Box , Button} from "@mui/material";
 // import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
-
 import { useLocation, useNavigate } from "react-router-dom";
-import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
+// import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
 import { useDispatch } from "react-redux";
-
-const PaginatedTable = ({ headerData, pageData }) => {
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import styled from "@emotion/styled";
+const PaginatedTable = ({ headerData, pageData , query }) => {
   const [url, setUrl] = useState(pageData.url);
-  const { data, isLoading, isError, refetch } = useGetReferralsQuery(url);
+  const { data, isLoading, isError, refetch } =query(url);
 
   // const { data, isLoading, isError, refetch }  = useGetReferralsQuery(pageData.url)
   const [count,setCount]=useState();
@@ -19,7 +20,19 @@ const PaginatedTable = ({ headerData, pageData }) => {
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+
+  const Pagination= styled('div')(({theme }) => ({ 
+    display:'flex',
+    justifyContent:'end',
+    alignItems:'center',
+    marginRight:'50px',
+    // margin:'10px 0px',
+    flexDirection:'row',
+    height:'40px',
+   //  backgroundColor:theme.header.background,
+    gap:'10px',
+ })); 
 
   useEffect(() => {
     if (data && changePage) {
@@ -103,25 +116,24 @@ const PaginatedTable = ({ headerData, pageData }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
-      <Button
-        variant="contained"
-        color="primary"
+      <Pagination  >
+      <ArrowBackIosNewIcon  
         disabled={page === 1}
-        onClick={handleClickPreviuos}
-      >
-        Back
-      </Button>
+        onClick={handleClickPreviuos}/>
+
       <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
-      <Button
+      <ArrowForwardIosIcon  
+        disabled={page === totalPages}
+        onClick={handleClickNext} />
+      {/* <Button
         variant="contained"
         color="primary"
         disabled={page === totalPages}
         onClick={handleClickNext}
       >
         Next
-      </Button>
-    </Box>
+      </Button> */}
+    </Pagination>
     </Paper>)
  
 );

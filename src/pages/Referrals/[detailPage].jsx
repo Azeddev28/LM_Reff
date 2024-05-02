@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Dropzone from 'react-dropzone';
 import {CircularProgress,Divider } from '@mui/material';
 import styled from '@emotion/styled';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import SwitchButton from '../../components/Buttons/SwitchButton';
 import {useGetReferralDetailQuery} from "../../redux/slices/referralAPiSlice"
 import { REFERRAL_DETAIL_DATA } from '../../utils/constants';
-import { Typography , Button } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Button , FormControlLabel  } from '@mui/material';
 import {patchRequest } from "../../axios";
-
-
+import Checkbox from '@mui/material/Checkbox';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 
 const Heading=styled('Typography')(({})=>({
   color: 'rgba(0, 0, 0, 0.87)',
@@ -27,6 +29,26 @@ const Container=styled('div')(({})=>({
   gap:"20px",
   flex:1,
  
+}));
+
+
+const Checked=styled(FormControlLabel)(({})=>({
+  display:'flex',
+  flexDirection:"row",
+  gap:"30px",
+  flex:1,
+  margin:'0px',
+  color: 'rgba(0, 0, 0, 0.87))',
+  fontFamily: 'Nunito',
+  fontSize: 14,
+  fontStyle: 'normal',
+  fontWeight: 400,
+  lineHight: "20px",
+  letterSpacing: 0.1,
+ 
+}));
+const CheckWrapper=styled('div')(({  }) => ({
+  margin:'0px 25px 0px 16px',
 }));
 
 const Column=styled('div')(({})=>({
@@ -51,12 +73,6 @@ const ColumnHeader=styled('Typography')(({})=>({
     letterSpacing: 0.06,
     padding:'16px'
 }));
-
-
-
-
-
-
 
 
 // const HeadingWrapper= styled('div')(({  }) => ({
@@ -88,7 +104,6 @@ const ContentWrapper= styled('div')(({  }) => ({
  
  
 }));
-
 
 const Label= styled('p')(({  }) => ({
   color: '#263238',
@@ -144,6 +159,111 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 
+const FileUploadWrapper=styled('div')(({  }) => ({
+  margin:'0px 24px',
+  gap:'12px',
+  display:"flex",
+  flexDirection:'column',
+}));
+
+const FileUploadButton=styled('div')(({  }) => ({
+  display:'flex',
+  flexDirection:'row',
+  gap:'6px',
+  padding:'0px 15px',
+  height:'36px',
+  alignItems:'center',
+}));
+
+const DropArea=styled('section')(({  }) => ({
+  height:'185px',
+  display:'flex', 
+  border:'1px solid rgba(0, 0, 0, 0.42)',
+  borderRadius:'4px',
+  background:'#F5F6F8',
+  justifyContent:'center',
+  alignItems:'end',
+  padding:'0px 5% 10px 5%'
+}));
+
+
+const DropzoneText=styled('section')(({  }) => ({
+  color: '#263238',
+  textAlign: 'center',
+  fontFamily: 'Nunito',
+  fontSize: 16,
+  fontStyle: 'normal',
+  fontWeight: 400,
+  lineHeight: '20px',
+  letterSpacing: 0.4,
+}));
+
+
+
+const DropZoneContent=styled('section')(({  }) => ({
+  display:'flex',
+  flexDirection:'column',
+  gap:'11px',
+  justifyContent:'center',
+  alignItems:'center',
+}));
+
+const UploadButton=styled(Button)(({  }) => ({
+  display:'flex',
+  justifyContent:'start',
+}));
+
+const UploadedFileSection=styled('div')(({  }) => ({
+    display:'flex',
+    flexDirection:'column',
+    gap:'10px',
+    margin:'0px 25px'
+}));
+
+
+const FileUploadTextWrapper=styled('div')(({  }) => ({
+  display:'flex',
+  flexDirection:'column',
+  gap:'10px',
+}));
+
+const FileUploadText=styled('div')(({  }) => ({
+  color: '#263238',
+  fontFamily: 'Nunito',
+  fontSize: 12,
+  fontStyle: 'normal',
+  fontWeight: 400,
+  lineHeight: '12px',
+  letterSpacing: 0.4,
+}));
+
+const UploadedFiles=styled('div')(({  }) => ({
+   display:'flex',
+   flexDirection:'column',
+   gap:'16px',
+}));
+
+const UploadedFile=styled('div')(({  }) => ({
+  display:'flex',
+  flexDirection:'row',
+  gap:'16px',
+  height:'55px',
+  padding:'0px 15px 0px 35px',
+  borderRadius: 4,
+  background: '#D9D9D9',
+  alignItems:'center',
+  boxShadow: '0px 0px 14px 0px rgba(53, 64, 82, 0.05)',
+}));
+
+const UploadedFileText=styled('p')(({  }) => ({
+  color: 'rgba(0, 0, 0, 0.87)',
+  fontFamily: 'Nunito',
+  fontSize: 14,
+  fontStyle: 'normal',
+  fontWeight: 600,
+  lineHeight: '20.4px',
+  letterSpacing: 0.06,
+}));
 
 
 
@@ -158,7 +278,7 @@ const DetailPage = () => {
   const handleViewFile =(fileLink)=>{
     window.open(fileLink, '_blank');
   }
-  // useEffect(() => {
+  
     const {
       data: referralData,
       isLoading,
@@ -229,6 +349,10 @@ const DetailPage = () => {
             </Card>
           ))}
           </ContentWrapper>
+          <CheckWrapper>
+          <Checked control={<Checkbox defaultChecked />} label="Preauthorization Required" />
+          </CheckWrapper>
+
         </Column>
         <Column>
           {/* <HeadingWrapper> */}
@@ -249,14 +373,76 @@ const DetailPage = () => {
           </Card>
         ))}
         </ContentWrapper>
-        
+        <CheckWrapper>
+          <Checked control={<Checkbox defaultChecked />} label="Procedure Cancelled" />
+          </CheckWrapper>
       </Column>
       <Column>
       {/* <HeadingWrapper> */}
         <ColumnHeader>Referral Attachments</ColumnHeader>
         {/* </HeadingWrapper> */}
         <ContentWrapper>
-        {referralDetailData.slice(14,16).map((item, index) => (
+         <FileUploadWrapper>
+         <Dropzone onDrop={acceptedFiles => console.log(acceptedFiles)}>
+          {({getRootProps, getInputProps}) => (
+            <DropArea>
+              <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                 <DropZoneContent>
+                  <CloudUploadIcon fontSize='large'/>
+                 <DropzoneText>Choose a file or drag and drop here</DropzoneText>
+                 </DropZoneContent>
+                
+              </div>
+            </DropArea>
+          )}
+          </Dropzone>
+          <UploadButton
+                component="label"
+                role={undefined}
+                variant="contained"
+                tabIndex={-1}  
+                
+        >
+          <FileUploadButton>
+          <CloudUploadIcon/>
+          <p>Browse for File</p>
+          </FileUploadButton>
+          <VisuallyHiddenInput 
+             type="file" 
+              onClick={(e) => {
+                    const attachmentType = item.key === 'preop-consult notes.pdf' ? 'preop_consult_attachment' : 'op_notes_attachment';
+                    handleFileChange(e, attachmentType);
+      }} 
+    />
+        </UploadButton>
+      </FileUploadWrapper>
+      <UploadedFileSection>
+          <FileUploadTextWrapper>
+            <FileUploadText>File Uploads</FileUploadText>
+            <Divider/>
+          </FileUploadTextWrapper>
+         <UploadedFiles>
+          <UploadedFile>
+            <AttachFileIcon fontSize='large'/>
+            <UploadedFileText>Pre Op Consult Notes</UploadedFileText>
+          </UploadedFile>
+          <UploadedFile>
+            <AttachFileIcon fontSize='large'/>
+            <UploadedFileText>Operating Notes</UploadedFileText>
+          </UploadedFile>
+          <UploadedFile>
+            <AttachFileIcon fontSize='large'/>
+            <UploadedFileText>Post Op Consult Notes</UploadedFileText>
+          </UploadedFile>
+
+         </UploadedFiles>
+        
+
+
+      </UploadedFileSection>
+
+        {/* {referralDetailData.slice(14,16).map((item, index) => (
           <Card key={index} >
            <Label>{item.key}</Label>
            <ButtonWrapper>
@@ -281,7 +467,7 @@ const DetailPage = () => {
         </Button>
            </ButtonWrapper>
           </Card>
-        ))}
+        ))} */}
         </ContentWrapper>
         </Column>
       </Container>

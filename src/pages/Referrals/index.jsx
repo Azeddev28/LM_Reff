@@ -52,7 +52,7 @@ const Referrals = () => {
           placeHolder="Search by Patient Name"
         />
         <TableWrapper>
-          <PaginatedTable headerData={REFERRAL_HEADER_DATA} pageData={{url: 'http://3.6.94.153/api/referrals'}}/>
+          <PaginatedTable query={useGetReferralsQuery} headerData={REFERRAL_HEADER_DATA} pageData={{url: 'http://3.6.94.153/api/referrals'}}/>
         </TableWrapper>
       </div>
     
