@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import {MenuItem,FormControl} from '@mui/material';
 
 interface SwitchButtonProps {
   value: string;
@@ -19,15 +19,23 @@ const SwitchButton = ({ value, onChange }: SwitchButtonProps) => {
   };
 
   return (
+    <FormControl variant="standard" sx={{ borderBottom: 0 }}>
     <Select
       labelId="demo-simple-select-standard-label"
       id="demo-simple-select-standard"
       value={checked ? "Yes" : "No"}
       onChange={handleChange}
+     
+      sx={{
+        "& fieldset": {
+          border: "none",
+        },
+      }}
     >
       <MenuItem value={"Yes"}>Yes</MenuItem>
       <MenuItem value={"No"}>No</MenuItem>
     </Select>
+    </FormControl>
   );
 };
 

@@ -18,7 +18,7 @@ const Heading=styled('Typography')(({})=>({
   fontStyle: 'normal',
   fontWeight: 600,
   lineHeight: "28.8px", /* 120% */
-  margin:"44px 0px 46px 0px"
+  marginBottom:'47px',
 }));
 
 const Container=styled('div')(({})=>({
@@ -26,55 +26,90 @@ const Container=styled('div')(({})=>({
   flexDirection:"row",
   gap:"20px",
   flex:1,
-  border:'1px solid red',
+ 
 }));
 
 const Column=styled('div')(({})=>({
   width: '33.33%' ,
   display:'flex',
-  gap:'10px' ,
+  minHeight:'918px',
+  // gap:'10px' ,
   flexDirection:'column' ,
-  border:'1px solid black' 
-}))
-
-const HeadingWrapper= styled('div')(({  }) => ({
-  height:"120px", 
-  verticalAlign:'center',
-  borderBottom:'1px solid black',
-  display:"flex",
-  justifyContent:"center",
-  alignItems:"center"
+  // border:'1px solid black',
+  borderRadius: 15,
+  background: '#FFF',
+  boxShadow: '0px 0px 14px 0px rgba(53, 64, 82, 0.05)',
 }));
 
-const Card = styled('div')(({  }) => ({
-  height:'110px' , 
-  border:'1px solid black' , 
+const ColumnHeader=styled('Typography')(({})=>({
+    color: 'rgba(0, 0, 0, 0.87)',
+    fontFamily: 'Nunito',
+    fontSize: 17,
+    fontStyle: 'normal',
+    fontWeight: 600,
+    lineHeight: "20.4px",
+    letterSpacing: 0.06,
+    padding:'16px'
+}));
+
+
+
+
+
+
+
+
+// const HeadingWrapper= styled('div')(({  }) => ({
+//   height:'52px',
+//   borderRadius: '4px 4px 0px 0px',
+//   verticalAlign:'center',
+ 
+//   display:"flex",
+//   justifyContent:"center",
+//   alignItems:"center"
+// }));
+
+const Card = styled('div')(({value }) => ({
+  height:'48px' , 
+  borderBottom: typeof value === "boolean" ? 'none' : '1px solid black',
   display:'flex',
   gap:'10px' ,
   flexDirection:'column' ,
-  padding:'10px 16px',
-  margin:'0px 30px'
+  paddingBottom:'5px',
+  // padding:'10px 16px',
+  margin:'0px 25px'
 }));
 
 const ContentWrapper= styled('div')(({  }) => ({
   padding:'20px 0px',
   display:'flex',
   flexDirection:'column',
-  gap:'10px',
+  gap:'13px',
+ 
  
 }));
 
 
 const Label= styled('p')(({  }) => ({
-  fontSize:'16px',
-  fontWeight:600,
-  margin:'0px !important',
+  color: '#263238',
+  fontFamily: 'Nunito',
+  fontSize: 12,
+  fontStyle: 'normal',
+  fontWeight: 400,
+  lineHeight: '12px',
+  letterSpacing: 0.4,
+  margin:'0px',
 }));
 
 const Value=styled('p')(({  }) => ({
-  fontSize:'14px',
-  fontWeight:500,
-  margin:'0px !important',
+color: 'rgba(0, 0, 0, 0.87)',
+fontFamily: 'Nunito',
+fontSize: 14,
+margin:'0px',
+fontStyle: 'normal',
+fontWeight: 400,
+lineHeight: '21px',
+letterSpacing: 0.079,
 }));
 
 const ButtonWrapper=styled('div')(({  }) => ({
@@ -83,10 +118,17 @@ const ButtonWrapper=styled('div')(({  }) => ({
    gap:"15px",
 }));
 
+const MainWrapper=styled('div')(({  }) => ({
+  display:'flex',
+  flexDirection:'column',
+ 
+}));
+
 const CutomizedDivider=styled('Divider')(({  }) => ({
-  marginTop:'40px',
   marginBottom:'40px',
-  background:'pink',
+  background:'#E0E0E0',
+  height:'1px',
+  marginBottom:'72px',
 }));
 
 const VisuallyHiddenInput = styled('input')({
@@ -161,19 +203,19 @@ const DetailPage = () => {
   console.log("Referral Data ",referralDetailData);
   return(
       isLoading ?  (<CircularProgress disableShrink />):(
-      <div>
+      <MainWrapper>
       <Heading>Referral Details</Heading>
       <CutomizedDivider orientation="vertical" variant="middle" flexItem />
       <Container>
        
         <Column>
-          <HeadingWrapper>
-          <Typography variant='h3'>Referral Information</Typography>
-          </HeadingWrapper>
+          {/* <HeadingWrapper> */}
+          <ColumnHeader variant='h3'>Referral Information</ColumnHeader>
+          {/* </HeadingWrapper> */}
           
           <ContentWrapper>
-          {referralDetailData.slice(6,13).map((item, index) => (
-            <Card key={index}>
+          {referralDetailData.slice(0,6).map((item, index) => (
+            <Card key={index} value={item.value}>
               <Label>{item.key}</Label>
               {typeof item.value === "boolean" ? (
                   // <SwitchButton
@@ -189,9 +231,9 @@ const DetailPage = () => {
           </ContentWrapper>
         </Column>
         <Column>
-          <HeadingWrapper>
-        <Typography variant='h3'>Referral Information</Typography>
-        </HeadingWrapper>
+          {/* <HeadingWrapper> */}
+        <ColumnHeader>Referral Information</ColumnHeader>
+        {/* </HeadingWrapper> */}
         <ContentWrapper>
         {referralDetailData.slice(7,13).map((item, index) => (
           <Card key={index} >
@@ -210,9 +252,9 @@ const DetailPage = () => {
         
       </Column>
       <Column>
-      <HeadingWrapper>
-        <Typography variant='h3'>Attachments</Typography>
-        </HeadingWrapper>
+      {/* <HeadingWrapper> */}
+        <ColumnHeader>Referral Attachments</ColumnHeader>
+        {/* </HeadingWrapper> */}
         <ContentWrapper>
         {referralDetailData.slice(14,16).map((item, index) => (
           <Card key={index} >
@@ -243,7 +285,7 @@ const DetailPage = () => {
         </ContentWrapper>
         </Column>
       </Container>
-      </div>)
+      </MainWrapper>)
       )
 };
 
