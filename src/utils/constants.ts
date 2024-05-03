@@ -13,13 +13,6 @@ export const REFERRAL_DETAIL_DATA = {
         editable: false,
         label:'dob',    
     },
-    dob: {
-        key: "Patient Date of Birth",
-        value: "",
-        editable: false,
-        label:'practice_name',
-
-    },
     practice_name: {
         key: "Practice Name",
         value: "",
@@ -31,27 +24,27 @@ export const REFERRAL_DETAIL_DATA = {
         value: "",
         editable: false,
     },
-    "specialty": {
+    specialty: {
         key: "Specialty",
         value: "",
         editable: false,
         label:'specialty'
     },
     // "Referring Party" missing in backend data
-    "referral_description": {
+    referral_description: {
         key: "Referral Description",
         value: "",
         editable: false,
         label:'referral_description'
     
     },
-    "preop_consult_scheduled_date": {
+    preop_consult_scheduled_date: {
         key: "Scheduled Consult Date",
         value: "",
         editable: true,
         label:'preop_consult_scheduled_date'
      },
-     "preop_consult_completed":{
+     preop_consult_completed:{
         key:"Did patient show up to pre-op consult?",
         value:"",
         editable: true,
@@ -107,19 +100,10 @@ export const REFERRAL_DETAIL_DATA = {
         editable: true,
         label:'op_notes_attachment'
      }
-
-    },
-    op_notes_attachment: {
-        key: "operating notes.pdf",
-        value: "",
-        editable: true,
-    }
-
     // 3 Procedure Notes
     // 4 Post Op Consult Date
     // 5 Did patient show up to post-op consult?
     // 6 Post Op Consult Notes    
-
 }
 
 export const REFERRAL_HEADER_DATA = [

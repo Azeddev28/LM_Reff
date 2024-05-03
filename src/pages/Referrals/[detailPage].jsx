@@ -336,7 +336,6 @@ const DetailPage = () => {
   useEffect(()=>{
   setReferralDetail(referralData);
   },[referralData])
-
   useEffect(() => {
     if(isSuccess){
     const updatedDetailData = {};
