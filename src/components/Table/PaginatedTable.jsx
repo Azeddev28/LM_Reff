@@ -34,45 +34,47 @@ const Sorter=styled('div')(({ }) => ({
 
 
 const PaginatedTable = ({ headerData, pageData,query }) => { 
+  
+  const generateUrl = () => {
+    const targetUrl = new URL(pageData.url);
+      if (pageData['search'] !== null && pageData['search'] !== undefined) {
+        targetUrl.searchParams.append(key, pageData['search']);
+      }
+      if (orderingValue !== null && orderingValue !== undefined) {
+        targetUrl.searchParams.append('ordering', orderingValue);
+      }
+    return targetUrl.toString()
+  }
+  const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url)
-  const targetUrl=pageData.search === null  ? pageData.url : `${pageData.url}?search=${pageData.search}`
   const { data, isLoading, refetch } =query(url);
-  const [count,setCount]=useState();
+  const ROWS_PER_PAGE = 2;
   const [changePage, setChangePage] = useState('');
   const [page, setPage] = useState(1);
-  const [pageInfo, setPageInfo] = useState({});
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
   
-  useEffect(()=>{
-    setUrl(targetUrl);
-    
-  },[targetUrl])
-
-
 
   useEffect(() => {
+    if(data?.count){
+      setTotalPages(Math.ceil(data?.count / ROWS_PER_PAGE))
+    }
+    if(pageData.search || orderingValue){
+      const targetUrl = generateUrl();
+      setUrl(targetUrl);
+    }
     if (data && changePage) {
-      // Update url to the value received from the API response
       setUrl(data[changePage]);
       setChangePage('')
     }
-    setPageInfo(data);
-    setCount(data?.count);
-    // setTotalPages(response?.count);
-    if (count) {
-      setTotalPages(Math.ceil(count / 2));
-    } else {
-      setTotalPages(0);
-    }
     
-  }, [data, pageInfo, url, changePage]);
+  }, [data, url, changePage, pageData.search, orderingValue]);
    
 
   const extractKeys = () => {
     let keys = [];
-    pageInfo?.results?.forEach((obj) => {
+    data?.results?.forEach((obj) => {
       keys = keys.concat(Object.keys(obj));
     });
     return Array.from(new Set(keys)); // Get unique keys
@@ -116,22 +118,23 @@ const PaginatedTable = ({ headerData, pageData,query }) => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              {headerData.map((key) => (
-                <TableCell key={key}>
+              {headerData.map((columnInfo) => (
+                <TableCell key={columnInfo.key}>
                   <Header >
-                  {key}
+                  {columnInfo.display}
                   <Sorter>
-                  <KeyboardArrowUpIcon  />
+                  <KeyboardArrowUpIcon  onClick={()=>{setOrderingValue(columnInfo.sortKey)}}/>
                   {/* <HorizontalRuleIcon/> */}
-                  <KeyboardArrowDownIcon />
+                  <KeyboardArrowDownIcon onClick={()=>{
+                    setOrderingValue(`-${columnInfo.sortKey}`)}}/>
                   </Sorter>
                   </Header>
                   </TableCell>
               ))}
             </TableRow>
           </TableHead>
-         { count > 0  ? (<TableBody>
-            {pageInfo?.results?.map((obj, index) => (
+         { data?.count > 0  ? (<TableBody>
+            {data?.results?.map((obj, index) => (
               <TableRow key={index} onClick={() => (handleDetailPage(obj))}>
                 {extractRowValues(obj, keys)?.map((item, index) => (
                   item.key !== "uuid" && 

@@ -1,7 +1,6 @@
 import { getRoute } from "../../api/backendRoutes";
 import { getRequest, patchRequest } from "../../axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { REFERRAL_ROWS_DATA } from "../../utils/constants";
 
 export const fetchReferrals = createAsyncThunk(
   "data/fetchReferrals",

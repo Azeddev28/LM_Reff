@@ -1,6 +1,6 @@
 import React,{ useEffect,useState } from "react";
 import DashboardHeader from "../../components/DashboardHeader";
-import  {REFERRAL_ROWS_DATA,CLAIMS_HEADER_DATA} from '../../utils/constants';
+import  {CLAIMS_HEADER_DATA} from '../../utils/constants';
 import PaginatedTable from "../../components/Table/PaginatedTable";
 import { useDispatch, useSelector } from 'react-redux';
 import styled from "@emotion/styled";
