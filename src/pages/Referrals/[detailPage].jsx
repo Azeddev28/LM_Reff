@@ -28,6 +28,7 @@ const Container=styled('div')(({})=>({
   flexDirection:"row",
   gap:"20px",
   flex:1,
+  height:'fit-content',
  
 }));
 
@@ -54,8 +55,8 @@ const CheckWrapper=styled('div')(({  }) => ({
 const Column=styled('div')(({})=>({
   width: '33.33%' ,
   display:'flex',
-  minHeight:'918px',
-  // gap:'10px' ,
+  height:"auto",
+  paddingBottom:'40px',
   flexDirection:'column' ,
   // border:'1px solid black',
   borderRadius: 15,
@@ -304,7 +305,7 @@ const DetailPage = () => {
   const [data, setData] = useState({});
   const [files,setFiles]=useState([]);
   
-  
+
   const dropDownStyling={
     boxShadow: "none",
     ".MuiOutlinedInput-notchedOutline": { border: 0 },
@@ -407,7 +408,7 @@ const DetailPage = () => {
           ))}
           </ContentWrapper>
           <CheckWrapper>
-          <Checked control={<Checkbox defaultChecked />} label="Preauthorization Required" />
+          <Checked control={<Checkbox defaultChecked />} style={{ pointerEvents: 'none' }}  label="Preauthorization Required" />
           </CheckWrapper>
 
         </Column>
@@ -510,6 +511,9 @@ const DetailPage = () => {
         </ContentWrapper>
         </Column>
       </Container>
+      <div style={{width:'100%',display:'flex',justifyContent:"end"}}>
+      <Button variant='contained' style={{marginTop:"35px", verticalAlign:"end" ,width:'127px'}}>Save Changes</Button>
+      </div>
       </MainWrapper>)
       )
 };
