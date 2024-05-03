@@ -1,64 +1,71 @@
 import React, { useState, useEffect } from "react";
-import CircularProgress from '@mui/material/CircularProgress';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Button, Typography } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Box,
+  Button,
+  Typography,
+} from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import styled from "@emotion/styled";
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-// import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
-const Pagination = styled('div')(({ }) => ({
-  display: 'flex',
-  justifyContent: 'end',
-  alignItems: 'center',
-  marginRight: '50px',
-  flexDirection: 'row',
-  height: '40px',
-  gap: '0px',
-}));
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-const Header = styled('div')(({ }) => ({
+const Pagination = styled("div")(({}) => ({
   display: "flex",
-  flexDirection: 'row',
-  gap: '10px',
-  alignItems: 'center',
+  justifyContent: "end",
+  alignItems: "center",
+  marginRight: "50px",
+  flexDirection: "row",
+  height: "40px",
+  gap: "0px",
 }));
 
-const Sorter = styled('div')(({ }) => ({
+const Header = styled("div")(({}) => ({
   display: "flex",
-  flexDirection: 'column',
-  gap: '0px'
+  flexDirection: "row",
+  gap: "10px",
+  alignItems: "center",
 }));
 
-
+const Sorter = styled("div")(({}) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0px",
+}));
 
 const PaginatedTable = ({ headerData, pageData, query }) => {
-
   const generateUrl = () => {
     const targetUrl = new URL(pageData.url);
-    if (pageData['search'] !== null && pageData['search'] !== undefined) {
-      targetUrl.searchParams.append(key, pageData['search']);
+    if (pageData["search"] !== null && pageData["search"] !== undefined) {
+      targetUrl.searchParams.append(key, pageData["search"]);
     }
     if (orderingValue !== null && orderingValue !== undefined) {
-      targetUrl.searchParams.append('ordering', orderingValue);
+      targetUrl.searchParams.append("ordering", orderingValue);
     }
-    return targetUrl.toString()
-  }
+    return targetUrl.toString();
+  };
   const [orderingValue, setOrderingValue] = useState(null);
-  const [url, setUrl] = useState(pageData.url)
+  const [url, setUrl] = useState(pageData.url);
   const { data, isLoading, refetch } = query(url);
   const ROWS_PER_PAGE = 2;
-  const [changePage, setChangePage] = useState('');
+  const [changePage, setChangePage] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
 
-
   useEffect(() => {
     if (data?.count) {
-      setTotalPages(Math.ceil(data?.count / ROWS_PER_PAGE))
+      setTotalPages(Math.ceil(data?.count / ROWS_PER_PAGE));
     }
     if (pageData.search || orderingValue) {
       const targetUrl = generateUrl();
@@ -66,11 +73,9 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
     }
     if (data && changePage) {
       setUrl(data[changePage]);
-      setChangePage('')
+      setChangePage("");
     }
-
   }, [data, url, changePage, pageData.search, orderingValue]);
-
 
   const extractKeys = () => {
     let keys = [];
@@ -84,8 +89,8 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
 
   const extractRowValues = (obj, keys) => {
     return keys
-      .filter(key => obj.hasOwnProperty(key))
-      .map(key => ({ key, value: obj[key] }));
+      .filter((key) => obj.hasOwnProperty(key))
+      .map((key) => ({ key, value: obj[key] }));
   };
 
   const handleDetailPage = (data) => {
@@ -96,72 +101,111 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
 
   const handleClickPreviuos = () => {
     if (page > 1) {
-      setPage(page - 1)
+      setPage(page - 1);
     }
-    refetch()
-    setChangePage('previous')
-
-  }
+    refetch();
+    setChangePage("previous");
+  };
 
   const handleClickNext = () => {
     if (page < totalPages) {
-      setPage(page + 1)
+      setPage(page + 1);
     }
-    refetch()
-    setChangePage('next')
+    refetch();
+    setChangePage("next");
+  };
 
-  }
-
-  return (
-    isLoading ? (<CircularProgress />) :
-      (<Paper>
-        <TableContainer>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow style={{cursor:"pointer"}}>
-                {headerData.map((columnInfo) => (
-                  <TableCell key={columnInfo.key}>
-                    <Header >
-                      {columnInfo.display}
-                      <Sorter>
-                        <KeyboardArrowUpIcon style={{ cursor: 'pointer' ,height:'16px' ,width:'16px' }} onClick={() => { setOrderingValue(columnInfo.sortKey) }} />
-                        <KeyboardArrowDownIcon style={{ cursor: 'pointer' ,height:'16px' ,width:'16px'  }} onClick={() => { setOrderingValue(`-${columnInfo.sortKey}`) }} />
-                      </Sorter>
-                    </Header>
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            {data?.count > 0 ? (<TableBody>
+  return isLoading ? (
+    <CircularProgress />
+  ) : (
+    <Paper>
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow style={{ cursor: "pointer" }}>
+              {headerData.map((columnInfo) => (
+                <TableCell key={columnInfo.key}>
+                  <Header>
+                    {columnInfo.display}
+                    <Sorter>
+                      <KeyboardArrowUpIcon
+                        style={{
+                          cursor: "pointer",
+                          height: "16px",
+                          width: "16px",
+                        }}
+                        onClick={() => {
+                          setOrderingValue(columnInfo.sortKey);
+                        }}
+                      />
+                      <KeyboardArrowDownIcon
+                        style={{
+                          cursor: "pointer",
+                          height: "16px",
+                          width: "16px",
+                        }}
+                        onClick={() => {
+                          setOrderingValue(`-${columnInfo.sortKey}`);
+                        }}
+                      />
+                    </Sorter>
+                  </Header>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          {data?.count > 0 ? (
+            <TableBody>
               {data?.results?.map((obj, index) => (
-                <TableRow key={index} style={{cursor:"pointer"}} onClick={() => (handleDetailPage(obj))}>
-                  {extractRowValues(obj, keys)?.map((item, index) => (
-                    item.key !== "uuid" &&
-                    <TableCell key={index}>{item.value}</TableCell>
-                  ))}
+                <TableRow
+                  key={index}
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleDetailPage(obj)}
+                >
+                  {extractRowValues(obj, keys)?.map(
+                    (item, index) =>
+                      item.key !== "uuid" && (
+                        <TableCell key={index}>{item.value}</TableCell>
+                      )
+                  )}
                 </TableRow>
               ))}
-            </TableBody>) : (<Typography variant="h4" style={{ margin: '20px auto', textAlign: 'center' }}>No Record Found</Typography>)}
-          </Table>
-        </TableContainer>
-        <Pagination  >
-          <ArrowBackIosNewIcon
-            disabled={page === 1}
-            style={{ cursor: 'pointer', color: page === 1 ? '#BDBDBD' : 'inherit' , height:'16px', width:'16px' }}
-            onClick={handleClickPreviuos} />
+            </TableBody>
+          ) : (
+            <Typography
+              variant="h4"
+              style={{ margin: "20px auto", textAlign: "center" }}
+            >
+              No Record Found
+            </Typography>
+          )}
+        </Table>
+      </TableContainer>
+      <Pagination>
+        <ArrowBackIosNewIcon
+          disabled={page === 1}
+          style={{
+            cursor: "pointer",
+            color: page === 1 ? "#BDBDBD" : "inherit",
+            height: "16px",
+            width: "16px",
+          }}
+          onClick={handleClickPreviuos}
+        />
 
-
-          <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
-          <ArrowForwardIosIcon
-            style={{ cursor: 'pointer', color: page === totalPages ? '#BDBDBD' : 'inherit' , height:'16px', width:'16px' }}
-            disabled={page === totalPages}
-            onClick={handleClickNext} />
-
-
-        </Pagination>
-      </Paper>)
-
-
+        <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
+        <ArrowForwardIosIcon
+          style={{
+            cursor: "pointer",
+            color: page === totalPages ? "#BDBDBD" : "inherit",
+            height: "16px",
+            width: "16px",
+          }}
+          disabled={page === totalPages}
+          onClick={handleClickNext}
+        />
+      </Pagination>
+    </Paper>
   );
 };
 
