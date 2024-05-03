@@ -190,7 +190,7 @@ export const REFERRAL_DETAIL_DATA={
         key:"Is Travel Required?",
         value:"",
         editable: true,
-        label:''
+        label:'travel_required'
      },
      op_completed:{
         key:"Was the surgery completed?",

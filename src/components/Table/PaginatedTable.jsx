@@ -121,9 +121,9 @@ const PaginatedTable = ({ headerData, pageData,query }) => {
                   <Header >
                   {key}
                   <Sorter>
-                  <KeyboardArrowUpIcon  />
+                  <KeyboardArrowUpIcon  style={{cursor:'pointer'}} />
                   {/* <HorizontalRuleIcon/> */}
-                  <KeyboardArrowDownIcon />
+                  <KeyboardArrowDownIcon style={{cursor:'pointer'}} />
                   </Sorter>
                   </Header>
                   </TableCell>
@@ -145,12 +145,16 @@ const PaginatedTable = ({ headerData, pageData,query }) => {
       <Pagination  >
       <ArrowBackIosNewIcon  
         disabled={page === 1}
+        style={{ cursor: 'pointer', color: page === 1 ? 'grey' : 'inherit' }}
         onClick={handleClickPreviuos}/>
+       
 
       <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
       <ArrowForwardIosIcon  
+        style={{ cursor: 'pointer', color: page === totalPages ? 'grey' : 'inherit' }}
         disabled={page === totalPages}
         onClick={handleClickNext} />
+        
       
     </Pagination>
     </Paper>) 

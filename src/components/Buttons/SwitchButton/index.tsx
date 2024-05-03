@@ -4,18 +4,19 @@ import {MenuItem,FormControl} from '@mui/material';
 
 interface SwitchButtonProps {
   value: string;
-  onChange: (value: boolean) => void;
+  setSwitchValue:React.Dispatch<React.SetStateAction<string >>;
+  // handleInputChange: (label: string, value: string) => void;
+  // label:string;
+
 }
 
-const SwitchButton = ({ value, onChange }: SwitchButtonProps) => {
-  const [checked, setChecked] = useState(value === "Yes");
+const SwitchButton = ({ value, setSwitchValue  }: SwitchButtonProps) => {
+  
 
   const handleChange = (event: SelectChangeEvent) => {
-    const newValue = event.target.value === "Yes";
-    setChecked(newValue);
-    if (typeof onChange === 'function') { // Check if onChange is a function before invoking
-      onChange(newValue);
-    }
+    setSwitchValue(event.target.value);
+    // handleInputChange('switchValue', value);
+
   };
 
   return (
@@ -23,7 +24,8 @@ const SwitchButton = ({ value, onChange }: SwitchButtonProps) => {
     <Select
       labelId="demo-simple-select-standard-label"
       id="demo-simple-select-standard"
-      value={checked ? "Yes" : "No"}
+      value={value}
+      
       onChange={handleChange}
       sx={{
         boxShadow: "none",

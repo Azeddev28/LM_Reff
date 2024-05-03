@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
-import {CircularProgress,Divider } from '@mui/material';
+import {CircularProgress,Divider ,Select ,MenuItem } from '@mui/material';
 import styled from '@emotion/styled';
-
 // import { useDispatch } from 'react-redux';
-import SwitchButton from '../../components/Buttons/SwitchButton';
 import {useGetReferralDetailQuery} from "../../redux/slices/referralAPiSlice"
 import { REFERRAL_DETAIL_DATA } from '../../utils/constants';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -292,8 +290,8 @@ const StyledInput = styled.input`
  
 
   &:focus {
-    /* Add styles for onFocus */
-    border: 2px solid blue; /* For example, change border color on focus */
+    outline:none;
+    border: none; 
   }
 `;
 
@@ -304,15 +302,26 @@ const DetailPage = () => {
   const [referralDetail,setReferralDetail]=useState([]);
   const [detailData, setDetailData] = useState([]);
   const [data, setData] = useState({});
-  const [switchValue, setSwitchValue] = useState(false);
- 
-  const handleSwitchChange = (newValue ,key ) => {
-    setSwitchValue(newValue);
-    handleInputChange(newValue,key)
-  };
-  // const handleViewFile =(fileLink)=>{
-  //   window.open(fileLink, '_blank');
-  // }
+  const [switchValue, setSwitchValue] = useState();
+
+
+  const dropDownStyling={
+    boxShadow: "none",
+    ".MuiOutlinedInput-notchedOutline": { border: 0 },
+    "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+      {
+        border: 0,
+      },
+    "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+      {
+        border: 0,
+      },
+      '& .MuiSelect-select': {
+        padding:"0px",
+     }
+
+
+  }
   
 
     const {
@@ -332,7 +341,7 @@ const DetailPage = () => {
     if(isSuccess){
     const updatedDetailData = {};
     for (const key in REFERRAL_DETAIL_DATA) {
-      console.log("key",key);
+      // console.log("key",key);
       if (REFERRAL_DETAIL_DATA.hasOwnProperty(key)) {
         updatedDetailData[key] = {
           ...REFERRAL_DETAIL_DATA[key],
@@ -345,11 +354,10 @@ const DetailPage = () => {
   }
   }, [referralDetail]);
 
-
  // File upload
- const handleFileChange = (event) => {
+ const handleFileChangeButton = (event) => {
   const files = event.target.files;
-  // console.log("even.target",files);
+  console.log("even.target",files);
   // Do something with the selected files
   // console.log("Button Files",files);
 };
@@ -365,6 +373,10 @@ const DetailPage = () => {
   };
   console.log("dataa",data);
   
+  const handleDropDownChange=(label,value)=>{
+    const booleanConversion=value == "Yes" ? true : false ;
+        handleInputChange(label,booleanConversion);
+  }
   
   
   
@@ -390,8 +402,8 @@ const DetailPage = () => {
             (<Card key={index} value={item.value}>
               <Label>{item.key}</Label>
               {/* {console.log("item.editable",item.editable)} */}
-              {typeof item.value === "boolean" ? (
-                 <SwitchButton value={switchValue ? "Yes" : "No"} onChange={(e)=>handleSwitchChange(e,item.label)} />) 
+              {typeof item.value === "boolean" ? ("")
+                //  <SwitchButton   value={switchValue} label={item.label}  handleInputChange={handleInputChange} setSwitchValue={setSwitchValue}/>) 
                  : item.editable === true ? ( <h1>Editable</h1>) :
                   (<Value variant="h6">{item.value}</Value>)}
             </Card>)
@@ -410,8 +422,24 @@ const DetailPage = () => {
         {referralDetailData.slice(7,13).map((item, index) => (
           <Card key={index} >
             <Label>{item.key}</Label>
+            {/* {console.log("item label",item.label)} */}
             {typeof item.value === "boolean" ? (
-                 <SwitchButton value={switchValue ? "Yes" : "No"} onChange={handleSwitchChange} />) 
+                <Select
+                key={item.label}
+                labelId="demo-simple-select-standard-label"
+                id="demo-simple-select-standard"
+                // value={switchValue}
+                defaultValue={item.value=== true ? "Yes" :"No" }
+                onChange={(option)=>{
+                 console.log("DropDown Label",item.label);
+                  handleDropDownChange(item.label,option.target.value)
+                
+                }}
+                sx={dropDownStyling}
+              >
+                <MenuItem value={"Yes"}>Yes</MenuItem>
+                <MenuItem value={"No"}>No</MenuItem>
+              </Select>)
                  : item.editable === true ? ( 
                  <StyledInput defaultValue={item.value}  onChange={e => handleInputChange(item.label, e.target.value)}  />) :
                   (<Value variant="h6">{item.value}</Value>)}
@@ -453,8 +481,9 @@ const DetailPage = () => {
           </FileUploadButton>
           <VisuallyHiddenInput 
              type="file" 
-             onChange={handleFileChange}
-      
+             multiple={"multiple"}
+             onChange={handleFileChangeButton}
+            
     />
         </UploadButton>
       </FileUploadWrapper>
