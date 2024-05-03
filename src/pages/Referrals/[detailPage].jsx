@@ -3,15 +3,17 @@ import { useParams } from 'react-router-dom';
 import Dropzone from 'react-dropzone';
 import {CircularProgress,Divider } from '@mui/material';
 import styled from '@emotion/styled';
+
 // import { useDispatch } from 'react-redux';
 import SwitchButton from '../../components/Buttons/SwitchButton';
 import {useGetReferralDetailQuery} from "../../redux/slices/referralAPiSlice"
 import { REFERRAL_DETAIL_DATA } from '../../utils/constants';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Button , FormControlLabel  } from '@mui/material';
+import { Button , FormControlLabel ,TextField } from '@mui/material';
 import {patchRequest } from "../../axios";
 import Checkbox from '@mui/material/Checkbox';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import { border } from 'polished';
 
 const Heading=styled('Typography')(({})=>({
   color: 'rgba(0, 0, 0, 0.87)',
@@ -284,19 +286,35 @@ const UploadedFileText=styled('p')(({  }) => ({
 }));
 
 
+const StyledInput = styled.input`
+  border: none;
+  outline: none;
+ 
+
+  &:focus {
+    /* Add styles for onFocus */
+    border: 2px solid blue; /* For example, change border color on focus */
+  }
+`;
+
+
 
 const DetailPage = () => {
   const { id } = useParams();
   const [referralDetail,setReferralDetail]=useState([]);
   const [detailData, setDetailData] = useState([]);
+  const [data, setData] = useState({});
   const [switchValue, setSwitchValue] = useState(false);
-  const handleSwitchChange = (newValue) => {
+ 
+  const handleSwitchChange = (newValue ,key ) => {
     setSwitchValue(newValue);
+    handleInputChange(newValue,key)
   };
   // const handleViewFile =(fileLink)=>{
   //   window.open(fileLink, '_blank');
   // }
   
+
     const {
       data: referralData,
       isLoading,
@@ -314,6 +332,7 @@ const DetailPage = () => {
     if(isSuccess){
     const updatedDetailData = {};
     for (const key in REFERRAL_DETAIL_DATA) {
+      console.log("key",key);
       if (REFERRAL_DETAIL_DATA.hasOwnProperty(key)) {
         updatedDetailData[key] = {
           ...REFERRAL_DETAIL_DATA[key],
@@ -321,6 +340,7 @@ const DetailPage = () => {
         };
       }
     }
+    console.log("upfdated detail Data",updatedDetailData)
     setDetailData(updatedDetailData);
   }
   }, [referralDetail]);
@@ -331,11 +351,23 @@ const DetailPage = () => {
   const files = event.target.files;
   // console.log("even.target",files);
   // Do something with the selected files
-  console.log("Button Files",files);
+  // console.log("Button Files",files);
 };
  
   const referralDetailData=Object.values(detailData);
-  console.log("Referral Data ",referralDetailData);
+  // console.log("Referral Data ",referralDetailData);
+  const handleInputChange = (label, value) => {
+    // Update the data object with the new value for the corresponding label
+    setData(prevData => ({
+      ...prevData,
+      [label]: value
+    }));
+  };
+  console.log("dataa",data);
+  
+  
+  
+  
   return(
       isLoading ?  (<CircularProgress disableShrink />):(
       <MainWrapper>
@@ -357,11 +389,11 @@ const DetailPage = () => {
             ) :
             (<Card key={index} value={item.value}>
               <Label>{item.key}</Label>
+              {/* {console.log("item.editable",item.editable)} */}
               {typeof item.value === "boolean" ? (
-                  <SwitchButton value={switchValue ? "Yes" : "No"} onChange={handleSwitchChange} />
-          ) : (
-            <Value variant="h6">{item.value}</Value>
-          )}
+                 <SwitchButton value={switchValue ? "Yes" : "No"} onChange={(e)=>handleSwitchChange(e,item.label)} />) 
+                 : item.editable === true ? ( <h1>Editable</h1>) :
+                  (<Value variant="h6">{item.value}</Value>)}
             </Card>)
           ))}
           </ContentWrapper>
@@ -379,13 +411,10 @@ const DetailPage = () => {
           <Card key={index} >
             <Label>{item.key}</Label>
             {typeof item.value === "boolean" ? (
-                  <SwitchButton
-                    checked={item.value}
-                    color="primary"
-                  />
-          ) : (
-            <Value variant="h6">{item.value}</Value>
-          )}
+                 <SwitchButton value={switchValue ? "Yes" : "No"} onChange={handleSwitchChange} />) 
+                 : item.editable === true ? ( 
+                 <StyledInput defaultValue={item.value}  onChange={e => handleInputChange(item.label, e.target.value)}  />) :
+                  (<Value variant="h6">{item.value}</Value>)}
           </Card>
         ))}
         </ContentWrapper>
