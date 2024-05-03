@@ -1,19 +1,30 @@
 export const REFERRAL_DETAIL_DATA = {
     // Referral Receipt Date
-    patient_name: {
-        key: "Patient Name",
-        value: "",
+    patient_name:{
+     key:"Patient Name",
+     value:"", 
+     editable: false,
+     label:'patient_name',                                                                           
+
+    },
+    dob:{
+        key:"Patient Date of Birth",
+        value:"",
         editable: false,
+        label:'dob',    
     },
     dob: {
         key: "Patient Date of Birth",
         value: "",
         editable: false,
+        label:'practice_name',
+
     },
     practice_name: {
         key: "Practice Name",
         value: "",
         editable: false,
+        label:'assigned_provider',
     },
     assigned_provider: {
         key: "Assigned Provider",
@@ -24,57 +35,78 @@ export const REFERRAL_DETAIL_DATA = {
         key: "Specialty",
         value: "",
         editable: false,
+        label:'specialty'
     },
     // "Referring Party" missing in backend data
     "referral_description": {
         key: "Referral Description",
         value: "",
         editable: false,
+        label:'referral_description'
+    
     },
     "preop_consult_scheduled_date": {
         key: "Scheduled Consult Date",
         value: "",
         editable: true,
-    },
-    "preop_consult_completed": {
-        key: "Did patient show up to pre-op consult?",
-        value: "",
+        label:'preop_consult_scheduled_date'
+     },
+     "preop_consult_completed":{
+        key:"Did patient show up to pre-op consult?",
+        value:"",
         editable: true,
-    },
-    preop_consult_notes: {
-        key: "Consult Notes",
-        value: "",
+        label:'preop_consult_completed'
+     },
+     preop_consult_notes:{
+        key:"Consult Notes",
+        value:"",
         editable: true,
-    },
-    op_scheduled_date: {
-        key: "Scheduled Surgery Date",
-        value: "",
+        label:'preop_consult_notes',
+     },
+     op_scheduled_date:{
+      key:"Scheduled Surgery Date",
+      value:"",
+      editable: true,
+      label:'op_scheduled_date',
+     },
+
+     intended_procedure:{
+        key:"Intended Procedure (CPT Codes)",
+        value:"",
         editable: true,
-    },
-    intended_procedure: {
-        key: "Intended Procedure (CPT Codes)",
-        value: "",
+        label:'intended_procedure'
+     },
+     facility:{
+        key:"Facility",
+        value:"",
         editable: true,
-    },
-    facility: {
-        key: "Facility",
-        value: "",
+        label:'facility'
+     },
+     travel_required:{
+        key:"Is Travel Required?",
+        value:"",
         editable: true,
-    },
-    travel_required: {
-        key: "Is Travel Required?",
-        value: "",
+        label:'travel_required'
+     },
+     op_completed:{
+        key:"Was the surgery completed?",
+        value:"",
         editable: true,
-    },
-    op_completed: {
-        key: "Was the surgery completed?",
-        value: "",
+        label:'op_completed',
+     },
+     preop_consult_attachment:{
+        key:"preop-consult notes.pdf",
+        value:"",
         editable: true,
-    },
-    preop_consult_attachment: {
-        key: "preop-consult notes.pdf",
-        value: "",
+        label:'preop_consult_attachment'
+       
+     },
+     op_notes_attachment:{
+        key:"operating notes.pdf",
+        value:"",
         editable: true,
+        label:'op_notes_attachment'
+     }
 
     },
     op_notes_attachment: {
