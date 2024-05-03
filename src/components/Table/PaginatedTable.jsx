@@ -15,7 +15,7 @@ const Pagination = styled('div')(({ }) => ({
   marginRight: '50px',
   flexDirection: 'row',
   height: '40px',
-  gap: '10px',
+  gap: '0px',
 }));
 
 const Header = styled('div')(({ }) => ({
@@ -118,14 +118,14 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
         <TableContainer>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
-              <TableRow>
+              <TableRow style={{cursor:"pointer"}}>
                 {headerData.map((columnInfo) => (
                   <TableCell key={columnInfo.key}>
                     <Header >
                       {columnInfo.display}
                       <Sorter>
-                        <KeyboardArrowUpIcon style={{ cursor: 'pointer' }} onClick={() => { setOrderingValue(columnInfo.sortKey) }} />
-                        <KeyboardArrowDownIcon style={{ cursor: 'pointer' }} onClick={() => { setOrderingValue(`-${columnInfo.sortKey}`) }} />
+                        <KeyboardArrowUpIcon style={{ cursor: 'pointer' ,height:'16px' ,width:'16px' }} onClick={() => { setOrderingValue(columnInfo.sortKey) }} />
+                        <KeyboardArrowDownIcon style={{ cursor: 'pointer' ,height:'16px' ,width:'16px'  }} onClick={() => { setOrderingValue(`-${columnInfo.sortKey}`) }} />
                       </Sorter>
                     </Header>
                   </TableCell>
@@ -134,7 +134,7 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
             </TableHead>
             {data?.count > 0 ? (<TableBody>
               {data?.results?.map((obj, index) => (
-                <TableRow key={index} onClick={() => (handleDetailPage(obj))}>
+                <TableRow key={index} style={{cursor:"pointer"}} onClick={() => (handleDetailPage(obj))}>
                   {extractRowValues(obj, keys)?.map((item, index) => (
                     item.key !== "uuid" &&
                     <TableCell key={index}>{item.value}</TableCell>
@@ -147,13 +147,13 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
         <Pagination  >
           <ArrowBackIosNewIcon
             disabled={page === 1}
-            style={{ cursor: 'pointer', color: page === 1 ? 'grey' : 'inherit' }}
+            style={{ cursor: 'pointer', color: page === 1 ? '#BDBDBD' : 'inherit' , height:'16px', width:'16px' }}
             onClick={handleClickPreviuos} />
 
 
           <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
           <ArrowForwardIosIcon
-            style={{ cursor: 'pointer', color: page === totalPages ? 'grey' : 'inherit' }}
+            style={{ cursor: 'pointer', color: page === totalPages ? '#BDBDBD' : 'inherit' , height:'16px', width:'16px' }}
             disabled={page === totalPages}
             onClick={handleClickNext} />
 

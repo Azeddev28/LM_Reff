@@ -302,9 +302,9 @@ const DetailPage = () => {
   const [referralDetail,setReferralDetail]=useState([]);
   const [detailData, setDetailData] = useState([]);
   const [data, setData] = useState({});
-  const [switchValue, setSwitchValue] = useState();
-
-
+  const [files,setFiles]=useState([]);
+  
+  
   const dropDownStyling={
     boxShadow: "none",
     ".MuiOutlinedInput-notchedOutline": { border: 0 },
@@ -357,8 +357,7 @@ const DetailPage = () => {
  const handleFileChangeButton = (event) => {
   const files = event.target.files;
   console.log("even.target",files);
-  // Do something with the selected files
-  // console.log("Button Files",files);
+  
 };
  
   const referralDetailData=Object.values(detailData);
@@ -370,7 +369,7 @@ const DetailPage = () => {
       [label]: value
     }));
   };
-  console.log("dataa",data);
+  // console.log("dataa",data);
   
   const handleDropDownChange=(label,value)=>{
     const booleanConversion=value == "Yes" ? true : false ;
@@ -400,7 +399,6 @@ const DetailPage = () => {
             ) :
             (<Card key={index} value={item.value}>
               <Label>{item.key}</Label>
-              {/* {console.log("item.editable",item.editable)} */}
               {typeof item.value === "boolean" ? ("")
                 //  <SwitchButton   value={switchValue} label={item.label}  handleInputChange={handleInputChange} setSwitchValue={setSwitchValue}/>) 
                  : item.editable === true ? ( <h1>Editable</h1>) :
@@ -421,7 +419,6 @@ const DetailPage = () => {
         {referralDetailData.slice(7,13).map((item, index) => (
           <Card key={index} >
             <Label>{item.key}</Label>
-            {/* {console.log("item label",item.label)} */}
             {typeof item.value === "boolean" ? (
                 <Select
                 key={item.label}
