@@ -46,7 +46,7 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
   const generateUrl = () => {
     const targetUrl = new URL(pageData.url);
     if (pageData["search"] !== null && pageData["search"] !== undefined) {
-      targetUrl.searchParams.append(key, pageData["search"]);
+      targetUrl.searchParams.append('search', pageData["search"]);
     }
     if (orderingValue !== null && orderingValue !== undefined) {
       targetUrl.searchParams.append("ordering", orderingValue);
@@ -56,7 +56,7 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
   const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url);
   const { data, isLoading, refetch } = query(url);
-  const ROWS_PER_PAGE = 2;
+  const ROWS_PER_PAGE = 15;
   const [changePage, setChangePage] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
