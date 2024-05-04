@@ -273,7 +273,7 @@ const DetailPage = () => {
   const [referralDetail, setReferralDetail] = useState([]);
   const [detailData, setDetailData] = useState([]);
   const [data, setData] = useState({});
-  const [fileList, setFileList] = useState([]);
+  const [fileList, setFileList] = useState([]);  
   console.log("fileList Type==>", typeof fileList);
   console.log("fileList ==>", fileList);
 
@@ -372,7 +372,15 @@ const DetailPage = () => {
     console.log("colleacted files ", files);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      setFileList((prevFileList) => [...prevFileList, file]);
+      const attachmentData = {
+        lastModified: file.lastModified,
+        lastModifiedDate:new Date(file.lastModifiedDate) ,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        webkitRelativePath: file.webkitRelativePath
+      };
+      setFileList((prevFileList) => [...prevFileList, attachmentData]);
     }
 
     // handleInputChange('attachment',fileList);
