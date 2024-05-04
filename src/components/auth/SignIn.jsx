@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
-// import isAuthenticated from '../../redux/slices/authSlice';
 
 import {
   Alert as MuiAlert,
@@ -13,20 +12,18 @@ import {
   TextField as MuiTextField,
 } from "@mui/material";
 import { spacing } from "@mui/system";
-import { useDispatch ,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
-
 
 const Alert = styled(MuiAlert)(spacing);
 
-const TextField= styled(MuiTextField)(({ }) => ({ 
-  margin:'16px 0px'
+const TextField = styled(MuiTextField)(({}) => ({
+  margin: "16px 0px",
 }));
 
-
 function SignIn() {
-  const dispatch=useDispatch();
-  const {loading,error}=useSelector((state)=>state.auth)
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.auth);
   return (
     <Formik
       initialValues={{
@@ -42,12 +39,12 @@ function SignIn() {
         password: Yup.string().max(255).required("Password is required"),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        
         try {
-          await dispatch(login({email: values.email, password: values.password}));
-          
+          await dispatch(
+            login({ email: values.email, password: values.password })
+          );
         } catch (error) {
-         console.log("Error",error)
+          console.log("Error", error);
         }
       }}
     >
@@ -61,10 +58,6 @@ function SignIn() {
         values,
       }) => (
         <form noValidate onSubmit={handleSubmit}>
-          {/* <Alert mt={3} mb={3} severity="info">
-            Use <strong>demo@bootlab.io</strong> and{" "}
-            <strong>unsafepassword</strong> to sign in
-          </Alert> */}
           {errors.submit && (
             <Alert mt={2} mb={3} severity="warning">
               {errors.submit}
@@ -103,7 +96,6 @@ function SignIn() {
             fullWidth
             variant="contained"
             color="primary"
-        
             disabled={isSubmitting}
           >
             Sign in

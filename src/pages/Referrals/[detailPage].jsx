@@ -3,12 +3,15 @@ import { useParams } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { CircularProgress, Divider, Select, MenuItem } from "@mui/material";
 import styled from "@emotion/styled";
-import { useGetReferralDetailQuery } from "../../redux/slices/referralAPiSlice";
+import {
+  useGetReferralDetailQuery,
+  useLazyGetReferralDetailQuery,
+} from "../../redux/slices/referralAPiSlice";
 import { REFERRAL_DETAIL_DATA } from "../../utils/constants";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Button, FormControlLabel } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import { useUpdateReferralQuery } from "../../redux/slices/referralAPiSlice";
+import { useUpdateReferralMutation } from "../../redux/slices/referralAPiSlice";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 
 const Heading = styled("Typography")(({}) => ({
@@ -87,7 +90,6 @@ const Card = styled("div")(({ value }) => ({
   gap: "10px",
   flexDirection: "column",
   paddingBottom: "5px",
-  // padding:'10px 16px',
   margin: "0px 25px",
 }));
 
@@ -159,22 +161,11 @@ const FileUploadButton = styled("div")(({}) => ({
   alignItems: "center",
 }));
 
-// const DropArea=styled('section')(({  }) => ({
-//   // height:'185px',
-//   display:'flex',
-//   border:'1px solid rgba(0, 0, 0, 0.42)',
-//   borderRadius:'4px',
-//   background:'#F5F6F8',
-//   justifyContent:'center',
-//   alignItems:'end',
-
-// }));
-
 const DescriptionWrapper = styled("div")(({}) => ({
   display: "flex",
   flexDirection: "column",
   minHeight: "70px",
-  margin: "0px 25px",
+  margin: "0px 25px 13px 25px",
   gap: "12px",
 }));
 
@@ -283,8 +274,18 @@ const DetailPage = () => {
   const [detailData, setDetailData] = useState([]);
   const [data, setData] = useState({});
   const [fileList, setFileList] = useState([]);
+  console.log("fileList Type==>", typeof fileList);
+  console.log("fileList ==>", fileList);
 
-  console.log("File List", fileList);
+  // console.log("File List ==>", JSON.stringify(fileList, null, 2));
+  // const formData = new FormData();
+
+  const [updateReferral, {}] = useUpdateReferralMutation();
+  const [
+    updatedReferralData,
+    { data: updatedReferralDetailData, isSuccess: isSuccessV2 },
+  ] = useLazyGetReferralDetailQuery();
+  // console.log("File List", fileList);
 
   const dropDownStyling = {
     boxShadow: "none",
@@ -313,6 +314,12 @@ const DetailPage = () => {
   }, [referralData]);
 
   useEffect(() => {
+    if (isSuccessV2) {
+      setReferralDetail(updatedReferralDetailData);
+    }
+  }, [updatedReferralDetailData]);
+
+  useEffect(() => {
     if (isSuccess) {
       const updatedDetailData = {};
       for (const key in REFERRAL_DETAIL_DATA) {
@@ -324,15 +331,20 @@ const DetailPage = () => {
           };
         }
       }
-      console.log("upfdated detail Data", updatedDetailData);
+
       setDetailData(updatedDetailData);
     }
   }, [referralDetail]);
 
   useEffect(() => {
-    console.log("Updated fileList:", fileList);
-    // Assuming handleInputChange is defined somewhere
-    handleInputChange("attachment", fileList);
+    console.log("Use Effect call");
+    // console.log("Updated fileList:", fileList.length);
+    if (fileList.length > 0) {
+      console.log("File attached");
+      handleInputChange("attachment", fileList);
+    } else {
+      console.log("No");
+    }
   }, [fileList]);
   // File upload
   const handleFileChangeButton = (event) => {
@@ -345,13 +357,12 @@ const DetailPage = () => {
   const referralDetailData = Object.values(detailData);
   // console.log("Referral Data ",referralDetailData);
   const handleInputChange = (label, value) => {
-    // Update the data object with the new value for the corresponding label
     setData((prevData) => ({
       ...prevData,
       [label]: value,
     }));
   };
-  console.log("dataa To be submiteed", data);
+  // console.log("dataa To be submiteed", data);
 
   const handleDropDownChange = (label, value) => {
     const booleanConversion = value == "Yes" ? true : false;
@@ -368,8 +379,12 @@ const DetailPage = () => {
   };
 
   const handleSubmitChanges = () => {
-    console.log("DDTT", data);
-    // useUpdateReferralQuery(id);
+    console.log("handle Submit data changes", data);
+    updateReferral({ id, data });
+    console.log("Mutation called");
+    // setData({});
+    // updatedReferralData(id);
+    // setFileList([]);
   };
 
   return isLoading ? (
@@ -428,7 +443,7 @@ const DetailPage = () => {
                     // value={switchValue}
                     defaultValue={item.value === true ? "Yes" : "No"}
                     onChange={(option) => {
-                      console.log("DropDown Label", item.label);
+                      // console.log("DropDown Label", item.label);
                       handleDropDownChange(item.label, option.target.value);
                     }}
                     sx={dropDownStyling}
@@ -508,7 +523,7 @@ const DetailPage = () => {
               <UploadedFiles>
                 {fileList.map((item, index) => (
                   <>
-                    {console.log("item", item)}
+                    {/* {console.log("item", item)} */}
                     <UploadedFile>
                       <AttachFileIcon fontSize="large" />
                       <UploadedFileText>{item.name}</UploadedFileText>
@@ -523,6 +538,7 @@ const DetailPage = () => {
       <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
         <Button
           variant="contained"
+          disabled={Object.keys(data).length === 0}
           onClick={handleSubmitChanges}
           style={{ marginTop: "35px", verticalAlign: "end", width: "127px" }}
         >

@@ -42,14 +42,11 @@ function NavbarUserDropdown() {
     }
   }, [isAuthenticated]);
 
-  const handleSignOut = async () => {
+  const handleSignOut =  () => {
     dispatch(setAuthenticated(false))
     dispatch(setAccessToken(null));
     localStorage.removeItem('access');
-  
   };
-
-
 
 
   return (
