@@ -25,7 +25,8 @@ function NavbarUserDropdown() {
   const dispatch=useDispatch();
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
   const navigate = useNavigate();
-  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state: any) => state);
+  // const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
   
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
@@ -36,11 +37,18 @@ function NavbarUserDropdown() {
   };
 
 
+
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (isAuthenticated?.auth?.isAuthenticated === false) {
       navigate("/auth/sign-in");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated?.auth?.isAuthenticated]);
+
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate("/auth/sign-in");
+  //   }
+  // }, [isAuthenticated]);
 
   const handleSignOut =  () => {
     dispatch(setAuthenticated(false))
