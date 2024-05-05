@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
-import theme from '../../theme';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState , ChangeEvent  } from "react";
 interface DashboardHeaderProps{
@@ -10,10 +9,9 @@ interface DashboardHeaderProps{
     setSearchValue:React.Dispatch<React.SetStateAction<string | null>>
 }
 
-const Container= styled('div')(({theme }) => ({ 
+const Container= styled('div')(({ }) => ({ 
    display:'flex',
    flexDirection:'column',
-  //  backgroundColor:theme.header.background,
    gap:'10px',
 })); 
 
@@ -39,7 +37,6 @@ const Input=styled('input')(({})=>({
   height:"30px",
   backgroundColor:"white",
   ":focus":{
-    // backgroundColor:"white",
     outline:'none',
     border:'none',
   }
@@ -55,7 +52,7 @@ const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:Dashbo
   const handleInputValue=(event:ChangeEvent<HTMLInputElement>)=>{
     setInputValue(event.target.value);
     if(event.target.value === ''){
-     
+     console.log("Fizza Batool");
       setSearchValue(null);
     }
   } 

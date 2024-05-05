@@ -55,7 +55,10 @@ export const referralApi = createApi({
         };
       },
     }),
-    
+
+    getProfile: builder.query({
+      query: () => "/users/profile/",
+    }),  
 
 }),
 })
@@ -69,4 +72,5 @@ export const {
   useUpdateReferralMutation,
   useLazyGetReferralDetailQuery,
   useResetPasswordMutation,
+  useLazyGetProfileQuery,
 } = referralApi;

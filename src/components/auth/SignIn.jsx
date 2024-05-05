@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
+// import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
-
+import { useLoginMutation } from "../../redux/slices/authSlice";
+import { useLazyGetProfileQuery } from "../../redux/slices/referralAPiSlice";
+import {
+  setAuthenticated,
+  setAccessToken,
+  setUserName,
+} from "../../redux/slices/authSlice";
 import {
   Alert as MuiAlert,
   Checkbox,
@@ -13,7 +20,7 @@ import {
 } from "@mui/material";
 import { spacing } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux/slices/authSlice";
+// import { login } from "../../redux/slices/authSlice";
 
 const Alert = styled(MuiAlert)(spacing);
 
@@ -23,7 +30,37 @@ const TextField = styled(MuiTextField)(({}) => ({
 
 function SignIn() {
   const dispatch = useDispatch();
-  const { loading, error } = useSelector((state) => state.auth);
+  // const navigate = useNavigate();
+  const { isAuthenticated, accessToken } = useSelector((state) => state.auth);
+  console.log("isAuthenticated", isAuthenticated);
+  console.log("accessToken", accessToken);
+  const [login, { data: loginData, isSuccess: loginSuccessFull }] =
+    useLoginMutation();
+
+  const [getProfile, { data: profileData, isSuccess: getProfileSuccess }] =
+    useLazyGetProfileQuery();
+  console.log("PRofileData", profileData);
+  console.log("getProfileSuccesss", getProfileSuccess);
+  useEffect(() => {
+    if (loginSuccessFull) {
+      console.log("Make Login");
+      dispatch(setAuthenticated(true));
+      dispatch(setAccessToken(loginData.access));
+      localStorage.setItem("access", loginData.access);
+      getProfile();
+    }
+  }, [loginSuccessFull]);
+
+  useEffect(() => {
+    console.log("get Profile Success  useEffect Running");
+    console.log("Profile dttaaEffect", profileData);
+
+    if (getProfileSuccess) {
+      console.log("Profile Data", profileData);
+      // dispatch(user);
+    }
+  });
+
   return (
     <Formik
       initialValues={{
@@ -40,9 +77,8 @@ function SignIn() {
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
         try {
-          await dispatch(
-            login({ email: values.email, password: values.password })
-          );
+          console.log("Login Button click");
+          login({ email: values.email, password: values.password });
         } catch (error) {
           console.log("Error", error);
         }

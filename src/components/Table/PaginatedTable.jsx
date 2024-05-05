@@ -9,7 +9,7 @@ import {
   TableRow,
   Paper,
   Box,
-  Button,
+  IconButton,
   Typography,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -46,7 +46,7 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
   const generateUrl = () => {
     const targetUrl = new URL(pageData.url);
     if (pageData["search"] !== null && pageData["search"] !== undefined) {
-      targetUrl.searchParams.append('search', pageData["search"]);
+      targetUrl.searchParams.append("search", pageData["search"]);
     }
     if (orderingValue !== null && orderingValue !== undefined) {
       targetUrl.searchParams.append("ordering", orderingValue);
@@ -64,6 +64,8 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
   const location = useLocation();
 
   useEffect(() => {
+    // console.log("Search State has be changes ");
+    // console.log("Search Value", page.search);
     if (data?.count) {
       setTotalPages(Math.ceil(data?.count / ROWS_PER_PAGE));
     }
@@ -154,56 +156,78 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
               ))}
             </TableRow>
           </TableHead>
-          {data?.count > 0 ? (
-            <TableBody>
-              {data?.results?.map((obj, index) => (
-                <TableRow
-                  key={index}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => handleDetailPage(obj)}
+          <TableBody>
+            {data?.count > 0 ? (
+              <>
+                {data?.results?.map((obj, index) => (
+                  <TableRow
+                    key={index}
+                    style={{ cursor: "pointer" }}
+                    onClick={() => handleDetailPage(obj)}
+                  >
+                    {extractRowValues(obj, keys)?.map(
+                      (item, index) =>
+                        item.key !== "uuid" && (
+                          <TableCell key={index}>{item.value}</TableCell>
+                        )
+                    )}
+                  </TableRow>
+                ))}
+              </>
+            ) : (
+              <TableRow
+                variant="h4"
+                style={{ margin: "20px auto", textAlign: "center" }}
+              >
+                <TableCell
+                  colSpan={headerData.length}
+                  style={{ textAlign: "center" }}
                 >
-                  {extractRowValues(obj, keys)?.map(
-                    (item, index) =>
-                      item.key !== "uuid" && (
-                        <TableCell key={index}>{item.value}</TableCell>
-                      )
-                  )}
-                </TableRow>
-              ))}
-            </TableBody>
-          ) : (
-            <Typography
-              variant="h4"
-              style={{ margin: "20px auto", textAlign: "center" }}
-            >
-              No Record Found
-            </Typography>
-          )}
+                  <Typography variant="h4">No Record Found</Typography>
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
       <Pagination>
-        <ArrowBackIosNewIcon
-          disabled={page === 1}
+        <IconButton
+          disabled={page === 1 || data?.count === 0}
           style={{
             cursor: "pointer",
-            color: page === 1 ? "#BDBDBD" : "inherit",
+            color: page === 1 || data?.count === 0 ? "#BDBDBD" : "inherit",
             height: "16px",
             width: "16px",
           }}
           onClick={handleClickPreviuos}
-        />
-
-        <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
-        <ArrowForwardIosIcon
+        >
+          <ArrowBackIosNewIcon
+            style={{
+              height: "16px",
+              width: "16px",
+            }}
+          />
+        </IconButton>
+        {data?.count > 1 ? (
+          <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
+        ) : (
+          <Box>Page 0 of 0</Box>
+        )}
+        <IconButton
           style={{
             cursor: "pointer",
-            color: page === totalPages ? "#BDBDBD" : "inherit",
+            color:
+              (page === totalPages || data?.count) === 0
+                ? "#BDBDBD"
+                : "inherit",
             height: "16px",
             width: "16px",
           }}
-          disabled={page === totalPages}
+          disabled={page === totalPages || data?.count === 0}
           onClick={handleClickNext}
-        />
+        >
+          <ArrowForwardIosIcon style={{ height: "16px", width: "16px" }} />
+        </IconButton>
       </Pagination>
     </Paper>
   );

@@ -10,7 +10,7 @@ interface AuthGuardType {
 function AuthGuard({ children }: AuthGuardType) {
   const navigate = useNavigate();
   const accessToken = useSelector(getAccessToken);
-  console.log("Access Token from Auth Guard",accessToken);
+ 
   useEffect(() => { 
     if (accessToken !==null) {     
       navigate("/");
