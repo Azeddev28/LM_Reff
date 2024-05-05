@@ -40,6 +40,7 @@ function NavbarUserDropdown() {
 
   useEffect(() => {
     if (isAuthenticated?.auth?.isAuthenticated === false) {
+      console.log("USEEFFECT From Navbaruserdropdown");
       navigate("/auth/sign-in");
     }
   }, [isAuthenticated?.auth?.isAuthenticated]);

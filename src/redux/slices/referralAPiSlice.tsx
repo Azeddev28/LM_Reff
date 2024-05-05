@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getAccessToken } from './authSlice'; // Importing the selector to retrieve the access token
+import { getAccessToken } from './authSlice'; 
 
-// Define a service using a base URL and expected endpoints
 export const referralApi = createApi({
   reducerPath: 'referralApi',
   baseQuery: fetchBaseQuery({
@@ -34,36 +33,17 @@ export const referralApi = createApi({
         body: email,
       }),
     }),
-    // updateReferral: builder.mutation({
-    //   query: ({ id, data }) => {
-    //     console.log("Data Mutatation:", data); // Add this line to console.log the data
-    //     return {
-    //       url: `/referrals/update/${id}/`,
-    //       method: 'PATCH',
-    //       body: data,
-    //       formData: true,
-    //     };
-    //   },
-    // }),
-    // }),
      
     updateReferral: builder.mutation({
       query: ({ id, data }) => {
-        console.log("Data Mutation:", data); // Log the data for debugging
         const formData = new FormData();
-    
-        // Iterate over the keys of the data object
         Object.keys(data).forEach((key) => {
           const value = data[key];
-    
-          // If the value is an array (like files), iterate over it and append each file
           if (Array.isArray(value)) {
             value.forEach((file, index) => {
-              console.log("Fillllllllleeeeeeeee",file);
-              formData.append(`${key}[${index}]`, file);
+              formData.append('attachments', file);
             });
           } else {
-            // If it's not an array, append the value directly
             formData.append(key, value);
           }
         });
@@ -77,22 +57,10 @@ export const referralApi = createApi({
     }),
     
 
-
-    // updateReferral: builder.mutation({
-    //   query: ({ id, data }) => ({
-
-    //     url: `/referrals/update/${id}/`,
-    //     method: 'PATCH',
-    //     body: data,
-    //     formData: true,
-    //   }),
-    // }),
-  // }),
 }),
 })
 
-// Export hooks for usage in function components, which are
-// auto-generated based on the defined endpoints
+
 export const {
   useGetReferralsQuery,
   useGetReferralDetailQuery,

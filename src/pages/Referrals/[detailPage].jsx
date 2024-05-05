@@ -28,7 +28,7 @@ const Heading = styled(Typography)(({}) => ({
   fontSize: 24,
   fontStyle: "normal",
   fontWeight: 600,
-  lineHeight: "28.8px" /* 120% */,
+  lineHeight: "28.8px",
   marginBottom: "47px",
 }));
 
@@ -81,16 +81,6 @@ const ColumnHeader = styled(Typography)(({}) => ({
   padding: "16px",
 }));
 
-// const HeadingWrapper= styled('div')(({  }) => ({
-//   height:'52px',
-//   borderRadius: '4px 4px 0px 0px',
-//   verticalAlign:'center',
-
-//   display:"flex",
-//   justifyContent:"center",
-//   alignItems:"center"
-// }));
-
 const Card = styled("div")(({ value }) => ({
   height: "48px",
   borderBottom: typeof value === "boolean" ? "none" : "1px solid black",
@@ -136,7 +126,6 @@ const MainWrapper = styled("div")(({}) => ({
 }));
 
 const CutomizedDivider = styled(Divider)(({}) => ({
-  // marginBottom: "40px",
   background: "#E0E0E0",
   height: "1px",
   marginBottom: "72px",
@@ -282,18 +271,12 @@ const DetailPage = () => {
   const [detailData, setDetailData] = useState([]);
   const [data, setData] = useState({});
   const [fileList, setFileList] = useState([]);
-  console.log("fileList Type==>", typeof fileList);
-  console.log("fileList ==>", fileList);
-
-  // console.log("File List ==>", JSON.stringify(fileList, null, 2));
-  // const formData = new FormData();
 
   const [updateReferral, {}] = useUpdateReferralMutation();
   const [
     updatedReferralData,
     { data: updatedReferralDetailData, isSuccess: isSuccessV2 },
   ] = useLazyGetReferralDetailQuery();
-  // console.log("File List", fileList);
 
   const dropDownStyling = {
     boxShadow: "none",
@@ -313,8 +296,6 @@ const DetailPage = () => {
     data: referralData,
     isLoading,
     isSuccess,
-    isError,
-    error,
   } = useGetReferralDetailQuery(id);
 
   useEffect(() => {
@@ -331,7 +312,6 @@ const DetailPage = () => {
     if (isSuccess) {
       const updatedDetailData = {};
       for (const key in REFERRAL_DETAIL_DATA) {
-        // console.log("key",key);
         if (REFERRAL_DETAIL_DATA.hasOwnProperty(key)) {
           updatedDetailData[key] = {
             ...REFERRAL_DETAIL_DATA[key],
@@ -345,16 +325,11 @@ const DetailPage = () => {
   }, [referralDetail]);
 
   useEffect(() => {
-    console.log("Use Effect call");
-    // console.log("Updated fileList:", fileList.length);
     if (fileList.length > 0) {
-      console.log("File attached");
-      handleInputChange("attachment", fileList);
-    } else {
-      console.log("No");
+      handleInputChange("attachments", fileList);
     }
   }, [fileList]);
-  // File upload
+
   const handleFileChangeButton = (event) => {
     const files = event.target.files;
     console.log("even.target", typeof files);
@@ -363,14 +338,13 @@ const DetailPage = () => {
   };
 
   const referralDetailData = Object.values(detailData);
-  // console.log("Referral Data ",referralDetailData);
+
   const handleInputChange = (label, value) => {
     setData((prevData) => ({
       ...prevData,
       [label]: value,
     }));
   };
-  // console.log("dataa To be submiteed", data);
 
   const handleDropDownChange = (label, value) => {
     const booleanConversion = value == "Yes" ? true : false;
@@ -380,18 +354,16 @@ const DetailPage = () => {
     console.log("colleacted files ", files);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const attachmentData = {
-        lastModified: file.lastModified,
-        // lastModifiedDate: new Date(file.lastModifiedDate),
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        webkitRelativePath: file.webkitRelativePath,
-      };
-      setFileList((prevFileList) => [...prevFileList, attachmentData]);
+      // const attachmentData = {
+      //   lastModified: file.lastModified,
+      //   // lastModifiedDate: new Date(file.lastModifiedDate),
+      //   name: file.name,
+      //   size: file.size,
+      //   type: file.type,
+      //   webkitRelativePath: file.webkitRelativePath,
+      // };
+      setFileList((prevFileList) => [...prevFileList, file]);
     }
-
-    // handleInputChange('attachment',fileList);
   };
 
   const handleSubmitChanges = () => {
@@ -469,6 +441,7 @@ const DetailPage = () => {
                   </Select>
                 ) : item.editable === true ? (
                   <StyledInput
+                    name="attachments"
                     defaultValue={item.value}
                     onChange={(e) =>
                       handleInputChange(item.label, e.target.value)
