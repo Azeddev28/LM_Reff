@@ -46,6 +46,7 @@ function NavbarUserDropdown() {
 
   // useEffect(() => {
   //   if (!isAuthenticated) {
+  //     console.log("is Authnenticated state is changing ")
   //     navigate("/auth/sign-in");
   //   }
   // }, [isAuthenticated]);

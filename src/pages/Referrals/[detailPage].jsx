@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import { CircularProgress, Divider, Select, MenuItem } from "@mui/material";
+import {
+  CircularProgress,
+  Select,
+  MenuItem,
+  Button,
+  FormControlLabel,
+  Typography,
+  Divider,
+} from "@mui/material";
 import styled from "@emotion/styled";
 import {
   useGetReferralDetailQuery,
@@ -9,12 +17,12 @@ import {
 } from "../../redux/slices/referralAPiSlice";
 import { REFERRAL_DETAIL_DATA } from "../../utils/constants";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { Button, FormControlLabel } from "@mui/material";
+// import { Button, FormControlLabel, Typography, Divider } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { useUpdateReferralMutation } from "../../redux/slices/referralAPiSlice";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 
-const Heading = styled("Typography")(({}) => ({
+const Heading = styled(Typography)(({}) => ({
   color: "rgba(0, 0, 0, 0.87)",
   fontFamily: "Nunito",
   fontSize: 24,
@@ -62,7 +70,7 @@ const Column = styled("div")(({}) => ({
   boxShadow: "0px 0px 14px 0px rgba(53, 64, 82, 0.05)",
 }));
 
-const ColumnHeader = styled("Typography")(({}) => ({
+const ColumnHeader = styled(Typography)(({}) => ({
   color: "rgba(0, 0, 0, 0.87)",
   fontFamily: "Nunito",
   fontSize: 17,
@@ -127,8 +135,8 @@ const MainWrapper = styled("div")(({}) => ({
   flexDirection: "column",
 }));
 
-const CutomizedDivider = styled("Divider")(({}) => ({
-  marginBottom: "40px",
+const CutomizedDivider = styled(Divider)(({}) => ({
+  // marginBottom: "40px",
   background: "#E0E0E0",
   height: "1px",
   marginBottom: "72px",
@@ -273,7 +281,7 @@ const DetailPage = () => {
   const [referralDetail, setReferralDetail] = useState([]);
   const [detailData, setDetailData] = useState([]);
   const [data, setData] = useState({});
-  const [fileList, setFileList] = useState([]);  
+  const [fileList, setFileList] = useState([]);
   console.log("fileList Type==>", typeof fileList);
   console.log("fileList ==>", fileList);
 
@@ -374,11 +382,11 @@ const DetailPage = () => {
       const file = files[i];
       const attachmentData = {
         lastModified: file.lastModified,
-        lastModifiedDate:new Date(file.lastModifiedDate) ,
+        // lastModifiedDate: new Date(file.lastModifiedDate),
         name: file.name,
         size: file.size,
         type: file.type,
-        webkitRelativePath: file.webkitRelativePath
+        webkitRelativePath: file.webkitRelativePath,
       };
       setFileList((prevFileList) => [...prevFileList, attachmentData]);
     }
@@ -390,9 +398,9 @@ const DetailPage = () => {
     console.log("handle Submit data changes", data);
     updateReferral({ id, data });
     console.log("Mutation called");
-    // setData({});
-    // updatedReferralData(id);
-    // setFileList([]);
+    setData({});
+    updatedReferralData(id);
+    setFileList([]);
   };
 
   return isLoading ? (
