@@ -33,7 +33,6 @@ function AuthGuard({ children }: AuthGuardType) {
 
   useEffect(() => { 
     if (accessToken !==null) {     
-      console.log("Auth Guard",);
       navigate("/");
       getProfileData();
     } else {
