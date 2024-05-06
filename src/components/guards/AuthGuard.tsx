@@ -16,11 +16,10 @@ function AuthGuard({ children }: AuthGuardType) {
   const dispatch=useDispatch();
   const [getProfile,{data,isSuccess}]=useLazyGetProfileQuery();
   const getProfileData = async () => {
-    console.log("get Profile Data");
+    
     try {
-      await getProfile(); // Call getProfile asynchronously
+      await getProfile(); 
       if (isSuccess) {
-       
         dispatch(setUserName(data.name));
       } else {
         // Handle unsuccessful request if needed
@@ -34,13 +33,13 @@ function AuthGuard({ children }: AuthGuardType) {
 
   useEffect(() => { 
     if (accessToken !==null) {     
+      console.log("Auth Guard",);
       navigate("/");
       getProfileData();
     } else {
-      navigate("/auth/sign-in");
-      
+      navigate("/auth/sign-in");  
     }
-  }, [accessToken]);
+  }, [accessToken,isSuccess]);
      
   return <React.Fragment>{children}</React.Fragment>;
 }

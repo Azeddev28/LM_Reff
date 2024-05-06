@@ -42,11 +42,11 @@ function NavbarUserDropdown() {
     localStorage.removeItem('access');
   };
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/auth/sign-in");
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate("/auth/sign-in");
+  //   }
+  // }, [isAuthenticated]);
 
   return (
     <React.Fragment>
