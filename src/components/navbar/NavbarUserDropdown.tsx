@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { setAuthenticated } from "../../redux/slices/authSlice";
 
-// import useAuth from "../../hooks/useAuth";
 
 const IconButton = styled(MuiIconButton)`
   svg {
@@ -25,10 +24,8 @@ function NavbarUserDropdown() {
   const dispatch=useDispatch();
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
   const navigate = useNavigate();
-  // const isAuthenticated = useSelector((state: any) => state);
-  const {isAuthenticated,accessToken} = useSelector((state: any) => state.auth);
-  console.log("IsAuthenticated from NavbarUserDropDown",isAuthenticated);
-  console.log("accessToken from NavbarUserDropDown",accessToken);
+  const {isAuthenticated} = useSelector((state: any) => state.auth);
+  
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
   };
@@ -38,18 +35,8 @@ function NavbarUserDropdown() {
   };
 
 
-
-  // useEffect(() => {
-  //   if (isAuthenticated?.auth?.isAuthenticated === false) {
-  //     console.log("USEEFFECT From Navbaruserdropdown");
-  //     navigate("/auth/sign-in");
-  //   }
-  // }, [isAuthenticated?.auth?.isAuthenticated]);
-
- 
-
   const handleSignOut =  () => {
-    console.log("handle Sign out Click");
+    
     dispatch(setAuthenticated(false))
     dispatch(setAccessToken(null));
     localStorage.removeItem('access');
@@ -57,10 +44,9 @@ function NavbarUserDropdown() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      console.log("is Authnenticated state is changing ");
       navigate("/auth/sign-in");
     }
-  }, [isAuthenticated,accessToken]);
+  }, [isAuthenticated]);
 
   return (
     <React.Fragment>

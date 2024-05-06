@@ -3,6 +3,7 @@ import DashboardHeader from "../../components/DashboardHeader";
 import { REFERRAL_HEADER_DATA } from "../../utils/constants";
 import PaginatedTable from "../../components/Table/PaginatedTable";
 import styled from "@emotion/styled";
+import { useSelector } from "react-redux";
 import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
 import { set } from "date-fns";
 
@@ -12,12 +13,13 @@ const TableWrapper = styled("div")(({}) => ({
 
 const Referrals = () => {
   const [searchValue, setSearchValue] = useState(null);
+  const { userName } = useSelector((state) => state.auth);
   console.log("Search Value", searchValue);
   return (
     <div>
       <DashboardHeader
         heading="Referral Tracker"
-        subHeading="Greetings, {User Name}. Click on a patient to update their referral"
+        subHeading={`Greetings, ${userName}. Click on a patient to update their referral`}
         placeHolder="Search by Patient Name"
         setSearchValue={setSearchValue}
       />
