@@ -64,8 +64,6 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
   const location = useLocation();
 
   useEffect(() => {
-    // console.log("Search State has be changes ");
-    // console.log("Search Value", page.search);
     if (data?.count) {
       setTotalPages(Math.ceil(data?.count / ROWS_PER_PAGE));
     }
@@ -124,7 +122,7 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow style={{ cursor: "pointer" }}>
+            <TableRow>
               {headerData.map((columnInfo) => (
                 <TableCell key={columnInfo.key}>
                   <Header>

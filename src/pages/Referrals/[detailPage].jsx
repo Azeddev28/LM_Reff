@@ -55,7 +55,7 @@ const Checked = styled(FormControlLabel)(({}) => ({
   letterSpacing: 0.1,
 }));
 const CheckWrapper = styled("div")(({}) => ({
-  margin: "0px 25px 0px 16px",
+  margin: "13px 25px 0px 16px",
 }));
 
 const Column = styled("div")(({}) => ({
@@ -162,7 +162,7 @@ const DescriptionWrapper = styled("div")(({}) => ({
   display: "flex",
   flexDirection: "column",
   minHeight: "70px",
-  margin: "0px 25px 13px 25px",
+  margin: "0px 25px 0px 25px",
   gap: "12px",
 }));
 
@@ -332,8 +332,6 @@ const DetailPage = () => {
 
   const handleFileChangeButton = (event) => {
     const files = event.target.files;
-    console.log("even.target", typeof files);
-    console.log("even.target", files);
     handleFiles(files);
   };
 
@@ -354,25 +352,24 @@ const DetailPage = () => {
     console.log("colleacted files ", files);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      // const attachmentData = {
-      //   lastModified: file.lastModified,
-      //   // lastModifiedDate: new Date(file.lastModifiedDate),
-      //   name: file.name,
-      //   size: file.size,
-      //   type: file.type,
-      //   webkitRelativePath: file.webkitRelativePath,
-      // };
       setFileList((prevFileList) => [...prevFileList, file]);
     }
   };
 
   const handleSubmitChanges = () => {
-    console.log("handle Submit data changes", data);
     updateReferral({ id, data });
-    console.log("Mutation called");
     setData({});
     updatedReferralData(id);
     setFileList([]);
+  };
+
+  const getFileNameFromURL = (url) => {
+    console.log("URL", url);
+    return url.substring(url.lastIndexOf("/") + 1);
+  };
+
+  const handleViewFile = (url) => {
+    window.open(url, "_blank");
   };
 
   return isLoading ? (
@@ -397,8 +394,7 @@ const DetailPage = () => {
                     <Label>{item.key}</Label>
                     {typeof item.value === "boolean" ? (
                       ""
-                    ) : //  <SwitchButton   value={switchValue} label={item.label}  handleInputChange={handleInputChange} setSwitchValue={setSwitchValue}/>)
-                    item.editable === true ? (
+                    ) : item.editable === true ? (
                       <h1>Editable</h1>
                     ) : (
                       <Value variant="h6">{item.value}</Value>
@@ -420,7 +416,7 @@ const DetailPage = () => {
           <ColumnHeader>Referral Information</ColumnHeader>
 
           <ContentWrapper>
-            {referralDetailData.slice(7, 13).map((item, index) => (
+            {referralDetailData.slice(7, 14).map((item, index) => (
               <Card key={index}>
                 <Label>{item.key}</Label>
                 {typeof item.value === "boolean" ? (
@@ -431,7 +427,6 @@ const DetailPage = () => {
                     // value={switchValue}
                     defaultValue={item.value === true ? "Yes" : "No"}
                     onChange={(option) => {
-                      // console.log("DropDown Label", item.label);
                       handleDropDownChange(item.label, option.target.value);
                     }}
                     sx={dropDownStyling}
@@ -510,13 +505,22 @@ const DetailPage = () => {
                 <Divider />
               </FileUploadTextWrapper>
               <UploadedFiles>
-                {fileList.map((item, index) => (
+                {referralDetailData.slice(14).map((item, index) => (
                   <>
-                    {/* {console.log("item", item)} */}
-                    <UploadedFile>
-                      <AttachFileIcon fontSize="large" />
-                      <UploadedFileText>{item.name}</UploadedFileText>
-                    </UploadedFile>
+                    {console.log("item", item)}
+                    <React.Fragment key={index}>
+                      {item?.value?.map((innerItem, innerIndex) => (
+                        <UploadedFile
+                          key={innerIndex}
+                          onClick={() => handleViewFile(innerItem.attachment)}
+                        >
+                          <AttachFileIcon fontSize="large" />
+                          <UploadedFile>
+                            {getFileNameFromURL(innerItem.attachment)}
+                          </UploadedFile>
+                        </UploadedFile>
+                      ))}
+                    </React.Fragment>
                   </>
                 ))}
               </UploadedFiles>

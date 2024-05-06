@@ -14,6 +14,7 @@ const TableWrapper = styled("div")(({}) => ({
 const Referrals = () => {
   const [searchValue, setSearchValue] = useState(null);
   const { userName } = useSelector((state) => state.auth);
+
   console.log("Search Value", searchValue);
   return (
     <div>

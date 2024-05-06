@@ -1,3 +1,5 @@
+import { Label } from "@mui/icons-material"
+
 export const REFERRAL_DETAIL_DATA = {
     // Referral Receipt Date
     patient_name:{
@@ -87,19 +89,27 @@ export const REFERRAL_DETAIL_DATA = {
         editable: true,
         label:'op_completed',
      },
-     preop_consult_attachment:{
-        key:"preop-consult notes.pdf",
-        value:"",
-        editable: true,
-        label:'preop_consult_attachment'
+    //  preop_consult_attachment:{
+    //     key:"preop-consult notes.pdf",
+    //     value:"",
+    //     editable: true,
+    //     label:'preop_consult_attachment'
        
-     },
-     op_notes_attachment:{
-        key:"operating notes.pdf",
-        value:"",
-        editable: true,
-        label:'op_notes_attachment'
+    //  },
+    //  op_notes_attachment:{
+    //     key:"operating notes.pdf",
+    //     value:"",
+    //     editable: true,
+    //     label:'op_notes_attachment'
+    //  },
+     referral_attachments :{
+        key:'',
+        value:[],
+        editable:true.valueOf,
+        label:'referral_attachments'
      }
+
+
     // 3 Procedure Notes
     // 4 Post Op Consult Date
     // 5 Did patient show up to post-op consult?
