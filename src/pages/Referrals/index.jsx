@@ -32,6 +32,7 @@ const Referrals = () => {
             url: "http://3.6.94.153/api/referrals/",
             search: searchValue,
           }}
+          navigateDetail={true}
         />
       </TableWrapper>
     </div>

@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getAccessToken } from './authSlice'; 
 
+
+
 export const referralApi = createApi({
   reducerPath: 'referralApi',
   baseQuery: fetchBaseQuery({
@@ -12,19 +14,49 @@ export const referralApi = createApi({
       }
       return headers;
     },
+
   }),
+
   endpoints: (builder) => ({
     getReferrals: builder.query({
       query: (url) => url,
+      transformErrorResponse:(response)=>{
+        if(response.status===401){
+         console.log("Error occur");
+         window.location.href='/auth/sign-in';
+        }
+     }
     }),
     getClaims: builder.query({
-      query: (url) => url,
+      query: (url) => ({
+        url: url,
+      }),
+      transformErrorResponse:(response)=>{
+        if(response.status===401){
+         console.log("Error occur");
+         window.location.href='/auth/sign-in';
+        }
+     }
+      
+      
     }),
     getEmployees: builder.query({
       query: (url) => url,
+      transformErrorResponse:(response)=>{
+        if(response.status===401){
+         console.log("Error occur");
+         window.location.href='/auth/sign-in';
+        }
+     }
     }),  
     getReferralDetail: builder.query({
       query: (id) => `referrals/detail/${id}`,
+      transformErrorResponse:(response)=>{
+        if(response.status===401){
+         console.log("Error occur");
+         window.location.href='/auth/sign-in';
+        }
+     }
     }),
     resetPassword: builder.mutation({
       query: (email) => ({
@@ -32,6 +64,12 @@ export const referralApi = createApi({
         method: 'POST',
         body: email,
       }),
+      transformErrorResponse:(response)=>{
+        if(response.status===401){
+         console.log("Error occur");
+         window.location.href='/auth/sign-in';
+        }
+     }
     }),
      
     updateReferral: builder.mutation({
@@ -54,12 +92,29 @@ export const referralApi = createApi({
           body: formData,
         };
       },
+      transformErrorResponse:(response)=>{
+        if(response.status===401){
+         console.log("Error occur");
+         window.location.href='/auth/sign-in';
+        }
+     }
     }),
     getProfile: builder.query({
       query: () => "/users/profile/",
+      transformErrorResponse:(response)=>{
+         if(response.status===401){
+          console.log("Error occur");
+          window.location.href='/auth/sign-in';
+         }
+      }
+      
+      
     }),  
 
 }),
+
+
+   
 })
 
 

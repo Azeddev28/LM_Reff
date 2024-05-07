@@ -42,7 +42,7 @@ const Sorter = styled("div")(({}) => ({
   gap: "0px",
 }));
 
-const PaginatedTable = ({ headerData, pageData, query }) => {
+const PaginatedTable = ({ headerData, pageData, query, navigateDetail }) => {
   const generateUrl = () => {
     const targetUrl = new URL(pageData.url);
     if (pageData["search"] !== null && pageData["search"] !== undefined) {
@@ -160,8 +160,12 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
                 {data?.results?.map((obj, index) => (
                   <TableRow
                     key={index}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleDetailPage(obj)}
+                    style={{ cursor: navigateDetail ? "pointer" : "default" }}
+                    onClick={() => {
+                      if (navigateDetail) {
+                        handleDetailPage(obj);
+                      }
+                    }}
                   >
                     {extractRowValues(obj, keys)?.map(
                       (item, index) =>

@@ -39,6 +39,8 @@ function NavbarUserDropdown() {
     dispatch(setAuthenticated(false))
     dispatch(setAccessToken(null));
     localStorage.removeItem('access');
+     navigate("/auth/sign-in");
+     
   };
 
   // useEffect(() => {

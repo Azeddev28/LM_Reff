@@ -36,8 +36,9 @@ function AuthGuard({ children }: AuthGuardType) {
     console.log("UseEffect has been changed")
     if (!isAuthenticated) {     
       navigate("/auth/sign-in");
-      getProfileData();
+      
     } else {
+      getProfileData();
       navigate("/");  
     }
   }, [isSuccess,isAuthenticated]);
