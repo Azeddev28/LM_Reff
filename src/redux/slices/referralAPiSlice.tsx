@@ -22,7 +22,6 @@ export const referralApi = createApi({
       query: (url) => url,
       transformErrorResponse:(response)=>{
         if(response.status===401){
-         console.log("Error occur");
          window.location.href='/auth/sign-in';
         }
      }
@@ -33,7 +32,6 @@ export const referralApi = createApi({
       }),
       transformErrorResponse:(response)=>{
         if(response.status===401){
-         console.log("Error occur");
          window.location.href='/auth/sign-in';
         }
      }
@@ -44,7 +42,6 @@ export const referralApi = createApi({
       query: (url) => url,
       transformErrorResponse:(response)=>{
         if(response.status===401){
-         console.log("Error occur");
          window.location.href='/auth/sign-in';
         }
      }
@@ -53,7 +50,6 @@ export const referralApi = createApi({
       query: (id) => `referrals/detail/${id}`,
       transformErrorResponse:(response)=>{
         if(response.status===401){
-         console.log("Error occur");
          window.location.href='/auth/sign-in';
         }
      }
@@ -66,7 +62,7 @@ export const referralApi = createApi({
       }),
       transformErrorResponse:(response)=>{
         if(response.status===401){
-         console.log("Error occur");
+        
          window.location.href='/auth/sign-in';
         }
      }
@@ -94,7 +90,7 @@ export const referralApi = createApi({
       },
       transformErrorResponse:(response)=>{
         if(response.status===401){
-         console.log("Error occur");
+         
          window.location.href='/auth/sign-in';
         }
      }
@@ -103,7 +99,6 @@ export const referralApi = createApi({
       query: () => "/users/profile/",
       transformErrorResponse:(response)=>{
          if(response.status===401){
-          console.log("Error occur");
           window.location.href='/auth/sign-in';
          }
       }

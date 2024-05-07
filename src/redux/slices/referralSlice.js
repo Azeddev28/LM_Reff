@@ -27,19 +27,6 @@ export const fetchReferralDetail = createAsyncThunk(
   }
 );
 
-// export const updateReferalDetail = createAsyncThunk(
-//   "data/updateReferalDetail",
-//   async (id, formData) => {
-//     console.log("Data", formData);
-//     return patchRequest(
-//       `http://3.6.94.153/api/referrals/update/${id}`,
-//       formData
-//     );
-//   }
-// );
-
-//3.6.94.153/api/referrals/detail/38a46fa3-c9c7-4454-a136-a6d28edd7176/
-
 // Define a data slice using createSlice
 export const referralSlice = createSlice({
   name: "referral",

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAccessToken } from "../../redux/slices/authSlice";
 import { useLazyGetProfileQuery } from "../../redux/slices/referralAPiSlice";
 // import {isAuthenticated} from "../../redux/slices/authSlice";
 import { useDispatch,useSelector } from "react-redux";
@@ -12,11 +11,10 @@ interface AuthGuardType {
 function AuthGuard({ children }: AuthGuardType) {
   
   const navigate = useNavigate();
-  const accessToken = useSelector(getAccessToken);
   const dispatch=useDispatch();
   const [getProfile,{data,isSuccess}]=useLazyGetProfileQuery();
   const {isAuthenticated}=useSelector((state)=>state.auth);
-  console.log("IsAuthenticated",isAuthenticated);
+  
   const getProfileData = async () => {
     try {
       await getProfile(); 
@@ -33,7 +31,7 @@ function AuthGuard({ children }: AuthGuardType) {
 
 
   useEffect(() => { 
-    console.log("UseEffect has been changed")
+   
     if (!isAuthenticated) {     
       navigate("/auth/sign-in");
       
@@ -44,10 +42,8 @@ function AuthGuard({ children }: AuthGuardType) {
   }, [isSuccess,isAuthenticated]);
      
   return( 
-  <>
-  {console.log("AuthGuard has been call")}
   <React.Fragment>{children}</React.Fragment>
-  </>
+  
   )
 }
 

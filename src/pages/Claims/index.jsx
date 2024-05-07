@@ -13,7 +13,7 @@ const TableWrapper = styled("div")(({}) => ({
 const Claims = () => {
   const [searchValue, setSearchValue] = useState(null);
   const { userName } = useSelector((state) => state.auth);
-  console.log("UserName", userName);
+
   return (
     <div>
       <DashboardHeader

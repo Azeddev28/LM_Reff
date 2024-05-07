@@ -328,6 +328,7 @@ const DetailPage = () => {
     if (fileList.length > 0) {
       handleInputChange("attachments", fileList);
     }
+    console.log("FileList", fileList);
   }, [fileList]);
 
   const handleFileChangeButton = (event) => {
@@ -349,7 +350,6 @@ const DetailPage = () => {
     handleInputChange(label, booleanConversion);
   };
   const handleFiles = (files) => {
-    console.log("colleacted files ", files);
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       setFileList((prevFileList) => [...prevFileList, file]);
@@ -364,7 +364,6 @@ const DetailPage = () => {
   };
 
   const getFileNameFromURL = (url) => {
-    console.log("URL", url);
     return url.substring(url.lastIndexOf("/") + 1);
   };
 
@@ -518,6 +517,12 @@ const DetailPage = () => {
                       </UploadedFile>
                     ))}
                   </React.Fragment>
+                ))}
+                {fileList.map((item, index) => (
+                  <UploadedFile key={index}>
+                    <AttachFileIcon fontSize="large" />
+                    <UploadedFile>{item.name}</UploadedFile>
+                  </UploadedFile>
                 ))}
               </UploadedFiles>
             </UploadedFileSection>
