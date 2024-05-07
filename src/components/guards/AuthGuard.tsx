@@ -1,22 +1,23 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { getAccessToken } from "../../redux/slices/authSlice";
 import { useLazyGetProfileQuery } from "../../redux/slices/referralAPiSlice";
-import { useDispatch } from "react-redux";
+// import {isAuthenticated} from "../../redux/slices/authSlice";
+import { useDispatch,useSelector } from "react-redux";
 import { setUserName } from "../../redux/slices/authSlice";
 interface AuthGuardType {
   children: React.ReactNode;
 }
 // TODO : authentication needs to be check
 function AuthGuard({ children }: AuthGuardType) {
-
+  
   const navigate = useNavigate();
   const accessToken = useSelector(getAccessToken);
   const dispatch=useDispatch();
   const [getProfile,{data,isSuccess}]=useLazyGetProfileQuery();
+  const {isAuthenticated}=useSelector((state)=>state.auth);
+  console.log("IsAuthenticated",isAuthenticated);
   const getProfileData = async () => {
-    
     try {
       await getProfile(); 
       if (isSuccess) {
@@ -32,15 +33,21 @@ function AuthGuard({ children }: AuthGuardType) {
 
 
   useEffect(() => { 
-    if (accessToken !==null) {     
-      navigate("/");
+    console.log("UseEffect has been changed")
+    if (!isAuthenticated) {     
+      navigate("/auth/sign-in");
       getProfileData();
     } else {
-      navigate("/auth/sign-in");  
+      navigate("/");  
     }
-  }, [accessToken,isSuccess]);
+  }, [isSuccess,isAuthenticated]);
      
-  return <React.Fragment>{children}</React.Fragment>;
+  return( 
+  <>
+  {console.log("AuthGuard has been call")}
+  <React.Fragment>{children}</React.Fragment>
+  </>
+  )
 }
 
 export default AuthGuard;

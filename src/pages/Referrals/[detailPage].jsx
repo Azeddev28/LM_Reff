@@ -424,7 +424,6 @@ const DetailPage = () => {
                     key={item.label}
                     labelId="demo-simple-select-standard-label"
                     id="demo-simple-select-standard"
-                    // value={switchValue}
                     defaultValue={item.value === true ? "Yes" : "No"}
                     onChange={(option) => {
                       handleDropDownChange(item.label, option.target.value);
@@ -506,22 +505,19 @@ const DetailPage = () => {
               </FileUploadTextWrapper>
               <UploadedFiles>
                 {referralDetailData.slice(14).map((item, index) => (
-                  <>
-                    {console.log("item", item)}
-                    <React.Fragment key={index}>
-                      {item?.value?.map((innerItem, innerIndex) => (
-                        <UploadedFile
-                          key={innerIndex}
-                          onClick={() => handleViewFile(innerItem.attachment)}
-                        >
-                          <AttachFileIcon fontSize="large" />
-                          <UploadedFile>
-                            {getFileNameFromURL(innerItem.attachment)}
-                          </UploadedFile>
+                  <React.Fragment key={index}>
+                    {item?.value?.map((innerItem, innerIndex) => (
+                      <UploadedFile
+                        key={innerIndex}
+                        onClick={() => handleViewFile(innerItem.attachment)}
+                      >
+                        <AttachFileIcon fontSize="large" />
+                        <UploadedFile>
+                          {getFileNameFromURL(innerItem.attachment)}
                         </UploadedFile>
-                      ))}
-                    </React.Fragment>
-                  </>
+                      </UploadedFile>
+                    ))}
+                  </React.Fragment>
                 ))}
               </UploadedFiles>
             </UploadedFileSection>

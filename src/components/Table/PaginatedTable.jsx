@@ -82,7 +82,7 @@ const PaginatedTable = ({ headerData, pageData, query }) => {
     data?.results?.forEach((obj) => {
       keys = keys.concat(Object.keys(obj));
     });
-    return Array.from(new Set(keys)); // Get unique keys
+    return Array.from(new Set(keys));
   };
 
   const keys = extractKeys();

@@ -36,7 +36,6 @@ function NavbarUserDropdown() {
 
 
   const handleSignOut =  () => {
-    
     dispatch(setAuthenticated(false))
     dispatch(setAccessToken(null));
     localStorage.removeItem('access');
