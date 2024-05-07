@@ -17,7 +17,6 @@ import {
 } from "../../redux/slices/referralAPiSlice";
 import { REFERRAL_DETAIL_DATA } from "../../utils/constants";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-// import { Button, FormControlLabel, Typography, Divider } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import { useUpdateReferralMutation } from "../../redux/slices/referralAPiSlice";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
@@ -64,7 +63,6 @@ const Column = styled("div")(({}) => ({
   height: "auto",
   paddingBottom: "40px",
   flexDirection: "column",
-  // border:'1px solid black',
   borderRadius: 15,
   background: "#FFF",
   boxShadow: "0px 0px 14px 0px rgba(53, 64, 82, 0.05)",
@@ -96,6 +94,12 @@ const ContentWrapper = styled("div")(({}) => ({
   display: "flex",
   flexDirection: "column",
   gap: "13px",
+}));
+const ContentWrapperV2 = styled("div")(({}) => ({
+  padding: "20px 0px 0px 0px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "25px",
 }));
 
 const Label = styled("p")(({}) => ({
@@ -245,10 +249,9 @@ const UploadedFile = styled("div")(({}) => ({
   boxShadow: "0px 0px 14px 0px rgba(53, 64, 82, 0.05)",
 }));
 
-const UploadedFileText = styled("p")(({}) => ({
+const FileText = styled("p")(({}) => ({
   color: "rgba(0, 0, 0, 0.87)",
-  // fontFamily: "Nunito",
-  fontSize: 14,
+  fontSize: "14px",
   fontStyle: "normal",
   fontWeight: 600,
   lineHeight: "20.4px",
@@ -328,7 +331,6 @@ const DetailPage = () => {
     if (fileList.length > 0) {
       handleInputChange("attachments", fileList);
     }
-    console.log("FileList", fileList);
   }, [fileList]);
 
   const handleFileChangeButton = (event) => {
@@ -455,7 +457,7 @@ const DetailPage = () => {
         </Column>
         <Column>
           <ColumnHeader>Referral Attachments</ColumnHeader>
-          <ContentWrapper>
+          <ContentWrapperV2>
             <FileUploadWrapper>
               <Dropzone onDrop={(acceptedFiles) => handleFiles(acceptedFiles)}>
                 {({ getRootProps, getInputProps }) => (
@@ -509,11 +511,12 @@ const DetailPage = () => {
                       <UploadedFile
                         key={innerIndex}
                         onClick={() => handleViewFile(innerItem.attachment)}
+                        style={{ cursor: "pointer" }}
                       >
                         <AttachFileIcon fontSize="large" />
-                        <UploadedFile>
+                        <FileText>
                           {getFileNameFromURL(innerItem.attachment)}
-                        </UploadedFile>
+                        </FileText>
                       </UploadedFile>
                     ))}
                   </React.Fragment>
@@ -521,12 +524,12 @@ const DetailPage = () => {
                 {fileList.map((item, index) => (
                   <UploadedFile key={index}>
                     <AttachFileIcon fontSize="large" />
-                    <UploadedFile>{item.name}</UploadedFile>
+                    <FileText>{item.name}</FileText>
                   </UploadedFile>
                 ))}
               </UploadedFiles>
             </UploadedFileSection>
-          </ContentWrapper>
+          </ContentWrapperV2>
         </Column>
       </Container>
       <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
