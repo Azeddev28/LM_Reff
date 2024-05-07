@@ -4,6 +4,7 @@ import { useGetEmployeesQuery } from "../../redux/slices/referralAPiSlice";
 import { EMPLOYER_HEADER_DATA } from "../../utils/constants";
 import PaginatedTable from "../../components/Table/PaginatedTable";
 import styled from "@emotion/styled";
+import { useSelector } from "react-redux";
 
 const TableWrapper = styled("div")(({}) => ({
   marginTop: "20px",
@@ -11,13 +12,15 @@ const TableWrapper = styled("div")(({}) => ({
 
 const EmployerList = () => {
   const [searchValue, setSearchValue] = useState(null);
+  const { userName } = useSelector((state) => state.auth);
 
   return (
     <div>
       <DashboardHeader
         heading="Employer List"
-        subHeading="Greetings, {User Name}. Search for an employer to check if your patient has a sponsored plan"
+        subHeading={`Greetings, ${userName}. Search for an employer to check if your patient has a sponsored plan`}
         placeHolder="Search by Employer Name"
+        setSearchValue={setSearchValue}
       />
       <TableWrapper>
         <PaginatedTable
