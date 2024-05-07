@@ -24,7 +24,7 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 
 const Heading = styled(Typography)(({}) => ({
   color: "rgba(0, 0, 0, 0.87)",
-  fontFamily: "Nunito",
+  // fontFamily: "Nunito",
   fontSize: 24,
   fontStyle: "normal",
   fontWeight: 600,
@@ -47,7 +47,7 @@ const Checked = styled(FormControlLabel)(({}) => ({
   flex: 1,
   margin: "0px",
   color: "rgba(0, 0, 0, 0.87))",
-  fontFamily: "Nunito",
+  // fontFamily: "Nunito",
   fontSize: 14,
   fontStyle: "normal",
   fontWeight: 400,
@@ -72,7 +72,7 @@ const Column = styled("div")(({}) => ({
 
 const ColumnHeader = styled(Typography)(({}) => ({
   color: "rgba(0, 0, 0, 0.87)",
-  fontFamily: "Nunito",
+  // fontFamily: "Nunito",
   fontSize: 17,
   fontStyle: "normal",
   fontWeight: 600,
@@ -100,7 +100,7 @@ const ContentWrapper = styled("div")(({}) => ({
 
 const Label = styled("p")(({}) => ({
   color: "#263238",
-  fontFamily: "Nunito",
+  // fontFamily: "Nunito",
   fontSize: 12,
   fontStyle: "normal",
   fontWeight: 400,
@@ -111,7 +111,7 @@ const Label = styled("p")(({}) => ({
 
 const Value = styled("p")(({}) => ({
   color: "rgba(0, 0, 0, 0.87)",
-  fontFamily: "Nunito",
+  // fontFamily: "Nunito",
   fontSize: 14,
   margin: "0px",
   fontStyle: "normal",
@@ -176,7 +176,7 @@ const ValueWrapper = styled("div")(({}) => ({
 const DropzoneText = styled("section")(({}) => ({
   color: "#263238",
   textAlign: "center",
-  fontFamily: "Nunito",
+  // fontFamily: "Nunito",
   fontSize: 16,
   fontStyle: "normal",
   fontWeight: 400,
@@ -219,7 +219,7 @@ const FileUploadTextWrapper = styled("div")(({}) => ({
 
 const FileUploadText = styled("div")(({}) => ({
   color: "#263238",
-  fontFamily: "Nunito",
+  // fontFamily: "Nunito",
   fontSize: 12,
   fontStyle: "normal",
   fontWeight: 400,
@@ -247,7 +247,7 @@ const UploadedFile = styled("div")(({}) => ({
 
 const UploadedFileText = styled("p")(({}) => ({
   color: "rgba(0, 0, 0, 0.87)",
-  fontFamily: "Nunito",
+  // fontFamily: "Nunito",
   fontSize: 14,
   fontStyle: "normal",
   fontWeight: 600,
