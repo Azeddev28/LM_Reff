@@ -13,6 +13,7 @@ const Root = styled.div`
   display: flex;
   min-height: 100%;
   flex-direction: column;
+  padding:0 20px;
 `;
 
 interface AuthType {

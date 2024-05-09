@@ -38,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({ onDrawerToggle }) => {
       <AppBar position="sticky" elevation={0}>
         <Toolbar>
           <Grid container alignItems="center">
-            <Grid item sx={{ display: { xs: "block", md: "none" } }}>
+            <Grid item sx={{ display: { xs: "block", screen_1200: "none" } }}>
               <IconButton
                 color="inherit"
                 aria-label="Open drawer"
