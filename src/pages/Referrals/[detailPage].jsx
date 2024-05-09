@@ -274,6 +274,7 @@ const DetailPage = () => {
   const [detailData, setDetailData] = useState([]);
   const [data, setData] = useState({});
   const [fileList, setFileList] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   const [updateReferral, {}] = useUpdateReferralMutation();
   const [
@@ -358,11 +359,17 @@ const DetailPage = () => {
     }
   };
 
-  const handleSubmitChanges = () => {
-    updateReferral({ id, data });
-    setData({});
-    updatedReferralData(id);
-    setFileList([]);
+  const handleSubmitChanges = async () => {
+    try {
+      setLoader(true);
+      await updateReferral({ id, data });
+      await updatedReferralData(id);
+      setLoader(false);
+      setData({});
+      setFileList([]);
+    } catch (error) {
+      setLoader(false);
+    }
   };
 
   const getFileNameFromURL = (url) => {
@@ -379,169 +386,183 @@ const DetailPage = () => {
     <MainWrapper>
       <Heading>Referral Details</Heading>
       <CutomizedDivider orientation="vertical" variant="middle" flexItem />
-      <Container>
-        <Column>
-          <ColumnHeader variant="h3">Referral Information</ColumnHeader>
-          <ContentWrapper>
-            {referralDetailData.slice(0, 6).map((item, index) => (
-              <div key={index}>
-                {item.key === "Referral Description" ? (
-                  <DescriptionWrapper>
-                    <Label>{item.key}</Label>
-                    <ValueWrapper>{item.value}</ValueWrapper>
-                  </DescriptionWrapper>
-                ) : (
-                  <Card key={index} value={item.value}>
+      {loader ? (
+        <CircularProgress disableShrink />
+      ) : (
+        <>
+          <Container>
+            <Column>
+              <ColumnHeader variant="h3">Referral Information</ColumnHeader>
+              <ContentWrapper>
+                {referralDetailData.slice(0, 6).map((item, index) => (
+                  <div key={index}>
+                    {item.key === "Referral Description" ? (
+                      <DescriptionWrapper>
+                        <Label>{item.key}</Label>
+                        <ValueWrapper>{item.value}</ValueWrapper>
+                      </DescriptionWrapper>
+                    ) : (
+                      <Card key={index} value={item.value}>
+                        <Label>{item.key}</Label>
+                        {typeof item.value === "boolean" ? (
+                          ""
+                        ) : item.editable === true ? (
+                          <h1>Editable</h1>
+                        ) : (
+                          <Value variant="h6">{item.value}</Value>
+                        )}
+                      </Card>
+                    )}
+                  </div>
+                ))}
+              </ContentWrapper>
+              <CheckWrapper>
+                <Checked
+                  control={<Checkbox defaultChecked />}
+                  style={{ pointerEvents: "none" }}
+                  label="Preauthorization Required"
+                />
+              </CheckWrapper>
+            </Column>
+            <Column>
+              <ColumnHeader>Referral Information</ColumnHeader>
+
+              <ContentWrapper>
+                {referralDetailData.slice(7, 14).map((item, index) => (
+                  <Card key={index}>
                     <Label>{item.key}</Label>
                     {typeof item.value === "boolean" ? (
-                      ""
+                      <Select
+                        key={item.label}
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        defaultValue={item.value === true ? "Yes" : "No"}
+                        onChange={(option) => {
+                          handleDropDownChange(item.label, option.target.value);
+                        }}
+                        sx={dropDownStyling}
+                      >
+                        <MenuItem value={"Yes"}>Yes</MenuItem>
+                        <MenuItem value={"No"}>No</MenuItem>
+                      </Select>
                     ) : item.editable === true ? (
-                      <h1>Editable</h1>
+                      <StyledInput
+                        name="attachments"
+                        defaultValue={item.value}
+                        onChange={(e) =>
+                          handleInputChange(item.label, e.target.value)
+                        }
+                      />
                     ) : (
                       <Value variant="h6">{item.value}</Value>
                     )}
                   </Card>
-                )}
-              </div>
-            ))}
-          </ContentWrapper>
-          <CheckWrapper>
-            <Checked
-              control={<Checkbox defaultChecked />}
-              style={{ pointerEvents: "none" }}
-              label="Preauthorization Required"
-            />
-          </CheckWrapper>
-        </Column>
-        <Column>
-          <ColumnHeader>Referral Information</ColumnHeader>
-
-          <ContentWrapper>
-            {referralDetailData.slice(7, 14).map((item, index) => (
-              <Card key={index}>
-                <Label>{item.key}</Label>
-                {typeof item.value === "boolean" ? (
-                  <Select
-                    key={item.label}
-                    labelId="demo-simple-select-standard-label"
-                    id="demo-simple-select-standard"
-                    defaultValue={item.value === true ? "Yes" : "No"}
-                    onChange={(option) => {
-                      handleDropDownChange(item.label, option.target.value);
-                    }}
-                    sx={dropDownStyling}
-                  >
-                    <MenuItem value={"Yes"}>Yes</MenuItem>
-                    <MenuItem value={"No"}>No</MenuItem>
-                  </Select>
-                ) : item.editable === true ? (
-                  <StyledInput
-                    name="attachments"
-                    defaultValue={item.value}
-                    onChange={(e) =>
-                      handleInputChange(item.label, e.target.value)
-                    }
-                  />
-                ) : (
-                  <Value variant="h6">{item.value}</Value>
-                )}
-              </Card>
-            ))}
-          </ContentWrapper>
-          <CheckWrapper>
-            <Checked
-              control={<Checkbox defaultChecked />}
-              label="Procedure Cancelled"
-            />
-          </CheckWrapper>
-        </Column>
-        <Column>
-          <ColumnHeader>Referral Attachments</ColumnHeader>
-          <ContentWrapperV2>
-            <FileUploadWrapper>
-              <Dropzone onDrop={(acceptedFiles) => handleFiles(acceptedFiles)}>
-                {({ getRootProps, getInputProps }) => (
-                  <section>
-                    <div
-                      {...getRootProps()}
-                      style={{
-                        height: "185px",
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "end",
-                      }}
-                    >
-                      <input {...getInputProps()} />
-                      <DropZoneContent>
-                        <CloudUploadIcon fontSize="large" />
-                        <DropzoneText>
-                          Choose a file or drag and drop here
-                        </DropzoneText>
-                      </DropZoneContent>
-                    </div>
-                  </section>
-                )}
-              </Dropzone>
-              <UploadButton
-                component="label"
-                role={undefined}
-                variant="contained"
-                tabIndex={-1}
-              >
-                <FileUploadButton>
-                  <CloudUploadIcon />
-                  <p>Browse for File</p>
-                </FileUploadButton>
-                <VisuallyHiddenInput
-                  type="file"
-                  multiple={"multiple"}
-                  onChange={handleFileChangeButton}
+                ))}
+              </ContentWrapper>
+              <CheckWrapper>
+                <Checked
+                  control={<Checkbox defaultChecked />}
+                  label="Procedure Cancelled"
                 />
-              </UploadButton>
-            </FileUploadWrapper>
-            <UploadedFileSection>
-              <FileUploadTextWrapper>
-                <FileUploadText>File Uploads</FileUploadText>
-                <Divider />
-              </FileUploadTextWrapper>
-              <UploadedFiles>
-                {referralDetailData.slice(14).map((item, index) => (
-                  <React.Fragment key={index}>
-                    {item?.value?.map((innerItem, innerIndex) => (
-                      <UploadedFile
-                        key={innerIndex}
-                        onClick={() => handleViewFile(innerItem.attachment)}
-                        style={{ cursor: "pointer" }}
-                      >
+              </CheckWrapper>
+            </Column>
+            <Column>
+              <ColumnHeader>Referral Attachments</ColumnHeader>
+              <ContentWrapperV2>
+                <FileUploadWrapper>
+                  <Dropzone
+                    onDrop={(acceptedFiles) => handleFiles(acceptedFiles)}
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <section>
+                        <div
+                          {...getRootProps()}
+                          style={{
+                            height: "185px",
+                            width: "100%",
+                            display: "flex",
+                            justifyContent: "end",
+                          }}
+                        >
+                          <input {...getInputProps()} />
+                          <DropZoneContent>
+                            <CloudUploadIcon fontSize="large" />
+                            <DropzoneText>
+                              Choose a file or drag and drop here
+                            </DropzoneText>
+                          </DropZoneContent>
+                        </div>
+                      </section>
+                    )}
+                  </Dropzone>
+                  <UploadButton
+                    component="label"
+                    role={undefined}
+                    variant="contained"
+                    tabIndex={-1}
+                  >
+                    <FileUploadButton>
+                      <CloudUploadIcon />
+                      <p>Browse for File</p>
+                    </FileUploadButton>
+                    <VisuallyHiddenInput
+                      type="file"
+                      multiple={"multiple"}
+                      onChange={handleFileChangeButton}
+                    />
+                  </UploadButton>
+                </FileUploadWrapper>
+                <UploadedFileSection>
+                  <FileUploadTextWrapper>
+                    <FileUploadText>File Uploads</FileUploadText>
+                    <Divider />
+                  </FileUploadTextWrapper>
+                  <UploadedFiles>
+                    {referralDetailData.slice(14, 15).map((item, index) => (
+                      <React.Fragment key={index}>
+                        {item?.value?.map((innerItem, innerIndex) => (
+                          <UploadedFile
+                            key={innerIndex}
+                            onClick={() => handleViewFile(innerItem.attachment)}
+                            style={{ cursor: "pointer" }}
+                          >
+                            <AttachFileIcon fontSize="large" />
+                            <FileText>
+                              {getFileNameFromURL(innerItem.attachment)}
+                            </FileText>
+                          </UploadedFile>
+                        ))}
+                      </React.Fragment>
+                    ))}
+                    {fileList.map((item, index) => (
+                      <UploadedFile key={index}>
                         <AttachFileIcon fontSize="large" />
-                        <FileText>
-                          {getFileNameFromURL(innerItem.attachment)}
-                        </FileText>
+                        <FileText>{item.name}</FileText>
                       </UploadedFile>
                     ))}
-                  </React.Fragment>
-                ))}
-                {fileList.map((item, index) => (
-                  <UploadedFile key={index}>
-                    <AttachFileIcon fontSize="large" />
-                    <FileText>{item.name}</FileText>
-                  </UploadedFile>
-                ))}
-              </UploadedFiles>
-            </UploadedFileSection>
-          </ContentWrapperV2>
-        </Column>
-      </Container>
-      <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
-        <Button
-          variant="contained"
-          disabled={Object.keys(data).length === 0}
-          onClick={handleSubmitChanges}
-          style={{ marginTop: "35px", verticalAlign: "end", width: "127px" }}
-        >
-          Save Changes
-        </Button>
-      </div>
+                  </UploadedFiles>
+                </UploadedFileSection>
+              </ContentWrapperV2>
+            </Column>
+          </Container>
+          <div
+            style={{ width: "100%", display: "flex", justifyContent: "end" }}
+          >
+            <Button
+              variant="contained"
+              disabled={Object.keys(data).length === 0}
+              onClick={handleSubmitChanges}
+              style={{
+                marginTop: "35px",
+                verticalAlign: "end",
+                width: "127px",
+              }}
+            >
+              Save Changes
+            </Button>
+          </div>
+        </>
+      )}
     </MainWrapper>
   );
 };
