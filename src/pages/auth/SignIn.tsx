@@ -28,11 +28,21 @@ const BigAvatar = styled(Avatar)`
   text-align: center;
   margin: 0 auto ${(props) => props.theme.spacing(5)};
 `;
+const ImageWrapper=styled('div')`
+  display:flex;
+   justify-content:center;
+   height:30px;
+   margin-bottom:15px;
+`;
+
 
 function SignIn() {
   return (
     <React.Fragment>
       <Wrapper>
+        <ImageWrapper>
+      <img src="/favicon.svg" alt="logo-image"/>
+      </ImageWrapper>
          <Typography component="h2" variant="h2" align="center">
            Sign in to your account to continue
          </Typography>

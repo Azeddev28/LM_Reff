@@ -51,16 +51,14 @@ const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:Dashbo
   
   const handleInputValue=(event:ChangeEvent<HTMLInputElement>)=>{
     setInputValue(event.target.value);
+    setSearchValue(event.target.value);
     if(event.target.value === ''){
-     
       setSearchValue(null);
     }
   } 
 
   const handleSearchValue=()=>{
-
-    setSearchValue(inputValue);
-   
+    setSearchValue(inputValue); 
   }
 
 

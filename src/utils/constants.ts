@@ -105,9 +105,16 @@ export const REFERRAL_DETAIL_DATA = {
      referral_attachments :{
         key:'',
         value:[],
-        editable:true.valueOf,
+        editable:true,
         label:'referral_attachments'
+     },
+     is_cancelled:{
+        key:'',
+        value:'',
+        editable:true,
+        label:'is_cancelled',
      }
+
 
 
     // 3 Procedure Notes
