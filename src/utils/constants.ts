@@ -197,7 +197,7 @@ export const EMPLOYER_HEADER_DATA = [
     },
     {
         'key': 'employer_name',
-        'display': "Employer Name",
+        'display': "Payer",
         'sortKey': 'convener_full_name'
     }
 ]
