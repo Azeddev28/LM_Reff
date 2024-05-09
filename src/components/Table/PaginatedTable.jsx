@@ -115,6 +115,14 @@ const PaginatedTable = ({ headerData, pageData, query, navigateDetail }) => {
     setChangePage("next");
   };
 
+  const StyledRow = styled(TableRow)((props) => ({
+    padding: 8,
+    cursor: props.navigateDetail ? "pointer" : "default",
+    "&:hover": {
+      backgroundColor: "rgba(242, 242, 242, 0.8)",
+    },
+  }));
+
   return isLoading ? (
     <CircularProgress />
   ) : (
@@ -158,8 +166,9 @@ const PaginatedTable = ({ headerData, pageData, query, navigateDetail }) => {
             {data?.count > 0 ? (
               <>
                 {data?.results?.map((obj, index) => (
-                  <TableRow
+                  <StyledRow
                     key={index}
+                    navigateDetail={navigateDetail}
                     style={{ cursor: navigateDetail ? "pointer" : "default" }}
                     onClick={() => {
                       if (navigateDetail) {
@@ -173,7 +182,7 @@ const PaginatedTable = ({ headerData, pageData, query, navigateDetail }) => {
                           <TableCell key={index}>{item.value}</TableCell>
                         )
                     )}
-                  </TableRow>
+                  </StyledRow>
                 ))}
               </>
             ) : (
