@@ -10,6 +10,7 @@ const StyledDatePicker = styled(DatePicker)({
   "& .MuiInputBase-root": {
     border: "none",
     height: "17px",
+    width: "130%",
     "& input": {
       padding: "0px 40px 0px 0px",
       border: "none",
