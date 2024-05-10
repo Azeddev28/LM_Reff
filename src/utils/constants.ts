@@ -1,7 +1,12 @@
 import { Label } from "@mui/icons-material"
 
 export const REFERRAL_DETAIL_DATA = {
-    // Referral Receipt Date
+    date_created:{
+        key:"Referral Receipt Date",
+        value:"", 
+        editable: false,
+        label:'date_created',                                                                           
+    },
     patient_name:{
      key:"Patient Name",
      value:"", 
@@ -32,19 +37,31 @@ export const REFERRAL_DETAIL_DATA = {
         editable: false,
         label:'specialty'
     },
-    // "Referring Party" missing in backend data
+    referring_party:{
+        key: "Referring Party",
+        value: "",
+        editable: false,
+        label:'referring_party'
+    },
     referral_description: {
         key: "Referral Description",
         value: "",
         editable: false,
         label:'referral_description'
     
+    }, 
+    practice_notes:{
+        key: "Practice Notes",
+        value: "",
+        editable: true,
+        label:'practice_notes'
     },
-    preop_consult_scheduled_date: {
+     preop_consult_scheduled_date: {
         key: "Scheduled Consult Date",
         value: "",
         editable: true,
-        label:'preop_consult_scheduled_date'
+        label:'preop_consult_scheduled_date',
+        datePicker:true,
      },
      preop_consult_completed:{
         key:"Did patient show up to pre-op consult?",
@@ -63,6 +80,7 @@ export const REFERRAL_DETAIL_DATA = {
       value:"",
       editable: true,
       label:'op_scheduled_date',
+      datePicker:true,
      },
 
      intended_procedure:{
@@ -89,19 +107,32 @@ export const REFERRAL_DETAIL_DATA = {
         editable: true,
         label:'op_completed',
      },
-    //  preop_consult_attachment:{
-    //     key:"preop-consult notes.pdf",
-    //     value:"",
-    //     editable: true,
-    //     label:'preop_consult_attachment'
-       
-    //  },
-    //  op_notes_attachment:{
-    //     key:"operating notes.pdf",
-    //     value:"",
-    //     editable: true,
-    //     label:'op_notes_attachment'
-    //  },
+     op_notes :{
+        key:"Procedure Notes",
+        value:"",
+        editable: true,
+        label:'op_notes',
+     },
+     post_op_consult_date :{
+        key:"Post Op Consult Date",
+        value:"",
+        editable: true,
+        label:'post_op_consult_date',
+        datePicker:true,
+     },    
+     post_op_consult_completed:{
+        key:"Did patient show up to post-op consult?",
+        value:"",
+        editable: true,
+        label:'post_op_consult_completed',
+     },
+     post_op_consult_notes :{
+        key:"Post Op Consult notes",
+        value:"",
+        editable: true,
+        label:'post_op_consult_notes',
+     },
+
      referral_attachments :{
         key:'',
         value:[],
@@ -115,12 +146,7 @@ export const REFERRAL_DETAIL_DATA = {
         label:'is_cancelled',
      }
 
-
-
-    // 3 Procedure Notes
-    // 4 Post Op Consult Date
-    // 5 Did patient show up to post-op consult?
-    // 6 Post Op Consult Notes    
+   
 }
 
 export const REFERRAL_HEADER_DATA = [

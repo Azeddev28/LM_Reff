@@ -21,7 +21,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useUpdateReferralMutation } from "../../redux/slices/referralAPiSlice";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 
-const Heading = styled(Typography)(({}) => ({
+const Heading = styled(Typography)(({ theme }) => ({
   color: "rgba(0, 0, 0, 0.87)",
   // fontFamily: "Nunito",
   fontSize: 24,
@@ -29,14 +29,20 @@ const Heading = styled(Typography)(({}) => ({
   fontWeight: 600,
   lineHeight: "28.8px",
   marginBottom: "47px",
+  [theme.breakpoints.down("md")]: {
+    marginBottom: "20px",
+  },
 }));
 
-const Container = styled("div")(({}) => ({
+const Container = styled("div")(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
   gap: "20px",
   flex: 1,
   height: "fit-content",
+  [theme.breakpoints.down("md")]: {
+    flexDirection: "column",
+  },
 }));
 
 const Checked = styled(FormControlLabel)(({}) => ({
@@ -57,7 +63,7 @@ const CheckWrapper = styled("div")(({}) => ({
   margin: "13px 25px 0px 16px",
 }));
 
-const Column = styled("div")(({}) => ({
+const Column = styled("div")(({ theme }) => ({
   width: "33.33%",
   display: "flex",
   height: "auto",
@@ -66,6 +72,9 @@ const Column = styled("div")(({}) => ({
   borderRadius: 15,
   background: "#FFF",
   boxShadow: "0px 0px 14px 0px rgba(53, 64, 82, 0.05)",
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+  },
 }));
 
 const ColumnHeader = styled(Typography)(({}) => ({
@@ -129,10 +138,13 @@ const MainWrapper = styled("div")(({}) => ({
   flexDirection: "column",
 }));
 
-const CutomizedDivider = styled(Divider)(({}) => ({
+const CutomizedDivider = styled(Divider)(({ theme }) => ({
   background: "#E0E0E0",
   height: "1px",
   marginBottom: "72px",
+  [theme.breakpoints.down("md")]: {
+    marginBottom: "35px",
+  },
 }));
 
 const VisuallyHiddenInput = styled("input")({
@@ -241,8 +253,9 @@ const UploadedFile = styled("div")(({}) => ({
   display: "flex",
   flexDirection: "row",
   gap: "16px",
-  height: "55px",
-  padding: "0px 5px 0px 13px",
+  minHeight: "55px",
+  // height: "fit-content",
+  padding: "11px 5px 11px 13px",
   borderRadius: 4,
   background: "#D9D9D9",
   alignItems: "center",
@@ -256,6 +269,8 @@ const FileText = styled("p")(({}) => ({
   fontWeight: 600,
   lineHeight: "20.4px",
   letterSpacing: 0.06,
+  margin: "0px",
+  wordBreak: "break-all",
 }));
 
 const StyledInput = styled.input`
@@ -267,6 +282,15 @@ const StyledInput = styled.input`
     border: none;
   }
 `;
+
+const ButtonWrapper = styled("div")(({ theme }) => ({
+  width: "100%",
+  display: "flex",
+  justifyContent: "end",
+  [theme.breakpoints.down("md")]: {
+    justifyContent: "center",
+  },
+}));
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -352,7 +376,7 @@ const DetailPage = () => {
         firstTime = false;
       }
     }
-  }, [detailData]);
+  }, [detailData, referralData]);
 
   const handleInputChange = (label, value) => {
     setData((prevData) => ({
@@ -392,12 +416,45 @@ const DetailPage = () => {
   const handleViewFile = (url) => {
     window.open(url, "_blank");
   };
+  // const StyledDatePicker = styled(DatePicker)({
+  //   "& .MuiInputBase-root": {
+  //     border: "none", // Remove border
+  //     "& input": {
+  //       padding: "0px",
+  //       border: "none", // Remove border
+  //       fontSize: "16px",
+  //       color: "black",
+  //     },
+  //     "& .MuiSvgIcon-root": {
+  //       // Customizing calendar icon
+  //       color: "blue",
+  //     },
+  //   },
+  //   "& .MuiPickersDay-day": {
+  //     // Customizing days in calendar
+  //     fontSize: "14px",
+  //     color: "black",
+  //     "&:hover": {
+  //       backgroundColor: "rgba(0, 0, 0, 0.04)",
+  //     },
+  //     "&.Mui-selected": {
+  //       backgroundColor: "blue",
+  //       color: "white",
+  //       "&:hover": {
+  //         backgroundColor: "blue",
+  //       },
+  //     },
+  //   },
+  //   "& .MuiOutlinedInput-notchedOutline": {
+  //     // border: "none",
+  //     border: "1px solid red !important",
+  //   },
+  // });
 
   const handleCheckboxChange = () => {
     setIsCancelled(!isCancelled);
     handleInputChange("is_cancelled", !isCancelled);
   };
-  console.log(JSON.stringify(referralDetailData));
   return isLoading ? (
     <CircularProgress disableShrink />
   ) : (
@@ -412,7 +469,7 @@ const DetailPage = () => {
             <Column>
               <ColumnHeader variant="h3">Referral Information</ColumnHeader>
               <ContentWrapper>
-                {referralDetailData.slice(0, 6).map((item, index) => (
+                {referralDetailData.slice(0, 8).map((item, index) => (
                   <div key={index}>
                     {item.key === "Referral Description" ? (
                       <DescriptionWrapper>
@@ -436,7 +493,11 @@ const DetailPage = () => {
               </ContentWrapper>
               <CheckWrapper>
                 <Checked
-                  control={<Checkbox defaultChecked />}
+                  control={
+                    <Checkbox
+                      checked={referralData?.preauthorization_required}
+                    />
+                  }
                   style={{ pointerEvents: "none" }}
                   label="Preauthorization Required"
                 />
@@ -446,35 +507,42 @@ const DetailPage = () => {
               <ColumnHeader>Referral Information</ColumnHeader>
 
               <ContentWrapper>
-                {referralDetailData.slice(7, 14).map((item, index) => (
-                  <Card key={index}>
-                    <Label>{item.key}</Label>
-                    {typeof item.value === "boolean" ? (
-                      <Select
-                        key={item.label}
-                        labelId="demo-simple-select-standard-label"
-                        id="demo-simple-select-standard"
-                        defaultValue={item.value === true ? "Yes" : "No"}
-                        onChange={(option) => {
-                          handleDropDownChange(item.label, option.target.value);
-                        }}
-                        sx={dropDownStyling}
-                      >
-                        <MenuItem value={"Yes"}>Yes</MenuItem>
-                        <MenuItem value={"No"}>No</MenuItem>
-                      </Select>
-                    ) : item.editable === true ? (
-                      <StyledInput
-                        name="attachments"
-                        defaultValue={item.value}
-                        onChange={(e) =>
-                          handleInputChange(item.label, e.target.value)
-                        }
-                      />
-                    ) : (
-                      <Value variant="h6">{item.value}</Value>
-                    )}
-                  </Card>
+                {referralDetailData.slice(8, 21).map((item, index) => (
+                  <>
+                    <Card key={index}>
+                      <Label>{item.key}</Label>
+                      {typeof item.value === "boolean" ? (
+                        <Select
+                          key={item.label}
+                          labelId="demo-simple-select-standard-label"
+                          id="demo-simple-select-standard"
+                          defaultValue={item.value === true ? "Yes" : "No"}
+                          onChange={(option) => {
+                            handleDropDownChange(
+                              item.label,
+                              option.target.value
+                            );
+                          }}
+                          sx={dropDownStyling}
+                        >
+                          <MenuItem value={"Yes"}>Yes</MenuItem>
+                          <MenuItem value={"No"}>No</MenuItem>
+                        </Select>
+                      ) : item.datePicker === true ? (
+                        <Value variant="h6">{item.value}</Value>
+                      ) : item.editable === true ? (
+                        <StyledInput
+                          name="attachments"
+                          defaultValue={item.value}
+                          onChange={(e) =>
+                            handleInputChange(item.label, e.target.value)
+                          }
+                        />
+                      ) : (
+                        <Value variant="h6">{item.value}</Value>
+                      )}
+                    </Card>
+                  </>
                 ))}
               </ContentWrapper>
               <CheckWrapper>
@@ -541,7 +609,7 @@ const DetailPage = () => {
                     <Divider />
                   </FileUploadTextWrapper>
                   <UploadedFiles>
-                    {referralDetailData.slice(14, 15).map((item, index) => (
+                    {referralDetailData.slice(22, 22).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
                           <UploadedFile
@@ -550,6 +618,7 @@ const DetailPage = () => {
                             style={{ cursor: "pointer" }}
                           >
                             <AttachFileIcon fontSize="large" />
+
                             <FileText>
                               {getFileNameFromURL(innerItem.attachment)}
                             </FileText>
@@ -568,9 +637,7 @@ const DetailPage = () => {
               </ContentWrapperV2>
             </Column>
           </Container>
-          <div
-            style={{ width: "100%", display: "flex", justifyContent: "end" }}
-          >
+          <ButtonWrapper>
             <Button
               variant="contained"
               disabled={Object.keys(data).length === 0}
@@ -583,7 +650,7 @@ const DetailPage = () => {
             >
               Save Changes
             </Button>
-          </div>
+          </ButtonWrapper>
         </>
       )}
     </MainWrapper>

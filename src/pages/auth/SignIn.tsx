@@ -22,12 +22,7 @@ const Wrapper = styled(Paper)`
   }
 `;
 
-const BigAvatar = styled(Avatar)`
-  width: 92px;
-  height: 92px;
-  text-align: center;
-  margin: 0 auto ${(props) => props.theme.spacing(5)};
-`;
+
 const ImageWrapper=styled('div')`
   display:flex;
    justify-content:center;

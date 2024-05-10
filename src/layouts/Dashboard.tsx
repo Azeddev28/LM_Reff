@@ -25,7 +25,7 @@ const Root = styled.div`
 `;
 
 const Drawer = styled.div`
-  ${(props) => props.theme.breakpoints.up("md")} {
+  ${(props) => props.theme.breakpoints.up("screen_1200")} {
     width: ${drawerWidth}px;
     flex-shrink: 0;
   }
@@ -81,7 +81,7 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
       
       <Drawer>
 
-        <Box sx={{ display: { xs: "block", lg: "none" } }}>
+        <Box sx={{ display: { xs: "block", screen_1200: "none" } }}>
           <Sidebar
             PaperProps={{ style: { width: drawerWidth } }}
             variant="temporary"
@@ -90,7 +90,7 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
             items={dashboardItems}
           />
         </Box>
-        <Box sx={{ display: { xs: "none", md: "block" } }}>
+        <Box sx={{ display: { xs: "none", screen_1200: "block" } }}>
           <Sidebar
             PaperProps={{ style: { width: drawerWidth } }}
             items={dashboardItems}
