@@ -326,6 +326,7 @@ const DetailPage = () => {
     isSuccess,
   } = useGetReferralDetailQuery(id);
 
+  console.log("Referral Data", referralData);
   useEffect(() => {
     setReferralDetail(referralData);
   }, [referralData]);
@@ -403,6 +404,40 @@ const DetailPage = () => {
   const handleViewFile = (url) => {
     window.open(url, "_blank");
   };
+  // const StyledDatePicker = styled(DatePicker)({
+  //   "& .MuiInputBase-root": {
+  //     border: "none", // Remove border
+  //     "& input": {
+  //       padding: "0px",
+  //       border: "none", // Remove border
+  //       fontSize: "16px",
+  //       color: "black",
+  //     },
+  //     "& .MuiSvgIcon-root": {
+  //       // Customizing calendar icon
+  //       color: "blue",
+  //     },
+  //   },
+  //   "& .MuiPickersDay-day": {
+  //     // Customizing days in calendar
+  //     fontSize: "14px",
+  //     color: "black",
+  //     "&:hover": {
+  //       backgroundColor: "rgba(0, 0, 0, 0.04)",
+  //     },
+  //     "&.Mui-selected": {
+  //       backgroundColor: "blue",
+  //       color: "white",
+  //       "&:hover": {
+  //         backgroundColor: "blue",
+  //       },
+  //     },
+  //   },
+  //   "& .MuiOutlinedInput-notchedOutline": {
+  //     // border: "none",
+  //     border: "1px solid red !important",
+  //   },
+  // });
 
   return isLoading ? (
     <CircularProgress disableShrink />
@@ -418,7 +453,7 @@ const DetailPage = () => {
             <Column>
               <ColumnHeader variant="h3">Referral Information</ColumnHeader>
               <ContentWrapper>
-                {referralDetailData.slice(0, 6).map((item, index) => (
+                {referralDetailData.slice(0, 8).map((item, index) => (
                   <div key={index}>
                     {item.key === "Referral Description" ? (
                       <DescriptionWrapper>
@@ -452,35 +487,43 @@ const DetailPage = () => {
               <ColumnHeader>Referral Information</ColumnHeader>
 
               <ContentWrapper>
-                {referralDetailData.slice(7, 14).map((item, index) => (
-                  <Card key={index}>
-                    <Label>{item.key}</Label>
-                    {typeof item.value === "boolean" ? (
-                      <Select
-                        key={item.label}
-                        labelId="demo-simple-select-standard-label"
-                        id="demo-simple-select-standard"
-                        defaultValue={item.value === true ? "Yes" : "No"}
-                        onChange={(option) => {
-                          handleDropDownChange(item.label, option.target.value);
-                        }}
-                        sx={dropDownStyling}
-                      >
-                        <MenuItem value={"Yes"}>Yes</MenuItem>
-                        <MenuItem value={"No"}>No</MenuItem>
-                      </Select>
-                    ) : item.editable === true ? (
-                      <StyledInput
-                        name="attachments"
-                        defaultValue={item.value}
-                        onChange={(e) =>
-                          handleInputChange(item.label, e.target.value)
-                        }
-                      />
-                    ) : (
-                      <Value variant="h6">{item.value}</Value>
-                    )}
-                  </Card>
+                {referralDetailData.slice(8, 21).map((item, index) => (
+                  <>
+                    {console.log("item", item)}
+                    <Card key={index}>
+                      <Label>{item.key}</Label>
+                      {typeof item.value === "boolean" ? (
+                        <Select
+                          key={item.label}
+                          labelId="demo-simple-select-standard-label"
+                          id="demo-simple-select-standard"
+                          defaultValue={item.value === true ? "Yes" : "No"}
+                          onChange={(option) => {
+                            handleDropDownChange(
+                              item.label,
+                              option.target.value
+                            );
+                          }}
+                          sx={dropDownStyling}
+                        >
+                          <MenuItem value={"Yes"}>Yes</MenuItem>
+                          <MenuItem value={"No"}>No</MenuItem>
+                        </Select>
+                      ) : item.datePicker === true ? (
+                        <Value variant="h6">{item.value}</Value>
+                      ) : item.editable === true ? (
+                        <StyledInput
+                          name="attachments"
+                          defaultValue={item.value}
+                          onChange={(e) =>
+                            handleInputChange(item.label, e.target.value)
+                          }
+                        />
+                      ) : (
+                        <Value variant="h6">{item.value}</Value>
+                      )}
+                    </Card>
+                  </>
                 ))}
               </ContentWrapper>
               <CheckWrapper>
@@ -542,7 +585,7 @@ const DetailPage = () => {
                     <Divider />
                   </FileUploadTextWrapper>
                   <UploadedFiles>
-                    {referralDetailData.slice(14, 15).map((item, index) => (
+                    {referralDetailData.slice(22, 22).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
                           <UploadedFile
