@@ -367,15 +367,14 @@ const DetailPage = () => {
   };
 
   const referralDetailData = Object.values(detailData);
-  let firstTime = true;
+
   useEffect(() => {
-    if (referralDetailData.length > 0 && firstTime === true) {
+    if (referralDetailData.length > 0) {
       const cancelledReferral = referralDetailData.find(
         (item) => item.label === "is_cancelled"
       );
       if (cancelledReferral) {
         setIsCancelled(cancelledReferral.value);
-        firstTime = false;
       }
     }
   }, [detailData, referralData]);
