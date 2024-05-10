@@ -474,7 +474,7 @@ const DetailPage = () => {
               </CheckWrapper>
             </Column>
             <Column>
-              <ColumnHeader>Referral Information</ColumnHeader>
+              <ColumnHeader>Referral Details</ColumnHeader>
 
               <ContentWrapper>
                 {referralDetailData.slice(8, 21).map((item, index) => (
