@@ -5,35 +5,30 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import styled from "@emotion/styled";
-import { TextField } from "@mui/material";
 
 const StyledDatePicker = styled(DatePicker)({
   "& .MuiInputBase-root": {
-    border: "none", // Remove border
-    height: "20px",
+    border: "none",
+    height: "17px",
     "& input": {
-      padding: "0px 20px 0px 0px",
-      border: "none", // Remove border
-      fontSize: "16px",
+      padding: "0px 40px 0px 0px",
+      border: "none",
+      fontSize: "14px",
+      fontWeight: 400,
       color: "black",
-      height: "20px",
+      height: "17px",
     },
-    // "& .MuiStack-root": {
-    //   paddingTop: "0px !important",
-    // },
 
     "& .MuiSvgIcon-root": {
-      // Customizing calendar icon
       color: "#2f65cb",
-      height: "16px",
-      width: "16px",
+      height: "17px",
+      width: "17px",
     },
     "& .MuiIconButton-root": {
       padding: "0px !important",
     },
   },
   "& .MuiPickersDay-day": {
-    // Customizing days in calendar
     fontSize: "14px",
     color: "black",
     "&:hover": {
@@ -51,17 +46,11 @@ const StyledDatePicker = styled(DatePicker)({
     border: "none",
     // border: "1px solid red !important",
   },
-  //   ".css-1d11lhx-MuiStack-root": {
-  //     paddingTop: "0px !important",
-  //   },
+
   "& .MuiStack-root": {
     paddingTop: "0px !important",
   },
-  //   "& .MuiPaper-root": {
-  //     "& .MuiStack-root": {
-  //       paddingTop: "0px !important",
-  //     },
-  //   },
+
   "& .MuiButtonBase-root-MuiIconButton-root": {
     padding: "0px",
   },
@@ -72,7 +61,7 @@ const DatePickerComponent = ({ date, handleInputChange, label }) => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    handleInputChange(label, date.format("YYYY-MM-DD")); // Convert date to desired format
+    handleInputChange(label, date.format("YYYY-MM-DD"));
   };
 
   useEffect(() => {

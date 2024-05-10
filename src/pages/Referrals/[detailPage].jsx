@@ -478,45 +478,40 @@ const DetailPage = () => {
 
               <ContentWrapper>
                 {referralDetailData.slice(8, 21).map((item, index) => (
-                  <>
-                    <Card key={index}>
-                      <Label>{item.key}</Label>
-                      {typeof item.value === "boolean" ? (
-                        <Select
-                          key={item.label}
-                          labelId="demo-simple-select-standard-label"
-                          id="demo-simple-select-standard"
-                          defaultValue={item.value === true ? "Yes" : "No"}
-                          onChange={(option) => {
-                            handleDropDownChange(
-                              item.label,
-                              option.target.value
-                            );
-                          }}
-                          sx={dropDownStyling}
-                        >
-                          <MenuItem value={"Yes"}>Yes</MenuItem>
-                          <MenuItem value={"No"}>No</MenuItem>
-                        </Select>
-                      ) : item.datePicker === true ? (
-                        <DatePickerComponent
-                          date={item.value}
-                          handleInputChange={handleInputChange}
-                          label={item.label}
-                        />
-                      ) : item.editable === true ? (
-                        <StyledInput
-                          name="attachments"
-                          defaultValue={item.value}
-                          onChange={(e) =>
-                            handleInputChange(item.label, e.target.value)
-                          }
-                        />
-                      ) : (
-                        <Value variant="h6">{item.value}</Value>
-                      )}
-                    </Card>
-                  </>
+                  <Card key={index}>
+                    <Label>{item.key}</Label>
+                    {typeof item.value === "boolean" ? (
+                      <Select
+                        key={item.label}
+                        labelId="demo-simple-select-standard-label"
+                        id="demo-simple-select-standard"
+                        defaultValue={item.value === true ? "Yes" : "No"}
+                        onChange={(option) => {
+                          handleDropDownChange(item.label, option.target.value);
+                        }}
+                        sx={dropDownStyling}
+                      >
+                        <MenuItem value={"Yes"}>Yes</MenuItem>
+                        <MenuItem value={"No"}>No</MenuItem>
+                      </Select>
+                    ) : item.datePicker === true ? (
+                      <DatePickerComponent
+                        date={item.value}
+                        handleInputChange={handleInputChange}
+                        label={item.label}
+                      />
+                    ) : item.editable === true ? (
+                      <StyledInput
+                        name="attachments"
+                        defaultValue={item.value}
+                        onChange={(e) =>
+                          handleInputChange(item.label, e.target.value)
+                        }
+                      />
+                    ) : (
+                      <Value variant="h6">{item.value}</Value>
+                    )}
+                  </Card>
                 ))}
               </ContentWrapper>
               <CheckWrapper>
