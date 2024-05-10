@@ -275,6 +275,7 @@ const DetailPage = () => {
   const [data, setData] = useState({});
   const [fileList, setFileList] = useState([]);
   const [loader, setLoader] = useState(false);
+  const [isCancelled, setIsCancelled] = useState(false);
 
   const [updateReferral, {}] = useUpdateReferralMutation();
   const [
@@ -340,6 +341,18 @@ const DetailPage = () => {
   };
 
   const referralDetailData = Object.values(detailData);
+  let firstTime = true;
+  useEffect(() => {
+    if (referralDetailData.length > 0 && firstTime === true) {
+      const cancelledReferral = referralDetailData.find(
+        (item) => item.label === "is_cancelled"
+      );
+      if (cancelledReferral) {
+        setIsCancelled(cancelledReferral.value);
+        firstTime = false;
+      }
+    }
+  }, [detailData]);
 
   const handleInputChange = (label, value) => {
     setData((prevData) => ({
@@ -380,6 +393,11 @@ const DetailPage = () => {
     window.open(url, "_blank");
   };
 
+  const handleCheckboxChange = () => {
+    setIsCancelled(!isCancelled);
+    handleInputChange("is_cancelled", !isCancelled);
+  };
+  console.log(JSON.stringify(referralDetailData));
   return isLoading ? (
     <CircularProgress disableShrink />
   ) : (
@@ -461,7 +479,12 @@ const DetailPage = () => {
               </ContentWrapper>
               <CheckWrapper>
                 <Checked
-                  control={<Checkbox defaultChecked />}
+                  control={
+                    <Checkbox
+                      checked={isCancelled}
+                      onChange={handleCheckboxChange}
+                    />
+                  }
                   label="Procedure Cancelled"
                 />
               </CheckWrapper>
