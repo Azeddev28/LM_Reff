@@ -1,13 +1,13 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import authReducer from './slices/authSlice';
-import referralReducer from './slices/referralSlice';
+// import referralReducer from './slices/referralSlice';
 import { referralApi } from "./slices/referralAPiSlice";
 import { loginApi } from "./slices/authSlice";
 
 export const store = configureStore({
   reducer: {
     auth:authReducer,
-    referral:referralReducer,
+    // referral:referralReducer,
     [referralApi.reducerPath]: referralApi.reducer,
     [loginApi.reducerPath]:loginApi.reducer
   },

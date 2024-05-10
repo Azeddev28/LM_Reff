@@ -10,13 +10,8 @@ import AuthGuard from "./components/guards/AuthGuard";
 const routes = [
   {
     path: "/",
-    element:  <DashboardLayout  /> ,
-    children: [
-      {
-        path: "/",
-        element: <Referrals />,
-      }, 
-    ],
+    element:  <DashboardLayout> <Referrals /></DashboardLayout> ,
+    
   },
   {
     path: "/claims",

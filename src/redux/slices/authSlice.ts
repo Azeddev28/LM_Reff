@@ -1,6 +1,5 @@
 import { createSlice,  createSelector } from '@reduxjs/toolkit';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-// import { getRoute } from '../../api/backendRoutes';
 
 
 export const  loginApi = createApi({
@@ -24,21 +23,6 @@ export const  loginApi = createApi({
 })
 
 
-
-// export const login = createAsyncThunk(
-//   'auth/login',
-//   async (credentials, { dispatch, rejectWithValue }) => {
-//     try {
-//       const response = await postRequest("http://3.6.94.153/api/auth/login/", credentials);
-//       dispatch(setAuthenticated(true));
-//       dispatch(setAccessToken(response.access));
-//       localStorage.setItem('access', response.access);
-//       return response.data;
-//     } catch (error: any) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
 interface AuthState {
   isAuthenticated: boolean;
   userName:string;
@@ -68,20 +52,7 @@ const authSlice = createSlice({
     }
     
   },
-  // extraReducers: (builder) => {
-  //   builder.addCase(login.pending, (state) => {
-  //     state.loading = 'pending';
-  //     state.error = null;
-  //   });
-  //   builder.addCase(login.fulfilled, (state, action) => {
-  //     state.loading = 'idle';
-  //     state.isAuthenticated = true;
-  //   });
-  //   builder.addCase(login.rejected, (state, action) => {
-  //     state.loading = 'idle';
-  //     state.error = action.payload as string;
-  //   });
-  // },
+  
 });
 
 export const { setAuthenticated,setAccessToken,setUserName } = authSlice.actions;
