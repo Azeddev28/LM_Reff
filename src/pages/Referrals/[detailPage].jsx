@@ -20,6 +20,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Checkbox from "@mui/material/Checkbox";
 import { useUpdateReferralMutation } from "../../redux/slices/referralAPiSlice";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
+import DatePickerComponent from "../../components/DatePicker";
 
 const Heading = styled(Typography)(({ theme }) => ({
   color: "rgba(0, 0, 0, 0.87)",
@@ -89,7 +90,7 @@ const ColumnHeader = styled(Typography)(({}) => ({
 }));
 
 const Card = styled("div")(({ value }) => ({
-  height: "48px",
+  height: "50px",
   borderBottom: typeof value === "boolean" ? "none" : "1px solid black",
   display: "flex",
   gap: "10px",
@@ -404,40 +405,6 @@ const DetailPage = () => {
   const handleViewFile = (url) => {
     window.open(url, "_blank");
   };
-  // const StyledDatePicker = styled(DatePicker)({
-  //   "& .MuiInputBase-root": {
-  //     border: "none", // Remove border
-  //     "& input": {
-  //       padding: "0px",
-  //       border: "none", // Remove border
-  //       fontSize: "16px",
-  //       color: "black",
-  //     },
-  //     "& .MuiSvgIcon-root": {
-  //       // Customizing calendar icon
-  //       color: "blue",
-  //     },
-  //   },
-  //   "& .MuiPickersDay-day": {
-  //     // Customizing days in calendar
-  //     fontSize: "14px",
-  //     color: "black",
-  //     "&:hover": {
-  //       backgroundColor: "rgba(0, 0, 0, 0.04)",
-  //     },
-  //     "&.Mui-selected": {
-  //       backgroundColor: "blue",
-  //       color: "white",
-  //       "&:hover": {
-  //         backgroundColor: "blue",
-  //       },
-  //     },
-  //   },
-  //   "& .MuiOutlinedInput-notchedOutline": {
-  //     // border: "none",
-  //     border: "1px solid red !important",
-  //   },
-  // });
 
   return isLoading ? (
     <CircularProgress disableShrink />
@@ -510,7 +477,11 @@ const DetailPage = () => {
                           <MenuItem value={"No"}>No</MenuItem>
                         </Select>
                       ) : item.datePicker === true ? (
-                        <Value variant="h6">{item.value}</Value>
+                        <DatePickerComponent
+                          date={item.value}
+                          handleInputChange={handleInputChange}
+                          label={item.label}
+                        />
                       ) : item.editable === true ? (
                         <StyledInput
                           name="attachments"
