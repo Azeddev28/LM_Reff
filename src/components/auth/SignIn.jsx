@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useLoginMutation } from "../../redux/slices/authSlice";
@@ -18,13 +18,13 @@ import {
 } from "@mui/material";
 import { spacing } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
-
 const TextField = styled(MuiTextField)(({}) => ({
   margin: "16px 0px",
 }));
 
 function SignIn() {
   const dispatch = useDispatch();
+  const navigation = useNavigate();
   const [
     login,
     { data: loginData, isSuccess: loginSuccessFull, isError: loginError },
@@ -35,9 +35,17 @@ function SignIn() {
   const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // New state for severity
 
   useEffect(() => {
+    const access = localStorage.getItem("access");
+    if (access) {
+      navigation("/");
+    }
+  }, [navigation]);
+
+  useEffect(() => {
     if (loginSuccessFull) {
       dispatch(setAuthenticated(true));
       dispatch(setAccessToken(loginData.access));
+      console.log(loginData.access);
       localStorage.setItem("access", loginData.access);
       setSnackbarMessage("Successfully logged in");
       setSnackbarOpen(true);

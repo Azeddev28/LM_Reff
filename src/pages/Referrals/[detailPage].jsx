@@ -21,6 +21,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useUpdateReferralMutation } from "../../redux/slices/referralAPiSlice";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DatePickerComponent from "../../components/DatePicker";
+import dayjs from "dayjs";
 
 const Heading = styled(Typography)(({ theme }) => ({
   color: "rgba(0, 0, 0, 0.87)",
@@ -277,7 +278,8 @@ const FileText = styled("p")(({}) => ({
 const StyledInput = styled.input`
   border: none;
   outline: none;
-
+  padding: 0;
+  padding-bottom: 5;
   &:focus {
     outline: none;
     border: none;
@@ -300,6 +302,7 @@ const DetailPage = () => {
   const [data, setData] = useState({});
   const [fileList, setFileList] = useState([]);
   const [loader, setLoader] = useState(false);
+  const [isCancelled, setIsCancelled] = useState(false);
 
   const [updateReferral, {}] = useUpdateReferralMutation();
   const [
@@ -327,7 +330,6 @@ const DetailPage = () => {
     isSuccess,
   } = useGetReferralDetailQuery(id);
 
-  // console.log("Referral Data", referralData);
   useEffect(() => {
     setReferralDetail(referralData);
   }, [referralData]);
@@ -366,6 +368,17 @@ const DetailPage = () => {
   };
 
   const referralDetailData = Object.values(detailData);
+
+  useEffect(() => {
+    if (referralDetailData.length > 0) {
+      const cancelledReferral = referralDetailData.find(
+        (item) => item.label === "is_cancelled"
+      );
+      if (cancelledReferral) {
+        setIsCancelled(cancelledReferral.value);
+      }
+    }
+  }, [detailData, referralData]);
 
   const handleInputChange = (label, value) => {
     setData((prevData) => ({
@@ -406,6 +419,11 @@ const DetailPage = () => {
     window.open(url, "_blank");
   };
 
+  const handleCheckboxChange = () => {
+    setIsCancelled(!isCancelled);
+    handleInputChange("is_cancelled", !isCancelled);
+  };
+
   return isLoading ? (
     <CircularProgress disableShrink />
   ) : (
@@ -434,6 +452,10 @@ const DetailPage = () => {
                           ""
                         ) : item.editable === true ? (
                           <h1>Editable</h1>
+                        ) : item.key === "Referral Receipt Date" ? (
+                          <Value variant="h6">
+                            {dayjs(item.value).format("DD-MM-YYYY")}
+                          </Value>
                         ) : (
                           <Value variant="h6">{item.value}</Value>
                         )}
@@ -444,14 +466,18 @@ const DetailPage = () => {
               </ContentWrapper>
               <CheckWrapper>
                 <Checked
-                  control={<Checkbox defaultChecked />}
+                  control={
+                    <Checkbox
+                      checked={referralData?.preauthorization_required}
+                    />
+                  }
                   style={{ pointerEvents: "none" }}
                   label="Preauthorization Required"
                 />
               </CheckWrapper>
             </Column>
             <Column>
-              <ColumnHeader>Referral Information</ColumnHeader>
+              <ColumnHeader>Referral Details</ColumnHeader>
 
               <ContentWrapper>
                 {referralDetailData.slice(8, 21).map((item, index) => (
@@ -493,7 +519,12 @@ const DetailPage = () => {
               </ContentWrapper>
               <CheckWrapper>
                 <Checked
-                  control={<Checkbox defaultChecked />}
+                  control={
+                    <Checkbox
+                      checked={isCancelled}
+                      onChange={handleCheckboxChange}
+                    />
+                  }
                   label="Procedure Cancelled"
                 />
               </CheckWrapper>
