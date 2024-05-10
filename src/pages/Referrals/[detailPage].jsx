@@ -21,6 +21,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useUpdateReferralMutation } from "../../redux/slices/referralAPiSlice";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DatePickerComponent from "../../components/DatePicker";
+import dayjs from "dayjs";
 
 const Heading = styled(Typography)(({ theme }) => ({
   color: "rgba(0, 0, 0, 0.87)",
@@ -452,7 +453,9 @@ const DetailPage = () => {
                         ) : item.editable === true ? (
                           <h1>Editable</h1>
                         ) : item.key === "Referral Receipt Date" ? (
-                          <Value variant="h6">{item.value.split("T")[0]}</Value>
+                          <Value variant="h6">
+                            {dayjs(item.value).format("DD-MM-YYYY")}
+                          </Value>
                         ) : (
                           <Value variant="h6">{item.value}</Value>
                         )}
