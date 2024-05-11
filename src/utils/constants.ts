@@ -153,7 +153,7 @@ export const REFERRAL_HEADER_DATA = [
     {
         'key': 'patient_name',
         'display': "Patient Name",
-        'sortKey': 'patient_full_name'
+        'sortKey': 'patient__name'
     },
     {
         'key': 'dob',
@@ -168,7 +168,7 @@ export const REFERRAL_HEADER_DATA = [
     {
         'key': 'payer',
         'display': 'Payer',
-        'sortKey': 'convener_full_name'
+        'sortKey': 'convener__name'
     }
 ]
 
@@ -176,7 +176,7 @@ export const CLAIMS_HEADER_DATA = [
     {
         'key': 'patient_name',
         'display': "Patient Name",
-        'sortKey': 'patient_full_name'
+        'sortKey': 'patient__name'
     },
     {
         'key': 'date_of_service',
@@ -206,7 +206,7 @@ export const CLAIMS_HEADER_DATA = [
     {
         'key': 'payer',
         'display': "Payer",
-        'sortKey': 'convener_full_name'
+        'sortKey': 'convener__name'
     },
     {
         'key': 'claim_status',
@@ -222,8 +222,8 @@ export const EMPLOYER_HEADER_DATA = [
         'sortKey': 'name'
     },
     {
-        'key': 'employer_name',
+        'key': 'convener__name',
         'display': "Payer",
-        'sortKey': 'convener_full_name'
+        'sortKey': 'convener__name'
     }
 ]

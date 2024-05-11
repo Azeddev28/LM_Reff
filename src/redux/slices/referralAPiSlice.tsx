@@ -6,7 +6,7 @@ import { getAccessToken } from './authSlice';
 export const referralApi = createApi({
   reducerPath: 'referralApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://3.6.94.153/api',
+    baseUrl: import.meta.env.VITE_BASE_URL,
     prepareHeaders: async (headers, { getState }) => {
       const accessToken = getAccessToken(getState());
       if (accessToken) {

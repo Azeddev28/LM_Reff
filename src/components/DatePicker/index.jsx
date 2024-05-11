@@ -7,19 +7,19 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import styled from "@emotion/styled";
 
 const StyledDatePicker = styled(DatePicker)({
+  width: "100%",
   "& .MuiInputBase-root": {
-    border: "none",
     height: "17px",
-    width: "130%",
+    border: "none",
+
     "& input": {
-      padding: "0px 40px 0px 0px",
+      padding: "0px 0px 0px 0px",
       border: "none",
       fontSize: "14px",
       fontWeight: 400,
       color: "black",
       height: "17px",
     },
-
     "& .MuiSvgIcon-root": {
       color: "#2f65cb",
       height: "17px",
@@ -45,11 +45,6 @@ const StyledDatePicker = styled(DatePicker)({
   },
   "& .MuiOutlinedInput-notchedOutline": {
     border: "none",
-    // border: "1px solid red !important",
-  },
-
-  "& .MuiStack-root": {
-    paddingTop: "0px !important",
   },
 
   "& .MuiButtonBase-root-MuiIconButton-root": {
