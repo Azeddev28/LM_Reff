@@ -5,6 +5,7 @@ import PaginatedTable from "../../components/Table/PaginatedTable";
 import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
 import { useGetClaimsQuery } from "../../redux/slices/referralAPiSlice";
+import { getRoute } from "../../api/BackendRoutes";
 
 const TableWrapper = styled("div")(({}) => ({
   marginTop: "20px",
@@ -26,7 +27,7 @@ const Claims = () => {
         <PaginatedTable
           query={useGetClaimsQuery}
           pageData={{
-            url: "http://3.6.94.153/api/claims",
+            url: getRoute("claimList"),
             search: searchValue,
           }}
           headerData={CLAIMS_HEADER_DATA}

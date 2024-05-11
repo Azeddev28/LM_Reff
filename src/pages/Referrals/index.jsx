@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
 import { set } from "date-fns";
+import { getRoute } from "../../api/BackendRoutes";
 
 const TableWrapper = styled("div")(({}) => ({
   marginTop: "20px",
@@ -27,7 +28,7 @@ const Referrals = () => {
           query={useGetReferralsQuery}
           headerData={REFERRAL_HEADER_DATA}
           pageData={{
-            url: "http://3.6.94.153/api/referrals/",
+            url: getRoute("referralList"),
             search: searchValue,
           }}
           navigateDetail={true}

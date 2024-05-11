@@ -5,6 +5,7 @@ import { EMPLOYER_HEADER_DATA } from "../../utils/constants";
 import PaginatedTable from "../../components/Table/PaginatedTable";
 import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
+import { getRoute } from "../../api/BackendRoutes";
 
 const TableWrapper = styled("div")(({}) => ({
   marginTop: "20px",
@@ -25,7 +26,7 @@ const EmployerList = () => {
       <TableWrapper>
         <PaginatedTable
           pageData={{
-            url: "http://3.6.94.153/api/users/employer-list",
+            url: getRoute("employerList"),
             search: searchValue,
           }}
           query={useGetEmployeesQuery}

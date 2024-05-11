@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getAccessToken } from './authSlice'; 
 
 
-
 export const referralApi = createApi({
   reducerPath: 'referralApi',
   baseQuery: fetchBaseQuery({
@@ -16,7 +15,7 @@ export const referralApi = createApi({
     },
 
   }),
-
+  
   endpoints: (builder) => ({
     getReferrals: builder.query({
       query: (url) => url,
@@ -107,8 +106,6 @@ export const referralApi = createApi({
     }),  
 
 }),
-
-
    
 })
 
