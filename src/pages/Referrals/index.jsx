@@ -3,7 +3,9 @@ import DashboardHeader from "../../components/DashboardHeader";
 import { REFERRAL_HEADER_DATA } from "../../utils/constants";
 import PaginatedTable from "../../components/Table/PaginatedTable";
 import styled from "@emotion/styled";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { setUserName } from "../../redux/slices/authSlice";
+import { useGetProfileQuery } from "../../redux/slices/referralAPiSlice";
 import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
 import { set } from "date-fns";
 import { getRoute } from "../../api/BackendRoutes";
@@ -14,7 +16,11 @@ const TableWrapper = styled("div")(({}) => ({
 
 const Referrals = () => {
   const [searchValue, setSearchValue] = useState(null);
-  const { userName } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const { data, isSuccess } = useGetProfileQuery();
+  const userName = isSuccess ? data.name : "";
+  dispatch(setUserName(userName));
+
   return (
     <div>
       <DashboardHeader
