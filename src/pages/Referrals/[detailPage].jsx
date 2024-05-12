@@ -3,14 +3,13 @@ import { useParams } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import {
   CircularProgress,
-  Select,
-  MenuItem,
   Button,
   FormControlLabel,
   Typography,
   Divider,
 } from "@mui/material";
 import styled from "@emotion/styled";
+import StyledInput from "../../components/StyledInput";
 import {
   useGetReferralDetailQuery,
   useLazyGetReferralDetailQuery,
@@ -22,6 +21,7 @@ import { useUpdateReferralMutation } from "../../redux/slices/referralAPiSlice";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DatePickerComponent from "../../components/DatePicker";
 import dayjs from "dayjs";
+import DropDown from "../../components/DropDown";
 
 const Heading = styled(Typography)(({ theme }) => ({
   color: "rgba(0, 0, 0, 0.87)",
@@ -275,17 +275,6 @@ const FileText = styled("p")(({}) => ({
   wordBreak: "break-all",
 }));
 
-const StyledInput = styled.input`
-  border: none;
-  outline: none;
-  padding: 0;
-  padding-bottom: 5;
-  &:focus {
-    outline: none;
-    border: none;
-  }
-`;
-
 const ButtonWrapper = styled("div")(({ theme }) => ({
   width: "100%",
   display: "flex",
@@ -310,26 +299,11 @@ const DetailPage = () => {
     { data: updatedReferralDetailData, isSuccess: isSuccessV2 },
   ] = useLazyGetReferralDetailQuery();
 
-  const dropDownStyling = {
-    boxShadow: "none",
-    ".MuiOutlinedInput-notchedOutline": { border: 0 },
-    "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-      border: 0,
-    },
-    "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      border: 0,
-    },
-    "& .MuiSelect-select": {
-      padding: "0px",
-    },
-  };
-
   const {
     data: referralData,
     isLoading,
     isSuccess,
   } = useGetReferralDetailQuery(id);
-
   useEffect(() => {
     setReferralDetail(referralData);
   }, [referralData]);
@@ -358,7 +332,8 @@ const DetailPage = () => {
 
   useEffect(() => {
     if (fileList.length > 0) {
-      handleInputChange("attachments", fileList);
+      const files = fileList.map((obj) => obj.file);
+      handleInputChange("attachments", files);
     }
   }, [fileList]);
 
@@ -391,11 +366,22 @@ const DetailPage = () => {
     const booleanConversion = value == "Yes" ? true : false;
     handleInputChange(label, booleanConversion);
   };
+  // const handleFiles = (files) => {
+  //   for (let i = 0; i < files.length; i++) {
+  //     const file = files[i];
+  //     setFileList((prevFileList) => [...prevFileList, file]);
+  //   }
+  // };
   const handleFiles = (files) => {
+    const updatedFileList = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      setFileList((prevFileList) => [...prevFileList, file]);
+      updatedFileList.push({
+        file: file,
+        url: URL.createObjectURL(file),
+      });
     }
+    setFileList((prevFileList) => [...prevFileList, ...updatedFileList]);
   };
 
   const handleSubmitChanges = async () => {
@@ -484,19 +470,11 @@ const DetailPage = () => {
                   <Card key={index}>
                     <Label>{item.key}</Label>
                     {typeof item.value === "boolean" ? (
-                      <Select
-                        key={item.label}
-                        labelId="demo-simple-select-standard-label"
-                        id="demo-simple-select-standard"
-                        defaultValue={item.value === true ? "Yes" : "No"}
-                        onChange={(option) => {
-                          handleDropDownChange(item.label, option.target.value);
-                        }}
-                        sx={dropDownStyling}
-                      >
-                        <MenuItem value={"Yes"}>Yes</MenuItem>
-                        <MenuItem value={"No"}>No</MenuItem>
-                      </Select>
+                      <DropDown
+                        dropdownValue={item.value}
+                        handleInputChange={handleInputChange}
+                        label={item.label}
+                      />
                     ) : item.datePicker === true ? (
                       <DatePickerComponent
                         date={item.value}
@@ -505,11 +483,9 @@ const DetailPage = () => {
                       />
                     ) : item.editable === true ? (
                       <StyledInput
-                        name="attachments"
-                        defaultValue={item.value}
-                        onChange={(e) =>
-                          handleInputChange(item.label, e.target.value)
-                        }
+                        inputValue={item.value}
+                        handleInputChange={handleInputChange}
+                        label={item.label}
                       />
                     ) : (
                       <Value variant="h6">{item.value}</Value>
@@ -581,7 +557,7 @@ const DetailPage = () => {
                     <Divider />
                   </FileUploadTextWrapper>
                   <UploadedFiles>
-                    {referralDetailData.slice(22, 22).map((item, index) => (
+                    {referralDetailData.slice(21, 22).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
                           <UploadedFile
@@ -599,9 +575,12 @@ const DetailPage = () => {
                       </React.Fragment>
                     ))}
                     {fileList.map((item, index) => (
-                      <UploadedFile key={index}>
+                      <UploadedFile
+                        key={index}
+                        onClick={() => handleViewFile(item.url)}
+                      >
                         <AttachFileIcon fontSize="large" />
-                        <FileText>{item.name}</FileText>
+                        <FileText>{item.file.name}</FileText>
                       </UploadedFile>
                     ))}
                   </UploadedFiles>

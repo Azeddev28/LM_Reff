@@ -24,12 +24,13 @@ export const REFERRAL_DETAIL_DATA = {
         key: "Practice Name",
         value: "",
         editable: false,
-        label:'assigned_provider',
+        label:'practice_name',
     },
     assigned_provider: {
         key: "Assigned Provider",
         value: "",
         editable: false,
+        label:'assigned_provider',
     },
     specialty: {
         key: "Specialty",
@@ -48,7 +49,6 @@ export const REFERRAL_DETAIL_DATA = {
         value: "",
         editable: false,
         label:'referral_description'
-    
     }, 
     practice_notes:{
         key: "Practice Notes",
@@ -82,7 +82,6 @@ export const REFERRAL_DETAIL_DATA = {
       label:'op_scheduled_date',
       datePicker:true,
      },
-
      intended_procedure:{
         key:"Intended Procedure (CPT Codes)",
         value:"",
@@ -132,7 +131,6 @@ export const REFERRAL_DETAIL_DATA = {
         editable: true,
         label:'post_op_consult_notes',
      },
-
      referral_attachments :{
         key:'',
         value:[],
@@ -145,8 +143,6 @@ export const REFERRAL_DETAIL_DATA = {
         editable:true,
         label:'is_cancelled',
      }
-
-   
 }
 
 export const REFERRAL_HEADER_DATA = [
