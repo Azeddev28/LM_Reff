@@ -22,7 +22,7 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DatePickerComponent from "../../components/DatePicker";
 import dayjs from "dayjs";
 import DropDown from "../../components/DropDown";
-
+import { Checked } from "./style";
 const Heading = styled(Typography)(({ theme }) => ({
   color: "rgba(0, 0, 0, 0.87)",
   // fontFamily: "Nunito",
@@ -47,20 +47,20 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-const Checked = styled(FormControlLabel)(({}) => ({
-  display: "flex",
-  flexDirection: "row",
-  gap: "30px",
-  flex: 1,
-  margin: "0px",
-  color: "rgba(0, 0, 0, 0.87))",
-  // fontFamily: "Nunito",
-  fontSize: 14,
-  fontStyle: "normal",
-  fontWeight: 400,
-  lineHight: "20px",
-  letterSpacing: 0.1,
-}));
+// const Checked = styled(FormControlLabel)(({}) => ({
+//   display: "flex",
+//   flexDirection: "row",
+//   gap: "30px",
+//   flex: 1,
+//   margin: "0px",
+//   color: "rgba(0, 0, 0, 0.87))",
+//   // fontFamily: "Nunito",
+//   fontSize: 14,
+//   fontStyle: "normal",
+//   fontWeight: 400,
+//   lineHight: "20px",
+//   letterSpacing: 0.1,
+// }));
 const CheckWrapper = styled("div")(({}) => ({
   margin: "13px 25px 0px 16px",
 }));

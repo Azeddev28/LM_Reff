@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Drawer as MuiDrawer} from "@mui/material";
 import { SidebarItemsType } from "../../types/sidebar";
 import SidebarNav from "./SidebarNav";
-
+import { useNavigate } from "react-router-dom";
 const Drawer = styled(MuiDrawer)`
   border-right: 0;
 
@@ -21,7 +21,6 @@ const Brand = styled('div')`
   flex-direction:row;
   gap:12px;
   padding:20px 20px 20px 24px;
-
 `;
 
 const LogoText=styled('p')`
@@ -55,9 +54,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   showFooter = true,
   ...rest
 }) => {
+  const navigate=useNavigate();
   return (
     <Drawer variant="permanent" {...rest}>
-      <Brand>
+      <Brand onClick={()=>navigate("/")}>
          <img src="/favicon.svg" alt="logo-image" />
           <LogoText>Luminary Health</LogoText>
       </Brand>
