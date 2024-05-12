@@ -436,7 +436,7 @@ const DetailPage = () => {
               <ColumnHeader>Referral Details</ColumnHeader>
 
               <ContentWrapper>
-                {referralDetailData.slice(8, 21).map((item, index) => (
+                {referralDetailData.slice(8, 24).map((item, index) => (
                   <Card key={index}>
                     <Label>{item.key}</Label>
                     {typeof item.value === "boolean" ? (
@@ -536,7 +536,7 @@ const DetailPage = () => {
                         <FileText>{item.file.name}</FileText>
                       </UploadedFile>
                     ))}
-                    {referralDetailData.slice(21, 22).map((item, index) => (
+                    {referralDetailData.slice(24, 25).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
                           <UploadedFile

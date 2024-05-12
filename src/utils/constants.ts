@@ -56,8 +56,27 @@ export const REFERRAL_DETAIL_DATA = {
         editable: true,
         label:'practice_notes'
     },
-     preop_consult_scheduled_date: {
-        key: "Scheduled Consult Date",
+    initial_consultation_date:{
+        key: "Initial Consultation Date",
+        value: "",
+        editable: true,
+        label:'initial_consultation_date',
+        datePicker:true,
+    },
+    initial_consult_completed:{
+        key: "Initial Consult Completed",
+        value: "",
+        editable: true,
+        label:'initial_consult_completed'
+    },
+    initial_consult_notes:{
+        key: "Initial Consult Notes",
+        value: "",
+        editable: true,
+        label:'initial_consult_notes'
+    },
+    preop_consult_scheduled_date: {
+        key: "Scheduled Pre-Op Consult Date",
         value: "",
         editable: true,
         label:'preop_consult_scheduled_date',
@@ -70,7 +89,7 @@ export const REFERRAL_DETAIL_DATA = {
         label:'preop_consult_completed'
      },
      preop_consult_notes:{
-        key:"Consult Notes",
+        key:"Pre-op Consult Notes",
         value:"",
         editable: true,
         label:'preop_consult_notes',
