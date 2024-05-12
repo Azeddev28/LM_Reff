@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Dropzone from "react-dropzone";
-import {
-  CircularProgress,
-  Button,
-  FormControlLabel,
-  Typography,
-  Divider,
-} from "@mui/material";
+import { CircularProgress, Button, Typography, Divider } from "@mui/material";
 import styled from "@emotion/styled";
 import StyledInput from "../../components/StyledInput";
 import {
@@ -47,20 +41,6 @@ const Container = styled("div")(({ theme }) => ({
   },
 }));
 
-// const Checked = styled(FormControlLabel)(({}) => ({
-//   display: "flex",
-//   flexDirection: "row",
-//   gap: "30px",
-//   flex: 1,
-//   margin: "0px",
-//   color: "rgba(0, 0, 0, 0.87))",
-//   // fontFamily: "Nunito",
-//   fontSize: 14,
-//   fontStyle: "normal",
-//   fontWeight: 400,
-//   lineHight: "20px",
-//   letterSpacing: 0.1,
-// }));
 const CheckWrapper = styled("div")(({}) => ({
   margin: "13px 25px 0px 16px",
 }));
@@ -256,7 +236,7 @@ const UploadedFile = styled("div")(({}) => ({
   flexDirection: "row",
   gap: "16px",
   minHeight: "55px",
-  // height: "fit-content",
+  cursor: "pointer",
   padding: "11px 5px 11px 13px",
   borderRadius: 4,
   background: "#D9D9D9",
@@ -362,16 +342,6 @@ const DetailPage = () => {
     }));
   };
 
-  const handleDropDownChange = (label, value) => {
-    const booleanConversion = value == "Yes" ? true : false;
-    handleInputChange(label, booleanConversion);
-  };
-  // const handleFiles = (files) => {
-  //   for (let i = 0; i < files.length; i++) {
-  //     const file = files[i];
-  //     setFileList((prevFileList) => [...prevFileList, file]);
-  //   }
-  // };
   const handleFiles = (files) => {
     const updatedFileList = [];
     for (let i = 0; i < files.length; i++) {
@@ -557,13 +527,21 @@ const DetailPage = () => {
                     <Divider />
                   </FileUploadTextWrapper>
                   <UploadedFiles>
+                    {fileList.map((item, index) => (
+                      <UploadedFile
+                        key={index}
+                        onClick={() => handleViewFile(item.url)}
+                      >
+                        <AttachFileIcon fontSize="large" />
+                        <FileText>{item.file.name}</FileText>
+                      </UploadedFile>
+                    ))}
                     {referralDetailData.slice(21, 22).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
                           <UploadedFile
                             key={innerIndex}
                             onClick={() => handleViewFile(innerItem.attachment)}
-                            style={{ cursor: "pointer" }}
                           >
                             <AttachFileIcon fontSize="large" />
 
@@ -573,15 +551,6 @@ const DetailPage = () => {
                           </UploadedFile>
                         ))}
                       </React.Fragment>
-                    ))}
-                    {fileList.map((item, index) => (
-                      <UploadedFile
-                        key={index}
-                        onClick={() => handleViewFile(item.url)}
-                      >
-                        <AttachFileIcon fontSize="large" />
-                        <FileText>{item.file.name}</FileText>
-                      </UploadedFile>
                     ))}
                   </UploadedFiles>
                 </UploadedFileSection>
