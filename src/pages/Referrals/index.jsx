@@ -5,8 +5,8 @@ import PaginatedTable from "../../components/Table/PaginatedTable";
 import styled from "@emotion/styled";
 import { useDispatch } from "react-redux";
 import { setUserName } from "../../redux/slices/authSlice";
-import { useGetProfileQuery } from "../../redux/slices/referralAPiSlice";
-import { useGetReferralsQuery } from "../../redux/slices/referralAPiSlice";
+import { useGetProfileQuery } from "../../redux/slices/referralSlice";
+import { useGetReferralsQuery } from "../../redux/slices/referralSlice";
 import { set } from "date-fns";
 import { getRoute } from "../../api/BackendRoutes";
 

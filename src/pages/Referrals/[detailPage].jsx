@@ -13,11 +13,11 @@ import StyledInput from "../../components/StyledInput";
 import {
   useGetReferralDetailQuery,
   useLazyGetReferralDetailQuery,
-} from "../../redux/slices/referralAPiSlice";
+} from "../../redux/slices/referralSlice";
 import { REFERRAL_DETAIL_DATA } from "../../utils/constants";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Checkbox from "@mui/material/Checkbox";
-import { useUpdateReferralMutation } from "../../redux/slices/referralAPiSlice";
+import { useUpdateReferralMutation } from "../../redux/slices/referralSlice";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DatePickerComponent from "../../components/DatePicker";
 import dayjs from "dayjs";

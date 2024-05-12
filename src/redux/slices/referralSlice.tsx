@@ -53,19 +53,7 @@ export const referralApi = createApi({
         }
      }
     }),
-    resetPassword: builder.mutation({
-      query: (email) => ({
-        url: '/auth/password/reset/',
-        method: 'POST',
-        body: email,
-      }),
-      transformErrorResponse:(response)=>{
-        if(response.status===401){
-        
-         window.location.href='/auth/sign-in';
-        }
-     }
-    }),
+   
      
     updateReferral: builder.mutation({
       query: ({ id, data }) => {
@@ -117,7 +105,6 @@ export const {
   useGetEmployeesQuery,
   useUpdateReferralMutation,
   useLazyGetReferralDetailQuery,
-  useResetPasswordMutation,
   useLazyGetProfileQuery,
   useGetProfileQuery,
 } = referralApi;

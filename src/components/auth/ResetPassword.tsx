@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useResetPasswordMutation } from "../../redux/slices/referralAPiSlice";
+import { useResetPasswordMutation } from "../../redux/slices/authSlice";
 
 import {
   Alert as MuiAlert,

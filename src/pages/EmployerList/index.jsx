@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DashboardHeader from "../../components/DashboardHeader";
-import { useGetEmployeesQuery } from "../../redux/slices/referralAPiSlice";
+import { useGetEmployeesQuery } from "../../redux/slices/referralSlice";
 import { EMPLOYER_HEADER_DATA } from "../../utils/constants";
 import PaginatedTable from "../../components/Table/PaginatedTable";
 import styled from "@emotion/styled";

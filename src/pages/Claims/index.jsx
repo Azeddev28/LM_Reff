@@ -4,7 +4,7 @@ import { CLAIMS_HEADER_DATA } from "../../utils/constants";
 import PaginatedTable from "../../components/Table/PaginatedTable";
 import { useSelector } from "react-redux";
 import styled from "@emotion/styled";
-import { useGetClaimsQuery } from "../../redux/slices/referralAPiSlice";
+import { useGetClaimsQuery } from "../../redux/slices/referralSlice";
 import { getRoute } from "../../api/BackendRoutes";
 
 const TableWrapper = styled("div")(({}) => ({

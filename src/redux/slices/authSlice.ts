@@ -17,7 +17,19 @@ export const  loginApi = createApi({
         }
       ),
     }),
-     
+    resetPassword: builder.mutation({
+      query: (email) => ({
+        url: '/auth/password/reset/',
+        method: 'POST',
+        body: email,
+      }),
+      transformErrorResponse:(response)=>{
+        if(response.status===401){
+        
+         window.location.href='/auth/sign-in';
+        }
+     }
+    }),
 
 }),
 })
@@ -69,7 +81,7 @@ export const getAccessToken = createSelector(
 );   
 
 
-export const { useLoginMutation}=loginApi;
+export const { useLoginMutation,useResetPasswordMutation}=loginApi;
 
 export default authSlice.reducer;
 
