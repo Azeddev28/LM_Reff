@@ -31,7 +31,7 @@ const Claims = () => {
             search: searchValue,
           }}
           headerData={CLAIMS_HEADER_DATA}
-          navigateDetail={false}
+          redirectToDetailPage={false}
         />
       </TableWrapper>
     </div>

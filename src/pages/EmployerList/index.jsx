@@ -31,7 +31,7 @@ const EmployerList = () => {
           }}
           query={useGetEmployeesQuery}
           headerData={EMPLOYER_HEADER_DATA}
-          navigateDetail={false}
+          redirectToDetailPage={false}
         />
       </TableWrapper>
     </div>

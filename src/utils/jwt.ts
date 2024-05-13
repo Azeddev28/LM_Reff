@@ -12,17 +12,7 @@ const isValidToken = (accessToken: string) => {
   return decoded.exp > currentTime;
 };
 
-//  const handleTokenExpired = (exp) => {
-//   let expiredTimer;
 
-//   window.clearTimeout(expiredTimer);
-//   const currentTime = Date.now();
-//   const timeLeft = exp * 1000 - currentTime;
-//   console.log(timeLeft);
-//   expiredTimer = window.setTimeout(() => {
-//     console.log('expired');
-//   }, timeLeft);
-// };
 
 const setSession = (accessToken: string | null) => {
   if (accessToken) {

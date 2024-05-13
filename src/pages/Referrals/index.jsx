@@ -19,7 +19,9 @@ const Referrals = () => {
   const dispatch = useDispatch();
   const { data, isSuccess } = useGetProfileQuery();
   const userName = isSuccess ? data.name : "";
-  dispatch(setUserName(userName));
+  if ((isSuccess, data)) {
+    dispatch(setUserName(data.name));
+  }
 
   return (
     <div>
@@ -37,7 +39,7 @@ const Referrals = () => {
             url: getRoute("referralList"),
             search: searchValue,
           }}
-          navigateDetail={true}
+          redirectToDetailPage={true}
         />
       </TableWrapper>
     </div>

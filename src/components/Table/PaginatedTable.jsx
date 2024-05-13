@@ -49,7 +49,12 @@ const Sorter = styled("div")(({}) => ({
   gap: "0px",
 }));
 
-const PaginatedTable = ({ headerData, pageData, query, navigateDetail }) => {
+const PaginatedTable = ({
+  headerData,
+  pageData,
+  query,
+  redirectToDetailPage,
+}) => {
   const generateUrl = () => {
     const targetUrl = new URL(pageData.url);
     if (pageData["search"] !== null && pageData["search"] !== undefined) {
@@ -124,7 +129,7 @@ const PaginatedTable = ({ headerData, pageData, query, navigateDetail }) => {
 
   const StyledRow = styled(TableRow)((props) => ({
     padding: 8,
-    cursor: props.navigateDetail ? "pointer" : "default",
+    cursor: props.redirectToDetailPage ? "pointer" : "default",
     "&:hover": {
       backgroundColor: "rgba(242, 242, 242, 0.8)",
     },
@@ -177,10 +182,12 @@ const PaginatedTable = ({ headerData, pageData, query, navigateDetail }) => {
                 {data?.results?.map((obj, index) => (
                   <StyledRow
                     key={index}
-                    navigateDetail={navigateDetail}
-                    style={{ cursor: navigateDetail ? "pointer" : "default" }}
+                    redirectToDetailPage={redirectToDetailPage}
+                    style={{
+                      cursor: redirectToDetailPage ? "pointer" : "default",
+                    }}
                     onClick={() => {
-                      if (navigateDetail) {
+                      if (redirectToDetailPage) {
                         handleDetailPage(obj);
                       }
                     }}
