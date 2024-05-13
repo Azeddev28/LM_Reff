@@ -19,6 +19,13 @@ import styled from "@emotion/styled";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
+const ProgressWrapper = styled("div")(({}) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  height: "90vh",
+}));
+
 const Pagination = styled("div")(({}) => ({
   display: "flex",
   justifyContent: "end",
@@ -124,7 +131,9 @@ const PaginatedTable = ({ headerData, pageData, query, navigateDetail }) => {
   }));
 
   return isLoading ? (
-    <CircularProgress />
+    <ProgressWrapper>
+      <CircularProgress size={"7rem"} />
+    </ProgressWrapper>
   ) : (
     <Paper>
       <TableContainer>

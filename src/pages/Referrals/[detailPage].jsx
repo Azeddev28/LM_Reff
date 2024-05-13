@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { CircularProgress, Button, Typography, Divider } from "@mui/material";
-import styled from "@emotion/styled";
+
 import StyledInput from "../../components/StyledInput";
 import {
   useGetReferralDetailQuery,
@@ -16,253 +16,7 @@ import AttachFileIcon from "@mui/icons-material/AttachFile";
 import DatePickerComponent from "../../components/DatePicker";
 import dayjs from "dayjs";
 import DropDown from "../../components/DropDown";
-import { Checked } from "./style";
-const Heading = styled(Typography)(({ theme }) => ({
-  color: "rgba(0, 0, 0, 0.87)",
-  // fontFamily: "Nunito",
-  fontSize: 24,
-  fontStyle: "normal",
-  fontWeight: 600,
-  lineHeight: "28.8px",
-  marginBottom: "47px",
-  [theme.breakpoints.down("md")]: {
-    marginBottom: "20px",
-  },
-}));
-
-const Container = styled("div")(({ theme }) => ({
-  display: "flex",
-  flexDirection: "row",
-  gap: "20px",
-  flex: 1,
-  height: "fit-content",
-  [theme.breakpoints.down("md")]: {
-    flexDirection: "column",
-  },
-}));
-
-const CheckWrapper = styled("div")(({}) => ({
-  margin: "13px 25px 0px 16px",
-}));
-
-const Column = styled("div")(({ theme }) => ({
-  width: "33.33%",
-  display: "flex",
-  height: "auto",
-  paddingBottom: "40px",
-  flexDirection: "column",
-  borderRadius: 15,
-  background: "#FFF",
-  boxShadow: "0px 0px 14px 0px rgba(53, 64, 82, 0.05)",
-  [theme.breakpoints.down("md")]: {
-    width: "100%",
-  },
-}));
-
-const ColumnHeader = styled(Typography)(({}) => ({
-  color: "rgba(0, 0, 0, 0.87)",
-  // fontFamily: "Nunito",
-  fontSize: 17,
-  fontStyle: "normal",
-  fontWeight: 600,
-  lineHeight: "20.4px",
-  letterSpacing: 0.06,
-  padding: "16px",
-}));
-
-const Card = styled("div")(({ value }) => ({
-  height: "50px",
-  borderBottom: typeof value === "boolean" ? "none" : "1px solid black",
-  display: "flex",
-  gap: "10px",
-  flexDirection: "column",
-  paddingBottom: "5px",
-  margin: "0px 25px",
-}));
-
-const ContentWrapper = styled("div")(({}) => ({
-  padding: "20px 0px 0px 0px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "13px",
-}));
-const ContentWrapperV2 = styled("div")(({}) => ({
-  padding: "20px 0px 0px 0px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "25px",
-}));
-
-const Label = styled("p")(({}) => ({
-  color: "#263238",
-  // fontFamily: "Nunito",
-  fontSize: 12,
-  fontStyle: "normal",
-  fontWeight: 400,
-  lineHeight: "12px",
-  letterSpacing: 0.4,
-  margin: "0px",
-}));
-
-const Value = styled("p")(({}) => ({
-  color: "rgba(0, 0, 0, 0.87)",
-  // fontFamily: "Nunito",
-  fontSize: 14,
-  margin: "0px",
-  fontStyle: "normal",
-  fontWeight: 400,
-  lineHeight: "21px",
-  letterSpacing: 0.079,
-}));
-
-const MainWrapper = styled("div")(({}) => ({
-  display: "flex",
-  flexDirection: "column",
-}));
-
-const CutomizedDivider = styled(Divider)(({ theme }) => ({
-  background: "#E0E0E0",
-  height: "1px",
-  marginBottom: "72px",
-  [theme.breakpoints.down("md")]: {
-    marginBottom: "35px",
-  },
-}));
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
-
-const FileUploadWrapper = styled("div")(({}) => ({
-  margin: "0px 24px",
-  gap: "12px",
-  display: "flex",
-  flexDirection: "column",
-}));
-
-const FileUploadButton = styled("div")(({}) => ({
-  display: "flex",
-  flexDirection: "row",
-  gap: "10px",
-  height: "36px",
-  alignItems: "center",
-}));
-
-const DescriptionWrapper = styled("div")(({}) => ({
-  display: "flex",
-  flexDirection: "column",
-  minHeight: "70px",
-  margin: "0px 25px 0px 25px",
-  gap: "12px",
-}));
-
-const ValueWrapper = styled("div")(({}) => ({
-  borderRadius: 2,
-  border: "1px solid rgba(0, 0, 0, 0.42)",
-  background: "#F5F6F8",
-  padding: "9px 100px 7px 14px",
-}));
-
-const DropzoneText = styled("section")(({}) => ({
-  color: "#263238",
-  textAlign: "center",
-  // fontFamily: "Nunito",
-  fontSize: 16,
-  fontStyle: "normal",
-  fontWeight: 400,
-  lineHeight: "20px",
-  letterSpacing: 0.4,
-}));
-
-const DropZoneContent = styled("section")(({}) => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: "11px",
-  justifyContent: "end",
-  width: "100%",
-  alignItems: "center",
-  borderRadius: 4,
-  padding: "0px 16px",
-  border: "1px solid rgba(0, 0, 0, 0.42)",
-  background: "#F5F6F8",
-  paddingBottom: "10px",
-}));
-
-const UploadButton = styled(Button)(({}) => ({
-  display: "flex",
-  justifyContent: "start",
-  gap: "6px",
-}));
-
-const UploadedFileSection = styled("div")(({}) => ({
-  display: "flex",
-  flexDirection: "column",
-  margin: "0px 25px",
-  gap: "10px",
-}));
-
-const FileUploadTextWrapper = styled("div")(({}) => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
-}));
-
-const FileUploadText = styled("div")(({}) => ({
-  color: "#263238",
-  // fontFamily: "Nunito",
-  fontSize: 12,
-  fontStyle: "normal",
-  fontWeight: 400,
-  lineHeight: "12px",
-  letterSpacing: 0.4,
-}));
-
-const UploadedFiles = styled("div")(({}) => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: "16px",
-}));
-
-const UploadedFile = styled("div")(({}) => ({
-  display: "flex",
-  flexDirection: "row",
-  gap: "16px",
-  minHeight: "55px",
-  cursor: "pointer",
-  padding: "11px 5px 11px 13px",
-  borderRadius: 4,
-  background: "#D9D9D9",
-  alignItems: "center",
-  boxShadow: "0px 0px 14px 0px rgba(53, 64, 82, 0.05)",
-}));
-
-const FileText = styled("p")(({}) => ({
-  color: "rgba(0, 0, 0, 0.87)",
-  fontSize: "14px",
-  fontStyle: "normal",
-  fontWeight: 600,
-  lineHeight: "20.4px",
-  letterSpacing: 0.06,
-  margin: "0px",
-  wordBreak: "break-all",
-}));
-
-const ButtonWrapper = styled("div")(({ theme }) => ({
-  width: "100%",
-  display: "flex",
-  justifyContent: "end",
-  [theme.breakpoints.down("md")]: {
-    justifyContent: "center",
-  },
-}));
+import { Styled } from "./style";
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -381,47 +135,57 @@ const DetailPage = () => {
   };
 
   return isLoading ? (
-    <CircularProgress disableShrink />
+    <Styled.ProgressWrapper>
+      <CircularProgress size="7rem" />
+    </Styled.ProgressWrapper>
   ) : (
-    <MainWrapper>
-      <Heading>Referral Details</Heading>
-      <CutomizedDivider orientation="vertical" variant="middle" flexItem />
+    <Styled.MainWrapper>
+      <Styled.Heading>Referral Details</Styled.Heading>
+      <Styled.CutomizedDivider
+        orientation="vertical"
+        variant="middle"
+        flexItem
+      />
       {loader ? (
-        <CircularProgress disableShrink />
+        <Styled.ProgressWrapper>
+          <CircularProgress size="7rem" />
+        </Styled.ProgressWrapper>
       ) : (
         <>
-          <Container>
-            <Column>
-              <ColumnHeader variant="h3">Referral Information</ColumnHeader>
-              <ContentWrapper>
+          <Styled.Container>
+            <Styled.Column>
+              <Styled.ColumnHeader variant="h3">
+                Referral Information
+              </Styled.ColumnHeader>
+              <Styled.ContentWrapper>
                 {referralDetailData.slice(0, 8).map((item, index) => (
                   <div key={index}>
                     {item.key === "Referral Description" ? (
-                      <DescriptionWrapper>
-                        <Label>{item.key}</Label>
-                        <ValueWrapper>{item.value}</ValueWrapper>
-                      </DescriptionWrapper>
+                      <Styled.DescriptionWrapper>
+                        <Styled.Label>{item.key}</Styled.Label>
+                        <Styled.ValueWrapper>{item.value}</Styled.ValueWrapper>
+                      </Styled.DescriptionWrapper>
                     ) : (
-                      <Card key={index} value={item.value}>
-                        <Label>{item.key}</Label>
+                      <Styled.Card key={index} value={item.value}>
+                        <Styled.Label>{item.key}</Styled.Label>
                         {typeof item.value === "boolean" ? (
                           ""
                         ) : item.editable === true ? (
                           <h1>Editable</h1>
                         ) : item.key === "Referral Receipt Date" ? (
-                          <Value variant="h6">
+                          <Styled.Value variant="h6">
                             {dayjs(item.value).format("DD-MM-YYYY")}
-                          </Value>
+                          </Styled.Value>
                         ) : (
-                          <Value variant="h6">{item.value}</Value>
+                          <Styled.Value variant="h6">{item.value}</Styled.Value>
                         )}
-                      </Card>
+                      </Styled.Card>
                     )}
                   </div>
                 ))}
-              </ContentWrapper>
-              <CheckWrapper>
-                <Checked
+              </Styled.ContentWrapper>
+              <Styled.CheckWrapper>
+                <Styled.Checked
                   control={
                     <Checkbox
                       checked={referralData?.preauthorization_required}
@@ -430,15 +194,15 @@ const DetailPage = () => {
                   style={{ pointerEvents: "none" }}
                   label="Preauthorization Required"
                 />
-              </CheckWrapper>
-            </Column>
-            <Column>
-              <ColumnHeader>Referral Details</ColumnHeader>
+              </Styled.CheckWrapper>
+            </Styled.Column>
+            <Styled.Column>
+              <Styled.ColumnHeader>Referral Details</Styled.ColumnHeader>
 
-              <ContentWrapper>
+              <Styled.ContentWrapper>
                 {referralDetailData.slice(8, 24).map((item, index) => (
-                  <Card key={index}>
-                    <Label>{item.key}</Label>
+                  <Styled.Card key={index}>
+                    <Styled.Label>{item.key}</Styled.Label>
                     {typeof item.value === "boolean" ? (
                       <DropDown
                         dropdownValue={item.value}
@@ -458,13 +222,13 @@ const DetailPage = () => {
                         label={item.label}
                       />
                     ) : (
-                      <Value variant="h6">{item.value}</Value>
+                      <Styled.Value variant="h6">{item.value}</Styled.Value>
                     )}
-                  </Card>
+                  </Styled.Card>
                 ))}
-              </ContentWrapper>
-              <CheckWrapper>
-                <Checked
+              </Styled.ContentWrapper>
+              <Styled.CheckWrapper>
+                <Styled.Checked
                   control={
                     <Checkbox
                       checked={isCancelled}
@@ -473,12 +237,12 @@ const DetailPage = () => {
                   }
                   label="Procedure Cancelled"
                 />
-              </CheckWrapper>
-            </Column>
-            <Column>
-              <ColumnHeader>Referral Attachments</ColumnHeader>
-              <ContentWrapperV2>
-                <FileUploadWrapper>
+              </Styled.CheckWrapper>
+            </Styled.Column>
+            <Styled.Column>
+              <Styled.ColumnHeader>Referral Attachments</Styled.ColumnHeader>
+              <Styled.ContentWrapperV2>
+                <Styled.FileUploadWrapper>
                   <Dropzone
                     onDrop={(acceptedFiles) => handleFiles(acceptedFiles)}
                   >
@@ -494,70 +258,70 @@ const DetailPage = () => {
                           }}
                         >
                           <input {...getInputProps()} />
-                          <DropZoneContent>
+                          <Styled.DropZoneContent>
                             <CloudUploadIcon fontSize="large" />
-                            <DropzoneText>
+                            <Styled.DropzoneText>
                               Choose a file or drag and drop here
-                            </DropzoneText>
-                          </DropZoneContent>
+                            </Styled.DropzoneText>
+                          </Styled.DropZoneContent>
                         </div>
                       </section>
                     )}
                   </Dropzone>
-                  <UploadButton
+                  <Styled.UploadButton
                     component="label"
                     role={undefined}
                     variant="contained"
                     tabIndex={-1}
                   >
-                    <FileUploadButton>
+                    <Styled.FileUploadButton>
                       <CloudUploadIcon />
                       <p>Browse for File</p>
-                    </FileUploadButton>
-                    <VisuallyHiddenInput
+                    </Styled.FileUploadButton>
+                    <Styled.VisuallyHiddenInput
                       type="file"
                       multiple={"multiple"}
                       onChange={handleFileChangeButton}
                     />
-                  </UploadButton>
-                </FileUploadWrapper>
-                <UploadedFileSection>
-                  <FileUploadTextWrapper>
-                    <FileUploadText>File Uploads</FileUploadText>
+                  </Styled.UploadButton>
+                </Styled.FileUploadWrapper>
+                <Styled.UploadedFileSection>
+                  <Styled.FileUploadTextWrapper>
+                    <Styled.FileUploadText>File Uploads</Styled.FileUploadText>
                     <Divider />
-                  </FileUploadTextWrapper>
-                  <UploadedFiles>
+                  </Styled.FileUploadTextWrapper>
+                  <Styled.UploadedFiles>
                     {fileList.map((item, index) => (
-                      <UploadedFile
+                      <Styled.UploadedFile
                         key={index}
                         onClick={() => handleViewFile(item.url)}
                       >
                         <AttachFileIcon fontSize="large" />
-                        <FileText>{item.file.name}</FileText>
-                      </UploadedFile>
+                        <Styled.FileText>{item.file.name}</Styled.FileText>
+                      </Styled.UploadedFile>
                     ))}
                     {referralDetailData.slice(24, 25).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
-                          <UploadedFile
+                          <Styled.UploadedFile
                             key={innerIndex}
                             onClick={() => handleViewFile(innerItem.attachment)}
                           >
                             <AttachFileIcon fontSize="large" />
 
-                            <FileText>
+                            <Styled.FileText>
                               {getFileNameFromURL(innerItem.attachment)}
-                            </FileText>
-                          </UploadedFile>
+                            </Styled.FileText>
+                          </Styled.UploadedFile>
                         ))}
                       </React.Fragment>
                     ))}
-                  </UploadedFiles>
-                </UploadedFileSection>
-              </ContentWrapperV2>
-            </Column>
-          </Container>
-          <ButtonWrapper>
+                  </Styled.UploadedFiles>
+                </Styled.UploadedFileSection>
+              </Styled.ContentWrapperV2>
+            </Styled.Column>
+          </Styled.Container>
+          <Styled.ButtonWrapper>
             <Button
               variant="contained"
               disabled={Object.keys(data).length === 0}
@@ -570,10 +334,10 @@ const DetailPage = () => {
             >
               Save Changes
             </Button>
-          </ButtonWrapper>
+          </Styled.ButtonWrapper>
         </>
       )}
-    </MainWrapper>
+    </Styled.MainWrapper>
   );
 };
 
