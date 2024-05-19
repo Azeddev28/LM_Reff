@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 interface AuthGuardType {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ function AuthGuard({ children }: AuthGuardType) {
       navigate("/auth/sign-in");
       
     } else {
-      // getProfileData();
+     
       navigate("/");  
     }
   }, [isAuthenticated]);

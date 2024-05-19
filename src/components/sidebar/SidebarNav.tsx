@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import ReactPerfectScrollbar from "react-perfect-scrollbar";
@@ -51,7 +51,6 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
           {items &&
             items.map((item) => (
               <SidebarNavSection
-                // component="div"
                 key={item.title}
                 pages={item.pages}
                 title={item.title}

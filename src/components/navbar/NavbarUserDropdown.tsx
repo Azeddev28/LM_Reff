@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { Power } from "react-feather";
 import { useDispatch , useSelector } from "react-redux";
@@ -24,7 +24,7 @@ function NavbarUserDropdown() {
   const dispatch=useDispatch();
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
   const navigate = useNavigate();
-  const {isAuthenticated} = useSelector((state: any) => state.auth);
+ 
   
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
@@ -43,11 +43,7 @@ function NavbarUserDropdown() {
      
   };
 
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     navigate("/auth/sign-in");
-  //   }
-  // }, [isAuthenticated]);
+ 
 
   return (
     <React.Fragment>
@@ -69,7 +65,6 @@ function NavbarUserDropdown() {
         open={Boolean(anchorMenu)}
         onClose={closeMenu}
       >
-        {/* <MenuItem onClick={closeMenu}>Profile</MenuItem> */}
         <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
       </Menu>
     </React.Fragment>
