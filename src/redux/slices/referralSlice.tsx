@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getAccessToken } from "./authSlice";
+import { getRoute } from "../../api/BackendRoutes";
 
 export const referralApi = createApi({
   reducerPath: "referralApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://staging.api.luminaryhealthportal.com/api",
+    baseUrl: import.meta.env.VITE_URL,
     prepareHeaders: async (headers, { getState }) => {
       const accessToken = getAccessToken(getState());
       if (accessToken) {
@@ -19,7 +20,7 @@ export const referralApi = createApi({
       query: (url) => url,
       transformErrorResponse: (response) => {
         if (response.status === 401) {
-          window.location.href = "/auth/sign-in";
+          window.location.href = getRoute('signIn');
         }
       },
     }),
@@ -29,7 +30,7 @@ export const referralApi = createApi({
       }),
       transformErrorResponse: (response) => {
         if (response.status === 401) {
-          window.location.href = "/auth/sign-in";
+          window.location.href = getRoute('signIn');
         }
       },
     }),
@@ -37,7 +38,7 @@ export const referralApi = createApi({
       query: (url) => url,
       transformErrorResponse: (response) => {
         if (response.status === 401) {
-          window.location.href = "/auth/sign-in";
+          window.location.href = getRoute('signIn');
         }
       },
     }),
@@ -45,19 +46,19 @@ export const referralApi = createApi({
       query: (id) => `referrals/detail/${id}`,
       transformErrorResponse: (response) => {
         if (response.status === 401) {
-          window.location.href = "/auth/sign-in";
+          window.location.href = getRoute('signIn');
         }
       },
     }),
     resetPassword: builder.mutation({
       query: (email) => ({
-        url: "/auth/password/reset/",
+        url: getRoute('resetPassword'),
         method: "POST",
         body: email,
       }),
       transformErrorResponse: (response) => {
         if (response.status === 401) {
-          window.location.href = "/auth/sign-in";
+          window.location.href = getRoute('signIn');
         }
       },
     }),
@@ -84,7 +85,7 @@ export const referralApi = createApi({
       },
       transformErrorResponse: (response) => {
         if (response.status === 401) {
-          window.location.href = "/auth/sign-in";
+          window.location.href = getRoute('signIn');
         }
       },
     }),
@@ -92,7 +93,7 @@ export const referralApi = createApi({
       query: () => "/users/profile/",
       transformErrorResponse: (response) => {
         if (response.status === 401) {
-          window.location.href = "/auth/sign-in";
+          window.location.href = getRoute('signIn');
         }
       },
     }),

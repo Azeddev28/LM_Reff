@@ -26,7 +26,7 @@ const EmployerList = () => {
       <TableWrapper>
         <PaginatedTable
           pageData={{
-            url: "http://staging.api.luminaryhealthportal.com/api/users/employer-list",
+            url:`${import.meta.env.VITE_URL}${getRoute('employerList')}`,
             search: searchValue,
           }}
           query={useGetEmployeesQuery}
