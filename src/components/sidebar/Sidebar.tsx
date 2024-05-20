@@ -1,12 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { NavLink } from "react-router-dom";
-import ReferralLogo from "/Images/ReferralLogo.png";
-import { Box, Chip, Drawer as MuiDrawer, ListItemButton } from "@mui/material";
+import { Drawer as MuiDrawer} from "@mui/material";
 import { SidebarItemsType } from "../../types/sidebar";
-import Footer from "./SidebarFooter";
 import SidebarNav from "./SidebarNav";
-
+import { useNavigate } from "react-router-dom";
 const Drawer = styled(MuiDrawer)`
   border-right: 0;
 
@@ -15,37 +12,25 @@ const Drawer = styled(MuiDrawer)`
   }
 `;
 
-const Brand = styled(ListItemButton)<{
-  component?: React.ReactNode;
-  to?: string;
-}>`
-  
-  color: ${(props) => props.theme.sidebar.header.color};
+const Brand = styled('div')`
   background-color:white;
-  // background-color: ${(props) => props.theme.sidebar.header.background};
-  font-family: ${(props) => props.theme.typography.fontFamily};
   min-height: 56px;
   justify-content: center;
   cursor: pointer;
-  flex-grow: 0;
-
-  ${(props) => props.theme.breakpoints.up("sm")} {
-    min-height: 64px;
-  }
-
-  &:hover {
-    background-color: ${(props) => props.theme.sidebar.header.background};
-  }
+  display:flex;
+  flex-direction:row;
+  gap:12px;
+  padding:20px 20px 20px 24px;
 `;
 
-
-
-const LogoImage = styled('img')(({  }) => ({
-  width: '65%', // Adjust this as per your requirement
-  height: 'auto', // Adjust this as per your requirement
-  objectFit:'cover',
- 
-}));
+const LogoText=styled('p')`
+    color: black;
+    // font-family: Nunito;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px; 
+    margin:0px;
+`;
 
 
 export type SidebarProps = {
@@ -69,13 +54,15 @@ const Sidebar: React.FC<SidebarProps> = ({
   showFooter = true,
   ...rest
 }) => {
+  const navigate=useNavigate();
   return (
     <Drawer variant="permanent" {...rest}>
-      <Brand component={NavLink as any} to="/">
-         <LogoImage src={ReferralLogo} alt="logo-image" />
+      <Brand onClick={()=>navigate("/")}>
+         <img src="/favicon.svg" alt="logo-image" />
+          <LogoText>Luminary Health</LogoText>
       </Brand>
       <SidebarNav items={items} />
-      {!!showFooter && <Footer />}
+      
     </Drawer>
   );
 };

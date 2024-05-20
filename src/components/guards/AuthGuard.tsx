@@ -5,21 +5,27 @@ import { useSelector } from "react-redux";
 interface AuthGuardType {
   children: React.ReactNode;
 }
-
+// TODO : authentication needs to be check
 function AuthGuard({ children }: AuthGuardType) {
-  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+  
   const navigate = useNavigate();
-
-  useEffect(() => {
-    
-    if (!isAuthenticated) {
+  
+  const {isAuthenticated}=useSelector((state)=>state.auth);
+  useEffect(() => { 
+   
+    if (!isAuthenticated) {     
       navigate("/auth/sign-in");
+      
     } else {
-      navigate("/");
+     
+      navigate("/");  
     }
   }, [isAuthenticated]);
      
-  return <React.Fragment>{children}</React.Fragment>;
+  return( 
+  <React.Fragment>{children}</React.Fragment>
+  
+  )
 }
 
 export default AuthGuard;

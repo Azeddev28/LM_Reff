@@ -1,9 +1,9 @@
-import React,{useEffect} from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { Power } from "react-feather";
 import { useDispatch , useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import {  setAccessToken } from "../../redux/slices/authSlice";
 import {
   Tooltip,
   Menu,
@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { setAuthenticated } from "../../redux/slices/authSlice";
 
-// import useAuth from "../../hooks/useAuth";
 
 const IconButton = styled(MuiIconButton)`
   svg {
@@ -22,12 +21,11 @@ const IconButton = styled(MuiIconButton)`
 `;
 
 function NavbarUserDropdown() {
+  const dispatch=useDispatch();
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
   const navigate = useNavigate();
-  const dispatch=useDispatch();
-  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
-  // const { signOut } = useAuth();
-
+ 
+  
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
   };
@@ -37,21 +35,15 @@ function NavbarUserDropdown() {
   };
 
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/auth/sign-in");
-    }
-  }, [isAuthenticated]);
-
-  const handleSignOut = async () => {
+  const handleSignOut =  () => {
     dispatch(setAuthenticated(false))
-    
-    // await signOut();
-    // navigate("/auth/sign-in");
+    dispatch(setAccessToken(null));
+    localStorage.removeItem('access');
+     navigate("/auth/sign-in");
+     
   };
 
-
-
+ 
 
   return (
     <React.Fragment>
@@ -62,6 +54,7 @@ function NavbarUserDropdown() {
           onClick={toggleMenu}
           color="inherit"
           size="large"
+  
         >
           <Power />
         </IconButton>
@@ -72,7 +65,6 @@ function NavbarUserDropdown() {
         open={Boolean(anchorMenu)}
         onClose={closeMenu}
       >
-        <MenuItem onClick={closeMenu}>Profile</MenuItem>
         <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
       </Menu>
     </React.Fragment>

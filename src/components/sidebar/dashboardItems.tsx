@@ -5,13 +5,11 @@ const pagesSection = [
     href: "/",
     // icon: Sliders,
     title: "Referrals",
-    
   },
   {
     href: "/claims",
     // icon: Layout,
     title: "Claims",
-   
   },
   {
     href: "/employe-list",
@@ -19,18 +17,13 @@ const pagesSection = [
     title: "Employer List",
     // badge: "8",
   },
-  
 ] as SidebarItemsType[];
-
-
-
 
 const navItems = [
   {
-    title: "Pages",
+    title: "",
     pages: pagesSection,
   },
-  
 ];
 
 export default navItems;

@@ -1,39 +1,41 @@
-import React,{ useEffect } from "react";
+import React, { useState } from "react";
 import DashboardHeader from "../../components/DashboardHeader";
-import  {REFERRAL_ROWS_DATA,REFERRAL_HEADER_DATA} from '../../utils/constants';
+import { useGetEmployeesQuery } from "../../redux/slices/referralSlice";
+import { EMPLOYER_HEADER_DATA } from "../../utils/constants";
 import PaginatedTable from "../../components/Table/PaginatedTable";
-import { useDispatch, useSelector } from 'react-redux';
 import styled from "@emotion/styled";
-import { fetchReferrals } from "../../redux/slices/referralSlice";
+import { useSelector } from "react-redux";
+import { getRoute } from "../../api/BackendRoutes";
 
-
-const TableWrapper=styled('div')(({})=>({
-    marginTop:'20px',
- }));
+const TableWrapper = styled("div")(({}) => ({
+  marginTop: "20px",
+}));
 
 const EmployerList = () => {
-  const dispatch = useDispatch();
-  
-useEffect(() => {
-  dispatch(fetchReferrals());
-  
-}, [dispatch]);
-
-const referrals = useSelector((state) => state.referral.referralList);
-
-console.log("referrals",referrals);
+  const [searchValue, setSearchValue] = useState(null);
+  const { userName } = useSelector((state) => state.auth);
 
   return (
     <div>
-      <DashboardHeader heading="Employer List" 
-      subHeading="Greetings, {User Name}. Search for an employer to check if your patient has a sponsored plan"
-      placeHolder="Search by Employer Name"
+      <DashboardHeader
+        heading="Employer List"
+        subHeading={`Greetings, ${userName}. Search for an employer to check if your patient has a sponsored plan`}
+        placeHolder="Search by Employer Name"
+        setSearchValue={setSearchValue}
       />
       <TableWrapper>
-      <PaginatedTable rowsData={REFERRAL_ROWS_DATA} headerData={REFERRAL_HEADER_DATA}/>
+        <PaginatedTable
+          pageData={{
+            url:`${import.meta.env.VITE_URL}${getRoute('employerList')}`,
+            search: searchValue,
+          }}
+          query={useGetEmployeesQuery}
+          headerData={EMPLOYER_HEADER_DATA}
+          redirectToDetailPage={false}
+        />
       </TableWrapper>
     </div>
-  )
-}
+  );
+};
 
 export default EmployerList;

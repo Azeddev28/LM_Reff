@@ -1,17 +1,17 @@
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
-import theme from '../../theme';
 import SearchIcon from '@mui/icons-material/Search';
+import { useState , ChangeEvent  } from "react";
 interface DashboardHeaderProps{
     heading:string,
     subHeading:string,
     placeHolder:string,
+    setSearchValue:React.Dispatch<React.SetStateAction<string | null>>
 }
 
-const Container= styled('div')(({theme }) => ({ 
+const Container= styled('div')(({ }) => ({ 
    display:'flex',
    flexDirection:'column',
-  //  backgroundColor:theme.header.background,
    gap:'10px',
 })); 
 
@@ -37,21 +37,40 @@ const Input=styled('input')(({})=>({
   height:"30px",
   backgroundColor:"white",
   ":focus":{
-    // backgroundColor:"white",
     outline:'none',
     border:'none',
   }
 
  }));
 
-const DashboardHeader = ({heading,subHeading,placeHolder}:DashboardHeaderProps) => {
+
+
+
+const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:DashboardHeaderProps) => {
+  const [inputValue,setInputValue]=useState<string | null>(null);
+  
+  const handleInputValue=(event:ChangeEvent<HTMLInputElement>)=>{
+    setInputValue(event.target.value);
+    setSearchValue(event.target.value);
+    if(event.target.value === ''){
+      setSearchValue(null);
+    }
+  } 
+
+  const handleSearchValue=()=>{
+    setSearchValue(inputValue); 
+  }
+
+
+
+
   return (
     <Container>
       <Typography variant="h4">{heading}</Typography>
       <Typography>{subHeading}</Typography>
       <SearchBox>
-        <Input placeholder={placeHolder}/>
-        <SearchIcon fontSize="medium"/>
+        <Input placeholder={placeHolder} onChange={handleInputValue}/>
+        <SearchIcon  style={{ cursor: 'pointer' }} fontSize="medium" onClick={handleSearchValue} />
       </SearchBox>
     </Container>
   )

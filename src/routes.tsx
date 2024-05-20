@@ -4,18 +4,14 @@ import Claims from "./pages/Claims";
 import EmployerList from "./pages/EmployerList";
 import Auth from "./layouts/Auth";
 import SignIn from "./pages/auth/SignIn";
+import ResetPassword from "./pages/auth/ResetPassword";
 import DetailPage from "./pages/Referrals/[detailPage]";
-
+import AuthGuard from "./components/guards/AuthGuard";
 const routes = [
   {
     path: "/",
-    element: <DashboardLayout  />,
-    children: [
-      {
-        path: "/",
-        element: <Referrals />,
-      }, 
-    ],
+    element:  <DashboardLayout> <Referrals /></DashboardLayout> ,
+    
   },
   {
     path: "/claims",
@@ -23,14 +19,18 @@ const routes = [
   },
   {
     path: "employe-list",
-    element: <DashboardLayout ><EmployerList /></DashboardLayout>,
+    element: <DashboardLayout ><EmployerList /></DashboardLayout> ,
   },
   {
     path:"auth/sign-in",
-    element:<Auth><SignIn/></Auth>
+    element:<Auth><SignIn/></Auth>,
   },
   {
-    path: "/:id", // Dynamic route
+    path:"auth/reset-password",
+    element:<Auth><ResetPassword/></Auth>,
+  },
+  {
+    path: "/:id", 
     element: <DashboardLayout><DetailPage /></DashboardLayout>,
   },
   

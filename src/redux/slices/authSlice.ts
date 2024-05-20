@@ -1,55 +1,78 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { postRequest } from '../../axios';
-import { getRoute } from '../../api/backendRoutes';
+import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getRoute } from "../../api/BackendRoutes";
 
-export const login = createAsyncThunk(
-  'auth/login',
-  async (credentials, { dispatch, rejectWithValue }) => {
-    try {
-      const response = await postRequest("http://3.6.94.153/api/auth/login/", credentials);
-      dispatch(setAuthenticated(true));
-      return response.data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+export const loginApi = createApi({
+  reducerPath: "loginApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_URL,
+  }),
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: (data) => ({
+        url: getRoute('login'),
+        method: "POST",
+        body: data,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: (email) => ({
+        url:  getRoute('resetPassword'),
+        method: "POST",
+        body: email,
+      }),
+      transformErrorResponse: (response) => {
+        if (response.status === 401) {
+          window.location.href = "/auth/sign-in";
+        }
+      },
+    }),
+  }),
+});
+
 interface AuthState {
   isAuthenticated: boolean;
-  loading: 'idle' | 'pending' | 'fulfilled' | 'rejected';
-  error: string | null;
+  userName: string;
+  accessToken: string | null;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  loading: 'idle',
-  error: null,
+  userName: "",
+  accessToken: null,
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setAuthenticated(state, action) {
       state.isAuthenticated = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(login.pending, (state) => {
-      state.loading = 'pending';
-      state.error = null;
-    });
-    builder.addCase(login.fulfilled, (state, action) => {
-      state.loading = 'idle';
-      state.isAuthenticated = true;
-    });
-    builder.addCase(login.rejected, (state, action) => {
-      state.loading = 'idle';
-      state.error = action.payload as string;
-    });
+    setAccessToken(state, action) {
+      state.accessToken = action.payload;
+      localStorage.setItem("access", action.payload);
+    },
+    setUserName(state, action) {
+      state.userName = action.payload;
+    },
   },
 });
 
-export const { setAuthenticated } = authSlice.actions;
+export const { setAuthenticated, setAccessToken, setUserName } =
+  authSlice.actions;
+
+// TODO authentication needs to be check
+export const getAccessToken = createSelector(
+  (state) => state.auth.accessToken,
+  (accessToken) => {
+    if (!accessToken) {
+      return localStorage.getItem("access") || null;
+    }
+    return accessToken;
+  }
+);
+
+export const { useLoginMutation, useResetPasswordMutation } = loginApi;
 
 export default authSlice.reducer;

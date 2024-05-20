@@ -1,38 +1,50 @@
-import React,{ useEffect } from "react";
+import React, { useState } from "react";
 import DashboardHeader from "../../components/DashboardHeader";
-import  {REFERRAL_ROWS_DATA,REFERRAL_HEADER_DATA} from '../../utils/constants';
+import { REFERRAL_HEADER_DATA } from "../../utils/constants";
 import PaginatedTable from "../../components/Table/PaginatedTable";
-import { useDispatch, useSelector } from 'react-redux';
 import styled from "@emotion/styled";
-import { fetchReferrals } from "../../redux/slices/referralSlice";
+import { useDispatch } from "react-redux";
+import { setUserName } from "../../redux/slices/authSlice";
+import { useGetProfileQuery } from "../../redux/slices/referralSlice";
+import { useGetReferralsQuery } from "../../redux/slices/referralSlice";
+import { set } from "date-fns";
+import { getRoute } from "../../api/BackendRoutes";
 
-
-const TableWrapper=styled('div')(({})=>({
-    marginTop:'20px',
- }));
+const TableWrapper = styled("div")(({}) => ({
+  marginTop: "20px",
+}));
 
 const Referrals = () => {
+  const [searchValue, setSearchValue] = useState(null);
   const dispatch = useDispatch();
-  
-  useEffect(() => {
-    dispatch(fetchReferrals());
-  }, [dispatch]);
-
-const referrals = useSelector((state) => state.referral.referralList);
-
-
+  const { data, isSuccess } = useGetProfileQuery();
+  const userName = isSuccess ? data.name : "";
+  if ((isSuccess, data)) {
+    dispatch(setUserName(data.name));
+  }
 
   return (
     <div>
-      <DashboardHeader heading="Referral Tracker" 
-      subHeading="Greetings, {User Name}. Click on a patient to update their referral"
-      placeHolder="Search by Patient Name"
+      <DashboardHeader
+        heading="Referral Tracker"
+        subHeading={`Greetings, ${userName}. Click on a patient to update their referral`}
+        placeHolder="Search by Patient Name"
+        setSearchValue={setSearchValue}
       />
       <TableWrapper>
-      <PaginatedTable rowsData={referrals} headerData={REFERRAL_HEADER_DATA}/>
+        <PaginatedTable
+          query={useGetReferralsQuery}
+          headerData={REFERRAL_HEADER_DATA}
+          pageData={{
+            url:`${import.meta.env.VITE_URL}${getRoute('referralList')}`,
+            // url: "https://staging.api.luminaryhealthportal.com/api/referrals/",
+            search: searchValue,
+          }}
+          redirectToDetailPage={true}
+        />
       </TableWrapper>
     </div>
-  )
-}
+  );
+};
 
 export default Referrals;
