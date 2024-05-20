@@ -18,7 +18,7 @@ const Alert = styled(MuiAlert)(spacing);
 
 const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
 
-function ResetPassword() {
+function ConfirmPassword() {
   const navigate = useNavigate();
   const [resetPassword] = useResetPasswordMutation();
   let formData = new FormData();
@@ -26,21 +26,26 @@ function ResetPassword() {
   return (
     <Formik
       initialValues={{
-        email: "",
+        password: "",
+        confirmPassword:"",
         submit: false,
       }}
       validationSchema={Yup.object().shape({
-        email: Yup.string()
-          .email("Must be a valid email")
-          .max(255)
-          .required("Email is required"),
-      })}
+          password: Yup.string()
+          .min(5, "Password must be at least 5 characters long")
+          .required("Password is required"),
+          confirmPassword: Yup.string()
+          .oneOf([Yup.ref('password'), undefined], "Passwords must match")
+          .required("Password is required"),
+})}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        console.log('values', values)
         try {
-          let email = values.email;
-          formData.append("email", email);
-          resetPassword(formData);
-          navigate("/auth/confirm-password");
+            
+        //   let password = values.email;
+        //   formData.append("email", email);
+        //   resetPassword(formData);
+          navigate("/auth/sign-in");
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 
@@ -66,13 +71,25 @@ function ResetPassword() {
             </Alert>
           )}
           <TextField
-            type="email"
-            name="email"
-            label="Email Address"
-            value={values.email}
-            error={Boolean(touched.email && errors.email)}
+            type="password"
+            name="password"
+            label="Enter Your Password"
+            value={values.password}
+            error={Boolean(touched.password && errors.password)}
             fullWidth
-            helperText={touched.email && errors.email}
+            helperText={touched.password && errors.password}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            my={3}
+          />
+          <TextField
+            type="confirmPassword"
+            name="confirmPassword"
+            label="Re Enter Your Password"
+            value={values.confirmPassword}
+            error={Boolean(touched.confirmPassword && errors.confirmPassword)}
+            fullWidth
+            helperText={touched.confirmPassword && errors.confirmPassword}
             onBlur={handleBlur}
             onChange={handleChange}
             my={3}
@@ -84,7 +101,7 @@ function ResetPassword() {
             color="primary"
             disabled={isSubmitting}
           >
-            Reset password
+            Verify
           </Button>
         </form>
       )}
@@ -92,4 +109,4 @@ function ResetPassword() {
   );
 }
 
-export default ResetPassword;
+export default ConfirmPassword;
