@@ -27,7 +27,7 @@ const Claims = () => {
         <PaginatedTable
           query={useGetClaimsQuery}
           pageData={{
-            url: getRoute('claimList'),
+            url:`${import.meta.env.VITE_URL}${getRoute('claimList')}`,
             search: searchValue,
           }}
           headerData={CLAIMS_HEADER_DATA}

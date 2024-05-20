@@ -26,7 +26,7 @@ const EmployerList = () => {
       <TableWrapper>
         <PaginatedTable
           pageData={{
-            url: getRoute('employerList'),
+            url:`${import.meta.env.VITE_URL}${getRoute('employerList')}`,
             search: searchValue,
           }}
           query={useGetEmployeesQuery}
