@@ -27,7 +27,7 @@ const Claims = () => {
         <PaginatedTable
           query={useGetClaimsQuery}
           pageData={{
-            url: "http://staging.api.luminaryhealthportal.com/api/claims",
+            url: getRoute('claimList'),
             search: searchValue,
           }}
           headerData={CLAIMS_HEADER_DATA}

@@ -243,10 +243,7 @@ const PaginatedTable = ({
         <IconButton
           style={{
             cursor: "pointer",
-            color:
-              (page === totalPages || data?.count) === 0
-                ? "#BDBDBD"
-                : "inherit",
+            color: page === totalPages || totalPages === 0 ? "#BDBDBD" : "inherit",
             height: "16px",
             width: "16px",
           }}

@@ -1,22 +1,23 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getRoute } from "../../api/BackendRoutes";
 
 export const loginApi = createApi({
   reducerPath: "loginApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://staging.api.luminaryhealthportal.com/api",
+    baseUrl: import.meta.env.VITE_URL,
   }),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
-        url: "/auth/login/",
+        url: getRoute('login'),
         method: "POST",
         body: data,
       }),
     }),
     resetPassword: builder.mutation({
       query: (email) => ({
-        url: "/auth/password/reset/",
+        url:  getRoute('resetPassword'),
         method: "POST",
         body: email,
       }),
