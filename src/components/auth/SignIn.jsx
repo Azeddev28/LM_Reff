@@ -45,7 +45,6 @@ function SignIn() {
     if (loginSuccessFull) {
       dispatch(setAuthenticated(true));
       dispatch(setAccessToken(loginData.access));
-      localStorage.setItem("access", loginData.access);
       setSnackbarMessage("Successfully logged in");
       setSnackbarOpen(true);
       setSnackbarSeverity("success"); // Set severity to success

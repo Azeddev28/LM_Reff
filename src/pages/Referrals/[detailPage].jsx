@@ -64,12 +64,11 @@ const DetailPage = () => {
     }
   }, [referralDetail]);
 
-  useEffect(() => {
-    if (fileList.length > 0) {
-      const files = fileList.map((obj) => obj.file);
-      handleInputChange("attachments", files);
-    }
-  }, [fileList]);
+  // useEffect(() => {
+  //   if (fileList.length > 0) {
+  //     handleInputChange("attachments", fileList);
+  //   }
+  // }, [fileList]);
 
   const handleFileChangeButton = (event) => {
     const files = event.target.files;
@@ -100,12 +99,11 @@ const DetailPage = () => {
     const updatedFileList = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      updatedFileList.push({
-        file: file,
-        url: URL.createObjectURL(file),
-      });
+      handleInputChange("attachments", file);
+
+      setFileList((prevFileList) => [...prevFileList, file]);
     }
-    setFileList((prevFileList) => [...prevFileList, ...updatedFileList]);
+    // setFileList((prevFileList) => [...prevFileList, ...updatedFileList]);
   };
 
   const handleSubmitChanges = async () => {
@@ -133,7 +131,6 @@ const DetailPage = () => {
     setIsCancelled(!isCancelled);
     handleInputChange("is_cancelled", !isCancelled);
   };
-
   return isLoading ? (
     <Styled.ProgressWrapper>
       <CircularProgress size="7rem" />
@@ -297,7 +294,7 @@ const DetailPage = () => {
                         onClick={() => handleViewFile(item.url)}
                       >
                         <AttachFileIcon fontSize="large" />
-                        <Styled.FileText>{item.file.name}</Styled.FileText>
+                        <Styled.FileText>{item.name}</Styled.FileText>
                       </Styled.UploadedFile>
                     ))}
                     {referralDetailData.slice(24, 25).map((item, index) => (
@@ -310,7 +307,9 @@ const DetailPage = () => {
                             <AttachFileIcon fontSize="large" />
 
                             <Styled.FileText>
-                              {getFileNameFromURL(innerItem.attachment)}
+                              {getFileNameFromURL(
+                                innerItem?.filename ? innerItem?.filename : ""
+                              )}
                             </Styled.FileText>
                           </Styled.UploadedFile>
                         ))}

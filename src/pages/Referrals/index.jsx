@@ -36,7 +36,7 @@ const Referrals = () => {
           query={useGetReferralsQuery}
           headerData={REFERRAL_HEADER_DATA}
           pageData={{
-            url: getRoute("referralList"),
+            url: "http://staging.api.luminaryhealthportal.com/api/referrals/",
             search: searchValue,
           }}
           redirectToDetailPage={true}

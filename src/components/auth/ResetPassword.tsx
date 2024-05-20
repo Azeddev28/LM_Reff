@@ -20,9 +20,8 @@ const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
 
 function ResetPassword() {
   const navigate = useNavigate();
-  const [resetPassword]=useResetPasswordMutation();
-  let formData=new FormData();
-  
+  const [resetPassword] = useResetPasswordMutation();
+  let formData = new FormData();
 
   return (
     <Formik
@@ -37,13 +36,11 @@ function ResetPassword() {
           .required("Email is required"),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-       
         try {
-          let email=values.email;
-           formData.append("email",email);
-           resetPassword(formData);
+          let email = values.email;
+          formData.append("email", email);
+          resetPassword(formData);
           navigate("/auth/sign-in");
-        
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 

@@ -1,88 +1,77 @@
-import { createSlice,  createSelector } from '@reduxjs/toolkit';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-
-export const  loginApi = createApi({
-  reducerPath: 'loginApi',
+export const loginApi = createApi({
+  reducerPath: "loginApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL,
+    baseUrl: "http://staging.api.luminaryhealthportal.com/api",
   }),
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (data) => (
-        {
-          url: '/auth/login/',
-          method: 'POST',
-          body: data,
-        }
-      ),
+      query: (data) => ({
+        url: "/auth/login/",
+        method: "POST",
+        body: data,
+      }),
     }),
     resetPassword: builder.mutation({
       query: (email) => ({
-        url: '/auth/password/reset/',
-        method: 'POST',
+        url: "/auth/password/reset/",
+        method: "POST",
         body: email,
       }),
-      transformErrorResponse:(response)=>{
-        if(response.status===401){
-        
-         window.location.href='/auth/sign-in';
+      transformErrorResponse: (response) => {
+        if (response.status === 401) {
+          window.location.href = "/auth/sign-in";
         }
-     }
+      },
     }),
-
-}),
-})
-
+  }),
+});
 
 interface AuthState {
   isAuthenticated: boolean;
-  userName:string;
-  accessToken:string | null;
-
+  userName: string;
+  accessToken: string | null;
 }
 
 const initialState: AuthState = {
   isAuthenticated: false,
-  userName:"",
-  accessToken:null,
-  
+  userName: "",
+  accessToken: null,
 };
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setAuthenticated(state, action) {
       state.isAuthenticated = action.payload;
     },
-    setAccessToken(state,action){
-      state.accessToken=action.payload;
+    setAccessToken(state, action) {
+      state.accessToken = action.payload;
+      localStorage.setItem("access", action.payload);
     },
-    setUserName(state,action){
-       state.userName=action.payload;
-    }
-    
+    setUserName(state, action) {
+      state.userName = action.payload;
+    },
   },
-  
 });
 
-export const { setAuthenticated,setAccessToken,setUserName } = authSlice.actions;
+export const { setAuthenticated, setAccessToken, setUserName } =
+  authSlice.actions;
 
 // TODO authentication needs to be check
 export const getAccessToken = createSelector(
   (state) => state.auth.accessToken,
   (accessToken) => {
     if (!accessToken) {
-      return localStorage.getItem('access') || null;
+      return localStorage.getItem("access") || null;
     }
     return accessToken;
   }
-);   
+);
 
-
-export const { useLoginMutation,useResetPasswordMutation}=loginApi;
+export const { useLoginMutation, useResetPasswordMutation } = loginApi;
 
 export default authSlice.reducer;
-
-
