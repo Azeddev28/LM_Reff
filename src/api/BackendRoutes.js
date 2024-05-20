@@ -1,4 +1,3 @@
-const baseUrl = import.meta.env.VITE_URL;
 
 const ROUTES = {
   referralList: `/referrals/`,
