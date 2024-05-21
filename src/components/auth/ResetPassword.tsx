@@ -40,7 +40,6 @@ function ResetPassword() {
           let email = values.email;
           formData.append("email", email);
           resetPassword(formData);
-          navigate("/auth/confirm-password");
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 

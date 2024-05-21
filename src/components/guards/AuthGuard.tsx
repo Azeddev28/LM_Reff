@@ -13,11 +13,15 @@ function AuthGuard({ children }: AuthGuardType) {
   const {isAuthenticated}=useSelector((state)=>state.auth);
   useEffect(() => { 
    
-    if (!isAuthenticated) {     
-      navigate("/auth/sign-in");
+    // if (!isAuthenticated) {     
+    //   navigate("/auth/sign-in");
       
-    } else {
+    // } 
+    // else {
      
+    //   navigate("/");  
+    // }
+    if(isAuthenticated){
       navigate("/");  
     }
   }, [isAuthenticated]);

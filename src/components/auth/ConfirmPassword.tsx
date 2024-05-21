@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useResetPasswordMutation } from "../../redux/slices/authSlice";
+import { useConfirmPasswordMutation } from "../../redux/slices/authSlice";
 
 import {
   Alert as MuiAlert,
@@ -11,6 +11,14 @@ import {
   TextField as MuiTextField,
 } from "@mui/material";
 import { spacing } from "@mui/system";
+import { useParams } from "react-router-dom";
+
+interface ConfirmPasswordBody {
+  new_password1: string;
+  new_password2: string;
+  uid: string | undefined;
+  token: string | undefined;
+}
 
 // import useAuth from "../../hooks/useAuth";
 
@@ -19,8 +27,9 @@ const Alert = styled(MuiAlert)(spacing);
 const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
 
 function ConfirmPassword() {
+  const { uid, token } = useParams();
   const navigate = useNavigate();
-  const [resetPassword] = useResetPasswordMutation();
+  const [confirmPassword] = useConfirmPasswordMutation();
   let formData = new FormData();
 
   return (
@@ -31,21 +40,29 @@ function ConfirmPassword() {
         submit: false,
       }}
       validationSchema={Yup.object().shape({
-          password: Yup.string()
-          .min(5, "Password must be at least 5 characters long")
+        password: Yup.string()
+          .min(5, "Password must be at least 8 characters long")
           .required("Password is required"),
-          confirmPassword: Yup.string()
-          .oneOf([Yup.ref('password'), undefined], "Passwords must match")
+        confirmPassword: Yup.string()
+          .oneOf([Yup.ref("password"), undefined], "Passwords must match")
           .required("Password is required"),
-})}
+      })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-        console.log('values', values)
         try {
-            
-        //   let password = values.email;
-        //   formData.append("email", email);
-        //   resetPassword(formData);
-          navigate("/auth/sign-in");
+          let body: ConfirmPasswordBody = {
+            new_password1: values?.password,
+            new_password2: values?.confirmPassword,
+            uid,
+            token,
+          };
+          (Object.keys(body) as (keyof ConfirmPasswordBody)[]).forEach(
+            (key) => {
+              if (body[key] !== undefined) {
+                formData.append(key, body[key] as string);
+              }
+            }
+          );
+          confirmPassword(body);
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 

@@ -5,8 +5,8 @@ const ROUTES = {
   employerList: `/users/employer-list/`,
   login: `/auth/login/`,
   resetPassword:'/auth/password/reset/',
-  signIn:'/auth/sign-in'
-  
+  signIn:'/auth/sign-in',
+  confirmPassword:`auth/password/reset/confirm/`
   
 };
 

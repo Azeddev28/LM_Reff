@@ -27,6 +27,20 @@ export const loginApi = createApi({
         }
       },
     }),
+    confirmPassword: builder.mutation({
+      query: (body) => {
+        return {
+          url:  getRoute('confirmPassword'),
+          method: "POST",
+          body: body,
+        }
+      },
+      transformErrorResponse: (response) => {
+        if (response.status === 401) {
+          window.location.href = "/auth/sign-in";
+        }
+      },
+    }),
   }),
 });
 
@@ -73,6 +87,6 @@ export const getAccessToken = createSelector(
   }
 );
 
-export const { useLoginMutation, useResetPasswordMutation } = loginApi;
+export const { useLoginMutation, useResetPasswordMutation , useConfirmPasswordMutation} = loginApi;
 
 export default authSlice.reducer;
