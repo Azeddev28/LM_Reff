@@ -14,7 +14,7 @@ export const Styled = {
     flex: 1,
     margin: "0px",
     color: "rgba(0, 0, 0, 0.87))",
-    // fontFamily: "Nunito",
+    fontFamily: "inter",
     fontSize: 14,
     fontStyle: "normal",
     fontWeight: 400,
@@ -24,7 +24,7 @@ export const Styled = {
 
   Heading: styled(Typography)(({ theme }) => ({
     color: "rgba(0, 0, 0, 0.87)",
-    // fontFamily: "Nunito",
+    fontFamily: "inter",
     fontSize: 24,
     fontStyle: "normal",
     fontWeight: 600,
@@ -65,7 +65,7 @@ export const Styled = {
 
   ColumnHeader: styled(Typography)(({}) => ({
     color: "rgba(0, 0, 0, 0.87)",
-    // fontFamily: "Nunito",
+    fontFamily: "inter",
     fontSize: 17,
     fontStyle: "normal",
     fontWeight: 600,
@@ -75,13 +75,14 @@ export const Styled = {
   })),
 
   Card: styled("div")(({ value }) => ({
-    height: "50px",
-    borderBottom: typeof value === "boolean" ? "none" : "1px solid black",
+    height: "auto",
     display: "flex",
     gap: "10px",
     flexDirection: "column",
-    paddingBottom: "5px",
+    backgroundColor: "#F9F9F9",
+    padding: "5px",
     margin: "0px 25px",
+    border: "1px solid #E1E3EA;"
   })),
 
   ContentWrapper: styled("div")(({}) => ({
@@ -99,7 +100,7 @@ export const Styled = {
 
   Label: styled("p")(({}) => ({
     color: "#263238",
-    // fontFamily: "Nunito",
+    fontFamily: "inter",
     fontSize: 12,
     fontStyle: "normal",
     fontWeight: 400,
@@ -110,7 +111,7 @@ export const Styled = {
 
   Value: styled("p")(({}) => ({
     color: "rgba(0, 0, 0, 0.87)",
-    // fontFamily: "Nunito",
+    fontFamily: "inter",
     fontSize: 14,
     margin: "0px",
     fontStyle: "normal",
@@ -178,7 +179,7 @@ export const Styled = {
   DropzoneText: styled("section")(({}) => ({
     color: "#263238",
     textAlign: "center",
-    // fontFamily: "Nunito",
+    fontFamily: "inter",
     fontSize: 16,
     fontStyle: "normal",
     fontWeight: 400,
@@ -221,7 +222,7 @@ export const Styled = {
 
   FileUploadText: styled("div")(({}) => ({
     color: "#263238",
-    // fontFamily: "Nunito",
+    fontFamily: "inter",
     fontSize: 12,
     fontStyle: "normal",
     fontWeight: 400,
@@ -243,8 +244,9 @@ export const Styled = {
     cursor: "pointer",
     padding: "11px 5px 11px 13px",
     borderRadius: 4,
-    background: "#D9D9D9",
+    background: "#F9F9F9",
     alignItems: "center",
+    border: "1px solid #E1E3EA",
     boxShadow: "0px 0px 14px 0px rgba(53, 64, 82, 0.05)",
   })),
 

@@ -6,6 +6,10 @@ import { Typography } from "@mui/material";
 import { SidebarItemsType } from "../../types/sidebar";
 import SidebarNavList from "./SidebarNavList";
 
+const handleLogoutClick = () => {
+  console.log("Logout button clicked");
+};
+
 const Title = styled(Typography)`
   color: ${(props) => props.theme.sidebar.color};
   font-size: ${(props) => props.theme.typography.caption.fontSize};
@@ -30,6 +34,7 @@ const SidebarNavSection: React.FC<SidebarNavSectionProps> = (props) => {
     <Component {...rest}>
       {title && <Title variant="subtitle2">{title}</Title>}
       <SidebarNavList pages={pages} depth={0} />
+      
     </Component>
   );
 };

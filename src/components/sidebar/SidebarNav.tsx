@@ -30,6 +30,10 @@ const Items = styled.div`
  
 `;
 
+const handleLogoutClick = () => {
+  console.log("Logout button clicked");
+};
+
 type SidebarNavProps = {
   items: {
     title: string;

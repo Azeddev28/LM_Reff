@@ -9,6 +9,10 @@ type SidebarNavListProps = {
   pages: SidebarItemsType[];
 };
 
+const handleLogoutClick = () => {
+  console.log("Logout button clicked");
+};
+
 const SidebarNavList: React.FC<SidebarNavListProps> = (props) => {
   const { pages, depth } = props;
   const router = useLocation();

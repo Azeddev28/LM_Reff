@@ -19,7 +19,10 @@ const Container= styled('div')(({ }) => ({
 const ContainerChild= styled('div')(({ }) => ({ 
   display:'flex',
   alignItems: 'center',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  padding: '12px',
+  border: '1px solid #E1E3EA',
+  marginBottom: '0px' ,
 })); 
 
 const SearchBox=styled('div')(({theme})=>({
@@ -68,13 +71,10 @@ const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:Dashbo
     setSearchValue(inputValue); 
   }
 
-
-
-
   return (
     <Container>
       <Typography variant="h2">{heading}</Typography>
-      <div style={{ borderBottom: '1px solid #ccc', width: '100%', marginTop: '2.5vh', marginBottom: '1vh' }} />
+      <div style={{ borderBottom: '1px solid #E1E3EA', width: '100%', marginTop: '2.5vh', marginBottom: '3vh' }} />
       
       <ContainerChild>
       <Typography variant="h5">{subHeading}</Typography>

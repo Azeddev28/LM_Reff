@@ -22,13 +22,15 @@ CustomRouterLink.displayName = "CustomRouterLink";
 
 type ItemType = {
   activeclassname?: string;
-  onClick?: () => void;
+  // onClick?: () => void;
   to?: string;
   component?: typeof NavLink;
   depth: number;
+
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
-const Item = styled(ListItemButton)<ItemType>`
+const Item = styled(ListItemButton) <ItemType>`
 display: flex;
 flex-direction: column;
 margin-bottom: 30px;
@@ -68,7 +70,7 @@ type TitleType = {
   depth: number;
 };
 
-const Title = styled(ListItemText)<TitleType>`
+const Title = styled(ListItemText) <TitleType>`
   margin: 0;
   span {
     color: white;
@@ -107,6 +109,7 @@ const ExpandMoreIcon = styled(ExpandMore)`
 
 type SidebarNavListItemProps = ListItemProps & {
   className?: string;
+  onClick?: () => void;
   depth: number;
   href: string;
   icon: string;
@@ -123,6 +126,7 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
     children,
     icon,
     badge,
+    onClick,
     open: openProp = false,
   } = props;
 
@@ -136,8 +140,8 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
     return (
       <React.Fragment>
         <Item depth={depth} onClick={handleToggle}>
-         
-        <img src={icon} alt="" />
+
+          <img src={icon} alt="" />
           <Title depth={depth}>
             {title}
             {badge && <Badge label={badge} />}
@@ -156,15 +160,23 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
         component={CustomRouterLink}
         to={href}
         activeclassname="active"
+
+        onClick={(e) => {
+          if (onClick) {
+            onClick();
+          }
+        }}
       >
+
         <img src={icon} alt="" />
         <Title depth={depth}>
           {title}
           {badge && <Badge label={badge} />}
         </Title>
       </Item>
+
     </React.Fragment>
-    
+
   );
 };
 

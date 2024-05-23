@@ -87,7 +87,7 @@ const RightDiv = styled('div')`
 
 const WhiteTextTypography = styled(Typography)`
   color: white;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-size: 20px;
   margin-top: 18px;
   margin-left: 10px;
@@ -95,7 +95,7 @@ const WhiteTextTypography = styled(Typography)`
 
 const WhiteTextTypographyPara = styled(Typography)`
   color: white;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   font-size: 10px;
   margin-top: 18px;
   margin-left: 10px;

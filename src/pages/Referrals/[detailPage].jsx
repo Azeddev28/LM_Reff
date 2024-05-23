@@ -27,7 +27,7 @@ const DetailPage = () => {
   const [loader, setLoader] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
 
-  const [updateReferral, {}] = useUpdateReferralMutation();
+  const [updateReferral, { }] = useUpdateReferralMutation();
   const [
     updatedReferralData,
     { data: updatedReferralDetailData, isSuccess: isSuccessV2 },
@@ -150,15 +150,25 @@ const DetailPage = () => {
       ) : (
         <>
           <Styled.Container>
+
             <Styled.Column>
+
               <Styled.ColumnHeader variant="h3">
                 Referral Information
               </Styled.ColumnHeader>
+
+              <h variant="h3" style={{ marginLeft: '20px' }}>
+                These fields are maintained by Luminary and cannot be edited
+              </h>
+
               <Styled.ContentWrapper>
+
                 {referralDetailData.slice(0, 8).map((item, index) => (
                   <div key={index}>
                     {item.key === "Referral Description" ? (
+
                       <Styled.DescriptionWrapper>
+
                         <Styled.Label>{item.key}</Styled.Label>
                         <Styled.ValueWrapper>{item.value}</Styled.ValueWrapper>
                       </Styled.DescriptionWrapper>
@@ -180,7 +190,9 @@ const DetailPage = () => {
                     )}
                   </div>
                 ))}
+
               </Styled.ContentWrapper>
+
               <Styled.CheckWrapper>
                 <Styled.Checked
                   control={
@@ -192,11 +204,18 @@ const DetailPage = () => {
                   label="Preauthorization Required"
                 />
               </Styled.CheckWrapper>
+
             </Styled.Column>
+
             <Styled.Column>
               <Styled.ColumnHeader>Referral Details</Styled.ColumnHeader>
 
+              <h variant="h3" style={{ marginLeft: '20px',  marginRight: '20px' }}>
+              These fields should be updated by the Practice to update Luminary along the patient journey
+              </h>
+
               <Styled.ContentWrapper>
+
                 {referralDetailData.slice(8, 24).map((item, index) => (
                   <Styled.Card key={index}>
                     <Styled.Label>{item.key}</Styled.Label>
@@ -223,6 +242,7 @@ const DetailPage = () => {
                     )}
                   </Styled.Card>
                 ))}
+
               </Styled.ContentWrapper>
               <Styled.CheckWrapper>
                 <Styled.Checked
@@ -236,8 +256,13 @@ const DetailPage = () => {
                 />
               </Styled.CheckWrapper>
             </Styled.Column>
+
             <Styled.Column>
               <Styled.ColumnHeader>Referral Attachments</Styled.ColumnHeader>
+
+              <h variant="h3" style={{ marginLeft: '20px',  marginRight: '20px' }}>
+              View your referral documents and add any additional documents requested by the payer here
+              </h>
               <Styled.ContentWrapperV2>
                 <Styled.FileUploadWrapper>
                   <Dropzone
@@ -258,29 +283,17 @@ const DetailPage = () => {
                           <Styled.DropZoneContent>
                             <CloudUploadIcon fontSize="large" />
                             <Styled.DropzoneText>
-                              Choose a file or drag and drop here
+                              Click or drag file to this area to upload
+                            </Styled.DropzoneText>
+                            <Styled.DropzoneText>
+                              Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
                             </Styled.DropzoneText>
                           </Styled.DropZoneContent>
                         </div>
                       </section>
                     )}
                   </Dropzone>
-                  <Styled.UploadButton
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                  >
-                    <Styled.FileUploadButton>
-                      <CloudUploadIcon />
-                      <p>Browse for File</p>
-                    </Styled.FileUploadButton>
-                    <Styled.VisuallyHiddenInput
-                      type="file"
-                      multiple={"multiple"}
-                      onChange={handleFileChangeButton}
-                    />
-                  </Styled.UploadButton>
+
                 </Styled.FileUploadWrapper>
                 <Styled.UploadedFileSection>
                   <Styled.FileUploadTextWrapper>
@@ -319,6 +332,7 @@ const DetailPage = () => {
                 </Styled.UploadedFileSection>
               </Styled.ContentWrapperV2>
             </Styled.Column>
+
           </Styled.Container>
           <Styled.ButtonWrapper>
             <Button

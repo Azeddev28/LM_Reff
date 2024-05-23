@@ -2,7 +2,11 @@ import { SidebarItemsType } from "../../types/sidebar";
 import ClaimsIcon from "../../../public/claims-img.svg";
 import EmployerListIcon from "../../../public/employeers-img.svg";
 import referralsSvg from "../../../public/referrals-img.svg";
-import logoutSvg from "../../../public/logout-img.svg"
+import logoutSvg from "../../../public/logout-img.svg";
+
+const handleLogoutClick = () => {
+  localStorage.removeItem('access');
+};
 
 const pagesSection = [
   {
@@ -12,7 +16,7 @@ const pagesSection = [
   },
   {
     href: "/claims",
-    icon: ClaimsIcon, 
+    icon: ClaimsIcon,
     title: "Claims",
   },
   {
@@ -21,9 +25,10 @@ const pagesSection = [
     title: "Employers",
   },
   {
-    href: "/",
+    href: "/auth/sign-in",
     icon: logoutSvg,
     title: "Logout",
+    onClick: handleLogoutClick,
   }
 ] as SidebarItemsType[];
 
