@@ -26,8 +26,8 @@ const Referrals = () => {
   return (
     <div>
       <DashboardHeader
-        heading="Referral Tracker"
-        subHeading={`Greetings, ${userName}. Click on a patient to update their referral`}
+        heading={`Greetings, ${userName}`}
+        subHeading={`Referral Trackers`}
         placeHolder="Search by Patient Name"
         setSearchValue={setSearchValue}
       />

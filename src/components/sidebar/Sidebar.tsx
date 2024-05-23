@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Drawer as MuiDrawer} from "@mui/material";
+import { Drawer as MuiDrawer } from "@mui/material";
 import { SidebarItemsType } from "../../types/sidebar";
 import SidebarNav from "./SidebarNav";
 import { useNavigate } from "react-router-dom";
@@ -9,11 +9,12 @@ const Drawer = styled(MuiDrawer)`
 
   > div {
     border-right: 0;
+    background-color: white;
   }
 `;
 
 const Brand = styled('div')`
-  background-color:white;
+  background-color: #2F65CB;
   min-height: 56px;
   justify-content: center;
   cursor: pointer;
@@ -21,15 +22,22 @@ const Brand = styled('div')`
   flex-direction:row;
   gap:12px;
   padding:20px 20px 20px 24px;
+  align-items: center;
+
 `;
 
-const LogoText=styled('p')`
-    color: black;
+const LogoText = styled('p')`
+    color: white;
     // font-family: Nunito;
-    font-size: 20px;
+    font-size: 13px;
     font-weight: 600;
     line-height: 24px; 
     margin:0px;
+    background-color: #2F65CB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
 `;
 
 
@@ -54,15 +62,17 @@ const Sidebar: React.FC<SidebarProps> = ({
   showFooter = true,
   ...rest
 }) => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   return (
     <Drawer variant="permanent" {...rest}>
-      <Brand onClick={()=>navigate("/")}>
-         <img src="/favicon.svg" alt="logo-image" />
-          <LogoText>Luminary Health</LogoText>
+      <Brand onClick={() => navigate("/")}>
+        <img src="/favicon-white.svg" alt="logo-image" style={{ width: "60px",  marginTop: "10px"}} />
+
       </Brand>
-      <SidebarNav items={items} />
-      
+      <LogoText>Luminary</LogoText>
+      <LogoText>Health</LogoText>
+      <SidebarNav items={items}  />
+
     </Drawer>
   );
 };

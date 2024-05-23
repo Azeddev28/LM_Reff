@@ -1,22 +1,30 @@
 import { SidebarItemsType } from "../../types/sidebar";
+import ClaimsIcon from "../../../public/claims-img.svg";
+import EmployerListIcon from "../../../public/employeers-img.svg";
+import referralsSvg from "../../../public/referrals-img.svg";
+import logoutSvg from "../../../public/logout-img.svg"
 
 const pagesSection = [
   {
     href: "/",
-    // icon: Sliders,
+    icon: referralsSvg,
     title: "Referrals",
   },
   {
     href: "/claims",
-    // icon: Layout,
+    icon: ClaimsIcon, 
     title: "Claims",
   },
   {
     href: "/employe-list",
-    // icon: Briefcase,
-    title: "Employer List",
-    // badge: "8",
+    icon: EmployerListIcon,
+    title: "Employers",
   },
+  {
+    href: "/",
+    icon: logoutSvg,
+    title: "Logout",
+  }
 ] as SidebarItemsType[];
 
 const navItems = [

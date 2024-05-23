@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useState , ChangeEvent  } from "react";
+
 interface DashboardHeaderProps{
     heading:string,
     subHeading:string,
@@ -15,6 +16,12 @@ const Container= styled('div')(({ }) => ({
    gap:'10px',
 })); 
 
+const ContainerChild= styled('div')(({ }) => ({ 
+  display:'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between'
+})); 
+
 const SearchBox=styled('div')(({theme})=>({
  padding:"8px 16px 8px 0px ",
  border:`1px solid ${theme.header.background}`,
@@ -24,7 +31,7 @@ const SearchBox=styled('div')(({theme})=>({
  backgroundColor:'white',
  borderRadius:'10px',
  flexDirection:'row',
-  marginTop:'30px',
+  width: '30%'
 }));
 
 const Input=styled('input')(({})=>({
@@ -66,12 +73,18 @@ const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:Dashbo
 
   return (
     <Container>
-      <Typography variant="h4">{heading}</Typography>
-      <Typography>{subHeading}</Typography>
+      <Typography variant="h2">{heading}</Typography>
+      <div style={{ borderBottom: '1px solid #ccc', width: '100%', marginTop: '2.5vh', marginBottom: '1vh' }} />
+      
+      <ContainerChild>
+      <Typography variant="h5">{subHeading}</Typography>
       <SearchBox>
         <Input placeholder={placeHolder} onChange={handleInputValue}/>
         <SearchIcon  style={{ cursor: 'pointer' }} fontSize="medium" onClick={handleSearchValue} />
       </SearchBox>
+      </ContainerChild>
+
+      
     </Container>
   )
 }

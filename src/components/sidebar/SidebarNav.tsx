@@ -10,7 +10,7 @@ import SidebarNavSection from "./SidebarNavSection";
 import "../../vendor/perfect-scrollbar.css";
 
 const baseScrollbar = (props: any) => css`
-  background-color: ${props.theme.sidebar.background};
+  background-color: #2F65CB;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
   flex-grow: 1;
 `;
@@ -26,6 +26,7 @@ const PerfectScrollbar = styled(ReactPerfectScrollbar)`
 const Items = styled.div`
   padding-top: ${(props) => props.theme.spacing(2.5)};
   padding-bottom: ${(props) => props.theme.spacing(2.5)};
+  margin-top: 20px;
  
 `;
 
@@ -38,7 +39,7 @@ type SidebarNavProps = {
 
 const SidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
   const theme = useTheme();
-  
+
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const ScrollbarComponent = (
     matches ? PerfectScrollbar : Scrollbar
