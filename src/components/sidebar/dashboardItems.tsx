@@ -3,8 +3,13 @@ import ClaimsIcon from "../../../public/claims-img.svg";
 import EmployerListIcon from "../../../public/employeers-img.svg";
 import referralsSvg from "../../../public/referrals-img.svg";
 import logoutSvg from "../../../public/logout-img.svg";
+import { useDispatch } from "react-redux";
+import { setAccessToken, setAuthenticated } from "../../redux/slices/authSlice";
 
 const handleLogoutClick = () => {
+  const dispatch = useDispatch();
+  dispatch(setAuthenticated(false))
+  dispatch(setAccessToken(null));
   localStorage.removeItem('access');
 };
 
