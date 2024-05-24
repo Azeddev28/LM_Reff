@@ -27,14 +27,16 @@ const ContainerChild= styled('div')(({ }) => ({
 
 const SearchBox=styled('div')(({theme})=>({
  padding:"8px 16px 8px 0px ",
- border:`1px solid ${theme.header.background}`,
+ border:`1px solid #E1E3EA`,
  display:'flex',
- gap:'10px',
+ gap:'8px',
  alignItems:"center",
- backgroundColor:'white',
- borderRadius:'10px',
+ backgroundColor:'#FFFFFF',
+ borderRadius:'9px',
  flexDirection:'row',
-  width: '30%'
+ width: '25%',
+ height: '38px',
+ background: '#FFFFFF',
 }));
 
 const Input=styled('input')(({})=>({
@@ -73,11 +75,11 @@ const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:Dashbo
 
   return (
     <Container>
-      <Typography variant="h2">{heading}</Typography>
+      <Typography variant="h2" style={{ marginTop: "-20px", fontSize: "25px"}}>{heading}</Typography>
       <div style={{ borderBottom: '1px solid #E1E3EA', width: '100%', marginTop: '2.5vh', marginBottom: '3vh' }} />
       
       <ContainerChild>
-      <Typography variant="h5">{subHeading}</Typography>
+      <Typography variant="h6">{subHeading}</Typography>
       <SearchBox>
         <Input placeholder={placeHolder} onChange={handleInputValue}/>
         <SearchIcon  style={{ cursor: 'pointer' }} fontSize="medium" onClick={handleSearchValue} />

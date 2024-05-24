@@ -29,11 +29,10 @@ const Brand = styled('div')`
 
 const LogoText = styled('p')`
     color: white;
-    font-family: inter;
+    font-family: Inter;
     font-size: 13px;
-    font-weight: 600;
     line-height: 24px; 
-    margin:0px;
+    margin:-3px;
     background-color: #2F65CB;
     display: flex;
     align-items: center;
@@ -94,7 +93,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <Drawer variant="permanent" {...rest}>
       <Brand onClick={() => navigate("/")}>
-        <img src="/favicon-white.svg" alt="logo-image" style={{ width: "60px", marginTop: "10px" }} />
+        <img src="/favicon-white.svg" alt="logo-image" style={{ width: "40px", marginTop: "10px" , marginBottom: "0px" }} />
       </Brand>
       <LogoText>Luminary</LogoText>
       <LogoText>Health</LogoText>

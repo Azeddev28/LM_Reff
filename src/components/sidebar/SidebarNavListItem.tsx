@@ -11,6 +11,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { width } from "@mui/system";
 
 const CustomRouterLink = forwardRef<any, NavLinkProps>((props, ref) => (
   <div ref={ref}>
@@ -61,8 +62,8 @@ margin-top: 10px;
 background: #1847A0;
 border: 1px solid #1847A0;
 border-radius: 12px;
-margin-right: 20px;
-margin-left: 20px;
+margin-right: 10px;
+margin-left: 10px;
   }
 `;
 
@@ -74,7 +75,8 @@ const Title = styled(ListItemText) <TitleType>`
   margin: 0;
   span {
     color: white;
-    font-size: 14px;
+    font-size: 11px;
+    font-weight: 500;
     padding: 0 ${(props) => props.theme.spacing(4)};
     margin-top: 10px;
   }
@@ -168,7 +170,7 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
         }}
       >
 
-        <img src={icon} alt="" />
+        <img src={icon} alt="" style={{width: '25px'}}/>
         <Title depth={depth}>
           {title}
           {badge && <Badge label={badge} />}

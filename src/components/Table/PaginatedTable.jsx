@@ -150,7 +150,7 @@ const PaginatedTable = ({
     </ProgressWrapper>
   ) : (
     <Paper>
-      <TableContainer sx={{marginTop: '-20px', border: '1px solid #F1F1F2'}}>
+      <TableContainer sx={{ marginTop: '-20px', border: '1px solid #F1F1F2' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead sx={{ backgroundColor: '#F9F9F9' }}>
             <TableRow>
@@ -187,10 +187,10 @@ const PaginatedTable = ({
                         alt="Sort Ascending"
                         style={{
                           cursor: "pointer",
-                          height: "20px",
+                          height: "13px",
                           width: "20px",
                           transform: "rotate(180deg)",
-                            // Rotate the image for ascending sort
+                          // Rotate the image for ascending sort
                         }}
                         onClick={() => {
                           setOrderingValue(columnInfo.sortKey);

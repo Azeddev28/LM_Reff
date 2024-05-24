@@ -34,7 +34,6 @@ const SidebarNavSection: React.FC<SidebarNavSectionProps> = (props) => {
     <Component {...rest}>
       {title && <Title variant="subtitle2">{title}</Title>}
       <SidebarNavList pages={pages} depth={0} />
-      
     </Component>
   );
 };

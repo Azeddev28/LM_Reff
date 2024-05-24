@@ -1,16 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-
 import { SidebarItemsType } from "../../types/sidebar";
 import reduceChildRoutes from "./reduceChildRoutes";
 
 type SidebarNavListProps = {
   depth: number;
   pages: SidebarItemsType[];
-};
-
-const handleLogoutClick = () => {
-  console.log("Logout button clicked");
 };
 
 const SidebarNavList: React.FC<SidebarNavListProps> = (props) => {

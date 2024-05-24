@@ -10,9 +10,10 @@ import SidebarNavSection from "./SidebarNavSection";
 import "../../vendor/perfect-scrollbar.css";
 
 const baseScrollbar = (props: any) => css`
-  background-color: #2F65CB;
   border-right: 1px solid rgba(0, 0, 0, 0.12);
   flex-grow: 1;
+  margin-top: 10px;
+  border-top : 1px solid #1847A0;
 `;
 
 const Scrollbar = styled.div`
@@ -27,12 +28,7 @@ const Items = styled.div`
   padding-top: ${(props) => props.theme.spacing(2.5)};
   padding-bottom: ${(props) => props.theme.spacing(2.5)};
   margin-top: 20px;
- 
 `;
-
-const handleLogoutClick = () => {
-  console.log("Logout button clicked");
-};
 
 type SidebarNavProps = {
   items: {

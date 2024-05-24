@@ -17,7 +17,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 import Footer from "../components/Footer";
 
 
-const drawerWidth = 130;
+const drawerWidth = 100;
 
 const Root = styled.div`
   display: flex;
