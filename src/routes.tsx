@@ -7,6 +7,7 @@ import SignIn from "./pages/auth/SignIn";
 import ResetPassword from "./pages/auth/ResetPassword";
 import DetailPage from "./pages/Referrals/[detailPage]";
 import AuthGuard from "./components/guards/AuthGuard";
+import ConfirmPassword from "./pages/auth/ConfirmPassword";
 const routes = [
   {
     path: "/",
@@ -28,6 +29,10 @@ const routes = [
   {
     path:"auth/reset-password",
     element:<Auth><ResetPassword/></Auth>,
+  },
+  {
+    path:"auth/password/reset/confirm/:uid/:token",
+    element:<Auth><ConfirmPassword/></Auth>,
   },
   {
     path: "/:id", 
