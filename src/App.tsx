@@ -28,12 +28,13 @@ function App({ emotionCache = clientSideEmotionCache }) {
     <CacheProvider value={emotionCache}>
       <HelmetProvider>
         <Helmet
-          titleTemplate="%s | Mira"
-          defaultTitle="Mira - React Material Admin Dashboard"
+          // titleTemplate="%s | Mira"
+          defaultTitle="Luminary Health"
         />
         <Provider store={store}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <MuiThemeProvider theme={createTheme(theme)}>
+              {/* {content} */}
               <AuthGuard>{content}</AuthGuard>
             </MuiThemeProvider>
           </LocalizationProvider>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import * as Yup from "yup";
 import { Formik } from "formik";
+import { useResetPasswordMutation } from "../../redux/slices/authSlice";
 
 import {
   Alert as MuiAlert,
@@ -19,7 +20,8 @@ const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
 
 function ResetPassword() {
   const navigate = useNavigate();
-  // const { resetPassword } = useAuth();
+  const [resetPassword] = useResetPasswordMutation();
+  let formData = new FormData();
 
   return (
     <Formik
@@ -34,11 +36,10 @@ function ResetPassword() {
           .required("Email is required"),
       })}
       onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-       
         try {
-          // resetPassword(values.email);
-          navigate("/auth/sign-in");
-        
+          let email = values.email;
+          formData.append("email", email);
+          resetPassword(formData);
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 

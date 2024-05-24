@@ -1,51 +1,68 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { NavLink } from "react-router-dom";
-import ReferralLogo from "/Images/ReferralLogo.png";
-import { Box, Chip, Drawer as MuiDrawer, ListItemButton } from "@mui/material";
+import { Drawer as MuiDrawer } from "@mui/material";
 import { SidebarItemsType } from "../../types/sidebar";
-import Footer from "./SidebarFooter";
 import SidebarNav from "./SidebarNav";
+import { useNavigate } from "react-router-dom";
 
 const Drawer = styled(MuiDrawer)`
   border-right: 0;
 
   > div {
     border-right: 0;
+    background-color: white;
   }
 `;
 
-const Brand = styled(ListItemButton)<{
-  component?: React.ReactNode;
-  to?: string;
-}>`
-  
-  color: ${(props) => props.theme.sidebar.header.color};
-  background-color:white;
-  // background-color: ${(props) => props.theme.sidebar.header.background};
-  font-family: ${(props) => props.theme.typography.fontFamily};
+const Brand = styled('div')`
+  background-color: #2F65CB;
   min-height: 56px;
   justify-content: center;
   cursor: pointer;
-  flex-grow: 0;
+  display:flex;
+  flex-direction:row;
+  gap:12px;
+  padding:20px 20px 20px 24px;
+  align-items: center;
 
-  ${(props) => props.theme.breakpoints.up("sm")} {
-    min-height: 64px;
-  }
-
-  &:hover {
-    background-color: ${(props) => props.theme.sidebar.header.background};
-  }
 `;
 
+const LogoText = styled('p')`
+    color: white;
+    font-family: Inter;
+    font-size: 13px;
+    line-height: 24px; 
+    margin:-3px;
+    background-color: #2F65CB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter';
+`;
 
+const MenuItem = styled('button')`
+/* item */
 
-const LogoImage = styled('img')(({  }) => ({
-  width: '65%', // Adjust this as per your requirement
-  height: 'auto', // Adjust this as per your requirement
-  objectFit:'cover',
- 
-}));
+/* Auto layout */
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 0px;
+gap: 12px;
+
+width: 80px;
+height: 80px;
+
+border-radius: 12px;
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+
+background-color: #2F65CB;
+`;
 
 
 export type SidebarProps = {
@@ -69,13 +86,18 @@ const Sidebar: React.FC<SidebarProps> = ({
   showFooter = true,
   ...rest
 }) => {
+
+
+
+  const navigate = useNavigate();
   return (
     <Drawer variant="permanent" {...rest}>
-      <Brand component={NavLink as any} to="/">
-         <LogoImage src={ReferralLogo} alt="logo-image" />
+      <Brand onClick={() => navigate("/")}>
+        <img src="/favicon-white.svg" alt="logo-image" style={{ width: "40px", marginTop: "10px" , marginBottom: "0px" }} />
       </Brand>
+      <LogoText>Luminary</LogoText>
+      <LogoText>Health</LogoText>
       <SidebarNav items={items} />
-      {!!showFooter && <Footer />}
     </Drawer>
   );
 };

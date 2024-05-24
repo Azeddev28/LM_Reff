@@ -5,16 +5,15 @@ import ReactPerfectScrollbar from "react-perfect-scrollbar";
 import { List } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
 import { SidebarItemsType } from "../../types/sidebar";
 import SidebarNavSection from "./SidebarNavSection";
-
 import "../../vendor/perfect-scrollbar.css";
 
 const baseScrollbar = (props: any) => css`
-  background-color: ${props.theme.sidebar.background};
   border-right: 1px solid rgba(0, 0, 0, 0.12);
   flex-grow: 1;
+  margin-top: 10px;
+  border-top : 1px solid #1847A0;
 `;
 
 const Scrollbar = styled.div`
@@ -28,7 +27,7 @@ const PerfectScrollbar = styled(ReactPerfectScrollbar)`
 const Items = styled.div`
   padding-top: ${(props) => props.theme.spacing(2.5)};
   padding-bottom: ${(props) => props.theme.spacing(2.5)};
- 
+  margin-top: 20px;
 `;
 
 type SidebarNavProps = {
@@ -40,6 +39,7 @@ type SidebarNavProps = {
 
 const SidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
   const theme = useTheme();
+
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const ScrollbarComponent = (
     matches ? PerfectScrollbar : Scrollbar
@@ -52,7 +52,6 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
           {items &&
             items.map((item) => (
               <SidebarNavSection
-                component="div"
                 key={item.title}
                 pages={item.pages}
                 title={item.title}

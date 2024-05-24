@@ -27,36 +27,6 @@ const IconButton = styled(MuiIconButton)`
   }
 `;
 
-const Search = styled.div`
-  border-radius: 2px;
-  background-color: ${(props) => props.theme.header.background};
-  display: none;
-  position: relative;
-  width: 100%;
-
-  &:hover {
-    background-color: ${(props) => darken(0.05, props.theme.header.background)};
-  }
-
-  ${(props) => props.theme.breakpoints.up("md")} {
-    display: block;
-  }
-`;
-
-const SearchIconWrapper = styled.div`
-  width: 50px;
-  height: 100%;
-  position: absolute;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  svg {
-    width: 22px;
-    height: 22px;
-  }
-`;
 
 type NavbarProps = {
   onDrawerToggle: React.MouseEventHandler<HTMLElement>;
@@ -68,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({ onDrawerToggle }) => {
       <AppBar position="sticky" elevation={0}>
         <Toolbar>
           <Grid container alignItems="center">
-            <Grid item sx={{ display: { xs: "block", md: "none" } }}>
+            <Grid item sx={{ display: { xs: "block", screen_1200: "none" } }}>
               <IconButton
                 color="inherit"
                 aria-label="Open drawer"
@@ -79,9 +49,9 @@ const Navbar: React.FC<NavbarProps> = ({ onDrawerToggle }) => {
               </IconButton>
             </Grid>
             <Grid item xs />
-            <Grid item>
+            {/* <Grid item>
               <Typography variant='h4'>Luminary Health Providers</Typography>
-            </Grid>
+            </Grid> */}
             <Grid item xs />
             <Grid item>
               <NavbarUserDropdown />

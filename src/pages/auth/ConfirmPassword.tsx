@@ -4,9 +4,7 @@ import { Helmet } from "react-helmet-async";
 
 import { Paper, Typography } from "@mui/material";
 
-import { ReactComponent as Logo } from "../../vendor/logo.svg";
-import SignUpComponent from "../../components/auth/SignUp";
-
+import ConfirmPasswordComponent from "../../components/auth/ConfirmPassword";
 
 
 const ImageWrapperLeft = styled('div')`
@@ -72,13 +70,6 @@ const WhiteTextTypographyPara = styled(Typography)`
 `;
 
 
-const Brand = styled(Logo)`
-  fill: ${(props) => props.theme.palette.primary.main};
-  width: 64px;
-  height: 64px;
-  margin-bottom: 32px;
-`;
-
 const Wrapper = styled(Paper)`
   padding: ${(props) => props.theme.spacing(6)};
 
@@ -87,24 +78,8 @@ const Wrapper = styled(Paper)`
   }
 `;
 
-function SignUp() {
+function ConfirmPassword() {
   return (
-    // <React.Fragment>
-    //   <Brand />
-    //   <Wrapper>
-    //     <Helmet title="Sign Up" />
-
-    //     <Typography component="h1" variant="h4" align="center" gutterBottom>
-    //       Get started
-    //     </Typography>
-    //     <Typography component="h2" variant="body1" align="center">
-    //       Start creating the best possible user experience for you customers
-    //     </Typography>
-
-    //     <SignUpComponent />
-    //   </Wrapper>
-    // </React.Fragment>
-
     <React.Fragment>
       <Container>
         <LeftDiv>
@@ -128,22 +103,21 @@ function SignUp() {
 
         <RightDiv>
           <Wrapper>
-            <Helmet title="Sign Up" />
+            <Helmet title="Reset Password" />
 
             <Typography component="h1" variant="h4" align="center" gutterBottom>
-              Get started
-            </Typography>
-            <Typography component="h2" variant="body1" align="center">
-              Start creating the best possible user experience for you customers
+              Change Your Password
             </Typography>
 
-            <SignUpComponent />
+
+            <ConfirmPasswordComponent />
           </Wrapper>
         </RightDiv>
 
       </Container>
     </React.Fragment>
+
   );
 }
 
-export default SignUp;
+export default ConfirmPassword;
