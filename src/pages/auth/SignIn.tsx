@@ -47,42 +47,46 @@ const Container = styled('div')`
 `;
 
 const LeftDiv = styled('div')`
-  width: 60%;
-  height: 100%;
+  width: 48%;
+  height: 98vh;
   background-color: #006CEA;
   display:  flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+
+  margin-left: 0.5vw;
+  margin-top: 1vh;
 `;
 
 const LeftDiv1 = styled('div')`
-  width: 100%;
-  height: 10%;
-  margin-top: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+margin-top: 10%;
+margin-bottom: 5%;
+width: 100%;
+
 `;
 
 const LeftDiv2 = styled('div')`
-  width: 100%;
-  height: 50%;
-`;
 
-const LeftDiv3 = styled('div')`
-  width: 100%;
-  height: 10%;
-  margin-bottom: 10%
 `;
 
 const RightDiv = styled('div')`
-  width: 40%;
+  width: 50%;
   height: 100%;
   background-color: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const RightDiv1 = styled('div')`
+display: flex;
+align-items: center;
+margin-left: -200px;
+margin-bottom: 40px;
+`;
+
+const RightDiv2 = styled('div')`
+background-color: red;
 `;
 
 const WhiteTextTypography = styled(Typography)`
@@ -109,7 +113,7 @@ function SignIn() {
 
         <LeftDiv>
 
-          <LeftDiv1>
+          {/* <LeftDiv1>
 
             <ImageWrapper>
               <img src="/favicon-white.svg" alt="logo-image" />
@@ -118,45 +122,51 @@ function SignIn() {
               </WhiteTextTypography>
             </ImageWrapper>
 
-          </LeftDiv1>
+          </LeftDiv1> */}
 
-          <LeftDiv2>
-
-            <ImageWrapperLeft>
-              <img src="/signInCardImges.svg" alt="logo-image" />
-            </ImageWrapperLeft>
-
-          </LeftDiv2>
-
-          <LeftDiv3>
-
-            <WhiteTextTypography  variant="h2" align="center">
+          <LeftDiv1>
+            <WhiteTextTypography variant="h2" align="center">
               Luminary Health Providers
             </WhiteTextTypography>
 
             <WhiteTextTypographyPara variant="h2" align="center">
               Manage all of your Luminary Referrals in one place
             </WhiteTextTypographyPara>
+          </LeftDiv1>
 
-
-
-
-          </LeftDiv3>
+          <LeftDiv2>
+          <ImageWrapperLeft>
+              <img src="/login-img.svg" alt="logo-image" style={{height: '73vh'}}/>
+            </ImageWrapperLeft>
+          </LeftDiv2>
 
 
         </LeftDiv>
 
 
         <RightDiv>
+
+          <RightDiv1>
+              <img src="/favicon.svg" alt="logo-image" style={{height: '40px'}}/>
+              <Typography variant="h2" align="center" style={{fontSize: "20px", color: "black"}}>
+                Luminary Health
+              </Typography>
+          </RightDiv1>
+
+          <RightDiv2>
+             
           <Wrapper>
-            <Typography component="h3" variant="h3" align="center">
-              Login to your account
+            <Typography component="h3" variant="h3" align="left" style={{fontSize: "20px", marginBottom: "10px"}}>
+              Hi, nice to see you!
             </Typography>
 
             <SignInWrapper>
               <SignInComponent />
             </SignInWrapper>
           </Wrapper>
+          </RightDiv2>
+
+         
         </RightDiv>
 
       </Container>
