@@ -289,7 +289,6 @@ const DetailPage = () => {
                       </section>
                     )}
                   </Dropzone>
-
                 </Styled.FileUploadWrapper>
                 <Styled.UploadedFileSection>
                   <Styled.FileUploadTextWrapper>
@@ -328,7 +327,6 @@ const DetailPage = () => {
                 </Styled.UploadedFileSection>
               </Styled.ContentWrapperV2>
             </Styled.Column>
-
           </Styled.Container>
           <Styled.ButtonWrapper>
             <Button

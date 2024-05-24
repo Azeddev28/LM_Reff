@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import { useState , ChangeEvent  } from "react";
-
 interface DashboardHeaderProps{
     heading:string,
     subHeading:string,
@@ -72,6 +71,9 @@ const DashboardHeader = ({heading,subHeading,placeHolder, setSearchValue}:Dashbo
   const handleSearchValue=()=>{
     setSearchValue(inputValue); 
   }
+
+
+
 
   return (
     <Container>

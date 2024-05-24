@@ -39,7 +39,7 @@ type SidebarNavProps = {
 
 const SidebarNav: React.FC<SidebarNavProps> = ({ items }) => {
   const theme = useTheme();
-
+  
   const matches = useMediaQuery(theme.breakpoints.up("md"));
   const ScrollbarComponent = (
     matches ? PerfectScrollbar : Scrollbar

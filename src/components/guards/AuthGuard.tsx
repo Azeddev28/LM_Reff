@@ -9,24 +9,19 @@ interface AuthGuardType {
 function AuthGuard({ children }: AuthGuardType) {
   
   const navigate = useNavigate();
-  const location = useLocation();
-
   
   const {isAuthenticated}=useSelector((state:any)=>state.auth);
-
   useEffect(() => { 
-    const searchParams = new URLSearchParams(location.search);
-    const token = searchParams.get('token');
-    const uid = searchParams.get('uid');
-
-    if (!isAuthenticated) {   
-      if (token && uid) {
-        navigate("/auth/password/reset/confirm/");
-      } else {
-        navigate("/auth/sign-in");
-      }
-    } 
-    else {
+   
+    // if (!isAuthenticated) {     
+    //   navigate("/auth/sign-in");
+      
+    // } 
+    // else {
+     
+    //   navigate("/");  
+    // }
+    if(isAuthenticated){
       navigate("/");  
     }
   }, [isAuthenticated]);
