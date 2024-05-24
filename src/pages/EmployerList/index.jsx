@@ -18,8 +18,8 @@ const EmployerList = () => {
   return (
     <div>
       <DashboardHeader
-        heading="Employer List"
-        subHeading={`Greetings, ${userName}. Search for an employer to check if your patient has a sponsored plan`}
+        heading={`Greetings, ${userName}`}
+        subHeading={`Employer List`}
         placeHolder="Search by Employer Name"
         setSearchValue={setSearchValue}
       />

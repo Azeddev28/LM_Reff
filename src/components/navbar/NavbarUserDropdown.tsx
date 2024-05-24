@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Power } from "react-feather";
-import { useDispatch , useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {  setAccessToken } from "../../redux/slices/authSlice";
+import { setAccessToken } from "../../redux/slices/authSlice";
 import {
   Tooltip,
   Menu,
@@ -21,11 +21,11 @@ const IconButton = styled(MuiIconButton)`
 `;
 
 function NavbarUserDropdown() {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
   const navigate = useNavigate();
- 
-  
+
+
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
   };
@@ -35,15 +35,14 @@ function NavbarUserDropdown() {
   };
 
 
-  const handleSignOut =  () => {
+  const handleSignOut = () => {
     dispatch(setAuthenticated(false))
     dispatch(setAccessToken(null));
     localStorage.removeItem('access');
-     navigate("/auth/sign-in");
-     
+    navigate("/auth/sign-in");
   };
 
- 
+
 
   return (
     <React.Fragment>
@@ -54,7 +53,7 @@ function NavbarUserDropdown() {
           onClick={toggleMenu}
           color="inherit"
           size="large"
-  
+
         >
           <Power />
         </IconButton>

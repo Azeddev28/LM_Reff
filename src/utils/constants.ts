@@ -184,6 +184,16 @@ export const REFERRAL_HEADER_DATA = [
         'key': 'payer',
         'display': 'Payer',
         'sortKey': 'convener__name'
+    },
+    {
+        'key': 'referral_Description',
+        'display': 'Referral Description',
+        'sortKey': 'ref__desc'
+    },
+    {
+        'key': 'last_updated',
+        'display': 'Last Updated',
+        'sortKey': 'last_updated'
     }
 ]
 

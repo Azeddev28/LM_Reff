@@ -18,8 +18,8 @@ const Claims = () => {
   return (
     <div>
       <DashboardHeader
-        heading="Claims Dashboard"
-        subHeading={`Greetings , ${userName}. Search for a patient to view the claim status`}
+        heading={`Greetings, ${userName}`}
+        subHeading={`Claims Dashboard`}
         placeHolder="Search by Patient Name"
         setSearchValue={setSearchValue}
       />
