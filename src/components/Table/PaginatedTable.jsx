@@ -16,6 +16,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import styled from "@emotion/styled";
+import { format } from 'date-fns';
 
 
 
@@ -136,6 +137,11 @@ const PaginatedTable = ({
     setChangePage("next");
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return format(date, 'yyyy-MM-dd'); 
+  };
+
   const StyledRow = styled(TableRow)((props) => ({
     padding: 8,
     cursor: props.redirectToDetailPage ? "pointer" : "default",
@@ -223,7 +229,7 @@ const PaginatedTable = ({
                     {extractRowValues(obj, keys)?.map(
                       (item, index) =>
                         item.key !== "uuid" && (
-                          <TableCell key={index}>{item.value}</TableCell>
+                          <TableCell key={index}>{item.key === 'date_created' || item.key === 'date_updated' ?  formatDate(item.value) : item?.value}</TableCell>
                         )
                     )}
                   </StyledRow>

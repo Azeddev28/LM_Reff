@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , useLocation} from "react-router-dom";
 import { useSelector } from "react-redux";
 
 interface AuthGuardType {
@@ -9,19 +9,24 @@ interface AuthGuardType {
 function AuthGuard({ children }: AuthGuardType) {
   
   const navigate = useNavigate();
+  const location = useLocation();
+
   
-  const {isAuthenticated}=useSelector((state)=>state.auth);
+  const {isAuthenticated}=useSelector((state:any)=>state.auth);
+
   useEffect(() => { 
-   
-    // if (!isAuthenticated) {     
-    //   navigate("/auth/sign-in");
-      
-    // } 
-    // else {
-     
-    //   navigate("/");  
-    // }
-    if(isAuthenticated){
+    const searchParams = new URLSearchParams(location.search);
+    const token = searchParams.get('token');
+    const uid = searchParams.get('uid');
+
+    if (!isAuthenticated) {   
+      if (token && uid) {
+        navigate("/auth/password/reset/confirm/");
+      } else {
+        navigate("/auth/sign-in");
+      }
+    } 
+    else {
       navigate("/");  
     }
   }, [isAuthenticated]);
