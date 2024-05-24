@@ -203,8 +203,15 @@ const DetailPage = () => {
                   style={{ pointerEvents: "none" }}
                   label="Preauthorization Required"
                 />
+                <Styled.Checked
+                  control={
+                    <Checkbox
+                      checked={isCancelled}
+                    />
+                  }
+                  label="Procedure Cancelled"
+                />
               </Styled.CheckWrapper>
-
             </Styled.Column>
 
             <Styled.Column>
@@ -244,17 +251,6 @@ const DetailPage = () => {
                 ))}
 
               </Styled.ContentWrapper>
-              <Styled.CheckWrapper>
-                <Styled.Checked
-                  control={
-                    <Checkbox
-                      checked={isCancelled}
-                      onChange={handleCheckboxChange}
-                    />
-                  }
-                  label="Procedure Cancelled"
-                />
-              </Styled.CheckWrapper>
             </Styled.Column>
 
             <Styled.Column>
