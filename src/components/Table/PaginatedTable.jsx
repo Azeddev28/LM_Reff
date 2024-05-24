@@ -150,6 +150,8 @@ const PaginatedTable = ({
     },
   }));
 
+  
+
   return isLoading ? (
     <ProgressWrapper>
       <CircularProgress size={"7rem"} />
@@ -196,7 +198,6 @@ const PaginatedTable = ({
                           height: "13px",
                           width: "20px",
                           transform: "rotate(180deg)",
-                          // Rotate the image for ascending sort
                         }}
                         onClick={() => {
                           setOrderingValue(columnInfo.sortKey);
