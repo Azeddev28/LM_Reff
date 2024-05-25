@@ -33,18 +33,20 @@ function SignIn() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // New state for severity
-
-  useEffect(() => {
-    const access = localStorage.getItem("access");
-    if (access) {
-      navigation("/");
-    }
-  }, [navigation]);
+  
+  // [UPDATED]
+  // useEffect(() => {
+  //   const access = localStorage.getItem("access");
+  //   if (access) {
+  //     navigation("/");
+  //   }
+  // }, [navigation]);
 
   useEffect(() => {
     if (loginSuccessFull) {
       dispatch(setAuthenticated(true));
       dispatch(setAccessToken(loginData.access));
+      localStorage.setItem("access", loginData.access); // [UPDATED]
       setSnackbarMessage("Successfully logged in");
       setSnackbarOpen(true);
       setSnackbarSeverity("success"); // Set severity to success

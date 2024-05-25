@@ -6,42 +6,46 @@ import logoutSvg from "../../../public/logout-img.svg";
 import { useDispatch } from "react-redux";
 import { setAccessToken, setAuthenticated } from "../../redux/slices/authSlice";
 
-const handleLogoutClick = () => {
+const useNavItems = () => {
   const dispatch = useDispatch();
-  dispatch(setAuthenticated(false))
-  dispatch(setAccessToken(null));
-  localStorage.removeItem('access');
+
+  const handleLogoutClick = (event: any) => {
+    event.preventDefault();
+    localStorage.removeItem("access");
+    dispatch(setAccessToken(null));
+    dispatch(setAuthenticated(false));
+  };
+
+  const pagesSection = [
+    {
+      href: "/",
+      icon: referralsSvg,
+      title: "Referrals",
+    },
+    {
+      href: "/claims",
+      icon: ClaimsIcon,
+      title: "Claims",
+    },
+    {
+      href: "/employe-list",
+      icon: EmployerListIcon,
+      title: "Employers",
+    },
+    {
+      href: "/auth/sign-in",
+      icon: logoutSvg,
+      title: "Logout",
+      onClick: handleLogoutClick,
+    },
+  ] as SidebarItemsType[];
+
+  return [
+    {
+      title: "",
+      pages: pagesSection,
+    },
+  ];
 };
 
-const pagesSection = [
-  {
-    href: "/",
-    icon: referralsSvg,
-    title: "Referrals",
-  },
-  {
-    href: "/claims",
-    icon: ClaimsIcon,
-    title: "Claims",
-  },
-  {
-    href: "/employe-list",
-    icon: EmployerListIcon,
-    title: "Employers",
-  },
-  {
-    href: "/auth/sign-in",
-    icon: logoutSvg,
-    title: "Logout",
-    onClick: handleLogoutClick,
-  }
-] as SidebarItemsType[];
-
-const navItems = [
-  {
-    title: "",
-    pages: pagesSection,
-  },
-];
-
-export default navItems;
+export default useNavItems;
