@@ -1,12 +1,13 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getRoute } from "../../api/BackendRoutes";
+import { baseQueryWithReauth } from "../../utils/apiUtils";
+
+const baseUrl = import.meta.env.VITE_URL;
 
 export const loginApi = createApi({
   reducerPath: "loginApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_URL,
-  }),
+  baseQuery:baseQueryWithReauth(baseUrl), // [UPDATED]
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
@@ -21,11 +22,6 @@ export const loginApi = createApi({
         method: "POST",
         body: email,
       }),
-      transformErrorResponse: (response) => {
-        if (response.status === 401) {
-          window.location.href = "/auth/sign-in";
-        }
-      },
     }),
     confirmPassword: builder.mutation({
       query: (body) => {
@@ -40,6 +36,13 @@ export const loginApi = createApi({
           window.location.href = "/auth/sign-in";
         }
       },
+    }),
+    refreshToken: builder.mutation({
+      query: ({body}) => ({
+        url: getRoute("refreshToken"),
+        method: "POST",
+        body
+      }),
     }),
   }),
 });
@@ -87,6 +90,11 @@ export const getAccessToken = createSelector(
   }
 );
 
-export const { useLoginMutation, useResetPasswordMutation , useConfirmPasswordMutation} = loginApi;
+export const {
+  useLoginMutation,
+  useResetPasswordMutation,
+  useConfirmPasswordMutation,
+  useRefreshTokenMutation,
+} = loginApi;
 
 export default authSlice.reducer;

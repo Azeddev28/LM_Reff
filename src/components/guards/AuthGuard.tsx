@@ -12,18 +12,16 @@ function AuthGuard({ children }: AuthGuardType) {
   const dispatch = useDispatch();
 
   const { isAuthenticated } = useSelector((state: any) => state.auth);
+  const access = localStorage.getItem("access");
 
-  // Check authentication state on mount [UPDATED]
   useEffect(() => {
-    const access = localStorage.getItem("access");
-    if (access) {
-      dispatch(setAuthenticated(true)); // [UPDATED]
+    if (access) {      
+      dispatch(setAuthenticated(true));
     }
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    const access = localStorage.getItem("access"); // [UPDATED]
-    if (access) {
+    if (isAuthenticated) {
       navigate("/");
     } else {
       navigate("/auth/sign-in");

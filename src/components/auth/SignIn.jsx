@@ -34,13 +34,6 @@ function SignIn() {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // New state for severity
   
-  // [UPDATED]
-  // useEffect(() => {
-  //   const access = localStorage.getItem("access");
-  //   if (access) {
-  //     navigation("/");
-  //   }
-  // }, [navigation]);
 
   useEffect(() => {
     if (loginSuccessFull) {
