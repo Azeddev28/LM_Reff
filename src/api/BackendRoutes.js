@@ -6,8 +6,8 @@ const ROUTES = {
   login: `/auth/login/`,
   resetPassword:'/auth/password/reset/',
   signIn:'/auth/sign-in',
-  confirmPassword:`auth/password/reset/confirm/`
-  
+  confirmPassword:`/auth/password/reset/confirm/`,
+  refreshToken:`/auth/token/refresh/`
 };
 
 export const getRoute = (routeKey) => ROUTES[routeKey];
