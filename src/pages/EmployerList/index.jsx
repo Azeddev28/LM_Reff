@@ -18,9 +18,13 @@ const EmployerList = () => {
   return (
     <div>
       <DashboardHeader
-        heading={`Greetings, ${userName}`}
-        subHeading={`Employer List`}
-        placeHolder="Search by Employer Name"
+        heading={
+          <>
+            Greetings, <span style={{ color: '#3B5CA9' }}>{userName}</span>.
+          </>
+        }
+        subHeading="Employer List"
+        placeHolder="Search by employer name"
         setSearchValue={setSearchValue}
       />
       <TableWrapper>

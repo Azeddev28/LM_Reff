@@ -34,12 +34,10 @@ type ItemType = {
 const Item = styled(ListItemButton) <ItemType>`
 display: flex;
 flex-direction: column;
-margin-bottom: 30px;
+margin-bottom: 10px;
 margin-top: 10px;
-  padding-top: ${(props) =>
-    props.theme.spacing(props.depth && props.depth > 0 ? 2 : 3)};
-  padding-bottom: ${(props) =>
-    props.theme.spacing(props.depth && props.depth > 0 ? 2 : 3)};
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: ${(props) =>
     props.theme.spacing(props.depth && props.depth > 0 ? 14 : 8)};
   padding-right: ${(props) =>
@@ -62,8 +60,9 @@ margin-top: 10px;
 background: #1847A0;
 border: 1px solid #1847A0;
 border-radius: 12px;
-margin-right: 10px;
-margin-left: 10px;
+margin-right: 14px;
+margin-left: 14px;
+height: auto;
   }
 `;
 
