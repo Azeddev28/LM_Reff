@@ -160,10 +160,8 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
         component={CustomRouterLink}
         to={href}
         activeclassname="active"
-
         onClick={onClick}
       >
-
         <img src={icon} alt="" style={{width: '25px'}}/>
         <Title depth={depth}>
           {title}
