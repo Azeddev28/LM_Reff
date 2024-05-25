@@ -11,6 +11,9 @@ const CustomizedInput = styled.input`
     outline: none;
     border: none;
   }
+  font-weight: 600;
+  color: #7E8299;
+  font-size: 12px;
 `;
 
 const StyledInput = ({ inputValue, handleInputChange, label }) => {

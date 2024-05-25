@@ -10,6 +10,9 @@ import { useGetReferralsQuery } from "../../redux/slices/referralSlice";
 import { set } from "date-fns";
 import { getRoute } from "../../api/BackendRoutes";
 
+
+
+
 const TableWrapper = styled("div")(({}) => ({
   marginTop: "20px",
 }));

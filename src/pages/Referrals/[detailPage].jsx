@@ -17,6 +17,11 @@ import DatePickerComponent from "../../components/DatePicker";
 import dayjs from "dayjs";
 import DropDown from "../../components/DropDown";
 import { Styled } from "./style";
+import { useSelector } from "react-redux";
+import { color, fontSize, fontWeight } from "@mui/system";
+
+
+
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -26,6 +31,8 @@ const DetailPage = () => {
   const [fileList, setFileList] = useState([]);
   const [loader, setLoader] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
+
+  const { userName } = useSelector((state) => state.auth);
 
   const [updateReferral, { }] = useUpdateReferralMutation();
   const [
@@ -131,18 +138,24 @@ const DetailPage = () => {
     setIsCancelled(!isCancelled);
     handleInputChange("is_cancelled", !isCancelled);
   };
+
+
+
+
+
   return isLoading ? (
     <Styled.ProgressWrapper>
       <CircularProgress size="7rem" />
     </Styled.ProgressWrapper>
   ) : (
+
     <Styled.MainWrapper>
-      <Styled.Heading>Referral Details</Styled.Heading>
-      <Styled.CutomizedDivider
-        orientation="vertical"
-        variant="middle"
-        flexItem
-      />
+
+
+
+      <Typography variant="h2" style={{ marginTop: "-20px", fontSize: "25px", fontWeight: "500" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}</span>.</Typography>
+      <div style={{ borderBottom: '1px solid #E1E3EA', width: '107%', marginTop: '2.5vh', marginBottom: '5vh', marginLeft: "-4%" }} />
+
       {loader ? (
         <Styled.ProgressWrapper>
           <CircularProgress size="7rem" />
@@ -153,11 +166,11 @@ const DetailPage = () => {
 
             <Styled.Column>
 
-              <Styled.ColumnHeader variant="h3">
+              <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Information
               </Styled.ColumnHeader>
 
-              <h variant="h3" style={{ marginLeft: '20px' }}>
+              <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 These fields are maintained by Luminary and cannot be edited
               </h>
 
@@ -208,17 +221,21 @@ const DetailPage = () => {
             </Styled.Column>
 
             <Styled.Column>
-              <Styled.ColumnHeader>Referral Details</Styled.ColumnHeader>
+              <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
+                Referral Details
+              </Styled.ColumnHeader>
 
-              <h variant="h3" style={{ marginLeft: '20px',  marginRight: '20px' }}>
-              These fields should be updated by the Practice to update Luminary along the patient journey
+              <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
+                These fields should be updated by the Practice to update Luminary along the patient journey
               </h>
 
               <Styled.ContentWrapper>
 
                 {referralDetailData.slice(8, 24).map((item, index) => (
                   <Styled.Card key={index}>
+
                     <Styled.Label>{item.key}</Styled.Label>
+
                     {typeof item.value === "boolean" ? (
                       <DropDown
                         dropdownValue={item.value}
@@ -238,12 +255,13 @@ const DetailPage = () => {
                         label={item.label}
                       />
                     ) : (
-                      <Styled.Value variant="h6">{item.value}</Styled.Value>
+                      <Styled.Value variant="h">{item.value}</Styled.Value>
                     )}
                   </Styled.Card>
                 ))}
 
               </Styled.ContentWrapper>
+
               <Styled.CheckWrapper>
                 <Styled.Checked
                   control={
@@ -255,14 +273,19 @@ const DetailPage = () => {
                   label="Procedure Cancelled"
                 />
               </Styled.CheckWrapper>
+
             </Styled.Column>
 
             <Styled.Column>
-              <Styled.ColumnHeader>Referral Attachments</Styled.ColumnHeader>
+              <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
+                Referral Attachments
+              </Styled.ColumnHeader>
 
-              <h variant="h3" style={{ marginLeft: '20px',  marginRight: '20px' }}>
-              View your referral documents and add any additional documents requested by the payer here
+              <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
+                View your referral documents and add any additional documents requested by the payer here
               </h>
+
+
               <Styled.ContentWrapperV2>
                 <Styled.FileUploadWrapper>
                   <Dropzone
@@ -281,13 +304,13 @@ const DetailPage = () => {
                         >
                           <input {...getInputProps()} />
                           <Styled.DropZoneContent>
-                            <CloudUploadIcon fontSize="large" />
+                            <img src="../../../public/dropboxImg.svg" alt="" />
                             <Styled.DropzoneText>
                               Click or drag file to this area to upload
                             </Styled.DropzoneText>
-                            <Styled.DropzoneText>
+                            <Styled.DropzoneText2>
                               Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-                            </Styled.DropzoneText>
+                            </Styled.DropzoneText2>
                           </Styled.DropZoneContent>
                         </div>
                       </section>
@@ -295,41 +318,49 @@ const DetailPage = () => {
                   </Dropzone>
 
                 </Styled.FileUploadWrapper>
+
                 <Styled.UploadedFileSection>
-                  <Styled.FileUploadTextWrapper>
-                    <Styled.FileUploadText>File Uploads</Styled.FileUploadText>
-                    <Divider />
-                  </Styled.FileUploadTextWrapper>
+
                   <Styled.UploadedFiles>
+
                     {fileList.map((item, index) => (
+
                       <Styled.UploadedFile
                         key={index}
                         onClick={() => handleViewFile(item.url)}
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                       >
-                        <AttachFileIcon fontSize="large" />
-                        <Styled.FileText>{item.name}</Styled.FileText>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <img src="../../../public/attachFileIcon.svg" style={{ height: '20px', marginRight: "20px" }} alt="" />
+                          <Styled.FileText>{item.name}</Styled.FileText>
+                        </div>
+                        <img src="../../../public/deleteIcon.svg" alt="" />
                       </Styled.UploadedFile>
+
+
                     ))}
+
                     {referralDetailData.slice(24, 25).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
-                          <Styled.UploadedFile
-                            key={innerIndex}
-                            onClick={() => handleViewFile(innerItem.attachment)}
-                          >
-                            <AttachFileIcon fontSize="large" />
 
-                            <Styled.FileText>
-                              {getFileNameFromURL(
-                                innerItem?.filename ? innerItem?.filename : ""
-                              )}
-                            </Styled.FileText>
+                          <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                              <img src="../../../public/attachFileIcon.svg" style={{ height: '20px', marginRight: "20px" }} alt="" />
+                              <Styled.FileText>
+                                {getFileNameFromURL(innerItem?.filename ? innerItem?.filename : "")}
+                              </Styled.FileText>
+                            </div>
+                            <img src="../../../public/deleteIcon.svg" style={{}} alt="" />
                           </Styled.UploadedFile>
+
                         ))}
                       </React.Fragment>
                     ))}
                   </Styled.UploadedFiles>
+
                 </Styled.UploadedFileSection>
+
               </Styled.ContentWrapperV2>
             </Styled.Column>
 
