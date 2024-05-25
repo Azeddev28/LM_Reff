@@ -1,40 +1,36 @@
 import React, { useEffect } from "react";
-import { useNavigate , useLocation} from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthenticated } from "../../redux/slices/authSlice";
 
 interface AuthGuardType {
   children: React.ReactNode;
 }
 // TODO : authentication needs to be check
 function AuthGuard({ children }: AuthGuardType) {
-  
   const navigate = useNavigate();
-  const location = useLocation();
+  const dispatch = useDispatch();
 
-  
-  const {isAuthenticated}=useSelector((state:any)=>state.auth);
+  const { isAuthenticated } = useSelector((state: any) => state.auth);
 
-  useEffect(() => { 
-    const searchParams = new URLSearchParams(location.search);
-    const token = searchParams.get('token');
-    const uid = searchParams.get('uid');
+  // Check authentication state on mount [UPDATED]
+  useEffect(() => {
+    const access = localStorage.getItem("access");
+    if (access) {
+      dispatch(setAuthenticated(true)); // [UPDATED]
+    }
+  }, [dispatch]);
 
-    if (!isAuthenticated) {   
-      if (token && uid) {
-        navigate("/auth/password/reset/confirm/");
-      } else {
-        navigate("/auth/sign-in");
-      }
-    } 
-    else {
-      navigate("/");  
+  useEffect(() => {
+    const access = localStorage.getItem("access"); // [UPDATED]
+    if (access) {
+      navigate("/");
+    } else {
+      navigate("/auth/sign-in");
     }
   }, [isAuthenticated]);
-     
-  return( 
-  <React.Fragment>{children}</React.Fragment>
-  
-  )
+
+  return <React.Fragment>{children}</React.Fragment>;
 }
 
 export default AuthGuard;

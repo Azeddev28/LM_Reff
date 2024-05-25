@@ -23,12 +23,10 @@ CustomRouterLink.displayName = "CustomRouterLink";
 
 type ItemType = {
   activeclassname?: string;
-  // onClick?: () => void;
+  onClick?: () => void;
   to?: string;
   component?: typeof NavLink;
   depth: number;
-
-  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
 const Item = styled(ListItemButton) <ItemType>`
@@ -163,11 +161,7 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
         to={href}
         activeclassname="active"
 
-        onClick={(e) => {
-          if (onClick) {
-            onClick();
-          }
-        }}
+        onClick={onClick}
       >
 
         <img src={icon} alt="" style={{width: '25px'}}/>
