@@ -51,13 +51,12 @@ export const baseQueryWithReauth = (baseUrl: any) => {
     let result = await baseQuery(args, api, extraOptions);
 
     if (result.error && result.error.status === 401) {
-      if (result.error && result.error.status === 401) {
         // Check if refresh process is ongoing
         if (!refreshPromise) {
           // Fetch the refresh token
           refreshPromise = (async () => {
             const refreshToken = localStorage.getItem("refresh");
-
+  
             if (refreshToken) {
               const refreshResult : any = await baseQuery(
                 {
@@ -68,7 +67,7 @@ export const baseQueryWithReauth = (baseUrl: any) => {
                 api,
                 extraOptions
               );
-
+              
               if (refreshResult?.data?.access) {
                 api.dispatch(setAccessToken(refreshResult.data.access));
                 localStorage.setItem("access", refreshResult.data.access);
@@ -77,28 +76,28 @@ export const baseQueryWithReauth = (baseUrl: any) => {
               } else {
                 // Handle refresh failure
                 api.dispatch(setAuthenticated(false));
-                localStorage.removeItem("access");
+                localStorage.removeItem('access');
                 api.dispatch(setAccessToken(null));
-                window.location.href = getRoute("signIn");
+                window.location.href = getRoute('signIn');
               }
             } else {
               // Handle missing refresh token
               api.dispatch(setAuthenticated(false));
-              localStorage.removeItem("access");
+              localStorage.removeItem('access');
               api.dispatch(setAccessToken(null));
-              window.location.href = getRoute("signIn");
+              window.location.href = getRoute('signIn');
             }
-
+  
             refreshPromise = null; // Reset the refresh process flag
           })();
         }
-      }
+  
         // Await the ongoing refresh request
         await refreshPromise;
       }
+  
       return result;
-    } 
+    }; 
 
-    return baseQueryWithReauth;
-
+  return baseQueryWithReauth;
 };
