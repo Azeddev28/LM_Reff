@@ -16,17 +16,27 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import styled from "@emotion/styled";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { format } from 'date-fns';
 
-const ProgressWrapper = styled("div")(({}) => ({
+
+
+import KeyboardArrowUpIcon from '@mui/icons-material/ArrowDropUp';
+
+import KeyboardArrowDownIcon from '@mui/icons-material/ArrowDropDown';
+
+import sortingSvg from '../../../public/sorting.svg'
+
+
+
+
+const ProgressWrapper = styled("div")(({ }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   height: "90vh",
 }));
 
-const Pagination = styled("div")(({}) => ({
+const Pagination = styled("div")(({ }) => ({
   display: "flex",
   justifyContent: "end",
   alignItems: "center",
@@ -36,17 +46,17 @@ const Pagination = styled("div")(({}) => ({
   gap: "0px",
 }));
 
-const Header = styled("div")(({}) => ({
+const Header = styled("div")(({ }) => ({
   display: "flex",
   flexDirection: "row",
   gap: "10px",
   alignItems: "center",
 }));
 
-const Sorter = styled("div")(({}) => ({
+const Sorter = styled("div")(({ }) => ({
   display: "flex",
   flexDirection: "column",
-  gap: "0px",
+  justifyContent: "space-around",
 }));
 
 const PaginatedTable = ({
@@ -127,6 +137,11 @@ const PaginatedTable = ({
     setChangePage("next");
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return format(date, 'yyyy-MM-dd'); 
+  };
+
   const StyledRow = styled(TableRow)((props) => ({
     padding: 8,
     cursor: props.redirectToDetailPage ? "pointer" : "default",
@@ -135,26 +150,30 @@ const PaginatedTable = ({
     },
   }));
 
+  
+
   return isLoading ? (
     <ProgressWrapper>
       <CircularProgress size={"7rem"} />
     </ProgressWrapper>
   ) : (
     <Paper>
-      <TableContainer>
+      <TableContainer sx={{ marginTop: '-20px', border: '1px solid #F1F1F2' }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead sx={{ backgroundColor: '#F9F9F9' }}>
             <TableRow>
               {headerData.map((columnInfo) => (
                 <TableCell key={columnInfo.key}>
                   <Header>
                     {columnInfo.display}
                     <Sorter>
-                      <KeyboardArrowUpIcon
+
+
+                      {/* <KeyboardArrowUpIcon
                         style={{
                           cursor: "pointer",
-                          height: "16px",
-                          width: "16px",
+                          height: "26px",
+                          width: "26px",
                         }}
                         onClick={() => {
                           setOrderingValue(columnInfo.sortKey);
@@ -163,13 +182,28 @@ const PaginatedTable = ({
                       <KeyboardArrowDownIcon
                         style={{
                           cursor: "pointer",
-                          height: "16px",
-                          width: "16px",
+                          height: "26px",
+                          width: "26px",
                         }}
                         onClick={() => {
                           setOrderingValue(`-${columnInfo.sortKey}`);
                         }}
+                      /> */}
+
+                      <img
+                        src={sortingSvg}
+                        alt="Sort Ascending"
+                        style={{
+                          cursor: "pointer",
+                          height: "13px",
+                          width: "20px",
+                          transform: "rotate(180deg)",
+                        }}
+                        onClick={() => {
+                          setOrderingValue(columnInfo.sortKey);
+                        }}
                       />
+
                     </Sorter>
                   </Header>
                 </TableCell>
@@ -195,7 +229,7 @@ const PaginatedTable = ({
                     {extractRowValues(obj, keys)?.map(
                       (item, index) =>
                         item.key !== "uuid" && (
-                          <TableCell key={index}>{item.value}</TableCell>
+                          <TableCell key={index}>{item.key === 'date_created' || item.key === 'date_updated' ?  formatDate(item.value) : item?.value}</TableCell>
                         )
                     )}
                   </StyledRow>

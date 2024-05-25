@@ -6,6 +6,7 @@ const CustomizedInput = styled.input`
   outline: none;
   padding: 0;
   padding-bottom: 5;
+  background-color: #F9F9F9;
   &:focus {
     outline: none;
     border: none;

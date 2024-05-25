@@ -18,12 +18,12 @@ const reduceChildRoutes = (props: ReduceChildRoutesProps) => {
   if (page.children) {
     const open = page.href
       ? !!matchPath(
-          {
-            path: page.href,
-            end: false,
-          },
-          currentRoute
-        )
+        {
+          path: page.href,
+          end: false,
+        },
+        currentRoute
+      )
       : false;
 
     items.push(
@@ -35,6 +35,7 @@ const reduceChildRoutes = (props: ReduceChildRoutesProps) => {
         open={!!open}
         title={page.title}
         href={page.href}
+        onClick={page.onClick}
       >
         <SidebarNavList depth={depth + 1} pages={page.children} />
       </SidebarNavListItem>
@@ -48,6 +49,7 @@ const reduceChildRoutes = (props: ReduceChildRoutesProps) => {
         key={page.title}
         badge={page.badge}
         title={page.title}
+        onClick={page.onClick}
       />
     );
   }

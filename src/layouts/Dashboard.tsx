@@ -17,7 +17,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 import Footer from "../components/Footer";
 
 
-const drawerWidth = 258;
+const drawerWidth = 100;
 
 const Root = styled.div`
   display: flex;
@@ -75,38 +75,48 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
 
   return (
     <MuiThemeProvider theme={createTheme(THEMES.LIGHT)}>
-    <Root>
-      <CssBaseline />
-      <GlobalStyle />
-      
-      <Drawer>
+      <Root>
+        <CssBaseline />
+        <GlobalStyle />
 
-        <Box sx={{ display: { xs: "block", screen_1200: "none" } }}>
-          <Sidebar
-            PaperProps={{ style: { width: drawerWidth } }}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            items={dashboardItems}
-          />
-        </Box>
-        <Box sx={{ display: { xs: "none", screen_1200: "block" } }}>
-          <Sidebar
-            PaperProps={{ style: { width: drawerWidth } }}
-            items={dashboardItems}
-          />
-        </Box>
-      </Drawer>
-      <AppContent>
-        <Navbar onDrawerToggle={handleDrawerToggle} />
-        <MainContent p={isLgUp ? 12 : 5}>
-          {children}
-          <Outlet />
-        </MainContent>
-        {/* <Footer /> */}
-      </AppContent>
-   
-    </Root>
+        <Drawer>
+
+          <Box sx={{ display: { xs: "block", screen_1200: "none" } }}>
+            <Sidebar
+              PaperProps={{
+                style: {
+                  width: drawerWidth,
+                  backgroundColor: "#2F65CB",
+                }
+              }}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              items={dashboardItems}
+            />
+          </Box>
+          <Box sx={{ display: { xs: "none", screen_1200: "block" } }}>
+            <Sidebar
+              PaperProps={{
+                style: {
+                  width: drawerWidth,
+                  backgroundColor: "#2F65CB",
+                }
+              }}
+              items={dashboardItems}
+            />
+          </Box>
+        </Drawer>
+        <AppContent>
+          {/* <Navbar onDrawerToggle={handleDrawerToggle} /> */}
+          <MainContent p={isLgUp ? 12 : 5}>
+            {children}
+            <Outlet />
+          </MainContent>
+          {/* <Footer /> */}
+        </AppContent>
+
+      </Root>
     </MuiThemeProvider>
   );
 };

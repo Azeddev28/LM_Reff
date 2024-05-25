@@ -11,6 +11,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { width } from "@mui/system";
 
 const CustomRouterLink = forwardRef<any, NavLinkProps>((props, ref) => (
   <div ref={ref}>
@@ -22,13 +23,19 @@ CustomRouterLink.displayName = "CustomRouterLink";
 
 type ItemType = {
   activeclassname?: string;
-  onClick?: () => void;
+  // onClick?: () => void;
   to?: string;
   component?: typeof NavLink;
   depth: number;
+
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
-const Item = styled(ListItemButton)<ItemType>`
+const Item = styled(ListItemButton) <ItemType>`
+display: flex;
+flex-direction: column;
+margin-bottom: 30px;
+margin-top: 10px;
   padding-top: ${(props) =>
     props.theme.spacing(props.depth && props.depth > 0 ? 2 : 3)};
   padding-bottom: ${(props) =>
@@ -50,11 +57,13 @@ const Item = styled(ListItemButton)<ItemType>`
     color: ${(props) => props.theme.sidebar.color};
   }
   &.${(props) => props.activeclassname} {
-    background-color: ${(props) =>
-      darken(0.03, props.theme.sidebar.background)};
-    span {
-      color: ${(props) => props.theme.sidebar.color};
-    }
+    /* item */
+
+background: #1847A0;
+border: 1px solid #1847A0;
+border-radius: 12px;
+margin-right: 10px;
+margin-left: 10px;
   }
 `;
 
@@ -62,17 +71,16 @@ type TitleType = {
   depth: number;
 };
 
-const Title = styled(ListItemText)<TitleType>`
+const Title = styled(ListItemText) <TitleType>`
   margin: 0;
   span {
-    color: ${(props) =>
-      rgba(
-        props.theme.sidebar.color,
-        props.depth && props.depth > 0 ? 0.7 : 1
-      )};
-    font-size: ${(props) => props.theme.typography.body1.fontSize}px;
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
     padding: 0 ${(props) => props.theme.spacing(4)};
+    margin-top: 10px;
   }
+  
 `;
 
 const Badge = styled(Chip)`
@@ -103,9 +111,10 @@ const ExpandMoreIcon = styled(ExpandMore)`
 
 type SidebarNavListItemProps = ListItemProps & {
   className?: string;
+  onClick?: () => void;
   depth: number;
   href: string;
-  icon: React.FC<any>;
+  icon: string;
   badge?: string;
   open?: boolean;
   title: string;
@@ -117,8 +126,9 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
     href,
     depth = 0,
     children,
-    icon: Icon,
+    icon,
     badge,
+    onClick,
     open: openProp = false,
   } = props;
 
@@ -132,7 +142,8 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
     return (
       <React.Fragment>
         <Item depth={depth} onClick={handleToggle}>
-          {Icon && <Icon />}
+
+          <img src={icon} alt="" />
           <Title depth={depth}>
             {title}
             {badge && <Badge label={badge} />}
@@ -151,14 +162,23 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
         component={CustomRouterLink}
         to={href}
         activeclassname="active"
+
+        onClick={(e) => {
+          if (onClick) {
+            onClick();
+          }
+        }}
       >
-        {Icon && <Icon />}
+
+        <img src={icon} alt="" style={{width: '25px'}}/>
         <Title depth={depth}>
           {title}
           {badge && <Badge label={badge} />}
         </Title>
       </Item>
+
     </React.Fragment>
+
   );
 };
 
