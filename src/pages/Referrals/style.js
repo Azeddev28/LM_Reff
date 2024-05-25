@@ -13,17 +13,17 @@ export const Styled = {
     gap: "30px",
     flex: 1,
     margin: "0px",
-    color: "rgba(0, 0, 0, 0.87))",
+    color: "#5E6278",
     fontFamily: "inter",
     fontSize: 14,
     fontStyle: "normal",
-    fontWeight: 400,
+    fontWeight: 600,
     lineHight: "20px",
     letterSpacing: 0.1,
   })),
 
   Heading: styled(Typography)(({ theme }) => ({
-    color: "rgba(0, 0, 0, 0.87)",
+    color: "#5E6278",
     fontFamily: "inter",
     fontSize: 24,
     fontStyle: "normal",
@@ -34,6 +34,7 @@ export const Styled = {
       marginBottom: "20px",
     },
   })),
+
   Container: styled("div")(({ theme }) => ({
     display: "flex",
     flexDirection: "row",
@@ -55,8 +56,9 @@ export const Styled = {
     height: "auto",
     paddingBottom: "40px",
     flexDirection: "column",
-    borderRadius: 15,
-    background: "#FFF",
+    borderRadius: 10,
+    background: "#FFFFFF",
+    border: "1px solid #F1F1F2",
     boxShadow: "0px 0px 14px 0px rgba(53, 64, 82, 0.05)",
     [theme.breakpoints.down("md")]: {
       width: "100%",
@@ -83,7 +85,7 @@ export const Styled = {
     borderRadius: '8px',
     padding: "5px",
     margin: "0px 25px",
-    border: "1px solid #E1E3EA;"
+    border: "1px solid #E1E3EA;",
   })),
 
   ContentWrapper: styled("div")(({}) => ({
@@ -100,23 +102,24 @@ export const Styled = {
   })),
 
   Label: styled("p")(({}) => ({
-    color: "#263238",
+    color: "#A1A5B7",
     fontFamily: "inter",
-    fontSize: 12,
+    fontSize: 10,
     fontStyle: "normal",
-    fontWeight: 400,
+    fontWeight: 600,
     lineHeight: "12px",
     letterSpacing: 0.4,
     margin: "0px",
   })),
 
+
   Value: styled("p")(({}) => ({
-    color: "rgba(0, 0, 0, 0.87)",
+    color: "#7E8299",
     fontFamily: "inter",
-    fontSize: 14,
+    fontSize: 12,
     margin: "0px",
     fontStyle: "normal",
-    fontWeight: 400,
+    fontWeight: 600,
     lineHeight: "21px",
     letterSpacing: 0.079,
   })),
@@ -171,21 +174,36 @@ export const Styled = {
   })),
 
   ValueWrapper: styled("div")(({}) => ({
-    borderRadius: 2,
-    border: "1px solid rgba(0, 0, 0, 0.42)",
-    background: "#F5F6F8",
+    borderRadius: 8,
+    border: "1px solid #E1E3EA",
+    background: "#F9F9F9",
     padding: "9px 100px 7px 14px",
+    color: "#7E8299",
+    fontWeight: 600,
+    fontSize: "12px",
   })),
 
   DropzoneText: styled("section")(({}) => ({
-    color: "#263238",
+    color: "#5E6278",
     textAlign: "center",
     fontFamily: "inter",
-    fontSize: 16,
+    fontSize: 12,
+    fontStyle: "normal",
+    fontWeight: 600,
+    lineHeight: "20px",
+    letterSpacing: 0.4,
+  })),
+
+  DropzoneText2: styled("section")(({}) => ({
+    color: "#5E6278",
+    textAlign: "center",
+    fontFamily: "inter",
+    fontSize: 12,
     fontStyle: "normal",
     fontWeight: 400,
     lineHeight: "20px",
     letterSpacing: 0.4,
+    marginBottom: "18px",
   })),
 
   DropZoneContent: styled("section")(({}) => ({
@@ -197,7 +215,7 @@ export const Styled = {
     alignItems: "center",
     borderRadius: 4,
     padding: "0px 16px",
-    border: "1px solid rgba(0, 0, 0, 0.42)",
+    border: "1px solid #E1E3EA",
     background: "#F5F6F8",
     paddingBottom: "10px",
   })),
@@ -241,7 +259,7 @@ export const Styled = {
     display: "flex",
     flexDirection: "row",
     gap: "16px",
-    minHeight: "55px",
+    height: "40px",
     cursor: "pointer",
     padding: "11px 5px 11px 13px",
     borderRadius: 4,
@@ -253,7 +271,7 @@ export const Styled = {
 
   FileText: styled("p")(({}) => ({
     color: "rgba(0, 0, 0, 0.87)",
-    fontSize: "14px",
+    fontSize: "12px",
     fontStyle: "normal",
     fontWeight: 600,
     lineHeight: "20.4px",
@@ -270,4 +288,6 @@ export const Styled = {
       justifyContent: "center",
     },
   })),
+
+  
 };
