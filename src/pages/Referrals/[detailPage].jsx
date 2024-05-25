@@ -235,7 +235,7 @@ const DetailPage = () => {
                   <Styled.Card key={index}>
 
                     <Styled.Label>{item.key}</Styled.Label>
-                    
+
                     {typeof item.value === "boolean" ? (
                       <DropDown
                         dropdownValue={item.value}
@@ -273,7 +273,7 @@ const DetailPage = () => {
                   label="Procedure Cancelled"
                 />
               </Styled.CheckWrapper>
-              
+
             </Styled.Column>
 
             <Styled.Column>
@@ -304,13 +304,13 @@ const DetailPage = () => {
                         >
                           <input {...getInputProps()} />
                           <Styled.DropZoneContent>
-                            <CloudUploadIcon fontSize="large" />
+                            <img src="../../../public/dropboxImg.svg" alt="" />
                             <Styled.DropzoneText>
                               Click or drag file to this area to upload
                             </Styled.DropzoneText>
-                            <Styled.DropzoneText>
+                            <Styled.DropzoneText2>
                               Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-                            </Styled.DropzoneText>
+                            </Styled.DropzoneText2>
                           </Styled.DropZoneContent>
                         </div>
                       </section>
@@ -318,41 +318,49 @@ const DetailPage = () => {
                   </Dropzone>
 
                 </Styled.FileUploadWrapper>
+
                 <Styled.UploadedFileSection>
-                  <Styled.FileUploadTextWrapper>
-                    <Styled.FileUploadText>File Uploads</Styled.FileUploadText>
-                    <Divider />
-                  </Styled.FileUploadTextWrapper>
+
                   <Styled.UploadedFiles>
+
                     {fileList.map((item, index) => (
+
                       <Styled.UploadedFile
                         key={index}
                         onClick={() => handleViewFile(item.url)}
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                       >
-                        <AttachFileIcon fontSize="large" />
-                        <Styled.FileText>{item.name}</Styled.FileText>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <img src="../../../public/attachFileIcon.svg" style={{ height: '20px', marginRight: "20px" }} alt="" />
+                          <Styled.FileText>{item.name}</Styled.FileText>
+                        </div>
+                        <img src="../../../public/deleteIcon.svg" alt="" />
                       </Styled.UploadedFile>
+
+
                     ))}
+
                     {referralDetailData.slice(24, 25).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
-                          <Styled.UploadedFile
-                            key={innerIndex}
-                            onClick={() => handleViewFile(innerItem.attachment)}
-                          >
-                            <AttachFileIcon fontSize="large" />
 
-                            <Styled.FileText>
-                              {getFileNameFromURL(
-                                innerItem?.filename ? innerItem?.filename : ""
-                              )}
-                            </Styled.FileText>
+                          <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                              <img src="../../../public/attachFileIcon.svg" style={{ height: '20px', marginRight: "20px" }} alt="" />
+                              <Styled.FileText>
+                                {getFileNameFromURL(innerItem?.filename ? innerItem?.filename : "")}
+                              </Styled.FileText>
+                            </div>
+                            <img src="../../../public/deleteIcon.svg" style={{}} alt="" />
                           </Styled.UploadedFile>
+
                         ))}
                       </React.Fragment>
                     ))}
                   </Styled.UploadedFiles>
+
                 </Styled.UploadedFileSection>
+
               </Styled.ContentWrapperV2>
             </Styled.Column>
 

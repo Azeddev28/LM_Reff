@@ -189,10 +189,21 @@ export const Styled = {
     fontFamily: "inter",
     fontSize: 12,
     fontStyle: "normal",
+    fontWeight: 600,
+    lineHeight: "20px",
+    letterSpacing: 0.4,
+  })),
+
+  DropzoneText2: styled("section")(({}) => ({
+    color: "#5E6278",
+    textAlign: "center",
+    fontFamily: "inter",
+    fontSize: 12,
+    fontStyle: "normal",
     fontWeight: 400,
     lineHeight: "20px",
     letterSpacing: 0.4,
-    marginBottom: "8px",
+    marginBottom: "18px",
   })),
 
   DropZoneContent: styled("section")(({}) => ({
@@ -204,7 +215,7 @@ export const Styled = {
     alignItems: "center",
     borderRadius: 4,
     padding: "0px 16px",
-    border: "1px solid rgba(0, 0, 0, 0.42)",
+    border: "1px solid #E1E3EA",
     background: "#F5F6F8",
     paddingBottom: "10px",
   })),
@@ -248,7 +259,7 @@ export const Styled = {
     display: "flex",
     flexDirection: "row",
     gap: "16px",
-    minHeight: "55px",
+    height: "40px",
     cursor: "pointer",
     padding: "11px 5px 11px 13px",
     borderRadius: 4,
@@ -260,7 +271,7 @@ export const Styled = {
 
   FileText: styled("p")(({}) => ({
     color: "rgba(0, 0, 0, 0.87)",
-    fontSize: "14px",
+    fontSize: "12px",
     fontStyle: "normal",
     fontWeight: 600,
     lineHeight: "20.4px",
