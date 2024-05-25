@@ -8,9 +8,6 @@ import styled from "@emotion/styled";
 import dateIcon from "../../../public/dateIcon.svg"
 
 
-
-
-
 const StyledDatePicker = styled(DatePicker)({
   width: "100%",
   "& .MuiInputBase-root": {

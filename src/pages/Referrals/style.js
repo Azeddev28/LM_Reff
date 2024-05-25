@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { FormControlLabel, Typography, Button, Divider } from "@mui/material";
 export const Styled = {
-  ProgressWrapper: styled("div")(({}) => ({
+  ProgressWrapper: styled("div")(({ }) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     height: "90vh",
   })),
-  Checked: styled(FormControlLabel)(({}) => ({
+  Checked: styled(FormControlLabel)(({ }) => ({
     display: "flex",
     flexDirection: "row",
     gap: "30px",
@@ -40,13 +40,13 @@ export const Styled = {
     flexDirection: "row",
     gap: "20px",
     flex: 1,
-    height: "fit-content",
+    height: "auto",
     [theme.breakpoints.down("md")]: {
       flexDirection: "column",
     },
   })),
 
-  CheckWrapper: styled("div")(({}) => ({
+  CheckWrapper: styled("div")(({ }) => ({
     margin: "13px 25px 0px 16px",
   })),
 
@@ -65,7 +65,7 @@ export const Styled = {
     },
   })),
 
-  ColumnHeader: styled(Typography)(({}) => ({
+  ColumnHeader: styled(Typography)(({ }) => ({
     color: "rgba(0, 0, 0, 0.87)",
     fontFamily: "inter",
     fontSize: 17,
@@ -88,20 +88,20 @@ export const Styled = {
     border: "1px solid #E1E3EA;",
   })),
 
-  ContentWrapper: styled("div")(({}) => ({
+  ContentWrapper: styled("div")(({ }) => ({
     padding: "20px 0px 0px 0px",
     display: "flex",
     flexDirection: "column",
     gap: "13px",
   })),
-  ContentWrapperV2: styled("div")(({}) => ({
+  ContentWrapperV2: styled("div")(({ }) => ({
     padding: "20px 0px 0px 0px",
     display: "flex",
     flexDirection: "column",
     gap: "25px",
   })),
 
-  Label: styled("p")(({}) => ({
+  Label: styled("p")(({ }) => ({
     color: "#A1A5B7",
     fontFamily: "inter",
     fontSize: 10,
@@ -113,7 +113,7 @@ export const Styled = {
   })),
 
 
-  Value: styled("p")(({}) => ({
+  Value: styled("p")(({ }) => ({
     color: "#7E8299",
     fontFamily: "inter",
     fontSize: 12,
@@ -124,7 +124,7 @@ export const Styled = {
     letterSpacing: 0.079,
   })),
 
-  MainWrapper: styled("div")(({}) => ({
+  MainWrapper: styled("div")(({ }) => ({
     display: "flex",
     flexDirection: "column",
   })),
@@ -150,14 +150,14 @@ export const Styled = {
     width: 1,
   }),
 
-  FileUploadWrapper: styled("div")(({}) => ({
+  FileUploadWrapper: styled("div")(({ }) => ({
     margin: "0px 24px",
     gap: "12px",
     display: "flex",
     flexDirection: "column",
   })),
 
-  FileUploadButton: styled("div")(({}) => ({
+  FileUploadButton: styled("div")(({ }) => ({
     display: "flex",
     flexDirection: "row",
     gap: "10px",
@@ -165,7 +165,7 @@ export const Styled = {
     alignItems: "center",
   })),
 
-  DescriptionWrapper: styled("div")(({}) => ({
+  DescriptionWrapper: styled("div")(({ }) => ({
     display: "flex",
     flexDirection: "column",
     minHeight: "70px",
@@ -173,7 +173,7 @@ export const Styled = {
     gap: "12px",
   })),
 
-  ValueWrapper: styled("div")(({}) => ({
+  ValueWrapper: styled("div")(({ }) => ({
     borderRadius: 8,
     border: "1px solid #E1E3EA",
     background: "#F9F9F9",
@@ -183,7 +183,7 @@ export const Styled = {
     fontSize: "12px",
   })),
 
-  DropzoneText: styled("section")(({}) => ({
+  DropzoneText: styled("section")(({ }) => ({
     color: "#5E6278",
     textAlign: "center",
     fontFamily: "inter",
@@ -194,7 +194,7 @@ export const Styled = {
     letterSpacing: 0.4,
   })),
 
-  DropzoneText2: styled("section")(({}) => ({
+  DropzoneText2: styled("section")(({ }) => ({
     color: "#5E6278",
     textAlign: "center",
     fontFamily: "inter",
@@ -206,7 +206,7 @@ export const Styled = {
     marginBottom: "18px",
   })),
 
-  DropZoneContent: styled("section")(({}) => ({
+  DropZoneContent: styled("section")(({ }) => ({
     display: "flex",
     flexDirection: "column",
     gap: "11px",
@@ -220,26 +220,26 @@ export const Styled = {
     paddingBottom: "10px",
   })),
 
-  UploadButton: styled(Button)(({}) => ({
+  UploadButton: styled(Button)(({ }) => ({
     display: "flex",
     justifyContent: "start",
     gap: "6px",
   })),
 
-  UploadedFileSection: styled("div")(({}) => ({
+  UploadedFileSection: styled("div")(({ }) => ({
     display: "flex",
     flexDirection: "column",
     margin: "0px 25px",
     gap: "10px",
   })),
 
-  FileUploadTextWrapper: styled("div")(({}) => ({
+  FileUploadTextWrapper: styled("div")(({ }) => ({
     display: "flex",
     flexDirection: "column",
     gap: "10px",
   })),
 
-  FileUploadText: styled("div")(({}) => ({
+  FileUploadText: styled("div")(({ }) => ({
     color: "#263238",
     fontFamily: "inter",
     fontSize: 12,
@@ -249,13 +249,13 @@ export const Styled = {
     letterSpacing: 0.4,
   })),
 
-  UploadedFiles: styled("div")(({}) => ({
+  UploadedFiles: styled("div")(({ }) => ({
     display: "flex",
     flexDirection: "column",
     gap: "16px",
   })),
 
-  UploadedFile: styled("div")(({}) => ({
+  UploadedFile: styled("div")(({ }) => ({
     display: "flex",
     flexDirection: "row",
     gap: "16px",
@@ -269,7 +269,7 @@ export const Styled = {
     boxShadow: "0px 0px 14px 0px rgba(53, 64, 82, 0.05)",
   })),
 
-  FileText: styled("p")(({}) => ({
+  FileText: styled("p")(({ }) => ({
     color: "rgba(0, 0, 0, 0.87)",
     fontSize: "12px",
     fontStyle: "normal",
@@ -289,5 +289,5 @@ export const Styled = {
     },
   })),
 
-  
+
 };

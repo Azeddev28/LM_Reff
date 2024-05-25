@@ -112,11 +112,18 @@ export const REFERRAL_DETAIL_DATA = {
     editable: true,
     label: "facility",
   },
-  travel_required: {
-    key: "Is Travel Required?",
+  overnight_required: {
+    key: "Is Overnight Stay Required?",
     value: "",
     editable: true,
     label: "travel_required",
+  },
+  departure_date: {
+    key: "Departure Date",
+    value: "",
+    editable: true,
+    label: "departure_date",
+    datePicker: true,
   },
   op_completed: {
     key: "Was the surgery completed?",
