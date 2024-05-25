@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { useGetClaimsQuery } from "../../redux/slices/referralSlice";
 import { getRoute } from "../../api/BackendRoutes";
 
-const TableWrapper = styled("div")(({}) => ({
+const TableWrapper = styled("div")(({ }) => ({
   marginTop: "20px",
 }));
 
@@ -18,16 +18,21 @@ const Claims = () => {
   return (
     <div>
       <DashboardHeader
-        heading={`Greetings, ${userName}`}
-        subHeading={`Claims Dashboard`}
-        placeHolder="Search by Patient Name"
+        heading={
+          <>
+            Greetings, <span style={{ color: '#3B5CA9' }}>{userName}</span>.
+          </>
+        }
+        subHeading="Claims Dashboard"
+        placeHolder="Search by patient name"
         setSearchValue={setSearchValue}
       />
+
       <TableWrapper>
         <PaginatedTable
           query={useGetClaimsQuery}
           pageData={{
-            url:`${import.meta.env.VITE_URL}${getRoute('claimList')}`,
+            url: `${import.meta.env.VITE_URL}${getRoute('claimList')}`,
             search: searchValue,
           }}
           headerData={CLAIMS_HEADER_DATA}
