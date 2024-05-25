@@ -6,12 +6,22 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import styled from "@emotion/styled";
 
+
+
+
+
 const StyledDatePicker = styled(DatePicker)({
   width: "100%",
   "& .MuiInputBase-root": {
     height: "17px",
     border: "none",
 
+    '& .MuiInputBase-input': {
+      color: '#5E6278',
+      fontSize: 12,
+      fontWeight: 600,
+    },
+    
     "& input": {
       padding: "0px 0px 0px 0px",
       border: "none",
@@ -50,7 +60,11 @@ const StyledDatePicker = styled(DatePicker)({
   "& .MuiButtonBase-root-MuiIconButton-root": {
     padding: "0px",
   },
+
+
 });
+
+
 
 const DatePickerComponent = ({ date, handleInputChange, label }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs(date));
@@ -59,6 +73,8 @@ const DatePickerComponent = ({ date, handleInputChange, label }) => {
     setSelectedDate(date);
     handleInputChange(label, date.format("YYYY-MM-DD"));
   };
+
+
 
   useEffect(() => {
     setSelectedDate(dayjs(date));

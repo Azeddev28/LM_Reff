@@ -32,11 +32,24 @@ const DropDown = ({ dropdownValue, handleInputChange, label }) => {
       labelId="demo-simple-select-standard-label"
       id="demo-simple-select-standard"
       onChange={handleChange}
-      sx={dropDownStyling}
+      sx={{
+        ...dropDownStyling,
+        ...(data === 'Yes' && {
+          color: '#5E6278',
+          fontWeight: '600',
+          fontSize: 12,
+        }),
+        ...(data === 'No' && {
+          color: '#5E6278',
+          fontWeight: '600',
+          fontSize: 12,
+        }),
+      }}
     >
-      <MenuItem value={"Yes"}>Yes</MenuItem>
-      <MenuItem value={"No"}>No</MenuItem>
+      <MenuItem value={"Yes"} style={{ fontSize: 12, fontWeight: 600, color: "#5E6278" }}>Yes</MenuItem>
+      <MenuItem value={"No"} style={{ fontSize: 12, fontWeight: 600, color: "#5E6278" }}>No</MenuItem>
     </Select>
+
   );
 };
 
