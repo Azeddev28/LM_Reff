@@ -26,9 +26,13 @@ const Referrals = () => {
   return (
     <div>
       <DashboardHeader
-        heading={`Greetings, ${userName}`}
-        subHeading={`Referral Trackers`}
-        placeHolder="Search by Patient Name"
+        heading={
+          <>
+            Greetings, <span style={{ color: '#3B5CA9' }}>{userName}</span>.
+          </>
+        }
+        subHeading="Referral Trackers"
+        placeHolder="Search by patient name"
         setSearchValue={setSearchValue}
       />
       <TableWrapper>

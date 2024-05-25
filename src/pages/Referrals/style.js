@@ -80,6 +80,7 @@ export const Styled = {
     gap: "10px",
     flexDirection: "column",
     backgroundColor: "#F9F9F9",
+    borderRadius: '8px',
     padding: "5px",
     margin: "0px 25px",
     border: "1px solid #E1E3EA;"

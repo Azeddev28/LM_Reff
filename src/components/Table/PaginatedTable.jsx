@@ -16,18 +16,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import styled from "@emotion/styled";
-import { format } from 'date-fns';
 
-
-
-import KeyboardArrowUpIcon from '@mui/icons-material/ArrowDropUp';
-
-import KeyboardArrowDownIcon from '@mui/icons-material/ArrowDropDown';
-
-import sortingSvg from '../../../public/sorting.svg'
-
-
-
+import upSvg from '../../../public/sorting-up.svg';
+import downSvg from '../../../public/sorting-down.svg';
 
 const ProgressWrapper = styled("div")(({ }) => ({
   display: "flex",
@@ -78,8 +69,7 @@ const PaginatedTable = ({
   const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url);
   const { data, isLoading, refetch } = query(url);
-  const ROWS_PER_PAGE = 15;
-  const [changePage, setChangePage] = useState("");
+  const ROWS_PER_PAGE = 9;
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
@@ -93,11 +83,7 @@ const PaginatedTable = ({
       const targetUrl = generateUrl();
       setUrl(targetUrl);
     }
-    if (data && changePage) {
-      setUrl(data[changePage]);
-      setChangePage("");
-    }
-  }, [data, url, changePage, pageData.search, orderingValue]);
+  }, [data, url, pageData.search, orderingValue]);
 
   const extractKeys = () => {
     let keys = [];
@@ -121,25 +107,16 @@ const PaginatedTable = ({
     navigate(`${currentUrl}${id}`, { state: { data: id } });
   };
 
-  const handleClickPreviuos = () => {
+  const handleClickPrevious = () => {
     if (page > 1) {
       setPage(page - 1);
     }
-    refetch();
-    setChangePage("previous");
   };
 
   const handleClickNext = () => {
     if (page < totalPages) {
       setPage(page + 1);
     }
-    refetch();
-    setChangePage("next");
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return format(date, 'yyyy-MM-dd'); 
   };
 
   const StyledRow = styled(TableRow)((props) => ({
@@ -150,7 +127,13 @@ const PaginatedTable = ({
     },
   }));
 
-  
+  const getDisplayedRows = () => {
+    if (data?.results) {
+      const startIndex = (page - 1) * ROWS_PER_PAGE;
+      return data.results.slice(startIndex, startIndex + ROWS_PER_PAGE);
+    }
+    return [];
+  };
 
   return isLoading ? (
     <ProgressWrapper>
@@ -164,56 +147,44 @@ const PaginatedTable = ({
             <TableRow>
               {headerData.map((columnInfo) => (
                 <TableCell key={columnInfo.key}>
-                  <Header>
+                  <Header style={{ fontSize: "13px", color: "#7E8299", fontWeight: "600" }}>
                     {columnInfo.display}
                     <Sorter>
-
-
-                      {/* <KeyboardArrowUpIcon
+                      <img
+                        src={downSvg}
+                        alt="Sort Ascending"
                         style={{
                           cursor: "pointer",
-                          height: "26px",
-                          width: "26px",
+                          height: "7px",
+                          width: "14px",
                         }}
                         onClick={() => {
                           setOrderingValue(columnInfo.sortKey);
                         }}
                       />
-                      <KeyboardArrowDownIcon
+                      <img
+                        src={upSvg}
+                        alt="Sort Descending"
                         style={{
                           cursor: "pointer",
-                          height: "26px",
-                          width: "26px",
+                          height: "7px",
+                          width: "14px",
                         }}
                         onClick={() => {
                           setOrderingValue(`-${columnInfo.sortKey}`);
                         }}
-                      /> */}
-
-                      <img
-                        src={sortingSvg}
-                        alt="Sort Ascending"
-                        style={{
-                          cursor: "pointer",
-                          height: "13px",
-                          width: "20px",
-                          transform: "rotate(180deg)",
-                        }}
-                        onClick={() => {
-                          setOrderingValue(columnInfo.sortKey);
-                        }}
                       />
-
                     </Sorter>
                   </Header>
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
+
           <TableBody>
             {data?.count > 0 ? (
               <>
-                {data?.results?.map((obj, index) => (
+                {getDisplayedRows().map((obj, index) => (
                   <StyledRow
                     key={index}
                     redirectToDetailPage={redirectToDetailPage}
@@ -229,7 +200,7 @@ const PaginatedTable = ({
                     {extractRowValues(obj, keys)?.map(
                       (item, index) =>
                         item.key !== "uuid" && (
-                          <TableCell key={index}>{item.key === 'date_created' || item.key === 'date_updated' ?  formatDate(item.value) : item?.value}</TableCell>
+                          <TableCell key={index} style={{ color: "#A1A5B7", fontWeight: "600", fontSize: "12px" }}>{item.value}</TableCell>
                         )
                     )}
                   </StyledRow>
@@ -238,13 +209,13 @@ const PaginatedTable = ({
             ) : (
               <TableRow
                 variant="h4"
-                style={{ margin: "20px auto", textAlign: "center" }}
+                style={{ margin: "20px auto", textAlign: "center", }}
               >
                 <TableCell
                   colSpan={headerData.length}
                   style={{ textAlign: "center" }}
                 >
-                  <Typography variant="h4">No Record Found</Typography>
+                  <Typography variant="h6">No Record Found</Typography>
                 </TableCell>
               </TableRow>
             )}
@@ -252,6 +223,7 @@ const PaginatedTable = ({
         </Table>
       </TableContainer>
       <Pagination>
+
         <IconButton
           disabled={page === 1 || data?.count === 0}
           style={{
@@ -260,7 +232,7 @@ const PaginatedTable = ({
             height: "16px",
             width: "16px",
           }}
-          onClick={handleClickPreviuos}
+          onClick={handleClickPrevious}
         >
           <ArrowBackIosNewIcon
             style={{
@@ -269,6 +241,7 @@ const PaginatedTable = ({
             }}
           />
         </IconButton>
+        
         {data?.count > 1 ? (
           <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
         ) : (
