@@ -31,9 +31,12 @@ export const loginApi = createApi({
           body: body,
         }
       },
-      transformErrorResponse: (response) => {
-        if (response.status === 401) {
-          window.location.href = "/auth/sign-in";
+    }),
+    validatePassword: builder.mutation({
+      query: (params) => {
+        return {
+          url: `/auth/validate/reset/${params?.uid}/${params?.token}`,
+          method: "POST",      
         }
       },
     }),
@@ -95,6 +98,7 @@ export const {
   useResetPasswordMutation,
   useConfirmPasswordMutation,
   useRefreshTokenMutation,
+  useValidatePasswordMutation
 } = loginApi;
 
 export default authSlice.reducer;
