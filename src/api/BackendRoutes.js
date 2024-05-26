@@ -1,5 +1,3 @@
-import { validateDate } from "@mui/x-date-pickers/internals";
-
 const ROUTES = {
   referralList: `/referrals/`,
   claimList: `/claims`,
