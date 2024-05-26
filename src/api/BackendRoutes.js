@@ -1,4 +1,3 @@
-
 const ROUTES = {
   referralList: `/referrals/`,
   claimList: `/claims`,
@@ -7,6 +6,7 @@ const ROUTES = {
   resetPassword:'/auth/password/reset/',
   signIn:'/auth/sign-in',
   confirmPassword:`/auth/password/reset/confirm/`,
+  validateconfirmPassword:`/auth/validate/reset/`,
   refreshToken:`/auth/token/refresh/`
 };
 

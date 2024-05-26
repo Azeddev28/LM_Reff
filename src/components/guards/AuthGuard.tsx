@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../redux/slices/authSlice";
 
@@ -10,6 +10,24 @@ interface AuthGuardType {
 function AuthGuard({ children }: AuthGuardType) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const extractParams = (pathname: string, pattern: string) => {
+    const patternParts = pattern.split('/');
+    const pathParts = pathname.split('/');
+    const params: Record<string, string> = {};
+
+    patternParts.forEach((part, index) => {
+      if (part.startsWith(':')) {
+        const paramName = part.slice(1);
+        params[paramName] = pathParts[index];
+      }
+    });
+    return params;
+  };
+  
+  const params = extractParams(location.pathname, "/:uid/:token");
+  const { uid, token } = params;
 
   const { isAuthenticated } = useSelector((state: any) => state.auth);
   const access = localStorage.getItem("access");
@@ -24,7 +42,12 @@ function AuthGuard({ children }: AuthGuardType) {
     if (isAuthenticated) {
       navigate("/");
     } else {
-      navigate("/auth/sign-in");
+      if (uid && token && !location.pathname.includes("/auth")){
+        navigate(`/${uid}/${token}`)
+      }
+      else{
+        navigate("/auth/sign-in");
+      }
     }
   }, [isAuthenticated]);
 

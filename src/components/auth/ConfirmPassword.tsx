@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import { useConfirmPasswordMutation } from "../../redux/slices/authSlice";
+import { useConfirmPasswordMutation, useValidatePasswordMutation } from "../../redux/slices/authSlice";
 
 import {
   Alert as MuiAlert,
@@ -16,8 +16,6 @@ import { useParams } from "react-router-dom";
 interface ConfirmPasswordBody {
   new_password1: string;
   new_password2: string;
-  uid: string | undefined;
-  token: string | undefined;
 }
 
 // import useAuth from "../../hooks/useAuth";
@@ -27,10 +25,28 @@ const Alert = styled(MuiAlert)(spacing);
 const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
 
 function ConfirmPassword() {
-  const { uid, token } = useParams();
+  const params = useParams();
   const navigate = useNavigate();
-  const [confirmPassword] = useConfirmPasswordMutation();
+  const [confirmPassword,{data:confirmPasswordData, isSuccess:confirmPasswordSuccess, isError:confirmPasswordError}] = useConfirmPasswordMutation();
+  const [validatePassword,{ data, isSuccess, isError }]= useValidatePasswordMutation();
+
   let formData = new FormData();
+
+  useEffect(() => {
+    validatePassword(params);
+  }, []);
+
+  useEffect(()=>{
+    if(isError){
+      navigate('/404')
+    }
+  },[isError])
+
+  useEffect(()=>{
+    if(confirmPasswordSuccess){
+      navigate("/auth/sign-in") //TODO show toast for password reset successfully
+    }
+  },[confirmPasswordSuccess])
 
   return (
     <Formik
@@ -52,8 +68,6 @@ function ConfirmPassword() {
           let body: ConfirmPasswordBody = {
             new_password1: values?.password,
             new_password2: values?.confirmPassword,
-            uid,
-            token,
           };
           (Object.keys(body) as (keyof ConfirmPasswordBody)[]).forEach(
             (key) => {
@@ -62,7 +76,12 @@ function ConfirmPassword() {
               }
             }
           );
-          confirmPassword(body);
+          let confirmPasswordParams={
+            body, 
+            uid:params?.uid,
+            token:params?.token,
+          }
+          confirmPassword(confirmPasswordParams);
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 

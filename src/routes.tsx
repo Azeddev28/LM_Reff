@@ -8,6 +8,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import DetailPage from "./pages/Referrals/[detailPage]";
 import AuthGuard from "./components/guards/AuthGuard";
 import ConfirmPassword from "./pages/auth/ConfirmPassword";
+import Page404 from "./pages/auth/Page404";
 const routes = [
   {
     path: "/",
@@ -31,12 +32,16 @@ const routes = [
     element:<Auth><ResetPassword/></Auth>,
   },
   {
-    path:"auth/password/reset/confirm/:uid/:token",
+    path:"/:uid/:token",
     element:<Auth><ConfirmPassword/></Auth>,
   },
   {
     path: "/:id", 
     element: <DashboardLayout><DetailPage /></DashboardLayout>,
+  },
+  {
+    path: "/404", 
+    element: <DashboardLayout><Page404 /></DashboardLayout>,//TODO remove side bar from this page
   },
   
 ];
