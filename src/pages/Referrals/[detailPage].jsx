@@ -153,7 +153,7 @@ const DetailPage = () => {
 
 
 
-      <Typography variant="h2" style={{ marginTop: "-20px", fontSize: "25px", fontWeight: "500" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}</span>.</Typography>
+      <Typography variant="h2" style={{ marginTop: "-20px", fontSize: "25px", fontWeight: "500" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span></Typography>
       <div style={{ borderBottom: '1px solid #E1E3EA', width: '107%', marginTop: '2.5vh', marginBottom: '5vh', marginLeft: "-4%" }} />
 
       {loader ? (

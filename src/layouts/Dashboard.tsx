@@ -80,7 +80,6 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
         <GlobalStyle />
 
         <Drawer>
-
           <Box sx={{ display: { xs: "block", screen_1200: "none" } }}>
             <Sidebar
               PaperProps={{
@@ -107,8 +106,10 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
             />
           </Box>
         </Drawer>
+
         <AppContent>
-          {/* <Navbar onDrawerToggle={handleDrawerToggle} /> */}
+          <Box sx={{ display: { xs: "block", screen_1200: "none", marginBottom: "30px" } }}><Navbar onDrawerToggle={handleDrawerToggle} /></Box>
+
           <MainContent p={isLgUp ? 12 : 5}>
             {children}
             <Outlet />
