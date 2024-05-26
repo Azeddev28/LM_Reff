@@ -31,7 +31,7 @@ const routes = [
     element:<Auth><ResetPassword/></Auth>,
   },
   {
-    path:"auth/password/reset/confirm/:uid/:token",
+    path:"/:uid/:token",
     element:<Auth><ConfirmPassword/></Auth>,
   },
   {
