@@ -24,18 +24,18 @@ export const loginApi = createApi({
       }),
     }),
     confirmPassword: builder.mutation({
-      query: (body) => {
+      query: (params) => {
         return {
-          url:  getRoute('confirmPassword'),
+          url:  `/auth/password/reset/confirm/${params?.uid}/${params?.token}/`, //TODO customize getRoute func to accept params
           method: "POST",
-          body: body,
+          body: params?.body,
         }
       },
     }),
     validatePassword: builder.mutation({
       query: (params) => {
         return {
-          url: `/auth/validate/reset/${params?.uid}/${params?.token}`,
+          url: `/auth/validate/reset/${params?.uid}/${params?.token}/`,//TODO customize getRoute func to accept params
           method: "POST",      
         }
       },
