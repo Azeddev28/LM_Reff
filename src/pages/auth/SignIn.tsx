@@ -100,9 +100,10 @@ const WhiteTextTypography = styled(Typography)`
 const WhiteTextTypographyPara = styled(Typography)`
   color: white;
   font-family: 'Inter';
-  font-size: 10px;
+  font-size: 12px;
   margin-top: 18px;
   margin-left: 10px;
+  font-weight: 400;
 `;
 
 
@@ -136,7 +137,7 @@ function SignIn() {
 
           <LeftDiv2>
           <ImageWrapperLeft>
-              <img src="/login-img.svg" alt="logo-image" style={{height: '73vh'}}/>
+              <img src="/login-img.svg" alt="logo-image" style={{height: '73vh', backgroundColor: "yellow"}}/>
             </ImageWrapperLeft>
           </LeftDiv2>
 
