@@ -68,15 +68,20 @@ const authSlice = createSlice({
     },
     setAccessToken(state, action) {
       state.accessToken = action.payload;
-      //localStorage.setItem("access", action.payload); // [UPDATED]
+      localStorage.setItem("access", action.payload); 
     },
     setUserName(state, action) {
       state.userName = action.payload;
     },
+    logoutUser(state) {
+      state.accessToken = null;
+      state.isAuthenticated = false;
+      localStorage.clear()
+    },
   },
 });
 
-export const { setAuthenticated, setAccessToken, setUserName } =
+export const { setAuthenticated, setAccessToken, setUserName, logoutUser } =
   authSlice.actions;
 
 // TODO authentication needs to be check
