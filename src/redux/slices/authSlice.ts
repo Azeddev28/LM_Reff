@@ -67,8 +67,12 @@ const authSlice = createSlice({
       state.isAuthenticated = action.payload;
     },
     setAccessToken(state, action) {
-      state.accessToken = action.payload;
-      localStorage.setItem("access", action.payload); 
+      state.isAuthenticated = true;
+      state.accessToken = action.payload.access;
+      localStorage.setItem("access", action.payload.access);
+      if (action.payload && action.payload.refresh) {
+        localStorage.setItem("refresh", action.payload.refresh);
+      }
     },
     setUserName(state, action) {
       state.userName = action.payload;
@@ -76,7 +80,7 @@ const authSlice = createSlice({
     logoutUser(state) {
       state.accessToken = null;
       state.isAuthenticated = false;
-      localStorage.clear()
+      localStorage.clear();
     },
   },
 });
@@ -94,6 +98,10 @@ export const getAccessToken = createSelector(
     return accessToken;
   }
 );
+
+export const getRefreshToken = () => {
+  return localStorage.getItem("refresh") || null;
+};
 
 export const {
   useLoginMutation,

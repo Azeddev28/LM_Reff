@@ -9,6 +9,7 @@ import {
   setAccessToken,
   getAccessToken,
   logoutUser,
+  getRefreshToken,
 } from "../redux/slices/authSlice";
 import { getRoute } from "../api/BackendRoutes";
 import { RootState } from "../redux/store";
@@ -55,7 +56,7 @@ export const baseQueryWithReauth = (baseUrl: any) => {
       if (!refreshPromise) {
         // Fetch the refresh token
         refreshPromise = (async () => {
-          const refreshToken = localStorage.getItem("refresh");
+          const refreshToken = getRefreshToken();
           if (refreshToken) {
             const refreshResult: any = await baseQuery(
               {
@@ -67,7 +68,7 @@ export const baseQueryWithReauth = (baseUrl: any) => {
               extraOptions
             );
             if (refreshResult?.data?.access) {
-              api.dispatch(setAccessToken(refreshResult.data.access));
+              api.dispatch(setAccessToken(refreshResult.data));
               // Retry the original request with the new access token
               result = await baseQuery(args, api, extraOptions);
             } else {
