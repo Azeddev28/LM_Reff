@@ -39,7 +39,7 @@ function ResetPassword() {
         try {
           let email = values.email;
           formData.append("email", email);
-          resetPassword(formData);
+          resetPassword(formData); //TODO add toast for email successfully sent
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 
