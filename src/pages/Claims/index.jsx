@@ -20,7 +20,7 @@ const Claims = () => {
       <DashboardHeader
         heading={
           <>
-            Greetings, <span style={{ color: '#3B5CA9' }}>{userName}</span>.
+            Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span>
           </>
         }
         subHeading="Claims Dashboard"
