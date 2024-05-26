@@ -70,16 +70,25 @@ const authSlice = createSlice({
       state.isAuthenticated = action.payload;
     },
     setAccessToken(state, action) {
-      state.accessToken = action.payload;
-      //localStorage.setItem("access", action.payload); // [UPDATED]
+      state.isAuthenticated = true;
+      state.accessToken = action.payload.access;
+      localStorage.setItem("access", action.payload.access);
+      if (action.payload && action.payload.refresh) {
+        localStorage.setItem("refresh", action.payload.refresh);
+      }
     },
     setUserName(state, action) {
       state.userName = action.payload;
     },
+    logoutUser(state) {
+      state.accessToken = null;
+      state.isAuthenticated = false;
+      localStorage.clear();
+    },
   },
 });
 
-export const { setAuthenticated, setAccessToken, setUserName } =
+export const { setAuthenticated, setAccessToken, setUserName, logoutUser } =
   authSlice.actions;
 
 // TODO authentication needs to be check
@@ -92,6 +101,10 @@ export const getAccessToken = createSelector(
     return accessToken;
   }
 );
+
+export const getRefreshToken = () => {
+  return localStorage.getItem("refresh") || null;
+};
 
 export const {
   useLoginMutation,

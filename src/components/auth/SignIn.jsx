@@ -8,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Alert from "@mui/material/Alert"; // Import Alert component
 
-import { setAuthenticated, setAccessToken } from "../../redux/slices/authSlice";
+import { setAccessToken } from "../../redux/slices/authSlice";
 import {
   Checkbox,
   FormControlLabel,
@@ -37,9 +37,7 @@ function SignIn() {
 
   useEffect(() => {
     if (loginSuccessFull) {
-      dispatch(setAuthenticated(true));
-      dispatch(setAccessToken(loginData.access));
-      localStorage.setItem("access", loginData.access); // [UPDATED]
+      dispatch(setAccessToken(loginData));
       setSnackbarMessage("Successfully logged in");
       setSnackbarOpen(true);
       setSnackbarSeverity("success"); // Set severity to success

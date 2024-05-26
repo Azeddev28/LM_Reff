@@ -4,6 +4,7 @@ import { Drawer as MuiDrawer } from "@mui/material";
 import { SidebarItemsType } from "../../types/sidebar";
 import SidebarNav from "./SidebarNav";
 import { useNavigate } from "react-router-dom";
+import useNavItems from "./dashboardItems";
 
 const Drawer = styled(MuiDrawer)`
   border-right: 0;
@@ -90,6 +91,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
 
   const navigate = useNavigate();
+  const navItems=useNavItems()
   return (
     <Drawer variant="permanent" {...rest}>
       <Brand onClick={() => navigate("/")}>
@@ -97,7 +99,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       </Brand>
       <LogoText>Luminary</LogoText>
       <LogoText>Health</LogoText>
-      <SidebarNav items={items} />
+      <SidebarNav items={navItems} />
     </Drawer>
   );
 };
