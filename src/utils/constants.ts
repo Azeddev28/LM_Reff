@@ -68,6 +68,14 @@ export const REFERRAL_DETAIL_DATA = {
     editable: true,
     label: "initial_consult_completed",
   },
+  initial_consult_format: {
+    key: "Visit Type",
+    value: "",
+    editable: true,
+    label: "initial_consult_format",
+    isDropDown: true,
+    datatype:'visitType'
+  },
   initial_consult_notes: {
     key: "Initial Consult Notes",
     value: "",
@@ -80,6 +88,14 @@ export const REFERRAL_DETAIL_DATA = {
     editable: true,
     label: "preop_consult_scheduled_date",
     datePicker: true,
+  },
+  preop_consult_format: {
+    key: "Visit Type",
+    value: "",
+    editable: true,
+    label: "preop_consult_format",
+    isDropDown: true,
+    datatype:'visitType'
   },
   preop_consult_completed: {
     key: "Did patient show up to pre-op consult?",
@@ -100,6 +116,14 @@ export const REFERRAL_DETAIL_DATA = {
     label: "op_scheduled_date",
     datePicker: true,
   },
+  postop_consult_format: {
+    key: "Visit Type",
+    value: "",
+    editable: true,
+    label: "postop_consult_format",
+    isDropDown: true,
+    datatype:'visitType'
+  },
   intended_procedure: {
     key: "Intended Procedure (CPT Codes)",
     value: "",
@@ -112,11 +136,27 @@ export const REFERRAL_DETAIL_DATA = {
     editable: true,
     label: "facility",
   },
-  travel_required: {
-    key: "Is Travel Required?",
+  overnight_stay_required: {
+    key: "Is Overnight Stay Required?",
     value: "",
     editable: true,
-    label: "travel_required",
+    label: "overnight_stay_required",
+  },
+  departure_date: {
+    key: "Departure Date",
+    value: "",
+    editable: true,
+    label: "departure_date",
+    inVisible:true,
+    datePicker: true,
+  },
+  return_date: {
+    key: "Return Date",
+    value: "",
+    editable: true,
+    label: "return_date",
+    inVisible:true,
+    datePicker: true,
   },
   op_completed: {
     key: "Was the surgery completed?",
