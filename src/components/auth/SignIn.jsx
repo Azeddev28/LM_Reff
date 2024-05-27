@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { spacing } from "@mui/system";
 import { useDispatch, useSelector } from "react-redux";
-const TextField = styled(MuiTextField)(({}) => ({
+const TextField = styled(MuiTextField)(({ }) => ({
   margin: "16px 0px",
 }));
 
@@ -33,7 +33,7 @@ function SignIn() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // New state for severity
-  
+
 
   useEffect(() => {
     if (loginSuccessFull) {
@@ -101,6 +101,8 @@ function SignIn() {
               onBlur={handleBlur}
               onChange={handleChange}
               my={2}
+              InputProps={{ style: { fontSize: '12px', fontWeight: "600", color: '#7E8299' } }} // Inline CSS for font size
+              style={{ }}
             />
             <TextField
               type="password"
@@ -113,6 +115,8 @@ function SignIn() {
               onBlur={handleBlur}
               onChange={handleChange}
               my={2}
+              InputProps={{ style: { fontSize: '12px', fontWeight: "600", color: '#7E8299' } }} // Inline CSS for font size
+              style={{ }}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -125,7 +129,7 @@ function SignIn() {
               color="primary"
               disabled={isSubmitting}
             >
-              Sign in
+              Login
             </Button>
             <Button
               component={Link}

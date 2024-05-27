@@ -203,17 +203,32 @@ const DetailPage = () => {
 
               </Styled.ContentWrapper>
 
-              <Styled.CheckWrapper>
+              <Styled.CheckWrapper style={{marginTop: "30px"}}>
                 <Styled.Checked
                   control={
                     <Checkbox
                       checked={referralData?.preauthorization_required}
+                      style={{ transform: "scale(1.5)", width: "30px", height: "30px", marginLeft: "8px" }}
                     />
                   }
                   style={{ pointerEvents: "none" }}
-                  label="Preauthorization Required"
+                  label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Preauthorization Required</span>}
                 />
               </Styled.CheckWrapper>
+
+              <Styled.CheckWrapper style={{marginTop: "30px"}}>
+                <Styled.Checked
+                  control={
+                    <Checkbox
+                      checked={referralData?.preauthorization_required}
+                      style={{ transform: "scale(1.5)", width: "30px", height: "30px",  marginLeft: "8px" }}
+                    />
+                  }
+                  style={{ pointerEvents: "none" }}
+                  label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Referral Cancelled</span>}
+                />
+              </Styled.CheckWrapper>
+
 
             </Styled.Column>
 

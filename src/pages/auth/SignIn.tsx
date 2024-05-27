@@ -36,7 +36,7 @@ const ImageWrapper = styled('div')`
 const ImageWrapperLeft = styled('div')`
   display:flex;
    justify-content:center;
-   height:360px;
+   height: 100%;
    margin-bottom:15px;
 `;
 
@@ -48,28 +48,27 @@ const Container = styled('div')`
 
 const LeftDiv = styled('div')`
   width: 48%;
-  height: 98vh;
-  background-color: #006CEA;
+  height: 100vh;
   display:  flex;
   flex-direction: column;
-
-  margin-left: 0.5vw;
-  margin-top: 1vh;
 `;
 
 const LeftDiv1 = styled('div')`
 margin-top: 10%;
 margin-bottom: 5%;
 width: 100%;
-
 `;
 
 const LeftDiv2 = styled('div')`
-
+height: 75%;
+position: absolute;
+bottom: 0;
+left: 50%;
+transform: translateX(-50%);
 `;
 
 const RightDiv = styled('div')`
-  width: 50%;
+  width: 52%;
   height: 100%;
   background-color: white;
   display: flex;
@@ -86,7 +85,6 @@ margin-bottom: 40px;
 `;
 
 const RightDiv2 = styled('div')`
-background-color: red;
 `;
 
 const WhiteTextTypography = styled(Typography)`
@@ -100,10 +98,20 @@ const WhiteTextTypography = styled(Typography)`
 const WhiteTextTypographyPara = styled(Typography)`
   color: white;
   font-family: 'Inter';
-  font-size: 12px;
+  font-size: 10px;
+  font-size: 14px;
   margin-top: 18px;
   margin-left: 10px;
   font-weight: 400;
+`;
+
+const LeftInnerDiv = styled('div')`
+background-color: #006CEA;
+height: 98%;
+width: 99%;
+margin-left: 1%;
+margin-top: 1%;
+position: relative;
 `;
 
 
@@ -113,27 +121,16 @@ function SignIn() {
       <Container>
 
         <LeftDiv>
-
-          {/* <LeftDiv1>
-
-            <ImageWrapper>
-              <img src="/favicon-white.svg" alt="logo-image" />
+          <LeftInnerDiv>
+            <LeftDiv1>
               <WhiteTextTypography variant="h2" align="center">
-                Luminary Health
+                Luminary Health Providers
               </WhiteTextTypography>
-            </ImageWrapper>
 
-          </LeftDiv1> */}
-
-          <LeftDiv1>
-            <WhiteTextTypography variant="h2" align="center">
-              Luminary Health Providers
-            </WhiteTextTypography>
-
-            <WhiteTextTypographyPara variant="h2" align="center">
-              Manage all of your Luminary Referrals in one place
-            </WhiteTextTypographyPara>
-          </LeftDiv1>
+              <WhiteTextTypographyPara variant="h2" align="center">
+                Manage all of your Luminary Referrals in one place
+              </WhiteTextTypographyPara>
+            </LeftDiv1>
 
           <LeftDiv2>
           <ImageWrapperLeft>
@@ -142,32 +139,38 @@ function SignIn() {
           </LeftDiv2>
 
 
+            <LeftDiv2>
+              <ImageWrapperLeft>
+                <img src="/login-img.svg" alt="logo-image"/>
+              </ImageWrapperLeft>
+            </LeftDiv2>
+          </LeftInnerDiv>
         </LeftDiv>
 
 
         <RightDiv>
 
           <RightDiv1>
-              <img src="/favicon.svg" alt="logo-image" style={{height: '40px'}}/>
-              <Typography variant="h2" align="center" style={{fontSize: "20px", color: "black"}}>
-                Luminary Health
-              </Typography>
+            <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
+            <Typography variant="h2" align="center" style={{ fontSize: "24px", color: "#181C32", fontWeight: "500", marginLeft: "10px" }}>
+              Luminary Health
+            </Typography>
           </RightDiv1>
 
           <RightDiv2>
-             
-          <Wrapper>
-            <Typography component="h3" variant="h3" align="left" style={{fontSize: "20px", marginBottom: "10px"}}>
-              Hi, nice to see you!
-            </Typography>
 
-            <SignInWrapper>
-              <SignInComponent />
-            </SignInWrapper>
-          </Wrapper>
+            <Wrapper>
+              <Typography component="h3" variant="h3" align="left" style={{ fontSize: "24px", fontWeight: "600", color: "#181C32", marginBottom: "10px" }}>
+                Hi, nice to see you!
+              </Typography>
+
+              <SignInWrapper>
+                <SignInComponent />
+              </SignInWrapper>
+            </Wrapper>
           </RightDiv2>
 
-         
+
         </RightDiv>
 
       </Container>
