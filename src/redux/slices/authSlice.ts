@@ -2,6 +2,7 @@ import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getRoute } from "../../api/BackendRoutes";
 import { baseQueryWithReauth } from "../../utils/apiUtils";
+import { getCookie, removeCookie, setCookie } from "../../utils/cookieManager";
 
 const baseUrl = import.meta.env.VITE_URL;
 
@@ -72,9 +73,9 @@ const authSlice = createSlice({
     setAccessToken(state, action) {
       state.isAuthenticated = true;
       state.accessToken = action.payload.access;
-      localStorage.setItem("access", action.payload.access);
+      setCookie("access", action.payload.access);
       if (action.payload && action.payload.refresh) {
-        localStorage.setItem("refresh", action.payload.refresh);
+        setCookie("refresh", action.payload.refresh);
       }
     },
     setUserName(state, action) {
@@ -83,7 +84,8 @@ const authSlice = createSlice({
     logoutUser(state) {
       state.accessToken = null;
       state.isAuthenticated = false;
-      localStorage.clear();
+      removeCookie('refresh')
+      removeCookie('access')
     },
   },
 });
@@ -96,14 +98,14 @@ export const getAccessToken = createSelector(
   (state) => state.auth.accessToken,
   (accessToken) => {
     if (!accessToken) {
-      return localStorage.getItem("access") || null;
+      return  getCookie("access") || null
     }
     return accessToken;
   }
 );
 
 export const getRefreshToken = () => {
-  return localStorage.getItem("refresh") || null;
+  return  getCookie("refresh") || null
 };
 
 export const {
