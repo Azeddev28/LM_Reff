@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Select, MenuItem } from "@mui/material";
-const DropDown = ({ dropdownValue, handleInputChange, label }) => {
-  const [data, setData] = useState(dropdownValue ? "Yes" : "No");
+const DropDown = ({ dropdownValue, handleInputChange, label , datatype }) => {
+  const [data, setData] = useState(() => {
+   
+    if (datatype) {
+      return dropdownValue ? dropdownValue : '';
+    } else {
+      return dropdownValue ? 'Yes' : 'No';
+    }
+  });
+
+
   const dropDownStyling = {
     boxShadow: "none",
     ".MuiOutlinedInput-notchedOutline": { border: 0 },
@@ -18,13 +27,34 @@ const DropDown = ({ dropdownValue, handleInputChange, label }) => {
 
   const handleChange = (event) => {
     setData(event.target.value);
-    const value = event.target.value === "Yes" ? true : false;
+    let value;
+    switch (datatype) {
+      case 'visitType':
+        value = event.target.value;
+        break;
+      default:
+        value = event.target.value === "Yes" ? true : false;
+        break;
+    }
     handleInputChange(label, value);
   };
 
-  useEffect(() => {
-    setData(dropdownValue ? "Yes" : "No");
-  }, [dropdownValue]);
+
+  const getDropdownItems = () => {
+    switch (datatype) {
+      case 'visitType':
+        return [
+          { value: 'In-Person', label: 'In-Person' },
+          { value: 'Virtual', label: 'Virtual' },
+        ];
+      default:
+        return [
+          { value: 'Yes', label: 'Yes' },
+          { value: 'No', label: 'No' },
+        ];
+    }
+  };
+  const dropdownItems = getDropdownItems();
 
   return (
     <Select
@@ -34,20 +64,20 @@ const DropDown = ({ dropdownValue, handleInputChange, label }) => {
       onChange={handleChange}
       sx={{
         ...dropDownStyling,
-        ...(data === 'Yes' && {
-          color: '#5E6278',
-          fontWeight: '600',
-          fontSize: 12,
-        }),
-        ...(data === 'No' && {
-          color: '#5E6278',
-          fontWeight: '600',
-          fontSize: 12,
-        }),
+        color: '#5E6278',
+        fontWeight: '600',
+        fontSize: 12,
       }}
     >
-      <MenuItem value={"Yes"} style={{ fontSize: 12, fontWeight: 600, color: "#5E6278" }}>Yes</MenuItem>
-      <MenuItem value={"No"} style={{ fontSize: 12, fontWeight: 600, color: "#5E6278" }}>No</MenuItem>
+      {dropdownItems.map((item) => (
+        <MenuItem
+          key={item.value}
+          value={item.value}
+          style={{ fontSize: 12, fontWeight: 600, color: "#5E6278" }}
+        >
+          {item.label}
+        </MenuItem>
+      ))}
     </Select>
 
   );
