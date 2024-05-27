@@ -31,6 +31,7 @@ const DetailPage = () => {
   const [fileList, setFileList] = useState([]);
   const [loader, setLoader] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
+  const [overNightStay, setOverNightStay] = useState(false);
 
   const { userName } = useSelector((state) => state.auth);
 
@@ -60,6 +61,9 @@ const DetailPage = () => {
       const updatedDetailData = {};
       for (const key in REFERRAL_DETAIL_DATA) {
         if (REFERRAL_DETAIL_DATA.hasOwnProperty(key)) {
+          if(key==="overnight_stay_required"){
+            setOverNightStay(referralDetail[key])
+          }
           updatedDetailData[key] = {
             ...REFERRAL_DETAIL_DATA[key],
             value: referralDetail[key],
@@ -100,6 +104,9 @@ const DetailPage = () => {
       ...prevData,
       [label]: value,
     }));
+    if(label==="overnight_stay_required"){
+      setOverNightStay(value)
+    }
   };
 
   const handleFiles = (files) => {
@@ -107,13 +114,20 @@ const DetailPage = () => {
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       handleInputChange("attachments", file);
-
       setFileList((prevFileList) => [...prevFileList, file]);
     }
     // setFileList((prevFileList) => [...prevFileList, ...updatedFileList]);
   };
 
   const handleSubmitChanges = async () => {
+    if (data.hasOwnProperty('overnight_stay_required') && data.overnight_stay_required === false) {
+      data.return_date = '';
+      data.departure_date = '';
+  }
+  if (data.hasOwnProperty('overnight_stay_required') && data.overnight_stay_required === true && (!data.return_date || !data.departure_date)) {
+    console.log("Overnight stay is true but return_date or departure_date is not set."); //TODO add warning toast for mandatory fields
+    return
+}
     try {
       setLoader(true);
       await updateReferral({ id, data });
@@ -243,34 +257,51 @@ const DetailPage = () => {
 
               <Styled.ContentWrapper>
 
-                {referralDetailData.slice(8, 24).map((item, index) => (
-                  <Styled.Card key={index}>
-
-                    <Styled.Label>{item.key}</Styled.Label>
-
-                    {typeof item.value === "boolean" ? (
-                      <DropDown
-                        dropdownValue={item.value}
-                        handleInputChange={handleInputChange}
-                        label={item.label}
-                      />
-                    ) : item.datePicker === true ? (
-                      <DatePickerComponent
-                        date={item.value}
-                        handleInputChange={handleInputChange}
-                        label={item.label}
-                      />
-                    ) : item.editable === true ? (
-                      <StyledInput
-                        inputValue={item.value}
-                        handleInputChange={handleInputChange}
-                        label={item.label}
-                      />
-                    ) : (
-                      <Styled.Value variant="h">{item.value}</Styled.Value>
-                    )}
-                  </Styled.Card>
-                ))}
+                {referralDetailData.slice(8, 29).map((item, index) => {
+                return (
+                    !item?.inVisible ?  (
+                      <Styled.Card key={index}>
+                      <Styled.Label>{item.key}</Styled.Label>
+                      {typeof item.value === "boolean" || item?.isDropDown ? (
+                        <DropDown
+                          dropdownValue={item.value}
+                          handleInputChange={handleInputChange}
+                          label={item.label}
+                          datatype={item?.datatype}
+                        />
+                      ) : item.datePicker === true ? (
+                        <DatePickerComponent
+                          date={item.value}
+                          handleInputChange={handleInputChange}
+                          label={item.label}
+                        />
+                      ) : item.editable === true ? (
+                        <StyledInput
+                          inputValue={item.value}
+                          handleInputChange={handleInputChange}
+                          label={item.label}
+                        />
+                      ) : (
+                        <Styled.Value variant="h">{item.value}</Styled.Value>
+                      )}
+                    </Styled.Card>
+                    ) :(
+                      <>
+                      {overNightStay ?
+                      (
+                        <Styled.Card key={index}>
+                        <Styled.Label>{item.key}</Styled.Label>
+                        <DatePickerComponent
+                            date={item.value}
+                            handleInputChange={handleInputChange}
+                            label={item.label}
+                          />
+                      </Styled.Card>
+                      ) : (null)}
+                      </>
+                    ) 
+                  )
+                })}
 
               </Styled.ContentWrapper>
 
@@ -352,7 +383,7 @@ const DetailPage = () => {
 
                     ))}
 
-                    {referralDetailData.slice(24, 25).map((item, index) => (
+                    {referralDetailData.slice(29, 30).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
 
