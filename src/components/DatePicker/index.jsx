@@ -16,7 +16,6 @@ const StyledDatePicker = styled(DatePicker)({
   "& .MuiInputBase-root": {
     height: "17px",
     border: "none",
-
     '& .MuiInputBase-input': {
       color: '#5E6278',
       fontSize: 12,
@@ -32,7 +31,7 @@ const StyledDatePicker = styled(DatePicker)({
       height: "17px",
     },
     "& .MuiSvgIcon-root": {
-      color: "#2f65cb",
+      color: "#7E8299",
       height: "17px",
       width: "17px",
     },
@@ -61,8 +60,6 @@ const StyledDatePicker = styled(DatePicker)({
   "& .MuiButtonBase-root-MuiIconButton-root": {
     padding: "0px",
   },
-
-
 });
 
 
@@ -74,8 +71,6 @@ const DatePickerComponent = ({ date, handleInputChange, label }) => {
     setSelectedDate(date);
     handleInputChange(label, date.format("YYYY-MM-DD"));
   };
-
-
 
   useEffect(() => {
     setSelectedDate(dayjs(date));

@@ -40,6 +40,7 @@ function ResetPassword() {
           let email = values.email;
           formData.append("email", email);
           resetPassword(formData); //TODO add toast for email successfully sent
+
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 
@@ -67,7 +68,7 @@ function ResetPassword() {
           <TextField
             type="email"
             name="email"
-            label="Email Address"
+            label="Email"
             value={values.email}
             error={Boolean(touched.email && errors.email)}
             fullWidth
@@ -83,7 +84,7 @@ function ResetPassword() {
             color="primary"
             disabled={isSubmitting}
           >
-            Reset password
+            Send password
           </Button>
         </form>
       )}

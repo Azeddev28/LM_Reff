@@ -154,21 +154,35 @@ const PaginatedTable = ({
                         src={downSvg}
                         alt="Sort Ascending"
                         style={{
-                          cursor: "pointer",
-                          height: "7px",
-                          width: "14px",
+                          cursor: 'pointer',
+                          height: '7px',
+                          width: '14px',
+                          transition: 'height 0.3s, width 0.3s',
+                        }}
+                        onMouseOver={(e) => {
+                          e.target.style.height = '10px';
+                        }}
+                        onMouseOut={(e) => {
+                          e.target.style.height = '7px';
                         }}
                         onClick={() => {
                           setOrderingValue(columnInfo.sortKey);
                         }}
                       />
-                      <img
+                       <img
                         src={upSvg}
-                        alt="Sort Descending"
+                        alt="Sort Decending"
                         style={{
-                          cursor: "pointer",
-                          height: "7px",
-                          width: "14px",
+                          cursor: 'pointer',
+                          height: '7px',
+                          width: '14px',
+                          transition: 'height 0.3s, width 0.3s',
+                        }}
+                        onMouseOver={(e) => {
+                          e.target.style.height = '10px';
+                        }}
+                        onMouseOut={(e) => {
+                          e.target.style.height = '7px';
                         }}
                         onClick={() => {
                           setOrderingValue(`-${columnInfo.sortKey}`);
@@ -241,7 +255,7 @@ const PaginatedTable = ({
             }}
           />
         </IconButton>
-        
+
         {data?.count > 1 ? (
           <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
         ) : (
