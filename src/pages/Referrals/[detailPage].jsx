@@ -166,10 +166,7 @@ const DetailPage = () => {
     <Styled.MainWrapper>
 
 
-
-      <Typography variant="h2" style={{ marginTop: "-20px", fontSize: "25px", fontWeight: "500" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span></Typography>
-      <div style={{ borderBottom: '1px solid #E1E3EA', width: '107%', marginTop: '2.5vh', marginBottom: '5vh', marginLeft: "-4%" }} />
-
+      <Typography variant="h2" style={{ marginBottom: "30px", marginTop: "-20px", fontSize: "25px", fontWeight: "500", marginLeft: "-4.6%", width: "108%", height: "55px", borderBottom: "1px solid #F1F1F2" }}><span style={{ marginLeft: "65px" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span></span></Typography>
       {loader ? (
         <Styled.ProgressWrapper>
           <CircularProgress size="7rem" />
@@ -220,17 +217,32 @@ const DetailPage = () => {
 
               </Styled.ContentWrapper>
 
-              <Styled.CheckWrapper>
+              <Styled.CheckWrapper style={{marginTop: "30px"}}>
                 <Styled.Checked
                   control={
                     <Checkbox
                       checked={referralData?.preauthorization_required}
+                      style={{ transform: "scale(1.5)", width: "30px", height: "30px", marginLeft: "8px" }}
                     />
                   }
                   style={{ pointerEvents: "none" }}
-                  label="Preauthorization Required"
+                  label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Preauthorization Required</span>}
                 />
               </Styled.CheckWrapper>
+
+              <Styled.CheckWrapper style={{marginTop: "30px"}}>
+                <Styled.Checked
+                  control={
+                    <Checkbox
+                      checked={referralData?.preauthorization_required}
+                      style={{ transform: "scale(1.5)", width: "30px", height: "30px",  marginLeft: "8px" }}
+                    />
+                  }
+                  style={{ pointerEvents: "none" }}
+                  label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Referral Cancelled</span>}
+                />
+              </Styled.CheckWrapper>
+
 
             </Styled.Column>
 
