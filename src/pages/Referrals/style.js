@@ -177,7 +177,7 @@ export const Styled = {
     borderRadius: 8,
     border: "1px solid #E1E3EA",
     background: "#F9F9F9",
-    padding: "9px 100px 7px 14px",
+    padding: "9px 14px 7px 14px",
     color: "#7E8299",
     fontWeight: 600,
     fontSize: "12px",

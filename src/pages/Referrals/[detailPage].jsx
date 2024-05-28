@@ -230,16 +230,17 @@ const DetailPage = () => {
                 />
               </Styled.CheckWrapper>
 
-              <Styled.CheckWrapper style={{marginTop: "30px"}}>
+
+              <Styled.CheckWrapper>
                 <Styled.Checked
                   control={
                     <Checkbox
-                      checked={referralData?.preauthorization_required}
-                      style={{ transform: "scale(1.5)", width: "30px", height: "30px",  marginLeft: "8px" }}
+                      checked={isCancelled}
+                      style={{ transform: "scale(1.5)", width: "30px", height: "30px", marginLeft: "8px" }}
+                      onChange={handleCheckboxChange}
                     />
                   }
-                  style={{ pointerEvents: "none" }}
-                  label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Referral Cancelled</span>}
+                  label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Procedure Cancelled</span>}
                 />
               </Styled.CheckWrapper>
 
@@ -249,7 +250,7 @@ const DetailPage = () => {
             <Styled.Column>
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Details
-              </Styled.ColumnHeader>
+              </Styled.ColumnHeader>  
 
               <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 These fields should be updated by the Practice to update Luminary along the patient journey
@@ -304,18 +305,6 @@ const DetailPage = () => {
                 })}
 
               </Styled.ContentWrapper>
-
-              <Styled.CheckWrapper>
-                <Styled.Checked
-                  control={
-                    <Checkbox
-                      checked={isCancelled}
-                      onChange={handleCheckboxChange}
-                    />
-                  }
-                  label="Procedure Cancelled"
-                />
-              </Styled.CheckWrapper>
 
             </Styled.Column>
 

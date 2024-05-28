@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 
 import { Button as MuiButton, Typography } from "@mui/material";
 import { spacing, SpacingProps } from "@mui/system";
+import fourOfourSvg from "../../../public/404.svg"
 
 interface ButtonProps extends SpacingProps {
   component?: React.ElementType;
@@ -27,15 +28,13 @@ const Wrapper = styled.div`
 function Page404() {
   return (
     <Wrapper>
+      <img src="../../../public/404.svg" alt="" style={{height: "322px"}}/>
       <Helmet title="404 Error" />
-      <Typography component="h1" variant="h1" align="center" gutterBottom>
+      <Typography style={{fontSize: "100px", fontWeight: "600", color: "#181C32"}} component="h1" variant="h1" align="center" gutterBottom>
         404
       </Typography>
-      <Typography component="h2" variant="h5" align="center" gutterBottom>
-        Page not found.
-      </Typography>
-      <Typography component="h2" variant="body1" align="center" gutterBottom>
-        The page you are looking for might have been removed.
+      <Typography style={{fontSize: "24px", fontWeight: "500"}} component="h2" variant="h5" align="center" gutterBottom>
+      Oops! Page not Found.
       </Typography>
 
       <Button
@@ -44,8 +43,9 @@ function Page404() {
         variant="contained"
         color="secondary"
         mt={2}
+        style={{ backgroundColor: "#2F65CB" }}
       >
-        Return to website
+        Go to Home Page
       </Button>
     </Wrapper>
   );
