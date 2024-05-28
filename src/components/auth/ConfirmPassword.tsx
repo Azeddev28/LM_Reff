@@ -42,6 +42,7 @@ function ConfirmPassword() {
       data: confirmPasswordData,
       isSuccess: confirmPasswordSuccess,
       isError: confirmPasswordError,
+      error: confirmPasswordMutationError
     },
   ] = useConfirmPasswordMutation();
   const [validatePassword, { data, isSuccess, isError }] =
@@ -81,10 +82,13 @@ function ConfirmPassword() {
       setSnackbarMessage("Password Changed Successfully");
       setSnackbarOpen(true);
       setSnackbarSeverity("success");
-      navigate("/auth/sign-in");
+      setTimeout(() => { 
+        navigate("/auth/sign-in");
+      }, 1000); 
     }
     if (confirmPasswordError) {
-      setSnackbarMessage("Something Went Wrong, Try again Later");
+      //@ts-ignore      
+      setSnackbarMessage(confirmPasswordMutationError?.data?.new_password2 ? confirmPasswordMutationError?.data?.new_password2 : "Something Went Wrong, Try again Later");
       setSnackbarOpen(true);
       setSnackbarSeverity("error");
     }
@@ -100,6 +104,10 @@ function ConfirmPassword() {
         }}
         validationSchema={Yup.object().shape({
           password: Yup.string()
+            .matches(
+              /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,}$/,
+              "Password must contain at least one numeric digit, one alphabetic character, one special character and must be 8 character long"
+            )
             .min(8, "Password must be at least 8 characters long")
             .required("Password is required"),
           confirmPassword: Yup.string()
