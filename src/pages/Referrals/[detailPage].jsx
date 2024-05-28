@@ -19,8 +19,9 @@ import DropDown from "../../components/DropDown";
 import { Styled } from "./style";
 import { useSelector } from "react-redux";
 import { color, fontSize, fontWeight } from "@mui/system";
-
-
+import dropBox from '../../../public/dropboxImg.svg';
+import attachFile from '../../../public/attachFileIcon.svg';
+import deleteFile from "../../../public/deleteIcon.svg"
 
 
 const DetailPage = () => {
@@ -309,7 +310,7 @@ const DetailPage = () => {
                         >
                           <input {...getInputProps()} />
                           <Styled.DropZoneContent>
-                            <img src="../../../public/dropboxImg.svg" alt="" />
+                            <img src={dropBox} alt="" />
                             <Styled.DropzoneText>
                               Click or drag file to this area to upload
                             </Styled.DropzoneText>
@@ -336,10 +337,10 @@ const DetailPage = () => {
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <img src="../../../public/attachFileIcon.svg" style={{ height: '20px', marginRight: "20px" }} alt="" />
+                          <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                           <Styled.FileText>{item.name}</Styled.FileText>
                         </div>
-                        <img src="../../../public/deleteIcon.svg" alt="" />
+                        <img src={deleteFile} alt="" />
                       </Styled.UploadedFile>
 
 
@@ -351,12 +352,12 @@ const DetailPage = () => {
 
                           <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                              <img src="../../../public/attachFileIcon.svg" style={{ height: '20px', marginRight: "20px" }} alt="" />
+                              <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                               <Styled.FileText>
                                 {getFileNameFromURL(innerItem?.filename ? innerItem?.filename : "")}
                               </Styled.FileText>
                             </div>
-                            <img src="../../../public/deleteIcon.svg" style={{}} alt="" />
+                            <img src={deleteFile} style={{}} alt="" />
                           </Styled.UploadedFile>
 
                         ))}

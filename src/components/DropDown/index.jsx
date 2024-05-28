@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Select, MenuItem } from "@mui/material";
 const DropDown = ({ dropdownValue, handleInputChange, label , datatype }) => {
-  const [data, setData] = useState(() => {
-   
-    if (datatype) {
-      return dropdownValue ? dropdownValue : '';
-    } else {
-      return dropdownValue ? 'Yes' : 'No';
-    }
-  });
+
+  const [data, setData] = useState('');
+
+    // Sync state with dropdownValue prop
+    useEffect(() => {
+      if (datatype) {
+        setData(dropdownValue ? dropdownValue : '');
+      } else {
+        setData(dropdownValue ? 'Yes' : 'No');
+      }
+    }, [dropdownValue, datatype]);
 
 
   const dropDownStyling = {
