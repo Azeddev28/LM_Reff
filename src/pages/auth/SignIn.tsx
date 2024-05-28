@@ -2,10 +2,12 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Helmet } from "react-helmet-async";
 
+
 import { Avatar, Paper, Typography } from "@mui/material";
 
 import { ReactComponent as Logo } from "../../vendor/logo.svg";
 import SignInComponent from "../../components/auth/SignIn";
+
 
 const Brand = styled(Logo)`
   fill: ${(props) => props.theme.palette.primary.main};
@@ -51,6 +53,10 @@ const LeftDiv = styled('div')`
   height: 100vh;
   display:  flex;
   flex-direction: column;
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
 `;
 
 const LeftDiv1 = styled('div')`
@@ -75,12 +81,16 @@ const RightDiv = styled('div')`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
 `;
 
 const RightDiv1 = styled('div')`
 display: flex;
 align-items: center;
-margin-left: -200px;
+
 margin-bottom: 40px;
 `;
 
@@ -130,16 +140,16 @@ function SignIn() {
               </WhiteTextTypographyPara>
             </LeftDiv1>
 
-          <LeftDiv2>
-          <ImageWrapperLeft>
-              <img src="/login-img.svg" alt="logo-image" style={{height: '73vh', backgroundColor: ""}}/>
-            </ImageWrapperLeft>
-          </LeftDiv2>
+            <LeftDiv2>
+              <ImageWrapperLeft>
+                <img src="/login-img.svg" alt="logo-image" style={{ height: '73vh', backgroundColor: "" }} />
+              </ImageWrapperLeft>
+            </LeftDiv2>
 
 
             <LeftDiv2>
               <ImageWrapperLeft>
-                <img src="/login-img.svg" alt="logo-image"/>
+                <img src="/login-img.svg" alt="logo-image" />
               </ImageWrapperLeft>
             </LeftDiv2>
           </LeftInnerDiv>
@@ -148,26 +158,27 @@ function SignIn() {
 
         <RightDiv>
 
-          <RightDiv1>
-            <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
-            <Typography variant="h2" align="center" style={{ fontSize: "24px", color: "#181C32", fontWeight: "500", marginLeft: "10px" }}>
-              Luminary Health
-            </Typography>
-          </RightDiv1>
-
-          <RightDiv2>
-
-            <Wrapper>
-              <Typography component="h3" variant="h3" align="left" style={{ fontSize: "24px", fontWeight: "600", color: "#181C32", marginBottom: "10px" }}>
-                Hi, nice to see you!
+          <div>
+            <RightDiv1>
+              <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
+              <Typography variant="h2" align="center" style={{ fontSize: "24px", color: "#181C32", fontWeight: "500", marginLeft: "10px" }}>
+                Luminary Health
               </Typography>
+            </RightDiv1>
 
-              <SignInWrapper>
-                <SignInComponent />
-              </SignInWrapper>
-            </Wrapper>
-          </RightDiv2>
+            <RightDiv2>
 
+              <Wrapper>
+                <Typography component="h3" variant="h3" align="left" style={{ fontSize: "24px", fontWeight: "600", color: "#181C32", marginBottom: "10px" }}>
+                  Hi, nice to see you!
+                </Typography>
+
+                <SignInWrapper>
+                  <SignInComponent />
+                </SignInWrapper>
+              </Wrapper>
+            </RightDiv2>
+          </div>
 
         </RightDiv>
 
