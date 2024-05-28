@@ -13,7 +13,7 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 
 const AppBar = styled(MuiAppBar)`
   background: ${(props) => props.theme.header.background};
-  color: ${(props) => props.theme.header.color};
+  color: "${(props) => props.theme.header.color}";
 `;
 
 const IconButton = styled(MuiIconButton)`
