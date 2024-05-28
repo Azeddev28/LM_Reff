@@ -57,7 +57,7 @@ function ConfirmPassword() {
       }}
       validationSchema={Yup.object().shape({
         password: Yup.string()
-          .min(5, "Password must be at least 8 characters long")
+          .min(8, "Password must be at least 8 characters long")
           .required("Password is required"),
         confirmPassword: Yup.string()
           .oneOf([Yup.ref("password"), undefined], "Passwords must match")
@@ -122,7 +122,7 @@ function ConfirmPassword() {
             }}
           />
           <TextField
-            type="confirmPassword"
+            type="password"
             name="confirmPassword"
             label="Confirm Password"
             value={values.confirmPassword}
