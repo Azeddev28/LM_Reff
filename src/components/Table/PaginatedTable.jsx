@@ -17,8 +17,8 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import styled from "@emotion/styled";
 
-import upSvg from '../../../public/sorting-up.svg';
-import downSvg from '../../../public/sorting-down.svg';
+import upSvg from '/sorting-up.svg?url';
+import downSvg from '/sorting-down.svg?url';
 
 const ProgressWrapper = styled("div")(({ }) => ({
   display: "flex",
@@ -66,8 +66,10 @@ const PaginatedTable = ({
     }
     return targetUrl.toString();
   };
+
   const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url);
+  const [loading, setLoading] = useState(false); // New loading state
   const { data, isLoading, refetch } = query(url);
   const ROWS_PER_PAGE = 9;
   const [page, setPage] = useState(1);
@@ -119,6 +121,14 @@ const PaginatedTable = ({
     }
   };
 
+  const handleSortClick = (sortKey) => {
+    setLoading(true); // Start loading
+    setOrderingValue(sortKey);
+    setTimeout(() => {
+      setLoading(false); // Stop loading after sorting
+    }, 500); // Adjust time based on API response time
+  };
+
   const StyledRow = styled(TableRow)((props) => ({
     padding: 8,
     cursor: props.redirectToDetailPage ? "pointer" : "default",
@@ -135,7 +145,7 @@ const PaginatedTable = ({
     return [];
   };
 
-  return isLoading ? (
+  return isLoading || loading ? (
     <ProgressWrapper>
       <CircularProgress size={"7rem"} />
     </ProgressWrapper>
@@ -146,7 +156,7 @@ const PaginatedTable = ({
           <TableHead sx={{ backgroundColor: '#F9F9F9' }}>
             <TableRow>
               {headerData.map((columnInfo) => (
-                <TableCell key={columnInfo.key}>
+                <TableCell key={columnInfo.key} sx={{ minWidth: 150 }}>
                   <Header style={{ fontSize: "13px", color: "#7E8299", fontWeight: "600" }}>
                     {columnInfo.display}
                     <Sorter>
@@ -166,12 +176,12 @@ const PaginatedTable = ({
                           e.target.style.height = '7px';
                         }}
                         onClick={() => {
-                          setOrderingValue(columnInfo.sortKey);
+                          handleSortClick(columnInfo.sortKey);
                         }}
                       />
                        <img
                         src={upSvg}
-                        alt="Sort Decending"
+                        alt="Sort Descending"
                         style={{
                           cursor: 'pointer',
                           height: '7px',
@@ -185,7 +195,7 @@ const PaginatedTable = ({
                           e.target.style.height = '7px';
                         }}
                         onClick={() => {
-                          setOrderingValue(`-${columnInfo.sortKey}`);
+                          handleSortClick(`-${columnInfo.sortKey}`);
                         }}
                       />
                     </Sorter>

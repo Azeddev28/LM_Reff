@@ -27,7 +27,7 @@ const StyledDatePicker = styled(DatePicker)({
       height: "17px",
     },
     "& .MuiSvgIcon-root": {
-      color: "#7E8299",
+      color: "#2F65CB",
       height: "17px",
       width: "17px",
     },
