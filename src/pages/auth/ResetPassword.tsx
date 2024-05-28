@@ -100,10 +100,8 @@ const WhiteTextTypographyPara = styled(Typography)`
 
 const LeftInnerDiv = styled('div')`
 background-color: #006CEA;
-height: 98%;
-width: 99%;
-margin-left: 1%;
-margin-top: 1%;
+height: 100%;
+width: 100%;
 position: relative;
 `;
 

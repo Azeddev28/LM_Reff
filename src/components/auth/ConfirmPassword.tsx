@@ -109,7 +109,7 @@ function ConfirmPassword() {
           <TextField
             type="password"
             name="password"
-            label="Enter Your Password"
+            label="New Password"
             value={values.password}
             error={Boolean(touched.password && errors.password)}
             fullWidth
@@ -117,11 +117,14 @@ function ConfirmPassword() {
             onBlur={handleBlur}
             onChange={handleChange}
             my={3}
+            InputLabelProps={{
+              style: { fontSize: 12, fontWeight: 600, color: "#7E8299" }
+            }}
           />
           <TextField
             type="confirmPassword"
             name="confirmPassword"
-            label="Re Enter Your Password"
+            label="Confirm Password"
             value={values.confirmPassword}
             error={Boolean(touched.confirmPassword && errors.confirmPassword)}
             fullWidth
@@ -129,6 +132,9 @@ function ConfirmPassword() {
             onBlur={handleBlur}
             onChange={handleChange}
             my={3}
+            InputLabelProps={{
+              style: { fontSize: 12, fontWeight: 600, color: "#7E8299" }
+            }}
           />
           <Button
             type="submit"
@@ -137,7 +143,7 @@ function ConfirmPassword() {
             color="primary"
             disabled={isSubmitting}
           >
-            Verify
+            Submit
           </Button>
         </form>
       )}
