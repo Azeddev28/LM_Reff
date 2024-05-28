@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../redux/slices/authSlice";
+import { getCookie } from "../../utils/cookieManager";
 
 interface AuthGuardType {
   children: React.ReactNode;
@@ -30,8 +31,7 @@ function AuthGuard({ children }: AuthGuardType) {
   const { uid, token } = params;
 
   const { isAuthenticated } = useSelector((state: any) => state.auth);
-  const access = localStorage.getItem("access");
-
+  const access =  getCookie("access") 
   useEffect(() => {
     if (access) {      
       dispatch(setAuthenticated(true));

@@ -6,10 +6,6 @@ import { Typography } from "@mui/material";
 import { SidebarItemsType } from "../../types/sidebar";
 import SidebarNavList from "./SidebarNavList";
 
-const handleLogoutClick = () => {
-  console.log("Logout button clicked");
-};
-
 const Title = styled(Typography)`
   color: ${(props) => props.theme.sidebar.color};
   font-size: ${(props) => props.theme.typography.caption.fontSize};

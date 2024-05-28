@@ -41,7 +41,7 @@ const routes = [
   },
   {
     path: "/404", 
-    element: <DashboardLayout><Page404 /></DashboardLayout>,//TODO remove side bar from this page
+    element: <Page404 />,//TODO remove side bar from this page
   },
   
 ];

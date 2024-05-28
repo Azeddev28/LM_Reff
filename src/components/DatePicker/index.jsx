@@ -8,9 +8,6 @@ import styled from "@emotion/styled";
 import dateIcon from "../../../public/dateIcon.svg"
 
 
-
-
-
 const StyledDatePicker = styled(DatePicker)({
   width: "100%",
   "& .MuiInputBase-root": {
@@ -21,7 +18,6 @@ const StyledDatePicker = styled(DatePicker)({
       fontSize: 12,
       fontWeight: 600,
     },
-    
     "& input": {
       padding: "0px 0px 0px 0px",
       border: "none",
@@ -56,12 +52,10 @@ const StyledDatePicker = styled(DatePicker)({
   "& .MuiOutlinedInput-notchedOutline": {
     border: "none",
   },
-
   "& .MuiButtonBase-root-MuiIconButton-root": {
     padding: "0px",
   },
 });
-
 
 
 const DatePickerComponent = ({ date, handleInputChange, label }) => {
