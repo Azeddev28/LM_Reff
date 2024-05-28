@@ -31,7 +31,6 @@ const DetailPage = () => {
   const [data, setData] = useState({});
   const [fileList, setFileList] = useState([]);
   const [loader, setLoader] = useState(false);
-  const [isCancelled, setIsCancelled] = useState(false);
   const [overNightStay, setOverNightStay] = useState(false);
 
   const { userName } = useSelector((state) => state.auth);
@@ -76,7 +75,6 @@ const DetailPage = () => {
     }
   }, [referralDetail]);
 
-
   const handleFileChangeButton = (event) => {
     const files = event.target.files;
     handleFiles(files);
@@ -84,16 +82,6 @@ const DetailPage = () => {
 
   const referralDetailData = Object.values(detailData);
 
-  useEffect(() => {
-    if (referralDetailData.length > 0) {
-      const cancelledReferral = referralDetailData.find(
-        (item) => item.label === "is_cancelled"
-      );
-      if (cancelledReferral) {
-        setIsCancelled(cancelledReferral.value);
-      }
-    }
-  }, [detailData, referralData]);
 
   const handleInputChange = (label, value) => {
     setData((prevData) => ({
@@ -106,13 +94,11 @@ const DetailPage = () => {
   };
 
   const handleFiles = (files) => {
-    const updatedFileList = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       handleInputChange("attachments", file);
       setFileList((prevFileList) => [...prevFileList, file]);
     }
-    // setFileList((prevFileList) => [...prevFileList, ...updatedFileList]);
   };
 
   const handleSubmitChanges = async () => {
@@ -142,11 +128,6 @@ const DetailPage = () => {
 
   const handleViewFile = (url) => {
     window.open(url, "_blank");
-  };
-
-  const handleCheckboxChange = () => {
-    setIsCancelled(!isCancelled);
-    handleInputChange("is_cancelled", !isCancelled);
   };
 
 
@@ -223,16 +204,17 @@ const DetailPage = () => {
                 />
               </Styled.CheckWrapper>
 
-              <Styled.CheckWrapper style={{marginTop: "30px"}}>
+
+              <Styled.CheckWrapper>
                 <Styled.Checked
                   control={
                     <Checkbox
-                      checked={referralData?.preauthorization_required}
-                      style={{ transform: "scale(1.5)", width: "30px", height: "30px",  marginLeft: "8px" }}
+                      checked={referralData?.is_cancelled}
+                      style={{ transform: "scale(1.5)", width: "30px", height: "30px", marginLeft: "8px" }}
                     />
                   }
                   style={{ pointerEvents: "none" }}
-                  label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Referral Cancelled</span>}
+                  label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Procedure Cancelled</span>}
                 />
               </Styled.CheckWrapper>
 
@@ -242,7 +224,7 @@ const DetailPage = () => {
             <Styled.Column>
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Details
-              </Styled.ColumnHeader>
+              </Styled.ColumnHeader>  
 
               <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 These fields should be updated by the Practice to update Luminary along the patient journey
@@ -297,18 +279,6 @@ const DetailPage = () => {
                 })}
 
               </Styled.ContentWrapper>
-
-              <Styled.CheckWrapper>
-                <Styled.Checked
-                  control={
-                    <Checkbox
-                      checked={isCancelled}
-                      onChange={handleCheckboxChange}
-                    />
-                  }
-                  label="Procedure Cancelled"
-                />
-              </Styled.CheckWrapper>
 
             </Styled.Column>
 

@@ -207,17 +207,18 @@ export const REFERRAL_HEADER_DATA = [
   {
     key: "patient_name",
     display: "Patient Name",
-    sortKey: "patient__name",
+    sortKey: "patient_name",
   },
   {
     key: "dob",
     display: "Date of Birth",
-    sortKey: "dob",
+    sortKey: "patient_dob",
   },
   {
     key: "referral_date",
     display: "Referral Date",
-    sortKey: "date_created",
+    sortKey: "referral_receipt_date",
+    isTimestamp: true
   },
   {
     key: "payer",
@@ -227,7 +228,7 @@ export const REFERRAL_HEADER_DATA = [
   {
     key: "referral_description",
     display: "Referral Description",
-    sortKey: "ref__desc",
+    sortKey: "referral_description",
   },
   {
     key: "date_updated",

@@ -3,14 +3,13 @@ import styled from "@emotion/styled";
 import { Power } from "react-feather";
 import { useDispatch , useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {  setAccessToken } from "../../redux/slices/authSlice";
+import {  logoutUser } from "../../redux/slices/authSlice";
 import {
   Tooltip,
   Menu,
   MenuItem,
   IconButton as MuiIconButton,
 } from "@mui/material";
-import { setAuthenticated } from "../../redux/slices/authSlice";
 
 
 const IconButton = styled(MuiIconButton)`
@@ -36,9 +35,7 @@ function NavbarUserDropdown() {
 
 
   const handleSignOut =  () => {
-    dispatch(setAuthenticated(false))
-    dispatch(setAccessToken(null));
-    localStorage.removeItem('access');
+    dispatch(logoutUser());
      navigate("/auth/sign-in");
      
   };
