@@ -19,8 +19,9 @@ import DropDown from "../../components/DropDown";
 import { Styled } from "./style";
 import { useSelector } from "react-redux";
 import { color, fontSize, fontWeight } from "@mui/system";
-
-
+import dropBox from '../../../public/dropboxImg.svg';
+import attachFile from '../../../public/attachFileIcon.svg';
+import deleteFile from "../../../public/deleteIcon.svg"
 
 
 const DetailPage = () => {
@@ -30,7 +31,6 @@ const DetailPage = () => {
   const [data, setData] = useState({});
   const [fileList, setFileList] = useState([]);
   const [loader, setLoader] = useState(false);
-  const [isCancelled, setIsCancelled] = useState(false);
   const [overNightStay, setOverNightStay] = useState(false);
 
   const { userName } = useSelector((state) => state.auth);
@@ -75,12 +75,6 @@ const DetailPage = () => {
     }
   }, [referralDetail]);
 
-  // useEffect(() => {
-  //   if (fileList.length > 0) {
-  //     handleInputChange("attachments", fileList);
-  //   }
-  // }, [fileList]);
-
   const handleFileChangeButton = (event) => {
     const files = event.target.files;
     handleFiles(files);
@@ -88,16 +82,6 @@ const DetailPage = () => {
 
   const referralDetailData = Object.values(detailData);
 
-  useEffect(() => {
-    if (referralDetailData.length > 0) {
-      const cancelledReferral = referralDetailData.find(
-        (item) => item.label === "is_cancelled"
-      );
-      if (cancelledReferral) {
-        setIsCancelled(cancelledReferral.value);
-      }
-    }
-  }, [detailData, referralData]);
 
   const handleInputChange = (label, value) => {
     setData((prevData) => ({
@@ -110,13 +94,11 @@ const DetailPage = () => {
   };
 
   const handleFiles = (files) => {
-    const updatedFileList = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       handleInputChange("attachments", file);
       setFileList((prevFileList) => [...prevFileList, file]);
     }
-    // setFileList((prevFileList) => [...prevFileList, ...updatedFileList]);
   };
 
   const handleSubmitChanges = async () => {
@@ -147,14 +129,6 @@ const DetailPage = () => {
   const handleViewFile = (url) => {
     window.open(url, "_blank");
   };
-
-  const handleCheckboxChange = () => {
-    setIsCancelled(!isCancelled);
-    handleInputChange("is_cancelled", !isCancelled);
-  };
-
-
-
 
 
   return isLoading ? (
@@ -235,11 +209,11 @@ const DetailPage = () => {
                 <Styled.Checked
                   control={
                     <Checkbox
-                      checked={isCancelled}
+                      checked={referralData?.is_cancelled}
                       style={{ transform: "scale(1.5)", width: "30px", height: "30px", marginLeft: "8px" }}
-                      onChange={handleCheckboxChange}
                     />
                   }
+                  style={{ pointerEvents: "none" }}
                   label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Procedure Cancelled</span>}
                 />
               </Styled.CheckWrapper>
@@ -336,7 +310,9 @@ const DetailPage = () => {
                         >
                           <input {...getInputProps()} />
                           <Styled.DropZoneContent>
-                            <img src="../../../public/dropboxImg.svg" alt="" />
+
+                            <img src={dropBox} alt="" />
+
                             <Styled.DropzoneText>
                               Click or drag file to this area to upload
                             </Styled.DropzoneText>
@@ -363,10 +339,12 @@ const DetailPage = () => {
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <img src="../../../public/attachFileIcon.svg" style={{ height: '20px', marginRight: "20px" }} alt="" />
+
+                          <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                           <Styled.FileText>{item.name}</Styled.FileText>
                         </div>
-                        <img src="../../../public/deleteIcon.svg" alt="" />
+                        <img src={deleteFile} alt="" />
+
                       </Styled.UploadedFile>
 
 
@@ -378,12 +356,16 @@ const DetailPage = () => {
 
                           <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                              <img src="../../../public/attachFileIcon.svg" style={{ height: '20px', marginRight: "20px" }} alt="" />
+
+                              <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
+
                               <Styled.FileText>
                                 {getFileNameFromURL(innerItem?.filename ? innerItem?.filename : "")}
                               </Styled.FileText>
                             </div>
-                            <img src="../../../public/deleteIcon.svg" style={{}} alt="" />
+
+                            <img src={deleteFile} style={{}} alt="" />
+
                           </Styled.UploadedFile>
 
                         ))}
