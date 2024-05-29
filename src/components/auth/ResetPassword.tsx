@@ -6,6 +6,8 @@ import { Formik } from "formik";
 import { useResetPasswordMutation } from "../../redux/slices/authSlice";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import { Fade } from "@mui/material";
+
 import {
   Alert as MuiAlert,
   Button,
@@ -14,13 +16,31 @@ import {
 } from "@mui/material";
 import { spacing } from "@mui/system";
 
-const Alert = styled(MuiAlert)(spacing);
+const Alert = styled(MuiAlert)(spacing, {
+  backgroundColor: "white", 
+  borderRadius: "10px", 
+});
 const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
+
+const SnackbarWrapper = styled.div`
+  position: relative;
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 8px;
+    background-color: #01E17B; // Change border color to green
+    border-bottom-left-radius: 10px; // Match border radius of the alert
+    border-bottom-right-radius: 10px; // Match border radius of the alert
+  }
+`;
+// a
 
 function ResetPassword() {
   const navigate = useNavigate();
-  const [resetPassword,
-    { data, isSuccess, isError }] = useResetPasswordMutation();
+  const [resetPassword, { data, isSuccess, isError }] = useResetPasswordMutation();
   let formData = new FormData();
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -83,9 +103,11 @@ function ResetPassword() {
         }) => (
           <form noValidate onSubmit={handleSubmit}>
             {errors.submit && (
-              <Alert mt={2} mb={1} severity="warning">
-                {errors.submit}
-              </Alert>
+              <SnackbarWrapper>
+                <Alert mt={2} mb={1} severity="warning">
+                  {errors.submit}
+                </Alert>
+              </SnackbarWrapper>
             )}
             <TextField
               type="email"
@@ -116,6 +138,7 @@ function ResetPassword() {
         open={snackbarOpen}
         autoHideDuration={6000}
         onClose={handleCloseSnackbar}
+        TransitionComponent={Fade}
         message={snackbarMessage}
         anchorOrigin={{
           vertical: "top",
@@ -123,23 +146,29 @@ function ResetPassword() {
         }}
       >
         {/* Render the Alert component with the appropriate severity */}
-        <Alert
-          action={
-            <React.Fragment>
-              <IconButton
-                size="small"
-                aria-label="close"
-                color="inherit"
-                onClick={handleCloseSnackbar}
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </React.Fragment>
-          }
-          severity={snackbarSeverity}
-        >
-          {snackbarMessage}
-        </Alert>
+        <SnackbarWrapper>
+          <Alert
+            action={
+              <React.Fragment>
+                <IconButton
+                  size="small"
+                  aria-label="close"
+                  color="inherit"
+                  onClick={handleCloseSnackbar}
+                >
+                  <CloseIcon fontSize="small" />
+                </IconButton>
+              </React.Fragment>
+            }
+            severity={snackbarSeverity}
+          >
+            <span style={{ fontSize: "14px" }}>Email Sent Successfully <br /></span>
+            <span style={{ fontSize: "12px" }}>
+              Reset Password link have been sent to <br />
+              your email successfully
+            </span>
+          </Alert>
+        </SnackbarWrapper>
       </Snackbar>
 
     </>
