@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { setUserName } from "../../redux/slices/authSlice";
 import { useGetProfileQuery } from "../../redux/slices/referralSlice";
 import { useGetReferralsQuery } from "../../redux/slices/referralSlice";
-import { set } from "date-fns";
 import { getRoute } from "../../api/BackendRoutes";
 
 
@@ -44,7 +43,6 @@ const Referrals = () => {
           headerData={REFERRAL_HEADER_DATA}
           pageData={{
             url:`${import.meta.env.VITE_URL}${getRoute('referralList')}`,
-            // url: "https://staging.api.luminaryhealthportal.com/api/referrals/",
             search: searchValue,
           }}
           redirectToDetailPage={true}
