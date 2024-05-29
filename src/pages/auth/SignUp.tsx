@@ -31,6 +31,10 @@ const LeftDiv = styled('div')`
 
   margin-left: 0.5vw;
   margin-top: 1vh;
+
+  @media (max-width: 1200px) {
+    display: none;
+  }
 `;
 
 const LeftDiv1 = styled('div')`
@@ -52,6 +56,10 @@ const RightDiv = styled('div')`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
 `;
 
 
@@ -89,21 +97,7 @@ const Wrapper = styled(Paper)`
 
 function SignUp() {
   return (
-    // <React.Fragment>
-    //   <Brand />
-    //   <Wrapper>
-    //     <Helmet title="Sign Up" />
 
-    //     <Typography component="h1" variant="h4" align="center" gutterBottom>
-    //       Get started
-    //     </Typography>
-    //     <Typography component="h2" variant="body1" align="center">
-    //       Start creating the best possible user experience for you customers
-    //     </Typography>
-
-    //     <SignUpComponent />
-    //   </Wrapper>
-    // </React.Fragment>
 
     <React.Fragment>
       <Container>
