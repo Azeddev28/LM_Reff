@@ -11,10 +11,12 @@ import {
   Box,
   IconButton,
   Typography,
+  TextField,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import SearchIcon from "@mui/icons-material/Search";
 import styled from "@emotion/styled";
 
 import upSvg from '/sorting-up.svg?url';
@@ -50,6 +52,15 @@ const Sorter = styled("div")(({ }) => ({
   justifyContent: "space-around",
 }));
 
+const SearchBox = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: "white",
+  border: "1px solid #ddd",
+  borderRadius: "4px",
+  padding: "2px 8px",
+}));
+
 const PaginatedTable = ({
   headerData,
   pageData,
@@ -64,16 +75,18 @@ const PaginatedTable = ({
     if (orderingValue !== null && orderingValue !== undefined) {
       targetUrl.searchParams.append("ordering", orderingValue);
     }
+    // targetUrl.searchParams.set("page", page); // Update the URL with the current page
     return targetUrl.toString();
   };
 
   const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url);
-  const [loading, setLoading] = useState(false); // New loading state
+  const [loading, setLoading] = useState(false); 
   const { data, isLoading, refetch } = query(url);
   const ROWS_PER_PAGE = 9;
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [inputPage, setInputPage] = useState(''); // New state for input page
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -85,7 +98,7 @@ const PaginatedTable = ({
       const targetUrl = generateUrl();
       setUrl(targetUrl);
     }
-  }, [data, url, pageData.search, orderingValue]);
+  }, [data, url, pageData.search, orderingValue, page]); // Include page in dependency array
 
   const extractKeys = () => {
     let keys = [];
@@ -127,6 +140,17 @@ const PaginatedTable = ({
     setTimeout(() => {
       setLoading(false); // Stop loading after sorting
     }, 500); // Adjust time based on API response time
+  };
+
+  const handleInputChange = (e) => {
+    setInputPage(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    const newPage = parseInt(inputPage, 10);
+    if (newPage > 0 && newPage <= totalPages) {
+      setPage(newPage);
+    }
   };
 
   const StyledRow = styled(TableRow)((props) => ({
@@ -179,7 +203,7 @@ const PaginatedTable = ({
                           handleSortClick(columnInfo.sortKey);
                         }}
                       />
-                       <img
+                      <img
                         src={upSvg}
                         alt="Sort Descending"
                         style={{
@@ -247,7 +271,6 @@ const PaginatedTable = ({
         </Table>
       </TableContainer>
       <Pagination>
-
         <IconButton
           disabled={page === 1 || data?.count === 0}
           style={{
@@ -266,11 +289,27 @@ const PaginatedTable = ({
           />
         </IconButton>
 
-        {data?.count > 1 ? (
-          <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
-        ) : (
-          <Box>Page 0 of 0</Box>
-        )}
+        <Box mx={2}>{`Page ${page} of`}</Box> 
+        <SearchBox>
+          <TextField
+            variant="standard"
+            placeholder="Page"
+            value={inputPage}
+            onChange={handleInputChange}
+            InputProps={{
+              disableUnderline: true,
+              startAdornment: (
+                <SearchIcon
+                  style={{ marginRight: "4px", color: "#BDBDBD", cursor: "pointer" }}
+                  onClick={handleSearchClick}
+                />
+              ),
+            }}
+            style={{ width: "50px", fontSize: "12px", padding: "2px 4px" }}
+          />
+        </SearchBox>
+        <Box mx={2}>{`${totalPages}`}</Box>
+
         <IconButton
           style={{
             cursor: "pointer",
