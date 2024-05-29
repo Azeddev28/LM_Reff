@@ -18,9 +18,11 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "@emotion/styled";
+import { useSelector , useDispatch} from "react-redux";
 
 import upSvg from '/sorting-up.svg?url';
 import downSvg from '/sorting-down.svg?url';
+import { setCurrentPage } from "../../redux/slices/referralSlice";
 
 const ProgressWrapper = styled("div")(({ }) => ({
   display: "flex",
@@ -67,38 +69,53 @@ const PaginatedTable = ({
   query,
   redirectToDetailPage,
 }) => {
-  const generateUrl = () => {
-    const targetUrl = new URL(pageData.url);
-    if (pageData["search"] !== null && pageData["search"] !== undefined) {
-      targetUrl.searchParams.append("search", pageData["search"]);
-    }
-    if (orderingValue !== null && orderingValue !== undefined) {
-      targetUrl.searchParams.append("ordering", orderingValue);
-    }
-    // targetUrl.searchParams.set("page", page); // Update the URL with the current page
-    return targetUrl.toString();
-  };
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch= useDispatch()
+
+  const currentPage = useSelector((state) => state.referral.page);
 
   const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url);
   const [loading, setLoading] = useState(false); 
-  const { data, isLoading, refetch } = query(url);
-  const ROWS_PER_PAGE = 9;
-  const [page, setPage] = useState(1);
+  const { data , isLoading, refetch } = query(url);
+  const ROWS_PER_PAGE = 15;
+  const [offset, setOffset] = useState((currentPage - 1) * 15);
+
   const [totalPages, setTotalPages] = useState(0);
-  const [inputPage, setInputPage] = useState(''); // New state for input page
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [inputPage, setInputPage] = useState(''); 
+
+
+  useEffect(() => {
+    if (pageData.search || orderingValue || offset !==null) {
+      const targetUrl = generateUrl();
+      setUrl(targetUrl);
+    }
+  }, [ pageData.search, orderingValue, offset]); 
 
   useEffect(() => {
     if (data?.count) {
       setTotalPages(Math.ceil(data?.count / ROWS_PER_PAGE));
     }
-    if (pageData.search || orderingValue) {
-      const targetUrl = generateUrl();
-      setUrl(targetUrl);
-    }
-  }, [data, url, pageData.search, orderingValue, page]); // Include page in dependency array
+  }, [data]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        if (data?.count) {
+          setTotalPages(Math.ceil(data.count / ROWS_PER_PAGE)); 
+        }
+      } catch (error) {
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [data]);
 
   const extractKeys = () => {
     let keys = [];
@@ -109,6 +126,21 @@ const PaginatedTable = ({
   };
 
   const keys = extractKeys();
+
+  const generateUrl = () => {
+   
+    const targetUrl = new URL(pageData.url);
+    if (pageData["search"] !== null && pageData["search"] !== undefined) {
+      targetUrl.searchParams.append("search", pageData["search"]);
+    }
+    if (orderingValue !== null && orderingValue !== undefined) {
+      targetUrl.searchParams.append("ordering", orderingValue);
+    }
+    if (offset !== null && offset !== undefined) {
+      targetUrl.searchParams.append("offset",  offset.toString());
+    }
+    return targetUrl.toString();
+  };
 
   const extractRowValues = (obj, keys) => {
     return keys
@@ -123,23 +155,29 @@ const PaginatedTable = ({
   };
 
   const handleClickPrevious = () => {
-    if (page > 1) {
-      setPage(page - 1);
+    if (data?.previous) {
+      setUrl(data.previous);
+      const newPage = currentPage - 1;
+      dispatch(setCurrentPage(newPage)); 
+      setOffset((newPage - 1) * ROWS_PER_PAGE); 
     }
   };
 
   const handleClickNext = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
+    if (data?.next) {
+      setUrl(data.next);
+      const newPage = currentPage + 1;
+      dispatch(setCurrentPage(newPage)); 
+      setOffset((newPage - 1) * ROWS_PER_PAGE); 
     }
   };
 
   const handleSortClick = (sortKey) => {
-    setLoading(true); // Start loading
+    setLoading(true); 
     setOrderingValue(sortKey);
     setTimeout(() => {
-      setLoading(false); // Stop loading after sorting
-    }, 500); // Adjust time based on API response time
+      setLoading(false); 
+    }, 500); 
   };
 
   const handleInputChange = (e) => {
@@ -148,9 +186,12 @@ const PaginatedTable = ({
 
   const handleSearchClick = () => {
     const newPage = parseInt(inputPage, 10);
-    if (newPage > 0 && newPage <= totalPages) {
-      setPage(newPage);
+     if (newPage > 0 && newPage <= totalPages) {
+      dispatch(setCurrentPage(newPage))
+      const newOffset = (newPage - 1) * ROWS_PER_PAGE;
+      setOffset(newOffset);
     }
+
   };
 
   const StyledRow = styled(TableRow)((props) => ({
@@ -163,8 +204,7 @@ const PaginatedTable = ({
 
   const getDisplayedRows = () => {
     if (data?.results) {
-      const startIndex = (page - 1) * ROWS_PER_PAGE;
-      return data.results.slice(startIndex, startIndex + ROWS_PER_PAGE);
+      return data.results
     }
     return [];
   };
@@ -272,10 +312,10 @@ const PaginatedTable = ({
       </TableContainer>
       <Pagination>
         <IconButton
-          disabled={page === 1 || data?.count === 0}
+          disabled={!data?.previous}
           style={{
             cursor: "pointer",
-            color: page === 1 || data?.count === 0 ? "#BDBDBD" : "inherit",
+            color: !data?.previous ? "#BDBDBD" : "inherit",
             height: "16px",
             width: "16px",
           }}
@@ -289,7 +329,7 @@ const PaginatedTable = ({
           />
         </IconButton>
 
-        <Box mx={2}>{`Page ${page} of`}</Box> 
+        <Box mx={2}>{`Page ${currentPage} of`}</Box> 
         <SearchBox>
           <TextField
             variant="standard"
@@ -313,11 +353,11 @@ const PaginatedTable = ({
         <IconButton
           style={{
             cursor: "pointer",
-            color: page === totalPages || totalPages === 0 ? "#BDBDBD" : "inherit",
+            color: !data?.next ? "#BDBDBD" : "inherit",
             height: "16px",
             width: "16px",
           }}
-          disabled={page === totalPages || data?.count === 0}
+          disabled={!data?.next}
           onClick={handleClickNext}
         >
           <ArrowForwardIosIcon style={{ height: "16px", width: "16px" }} />

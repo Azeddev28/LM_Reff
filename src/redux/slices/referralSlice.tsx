@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getAccessToken } from "./authSlice";
 import { getRoute } from "../../api/BackendRoutes";
 import { baseQueryWithReauth } from "../../utils/apiUtils";
+import { createSlice } from "@reduxjs/toolkit";
 
 const baseUrl = import.meta.env.VITE_URL;
 
@@ -11,12 +12,14 @@ export const referralApi = createApi({
 
   endpoints: (builder) => ({
     getReferrals: builder.query({
-      query: (url) => url,
+      query: (url) => {
+        return url;
+      },
     }),
     getClaims: builder.query({
-      query: (url) => ({
-        url: url,
-      }),
+      query: (url) => {
+        return url;
+      },
     }),
     getEmployees: builder.query({
       query: (url) => url,
@@ -59,6 +62,31 @@ export const referralApi = createApi({
   }),
 });
 
+
+interface ReferralState {
+  page: number;
+ 
+}
+const initialState: ReferralState = {
+  page: 1
+  
+};
+
+const refferalSlice = createSlice({
+  name: "refferal",
+  initialState,
+  reducers: {
+    setCurrentPage(state, action) {
+      console.log("action", action.payload)
+      state.page = action.payload;
+    },
+  },
+});
+
+export const { setCurrentPage } = refferalSlice.actions;
+
+
+
 export const {
   useGetReferralsQuery,
   useGetReferralDetailQuery,
@@ -69,3 +97,5 @@ export const {
   useLazyGetProfileQuery,
   useGetProfileQuery,
 } = referralApi;
+
+export default refferalSlice.reducer;
