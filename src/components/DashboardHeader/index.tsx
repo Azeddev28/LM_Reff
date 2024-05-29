@@ -51,7 +51,7 @@ const Input = styled('input')(({ }) => ({
     outline: 'none',
     border: 'none',
   },
-  fontSize: '10px'
+  fontSize: '13px'
 
 }));
 

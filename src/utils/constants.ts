@@ -13,11 +13,11 @@ export const REFERRAL_DETAIL_DATA = {
     editable: false,
     label: "patient_name",
   },
-  dob: {
+  patient_dob: {
     key: "Patient Date of Birth",
     value: "",
     editable: false,
-    label: "dob",
+    label: "patient_dob",
   },
   practice_name: {
     key: "Practice Name",
