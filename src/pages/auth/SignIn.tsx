@@ -159,19 +159,15 @@ function SignIn() {
         <RightDiv>
 
           <div>
-            <RightDiv1>
-              <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
-              <Typography variant="h2" align="center" style={{ fontSize: "24px", color: "#181C32", fontWeight: "500", marginLeft: "10px" }}>
-                Luminary Health
-              </Typography>
-            </RightDiv1>
-
             <RightDiv2>
 
               <Wrapper>
-                <Typography component="h3" variant="h3" align="left" style={{ fontSize: "24px", fontWeight: "600", color: "#181C32", marginBottom: "10px" }}>
-                  Hi, nice to see you!
-                </Typography>
+                <RightDiv1>
+                  <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
+                  <Typography variant="h2" align="center" style={{ fontSize: "24px", color: "#181C32", fontWeight: "500", marginLeft: "10px" }}>
+                    Luminary Health
+                  </Typography>
+                </RightDiv1>
 
                 <SignInWrapper>
                   <SignInComponent />

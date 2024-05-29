@@ -192,6 +192,7 @@ export const Styled = {
     fontWeight: 600,
     lineHeight: "20px",
     letterSpacing: 0.4,
+    marginBottom: "40px"
   })),
 
   DropzoneText2: styled("section")(({}) => ({

@@ -314,9 +314,6 @@ const DetailPage = () => {
                             <Styled.DropzoneText>
                               Click or drag file to this area to upload
                             </Styled.DropzoneText>
-                            <Styled.DropzoneText2>
-                              Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-                            </Styled.DropzoneText2>
                           </Styled.DropZoneContent>
                         </div>
                       </section>
