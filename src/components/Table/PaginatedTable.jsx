@@ -101,21 +101,6 @@ const PaginatedTable = ({
     }
   }, [data]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        if (data?.count) {
-          setTotalPages(Math.ceil(data.count / ROWS_PER_PAGE)); 
-        }
-      } catch (error) {
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [data]);
 
   const extractKeys = () => {
     let keys = [];
