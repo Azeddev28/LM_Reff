@@ -1,15 +1,32 @@
-// src/interceptorMiddleware.js
+// src/interceptorMiddleware.ts
 
-const interceptorMiddleware = (store) => (next) => (action) => {
+import { Middleware } from 'redux';
+
+interface Action {
+  type: string;
+  meta?: {
+    arg?: {
+      headers?: {
+        [key: string]: string;
+      };
+    };
+  };
+}
+
+interface State {
+  auth: {
+    token: string;
+  };
+}
+
+const interceptorMiddleware: Middleware<{}, State> = store => next => action => {
   // Intercept only API call actions
   if (action.type.endsWith("/pending")) {
     // Modify the action or perform side effects here
     console.log("API call initiated", action);
     // Add headers or other customizations
-    if (action.meta && action.meta.arg && action.meta.arg.headers) {
-      action.meta.arg.headers["Authorization"] = `Bearer ${
-        store.getState().auth.token
-      }`;
+    if (action.meta?.arg?.headers) {
+      action.meta.arg.headers["Authorization"] = `Bearer ${store.getState().auth.token}`;
     }
   }
 
