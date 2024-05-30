@@ -113,16 +113,16 @@ const PaginatedTable = ({
   const keys = extractKeys();
 
   const generateUrl = () => {
-   
     const targetUrl = new URL(pageData.url);
-    if (pageData["search"] !== null && pageData["search"] !== undefined) {
+      if (pageData["search"] !== null && pageData["search"] !== undefined) {
       targetUrl.searchParams.append("search", pageData["search"]);
+      setOffset(0)
     }
     if (orderingValue !== null && orderingValue !== undefined) {
       targetUrl.searchParams.append("ordering", orderingValue);
     }
-    if (offset !== null && offset !== undefined) {
-      targetUrl.searchParams.append("offset",  offset.toString());
+      if (offset !== null && offset !== undefined) {
+      targetUrl.searchParams.append("offset", offset.toString());
     }
     return targetUrl.toString();
   };
