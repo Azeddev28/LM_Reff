@@ -5,8 +5,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import styled from "@emotion/styled";
-import dateIcon from "../../../public/dateIcon.svg"
-
 
 const StyledDatePicker = styled(DatePicker)({
   width: "100%",
@@ -57,9 +55,9 @@ const StyledDatePicker = styled(DatePicker)({
   },
 });
 
-
 const DatePickerComponent = ({ date, handleInputChange, label }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs(date));
+  const today = dayjs(); // Get today's date
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -73,7 +71,11 @@ const DatePickerComponent = ({ date, handleInputChange, label }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={["DatePicker", "DatePicker"]}>
-        <StyledDatePicker value={selectedDate} onChange={handleDateChange} />
+        <StyledDatePicker
+          value={selectedDate}
+          onChange={handleDateChange}
+          minDate={today} // Set the minimum selectable date to today
+        />
       </DemoContainer>
     </LocalizationProvider>
   );

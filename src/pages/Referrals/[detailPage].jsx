@@ -19,9 +19,9 @@ import DropDown from "../../components/DropDown";
 import { Styled } from "./style";
 import { useSelector } from "react-redux";
 import { color, fontSize, fontWeight } from "@mui/system";
-import dropBox from '../../../public/dropboxImg.svg';
-import attachFile from '../../../public/attachFileIcon.svg';
-import deleteFile from "../../../public/deleteIcon.svg"
+import dropBox from '/dropboxImg.svg?url';
+import attachFile from '/attachFileIcon.svg?url';
+import deleteFile from "/deleteIcon.svg?url"
 
 
 const DetailPage = () => {

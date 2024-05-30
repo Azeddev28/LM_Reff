@@ -76,16 +76,20 @@ const PaginatedTable = ({
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
+  const initial_page = 1;
 
   useEffect(() => {
-    if (data?.count) {
-      setTotalPages(Math.ceil(data?.count / ROWS_PER_PAGE));
-    }
-    if (pageData.search || orderingValue) {
-      const targetUrl = generateUrl();
-      setUrl(targetUrl);
-    }
+      if (data?.count) {
+        setTotalPages(Math.ceil(data.results.length / ROWS_PER_PAGE));
+      }
+      if (pageData.search || orderingValue) {
+        const targetUrl = generateUrl();
+        setUrl(targetUrl);
+      }
   }, [data, url, pageData.search, orderingValue]);
+
+  console.log(data?.count)
+
 
   const extractKeys = () => {
     let keys = [];
@@ -94,6 +98,8 @@ const PaginatedTable = ({
     });
     return Array.from(new Set(keys));
   };
+
+
 
   const keys = extractKeys();
 
@@ -179,7 +185,7 @@ const PaginatedTable = ({
                           handleSortClick(columnInfo.sortKey);
                         }}
                       />
-                       <img
+                      <img
                         src={upSvg}
                         alt="Sort Descending"
                         style={{
