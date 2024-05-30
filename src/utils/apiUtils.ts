@@ -69,8 +69,6 @@ export const baseQueryWithReauth = (baseUrl: any) => {
             );
             if (refreshResult?.data?.access) {
               api.dispatch(setAccessToken(refreshResult.data));
-              // Retry the original request with the new access token
-              result = await baseQuery(args, api, extraOptions);
             } else {
               // Handle refresh failure
               api.dispatch(logoutUser());
@@ -78,16 +76,20 @@ export const baseQueryWithReauth = (baseUrl: any) => {
           } else {
             api.dispatch(logoutUser());
           }
-
-          refreshPromise = null; // Reset the refresh process flag
+          refreshPromise = null; // Reset the refreshPromise after it completes
         })();
       }
-
-      // Await the ongoing refresh request
-      await refreshPromise;
+      if (refreshPromise) {
+        try {
+            await refreshPromise; // Wait for the refresh to complete
+            // Retry the original request after successful refresh
+            return result = await baseQuery(args, api, extraOptions);
+        } catch (error) {
+            // Handle any errors during the refresh process
+        }
     }
-
-    return result;
+  }
+    return result;  
   };
 
   return baseQueryWithReauth;
