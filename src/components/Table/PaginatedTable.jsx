@@ -101,6 +101,10 @@ const PaginatedTable = ({
     }
   }, [data]);
 
+  useEffect(()=>{
+    return()=>dispatch(setCurrentPage(1))
+  },[])
+
 
   const extractKeys = () => {
     let keys = [];
@@ -342,7 +346,7 @@ const PaginatedTable = ({
             height: "16px",
             width: "16px",
           }}
-          disabled={!data?.next}
+          disabled={currentPage===totalPages}
           onClick={handleClickNext}
         >
           <ArrowForwardIosIcon style={{ height: "16px", width: "16px" }} />
