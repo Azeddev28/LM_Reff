@@ -14,7 +14,7 @@ const Brand = styled(Logo)`
   width: 64px;
   height: 64px;
   margin-bottom: 32px;
-  cursor: pointer; /* Add cursor pointer to indicate it's clickable */
+  cursor: pointer;
 `;
 
 const Wrapper = styled(Paper)`      
@@ -126,7 +126,7 @@ position: relative;
 
 function SignIn() {
   const handleLogoClick = () => {
-    window.location.reload(); // Reload the page
+    window.location.reload();
   };
 
   return (
@@ -168,7 +168,7 @@ function SignIn() {
 
               <Wrapper>
                 <RightDiv1>
-                  <a href="/" onClick={handleLogoClick}> {/* Make the logo clickable */}
+                  <a href="/" onClick={handleLogoClick}>
                     <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
                   </a>
                   

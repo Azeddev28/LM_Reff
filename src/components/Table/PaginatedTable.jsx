@@ -88,9 +88,6 @@ const PaginatedTable = ({
       }
   }, [data, url, pageData.search, orderingValue]);
 
-  console.log(data?.count)
-
-
   const extractKeys = () => {
     let keys = [];
     data?.results?.forEach((obj) => {
@@ -98,9 +95,7 @@ const PaginatedTable = ({
     });
     return Array.from(new Set(keys));
   };
-
-
-
+  
   const keys = extractKeys();
 
   const extractRowValues = (obj, keys) => {

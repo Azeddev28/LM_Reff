@@ -57,7 +57,7 @@ const StyledDatePicker = styled(DatePicker)({
 
 const DatePickerComponent = ({ date, handleInputChange, label }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs(date));
-  const today = dayjs(); // Get today's date
+  const today = dayjs();
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -74,7 +74,7 @@ const DatePickerComponent = ({ date, handleInputChange, label }) => {
         <StyledDatePicker
           value={selectedDate}
           onChange={handleDateChange}
-          minDate={today} // Set the minimum selectable date to today
+          minDate={today}
         />
       </DemoContainer>
     </LocalizationProvider>
