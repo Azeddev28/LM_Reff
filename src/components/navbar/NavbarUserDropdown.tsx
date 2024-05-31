@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 import { Power } from "react-feather";
 import { useDispatch , useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {  logoutUser } from "../../redux/slices/authSlice";
+import {  loginApi, logoutUser } from "../../redux/slices/authSlice";
+import { referralApi } from "../../redux/slices/referralSlice";
 import {
   Tooltip,
   Menu,
@@ -28,10 +29,11 @@ function NavbarUserDropdown() {
   const closeMenu = () => {
     setAnchorMenu(null);
   };
-  const handleSignOut =  () => {
+  const handleSignOut = (event: any) => {
+    event.preventDefault();
     dispatch(logoutUser());
-     navigate("/auth/sign-in");
-     
+    dispatch(loginApi.util.resetApiState());   //TODO implement a proper logic to remove cache
+    dispatch(referralApi.util.resetApiState());
   };
 
   return (
