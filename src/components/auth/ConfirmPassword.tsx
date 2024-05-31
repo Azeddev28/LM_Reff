@@ -27,8 +27,6 @@ interface ConfirmPasswordBody {
   new_password2: string;
 }
 
-// import useAuth from "../../hooks/useAuth";
-
 const Alert = styled(MuiAlert)(spacing);
 
 const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
@@ -237,7 +235,6 @@ function ConfirmPassword() {
           horizontal: "center",
         }}
       >
-        {/* Render the Alert component with the appropriate severity */}
         <Alert
           action={
             <React.Fragment>

@@ -3,8 +3,6 @@ import { Select, MenuItem } from "@mui/material";
 const DropDown = ({ dropdownValue, handleInputChange, label , datatype }) => {
 
   const [data, setData] = useState('');
-
-    // Sync state with dropdownValue prop
     useEffect(() => {
       if (datatype) {
         setData(dropdownValue ? dropdownValue : '');
@@ -12,7 +10,6 @@ const DropDown = ({ dropdownValue, handleInputChange, label , datatype }) => {
         setData(dropdownValue ? 'Yes' : 'No');
       }
     }, [dropdownValue, datatype]);
-
 
   const dropDownStyling = {
     boxShadow: "none",
@@ -41,7 +38,6 @@ const DropDown = ({ dropdownValue, handleInputChange, label , datatype }) => {
     }
     handleInputChange(label, value);
   };
-
 
   const getDropdownItems = () => {
     switch (datatype) {

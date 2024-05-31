@@ -11,7 +11,6 @@ import {
   IconButton as MuiIconButton,
 } from "@mui/material";
 
-
 const IconButton = styled(MuiIconButton)`
   svg {
     width: 22px;
@@ -23,24 +22,17 @@ function NavbarUserDropdown() {
   const dispatch=useDispatch();
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
   const navigate = useNavigate();
- 
-  
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
   };
-
   const closeMenu = () => {
     setAnchorMenu(null);
   };
-
-
   const handleSignOut =  () => {
     dispatch(logoutUser());
      navigate("/auth/sign-in");
      
   };
-
- 
 
   return (
     <React.Fragment>

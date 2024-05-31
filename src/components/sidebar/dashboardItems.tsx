@@ -1,14 +1,13 @@
 import { SidebarItemsType } from "../../types/sidebar";
-import ClaimsIcon from "../../../public/claims-img.svg";
-import EmployerListIcon from "../../../public/employeers-img.svg";
-import referralsSvg from "../../../public/referrals-img.svg";
-import logoutSvg from "../../../public/logout-img.svg";
+import ClaimsIcon from "/claims-img.svg?url";
+import EmployerListIcon from "/employeers-img.svg?url";
+import referralsSvg from "/referrals-img.svg?url";
+import logoutSvg from "/logout-img.svg?url";
 import { logoutUser } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 
 const useNavItems = () => {
   const dispatch = useDispatch();
-
   const handleLogoutClick = (event: any) => {
     event.preventDefault();
     dispatch(logoutUser());
@@ -36,7 +35,7 @@ const useNavItems = () => {
       title: "Logout",
       onClick: handleLogoutClick,
     },
-  ] as SidebarItemsType[];
+  ] as unknown as SidebarItemsType[];
 
   return [
     {

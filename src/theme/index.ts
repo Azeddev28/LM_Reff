@@ -1,5 +1,4 @@
 import "@mui/lab/themeAugmentation";
-
 import { createTheme as createMuiTheme } from "@mui/material/styles";
 import variants from "./variants";
 import typography from "./typography";

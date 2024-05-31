@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-
 import { Badge, Grid, Avatar, Typography } from "@mui/material";
-
-// import useAuth from "../../hooks/useAuth";
 
 const Footer = styled.div`
   background-color: ${(props) =>
@@ -37,8 +34,6 @@ const FooterBadge = styled(Badge)`
 `;
 
 const SidebarFooter: React.FC = ({ ...rest }) => {
-  // const { user } = useAuth();
-
   return (
     <Footer {...rest}>
       <Grid container spacing={2}>
@@ -51,22 +46,9 @@ const SidebarFooter: React.FC = ({ ...rest }) => {
             }}
             variant="dot"
           >
-            {/* {!!user && <Avatar alt={user.displayName} src={user.avatar} />} */}
-            {/* Demo data */}
-            {/* {!user && (
-              <Avatar
-                alt="Lucy Lavender"
-                src="/static/img/avatars/avatar-1.jpg"
-              />
-            )} */}
           </FooterBadge>
         </Grid>
         <Grid item>
-          {/* {!!user && (
-            <FooterText variant="body2">{user.displayName}</FooterText>
-          )} */}
-          {/* Demo data */}
-          {/* {!user && <FooterText variant="body2">Lucy Lavender</FooterText>} */}
           <FooterSubText variant="caption">UX Designer</FooterSubText>
         </Grid>
       </Grid>

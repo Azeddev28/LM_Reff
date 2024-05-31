@@ -112,7 +112,6 @@ export const Styled = {
     margin: "0px",
   })),
 
-
   Value: styled("p")(({}) => ({
     color: "#7E8299",
     fontFamily: "inter",
@@ -289,6 +288,4 @@ export const Styled = {
       justifyContent: "center",
     },
   })),
-
-  
 };

@@ -9,9 +9,6 @@ import { useGetProfileQuery } from "../../redux/slices/referralSlice";
 import { useGetReferralsQuery } from "../../redux/slices/referralSlice";
 import { getRoute } from "../../api/BackendRoutes";
 
-
-
-
 const TableWrapper = styled("div")(({}) => ({
   marginTop: "20px",
 }));
@@ -24,7 +21,6 @@ const Referrals = () => {
   if ((isSuccess, data)) {
     dispatch(setUserName(data.name));
   }
-
   return (
     <div>
       <DashboardHeader
@@ -33,7 +29,7 @@ const Referrals = () => {
             Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span>
           </>
         }
-        subHeading="Referral Trackers"
+        subHeading="Your Referrals"
         placeHolder="Search by patient name"
         setSearchValue={setSearchValue}
       />

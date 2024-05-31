@@ -2,7 +2,6 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-
 import { Button as MuiButton, Typography } from "@mui/material";
 import { spacing, SpacingProps } from "@mui/system";
 import fourOfourSvg from "../../../public/404.svg"
@@ -36,7 +35,6 @@ function Page404() {
       <Typography style={{fontSize: "24px", fontWeight: "500"}} component="h2" variant="h5" align="center" gutterBottom>
       Oops! Page not Found.
       </Typography>
-
       <Button
         component={Link}
         to="/"

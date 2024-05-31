@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import styled from "@emotion/styled";
-
 import { CssBaseline } from "@mui/material";
 import GlobalStyle from "../components/GlobalStyle";
 
@@ -27,7 +26,6 @@ const Auth: React.FC<AuthType> = ({ children }) => {
       <GlobalStyle />
       {children}
       <Outlet />
-      
     </Root>
   );
 };

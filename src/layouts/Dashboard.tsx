@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Outlet, useLocation } from "react-router-dom";
-
 import { Box, CssBaseline, Paper as MuiPaper } from "@mui/material";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { spacing } from "@mui/system";
-
 import GlobalStyle from "../components/GlobalStyle";
 import createTheme from "../theme";
 import { THEMES } from "../constants";
@@ -15,7 +13,6 @@ import Navbar from "../components/navbar/Navbar";
 import dashboardItems from "../components/sidebar/dashboardItems";
 import Sidebar from "../components/sidebar/Sidebar";
 import Footer from "../components/Footer";
-
 
 const drawerWidth = 100;
 
@@ -65,7 +62,6 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
     setMobileOpen(!mobileOpen);
   };
 
-  // Close mobile menu when navigation occurs
   useEffect(() => {
     setMobileOpen(false);
   }, [router.pathname]);
@@ -78,7 +74,6 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
       <Root>
         <CssBaseline />
         <GlobalStyle />
-
         <Drawer>
           <Box sx={{ display: { xs: "block", screen_1200: "none" } }}>
             <Sidebar
@@ -109,14 +104,11 @@ const Dashboard: React.FC<DashboardType> = ({ children }) => {
 
         <AppContent>
           <Box sx={{ display: { xs: "block", screen_1200: "none", marginBottom: "30px" } }}><Navbar onDrawerToggle={handleDrawerToggle} /></Box>
-
           <MainContent p={isLgUp ? 12 : 5}>
             {children}
             <Outlet />
           </MainContent>
-          {/* <Footer /> */}
         </AppContent>
-
       </Root>
     </MuiThemeProvider>
   );

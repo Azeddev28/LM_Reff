@@ -14,7 +14,6 @@ const TableWrapper = styled("div")(({ }) => ({
 const Claims = () => {
   const [searchValue, setSearchValue] = useState(null);
   const { userName } = useSelector((state) => state.auth);
-
   return (
     <div>
       <DashboardHeader
@@ -27,7 +26,6 @@ const Claims = () => {
         placeHolder="Search by patient name"
         setSearchValue={setSearchValue}
       />
-
       <TableWrapper>
         <PaginatedTable
           query={useGetClaimsQuery}

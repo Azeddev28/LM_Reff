@@ -9,11 +9,9 @@ const GlobalStyle = (props: any) => (
       #root {
         height: 100%;
       }
-
       body {
         margin: 0;
       }
-
       .MuiCardHeader-action .MuiIconButton-root {
         padding: 4px;
         width: 28px;

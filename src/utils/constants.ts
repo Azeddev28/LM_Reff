@@ -130,7 +130,7 @@ export const REFERRAL_DETAIL_DATA = {
     label: "facility",
   },
   overnight_stay_required: {
-    key: "Is Overnight Stay Required?",
+    key: "Is patient traveling for surgery? (Requiring hotel accommodations)",
     value: "",
     editable: true,
     label: "overnight_stay_required",
@@ -203,7 +203,6 @@ export const REFERRAL_DETAIL_DATA = {
     label: "is_cancelled",
   },
 };
-
 export const REFERRAL_HEADER_DATA = [
   {
     key: "patient_name",
@@ -238,7 +237,6 @@ export const REFERRAL_HEADER_DATA = [
     isDate: true,
   },
 ];
-
 export const CLAIMS_HEADER_DATA = [
   {
     key: "patient_name",

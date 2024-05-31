@@ -1,13 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Helmet } from "react-helmet-async";
-
-
 import { Avatar, Paper, Typography } from "@mui/material";
-
 import { ReactComponent as Logo } from "../../vendor/logo.svg";
 import SignInComponent from "../../components/auth/SignIn";
-
 
 const Brand = styled(Logo)`
   fill: ${(props) => props.theme.palette.primary.main};
@@ -123,35 +119,23 @@ width: 100%;
 position: relative;
 `;
 
-
 function SignIn() {
   const handleLogoClick = () => {
     window.location.reload();
   };
-
   return (
     <React.Fragment>
       <Container>
-
         <LeftDiv>
           <LeftInnerDiv>
             <LeftDiv1>
               <WhiteTextTypography variant="h2" align="center">
                 Luminary Health Providers
               </WhiteTextTypography>
-
               <WhiteTextTypographyPara variant="h2" align="center">
                 Manage all of your Luminary Referrals in one place
               </WhiteTextTypographyPara>
             </LeftDiv1>
-
-            <LeftDiv2>
-              <ImageWrapperLeft>
-                <img src="/login-img.svg" alt="logo-image" style={{ height: '73vh', backgroundColor: "" }} />
-              </ImageWrapperLeft>
-            </LeftDiv2>
-
-
             <LeftDiv2>
               <ImageWrapperLeft>
                 <img src="/login-img.svg" alt="logo-image" />
@@ -159,35 +143,27 @@ function SignIn() {
             </LeftDiv2>
           </LeftInnerDiv>
         </LeftDiv>
-
-
         <RightDiv>
-
           <div>
             <RightDiv2>
-
               <Wrapper>
                 <RightDiv1>
                   <a href="/" onClick={handleLogoClick}>
                     <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
                   </a>
-                  
                   <a href="/" style={{textDecoration: "none"}}>
                   <Typography variant="h2" align="center" style={{ fontSize: "24px", color: "#181C32", fontWeight: "500", marginLeft: "10px" }}>
                     Luminary Health
                   </Typography>
                   </a>
                 </RightDiv1>
-
                 <SignInWrapper>
                   <SignInComponent />
                 </SignInWrapper>
               </Wrapper>
             </RightDiv2>
           </div>
-
         </RightDiv>
-
       </Container>
     </React.Fragment>
   );

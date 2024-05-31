@@ -55,9 +55,6 @@ const Input = styled('input')(({ }) => ({
 
 }));
 
-
-
-
 const DashboardHeader = ({ heading, subHeading, placeHolder, setSearchValue }: DashboardHeaderProps) => {
   const [inputValue, setInputValue] = useState<string | null>(null);
 
@@ -75,9 +72,7 @@ const DashboardHeader = ({ heading, subHeading, placeHolder, setSearchValue }: D
 
   return (
     <Container>
-      <Typography variant="h2" style={{ marginBottom: "30px" ,marginTop: "-20px", fontSize: "25px", fontWeight: "500", marginLeft: "-4.6%", width: "108%", height: "55px", borderBottom: "1px solid #F1F1F2" }}><span style={{marginLeft: "65px"}}>{heading}</span></Typography>
-      {/* <div style={{ borderBottom: '1px solid #E1E3EA', width: '107%', marginTop: '2.5vh', marginBottom: '3vh', marginLeft: "-4%" }} /> */}
-
+      <Typography variant="h2" style={{ marginBottom: "30px" ,marginTop: "0px", fontSize: "25px", fontWeight: "500", marginLeft: "-4.6%", width: "108%", height: "65px", borderBottom: "1px solid #F1F1F2" }}><span style={{marginLeft: "65px"}}>{heading}</span></Typography>
       <ContainerChild>
         <Typography variant="h6" style={{ fontSize: "15px", fontWeight: "600" }}>{subHeading}</Typography>
         <SearchBox>

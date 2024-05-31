@@ -7,7 +7,7 @@ import { getCookie } from "../../utils/cookieManager";
 interface AuthGuardType {
   children: React.ReactNode;
 }
-// TODO : authentication needs to be check
+
 function AuthGuard({ children }: AuthGuardType) {
   const navigate = useNavigate();
   const dispatch = useDispatch();

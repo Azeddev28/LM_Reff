@@ -1,13 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Helmet } from "react-helmet-async";
-
 import { Paper, Typography } from "@mui/material";
-
 import { ReactComponent as Logo } from "../../vendor/logo.svg";
 import SignUpComponent from "../../components/auth/SignUp";
-
-
 
 const ImageWrapperLeft = styled('div')`
   display:flex;
@@ -41,11 +37,9 @@ const LeftDiv1 = styled('div')`
 margin-top: 10%;
 margin-bottom: 5%;
 width: 100%;
-
 `;
 
 const LeftDiv2 = styled('div')`
-
 `;
 
 const RightDiv = styled('div')`
@@ -62,7 +56,6 @@ const RightDiv = styled('div')`
   }
 `;
 
-
 const WhiteTextTypography = styled(Typography)`
   color: white;
   font-family: 'Inter';
@@ -78,7 +71,6 @@ const WhiteTextTypographyPara = styled(Typography)`
   margin-top: 18px;
   margin-left: 10px;
 `;
-
 
 const Brand = styled(Logo)`
   fill: ${(props) => props.theme.palette.primary.main};
@@ -97,8 +89,6 @@ const Wrapper = styled(Paper)`
 
 function SignUp() {
   return (
-
-
     <React.Fragment>
       <Container>
         <LeftDiv>
@@ -106,35 +96,28 @@ function SignUp() {
             <WhiteTextTypography variant="h2" align="center">
               Luminary Health Providers
             </WhiteTextTypography>
-
             <WhiteTextTypographyPara variant="h2" align="center">
               Manage all of your Luminary Referrals in one place
             </WhiteTextTypographyPara>
           </LeftDiv1>
-
           <LeftDiv2>
             <ImageWrapperLeft>
               <img src="/login-img.svg" alt="logo-image" style={{ height: '73vh' }} />
             </ImageWrapperLeft>
           </LeftDiv2>
         </LeftDiv>
-
-
         <RightDiv>
           <Wrapper>
             <Helmet title="Sign Up" />
-
             <Typography component="h1" variant="h4" align="center" gutterBottom>
               Get started
             </Typography>
             <Typography component="h2" variant="body1" align="center">
               Start creating the best possible user experience for you customers
             </Typography>
-
             <SignUpComponent />
           </Wrapper>
         </RightDiv>
-
       </Container>
     </React.Fragment>
   );

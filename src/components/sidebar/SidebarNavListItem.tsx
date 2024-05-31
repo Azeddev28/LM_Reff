@@ -2,7 +2,6 @@ import React, { forwardRef } from "react";
 import styled from "@emotion/styled";
 import { NavLink, NavLinkProps } from "react-router-dom";
 import { rgba, darken } from "polished";
-
 import {
   Chip,
   Collapse,
@@ -20,7 +19,6 @@ const CustomRouterLink = forwardRef<any, NavLinkProps>((props, ref) => (
 ));
 
 CustomRouterLink.displayName = "CustomRouterLink";
-
 type ItemType = {
   activeclassname?: string;
   onClick?: () => void;
@@ -53,8 +51,6 @@ margin-top: 10px;
     color: ${(props) => props.theme.sidebar.color};
   }
   &.${(props) => props.activeclassname} {
-    /* item */
-
 background: #1847A0;
 border: 1px solid #1847A0;
 border-radius: 12px;
@@ -77,7 +73,6 @@ const Title = styled(ListItemText) <TitleType>`
     padding: 0 ${(props) => props.theme.spacing(4)};
     margin-top: 10px;
   }
-  
 `;
 
 const Badge = styled(Chip)`
@@ -128,9 +123,7 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
     onClick,
     open: openProp = false,
   } = props;
-
   const [open, setOpen] = React.useState(openProp);
-
   const handleToggle = () => {
     setOpen((state) => !state);
   };
@@ -139,7 +132,6 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
     return (
       <React.Fragment>
         <Item depth={depth} onClick={handleToggle}>
-
           <img src={icon} alt="" />
           <Title depth={depth}>
             {title}
@@ -159,17 +151,14 @@ const SidebarNavListItem: React.FC<SidebarNavListItemProps> = (props) => {
         component={CustomRouterLink}
         to={href}
         activeclassname="active"
-
         onClick={onClick}
       >
-
         <img src={icon} alt="" style={{width: '25px'}}/>
         <Title depth={depth}>
           {title}
           {badge && <Badge label={badge} />}
         </Title>
       </Item>
-
     </React.Fragment>
 
   );

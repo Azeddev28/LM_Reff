@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useTranslation } from "react-i18next";
-
 import {
   Tooltip,
   Menu,
@@ -51,17 +50,13 @@ const languageOptions: languageOptionsType = {
 function NavbarLanguagesDropdown() {
   const { i18n } = useTranslation();
   const [anchorMenu, setAnchorMenu] = React.useState<any>(null);
-
   const selectedLanguage = languageOptions[i18n.language];
-
   const toggleMenu = (event: React.SyntheticEvent) => {
     setAnchorMenu(event.currentTarget);
   };
-
   const closeMenu = () => {
     setAnchorMenu(null);
   };
-
   const handleLanguageChange = (language: string) => {
     i18n.changeLanguage(language);
     closeMenu();

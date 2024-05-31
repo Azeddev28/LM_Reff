@@ -5,10 +5,9 @@ import { baseQueryWithReauth } from "../../utils/apiUtils";
 import { getCookie, removeCookie, setCookie } from "../../utils/cookieManager";
 
 const baseUrl = import.meta.env.VITE_URL;
-
 export const loginApi = createApi({
   reducerPath: "loginApi",
-  baseQuery:baseQueryWithReauth(baseUrl), // [UPDATED]
+  baseQuery:baseQueryWithReauth(baseUrl),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
@@ -27,7 +26,7 @@ export const loginApi = createApi({
     confirmPassword: builder.mutation({
       query: (params) => {
         return {
-          url:  `/auth/password/reset/confirm/${params?.uid}/${params?.token}/`, //TODO customize getRoute func to accept params
+          url:  `/auth/password/reset/confirm/${params?.uid}/${params?.token}/`,
           method: "POST",
           body: params?.body,
         }
@@ -36,7 +35,7 @@ export const loginApi = createApi({
     validatePassword: builder.mutation({
       query: (params) => {
         return {
-          url: `/auth/validate/reset/${params?.uid}/${params?.token}/`,//TODO customize getRoute func to accept params
+          url: `/auth/validate/reset/${params?.uid}/${params?.token}/`,
           method: "POST",      
         }
       },
@@ -92,8 +91,6 @@ const authSlice = createSlice({
 
 export const { setAuthenticated, setAccessToken, setUserName, logoutUser } =
   authSlice.actions;
-
-// TODO authentication needs to be check
 export const getAccessToken = createSelector(
   (state) => state.auth.accessToken,
   (accessToken) => {

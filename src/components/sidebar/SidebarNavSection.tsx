@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-
 import { Typography } from "@mui/material";
-
 import { SidebarItemsType } from "../../types/sidebar";
 import SidebarNavList from "./SidebarNavList";
 
@@ -25,7 +23,6 @@ type SidebarNavSectionProps = {
 
 const SidebarNavSection: React.FC<SidebarNavSectionProps> = (props) => {
   const { title, pages, component: Component = "nav", ...rest } = props;
-
   return (
     <Component {...rest}>
       {title && <Title variant="subtitle2">{title}</Title>}

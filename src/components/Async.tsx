@@ -1,11 +1,8 @@
 import React from "react";
-
 import Loader from "./Loader";
 
 const sleep = (m: number) => new Promise((r) => setTimeout(r, m));
-
 type componentType = React.ComponentClass<any> | null;
-
 interface IAsyncState {
   component: componentType;
 }
@@ -19,7 +16,6 @@ export default function asyncComponent(importComponent: any) {
         component: null,
       };
     }
-
     async componentDidMount() {
       await sleep(import.meta.env.DEV ? 150 : 0);
 
@@ -29,13 +25,11 @@ export default function asyncComponent(importComponent: any) {
         component: component,
       });
     }
-
     render() {
       const C: componentType = this.state.component;
 
       return C ? <C {...this.props} /> : <Loader />;
     }
   }
-
   return AsyncComponent;
 }

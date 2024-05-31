@@ -8,7 +8,6 @@ import useNavItems from "./dashboardItems";
 
 const Drawer = styled(MuiDrawer)`
   border-right: 0;
-
   > div {
     border-right: 0;
     background-color: white;
@@ -16,7 +15,6 @@ const Drawer = styled(MuiDrawer)`
 `;
 
 const Brand = styled('div')`
-  background-color: #2F65CB;
   min-height: 56px;
   justify-content: center;
   cursor: pointer;
@@ -25,7 +23,7 @@ const Brand = styled('div')`
   gap:12px;
   padding:20px 20px 20px 24px;
   align-items: center;
-
+  width: 100%
 `;
 
 const LogoText = styled('p')`
@@ -39,32 +37,24 @@ const LogoText = styled('p')`
     align-items: center;
     justify-content: center;
     font-family: 'Inter';
+    width: 100%;
 `;
 
 const MenuItem = styled('button')`
-/* item */
-
-/* Auto layout */
 display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
 padding: 0px;
 gap: 12px;
-
 width: 80px;
 height: 80px;
-
 border-radius: 12px;
-
-/* Inside auto layout */
 flex: none;
 order: 1;
 flex-grow: 0;
-
 background-color: #2F65CB;
 `;
-
 
 export type SidebarProps = {
   PaperProps: {
@@ -87,15 +77,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   showFooter = true,
   ...rest
 }) => {
-
-
-
   const navigate = useNavigate();
-  const navItems=useNavItems()
+  const navItems = useNavItems()
   return (
     <Drawer variant="permanent" {...rest}>
       <Brand onClick={() => navigate("/")}>
-        <img src="/favicon-white.svg" alt="logo-image" style={{ width: "40px", marginTop: "10px" , marginBottom: "-10px" }} />
+        <img src="/favicon-white.svg" alt="logo-image" style={{ width: "40px", marginBottom: "-10px" }} />
       </Brand>
       <LogoText>Luminary</LogoText>
       <LogoText>Health</LogoText>

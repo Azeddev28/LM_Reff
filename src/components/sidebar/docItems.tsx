@@ -1,5 +1,4 @@
 import { SidebarItemsType } from "../../types/sidebar";
-
 import {
   ArrowRightCircle,
   Code,
@@ -23,7 +22,7 @@ const gettingStartedSection = [
     icon: Code,
     title: "Getting Started",
   },
-] as SidebarItemsType[];
+] as unknown as SidebarItemsType[];
 
 const developmentSection = [
   {
@@ -94,7 +93,7 @@ const developmentSection = [
     icon: ArrowRightCircle,
     title: "Deployment",
   },
-] as SidebarItemsType[];
+] as unknown as SidebarItemsType[];
 
 const supportSection = [
   {
@@ -108,7 +107,7 @@ const supportSection = [
     title: "Changelog",
     badge: "v4.5.0",
   },
-] as SidebarItemsType[];
+] as unknown as SidebarItemsType[];
 
 const navItems = [
   {

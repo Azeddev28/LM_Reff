@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-
 import { THEMES } from "../constants";
 
 const initialState = {
   theme: THEMES.DEFAULT,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setTheme: (theme: string) => {},
 };
 const ThemeContext = React.createContext(initialState);
@@ -18,7 +16,6 @@ function ThemeProvider({ children }: ThemeProviderProps) {
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
-
     if (storedTheme) {
       _setTheme(JSON.parse(storedTheme));
     }

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Dropzone from "react-dropzone";
 import { CircularProgress, Button, Typography, Divider } from "@mui/material";
-
 import StyledInput from "../../components/StyledInput";
 import {
   useGetReferralDetailQuery,
@@ -32,15 +31,12 @@ const DetailPage = () => {
   const [fileList, setFileList] = useState([]);
   const [loader, setLoader] = useState(false);
   const [overNightStay, setOverNightStay] = useState(false);
-
   const { userName } = useSelector((state) => state.auth);
-
   const [updateReferral, { }] = useUpdateReferralMutation();
   const [
     updatedReferralData,
     { data: updatedReferralDetailData, isSuccess: isSuccessV2 },
   ] = useLazyGetReferralDetailQuery();
-
   const {
     data: referralData,
     isLoading,
@@ -70,7 +66,6 @@ const DetailPage = () => {
           };
         }
       }
-
       setDetailData(updatedDetailData);
     }
   }, [referralDetail]);
@@ -81,8 +76,6 @@ const DetailPage = () => {
   };
 
   const referralDetailData = Object.values(detailData);
-
-
   const handleInputChange = (label, value) => {
     setData((prevData) => ({
       ...prevData,
@@ -107,7 +100,7 @@ const DetailPage = () => {
       data.departure_date = '';
   }
   if (data.hasOwnProperty('overnight_stay_required') && data.overnight_stay_required === true && (!data.return_date || !data.departure_date)) {
-    console.log("Overnight stay is true but return_date or departure_date is not set."); //TODO add warning toast for mandatory fields
+    console.log("Overnight stay is true but return_date or departure_date is not set."); 
     return
 }
     try {
@@ -130,17 +123,13 @@ const DetailPage = () => {
     window.open(url, "_blank");
   };
 
-
   return isLoading ? (
     <Styled.ProgressWrapper>
       <CircularProgress size="7rem" />
     </Styled.ProgressWrapper>
   ) : (
-
     <Styled.MainWrapper>
-
-
-      <Typography variant="h2" style={{ marginBottom: "30px", marginTop: "-20px", fontSize: "25px", fontWeight: "500", marginLeft: "-4.6%", width: "108%", height: "55px", borderBottom: "1px solid #F1F1F2" }}><span style={{ marginLeft: "65px" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span></span></Typography>
+      <Typography variant="h2" style={{ marginBottom: "30px", marginTop: "0px", fontSize: "25px", fontWeight: "500", marginLeft: "-4.6%", width: "108%", height: "65px", borderBottom: "1px solid #F1F1F2" }}><span style={{ marginLeft: "65px" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span></span></Typography>
       {loader ? (
         <Styled.ProgressWrapper>
           <CircularProgress size="7rem" />
@@ -148,25 +137,18 @@ const DetailPage = () => {
       ) : (
         <>
           <Styled.Container>
-
             <Styled.Column>
-
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Information
               </Styled.ColumnHeader>
-
               <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 These fields are maintained by Luminary and cannot be edited
               </h>
-
               <Styled.ContentWrapper>
-
                 {referralDetailData.slice(0, 8).map((item, index) => (
                   <div key={index}>
                     {item.key === "Referral Description" ? (
-
                       <Styled.DescriptionWrapper>
-
                         <Styled.Label>{item.key}</Styled.Label>
                         <Styled.ValueWrapper>{item.value}</Styled.ValueWrapper>
                       </Styled.DescriptionWrapper>
@@ -188,9 +170,7 @@ const DetailPage = () => {
                     )}
                   </div>
                 ))}
-
               </Styled.ContentWrapper>
-
               <Styled.CheckWrapper style={{marginTop: "30px"}}>
                 <Styled.Checked
                   control={
@@ -203,8 +183,6 @@ const DetailPage = () => {
                   label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Preauthorization Required</span>}
                 />
               </Styled.CheckWrapper>
-
-
               <Styled.CheckWrapper>
                 <Styled.Checked
                   control={
@@ -217,21 +195,15 @@ const DetailPage = () => {
                   label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Procedure Cancelled</span>}
                 />
               </Styled.CheckWrapper>
-
-
             </Styled.Column>
-
             <Styled.Column>
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Details
               </Styled.ColumnHeader>  
-
               <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 These fields should be updated by the Practice to update Luminary along the patient journey
               </h>
-
               <Styled.ContentWrapper>
-
                 {referralDetailData.slice(8, 29).map((item, index) => {
                 return (
                     !item?.inVisible ?  (
@@ -279,19 +251,14 @@ const DetailPage = () => {
                 })}
 
               </Styled.ContentWrapper>
-
             </Styled.Column>
-
             <Styled.Column>
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Attachments
               </Styled.ColumnHeader>
-
               <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 View your referral documents and add any additional documents requested by the payer here
               </h>
-
-
               <Styled.ContentWrapperV2>
                 <Styled.FileUploadWrapper>
                   <Dropzone
@@ -319,15 +286,10 @@ const DetailPage = () => {
                       </section>
                     )}
                   </Dropzone>
-
                 </Styled.FileUploadWrapper>
-
                 <Styled.UploadedFileSection>
-
                   <Styled.UploadedFiles>
-
                     {fileList.map((item, index) => (
-
                       <Styled.UploadedFile
                         key={index}
                         onClick={() => handleViewFile(item.url)}
@@ -337,39 +299,27 @@ const DetailPage = () => {
                           <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                           <Styled.FileText>{item.name}</Styled.FileText>
                         </div>
-                        {/* <img src={deleteFile} alt="" /> */}
                       </Styled.UploadedFile>
-
-
                     ))}
-
                     {referralDetailData.slice(29, 30).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
-
                           <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-
                               <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
-
                               <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                               <Styled.FileText>
                                 {getFileNameFromURL(innerItem?.filename ? innerItem?.filename : "")}
                               </Styled.FileText>
                             </div>
-                            {/* <img src={deleteFile} style={{}} alt="" /> */}
                           </Styled.UploadedFile>
-
                         ))}
                       </React.Fragment>
                     ))}
                   </Styled.UploadedFiles>
-
                 </Styled.UploadedFileSection>
-
               </Styled.ContentWrapperV2>
             </Styled.Column>
-
           </Styled.Container>
           <Styled.ButtonWrapper>
             <Button

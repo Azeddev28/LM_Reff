@@ -4,15 +4,11 @@ import { Helmet } from "react-helmet-async";
 import { Paper, Typography } from "@mui/material";
 import ResetPasswordComponent from "../../components/auth/ResetPassword";
 
-
-
 const Wrapper = styled(Paper)`      
   padding: ${(props) => props.theme.spacing(6)};
-
   ${(props) => props.theme.breakpoints.up("md")} {
     padding: ${(props) => props.theme.spacing(10)};
   }
-
   margin-left: -100px;
 `;
 
@@ -63,9 +59,6 @@ position: absolute;
 bottom: 0;
 left: 50%;
 transform: translateX(-50%);
-
-
-
 `;
 
 const RightDiv = styled('div')`
@@ -115,28 +108,20 @@ width: 100%;
 position: relative;
 `;
 
-
-
-
 function ResetPassword() {
-
-
   return (
     <React.Fragment>
       <Container>
-
         <LeftDiv>
           <LeftInnerDiv>
             <LeftDiv1>
               <WhiteTextTypography variant="h2" align="center">
                 Luminary Health Providers
               </WhiteTextTypography>
-
               <WhiteTextTypographyPara variant="h2" align="center">
                 Manage all of your Luminary Referrals in one place
               </WhiteTextTypographyPara>
             </LeftDiv1>
-
             <LeftDiv2>
               <ImageWrapperLeft>
                 <img src="/login-img.svg" alt="logo-image" />
@@ -144,34 +129,26 @@ function ResetPassword() {
             </LeftDiv2>
           </LeftInnerDiv>
         </LeftDiv>
-
-
         <RightDiv>
-
             <RightDiv1 style={{width: "450px"}}>
               <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
               <Typography variant="h2" align="center" style={{ fontSize: "24px", color: "#181C32", fontWeight: "500", marginLeft: "10px" }}>
                 Luminary Health
               </Typography>
             </RightDiv1>
-
             <RightDiv2>
               <Wrapper>
                 <Helmet title="Reset Password" />
-
                 <Typography style={{ fontSize: "24px", fontWeight: "600", color: "#181C32" }} component="h1" variant="h4" align="start" gutterBottom>
                   Reset Password
                 </Typography>
                 <Typography style={{ fontSize: "14px", fontWeight: "500", color: "#A1A5B7" }} component="h2" variant="body1" align="start">
                   Enter your email to reset your password
                 </Typography>
-
                 <ResetPasswordComponent />
               </Wrapper>
             </RightDiv2>
-
         </RightDiv>
-
       </Container>
     </React.Fragment>
   );

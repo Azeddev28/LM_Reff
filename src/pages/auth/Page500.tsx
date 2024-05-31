@@ -2,7 +2,6 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-
 import { Button as MuiButton, Typography } from "@mui/material";
 import { spacing, SpacingProps } from "@mui/system";
 
@@ -38,7 +37,6 @@ function Page500() {
         The server encountered something unexpected that didn't allow it to
         complete the request.
       </Typography>
-
       <Button
         component={Link}
         to="/"

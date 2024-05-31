@@ -1,14 +1,12 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { withTheme } from "@emotion/react";
-
 import {
   Grid,
   AppBar as MuiAppBar,
   IconButton as MuiIconButton,
   Toolbar,
 } from "@mui/material";
-
 import { Menu as MenuIcon } from "@mui/icons-material";
 
 const AppBar = styled(MuiAppBar)`

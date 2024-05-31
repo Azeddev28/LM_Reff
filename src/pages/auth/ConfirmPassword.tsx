@@ -1,15 +1,11 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Helmet } from "react-helmet-async";
-
 import { Paper, Typography } from "@mui/material";
-
 import ConfirmPasswordComponent from "../../components/auth/ConfirmPassword";
-
 
 const Wrapper = styled(Paper)`      
   padding: ${(props) => props.theme.spacing(6)};
-
   ${(props) => props.theme.breakpoints.up("md")} {
     padding: ${(props) => props.theme.spacing(10)};
   }
@@ -113,32 +109,25 @@ width: 100%;
 position: relative;
 `;
 
-
 function ConfirmPassword() {
   return (
     <React.Fragment>
-
       <Container>
-
         <LeftDiv>
           <LeftInnerDiv>
             <LeftDiv1>
               <WhiteTextTypography variant="h2" align="center">
                 Luminary Health Providers
               </WhiteTextTypography>
-
               <WhiteTextTypographyPara variant="h2" align="center">
                 Manage all of your Luminary Referrals in one place
               </WhiteTextTypographyPara>
             </LeftDiv1>
-
             <LeftDiv2>
               <ImageWrapperLeft>
                 <img src="/login-img.svg" alt="logo-image" style={{ height: '73vh', backgroundColor: "" }} />
               </ImageWrapperLeft>
             </LeftDiv2>
-
-
             <LeftDiv2>
               <ImageWrapperLeft>
                 <img src="/login-img.svg" alt="logo-image" />
@@ -146,32 +135,20 @@ function ConfirmPassword() {
             </LeftDiv2>
           </LeftInnerDiv>
         </LeftDiv>
-
-
         <RightDiv>
-
           <Wrapper>
             <Helmet title="Reset Password" />
-
             <Typography style={{fontSize: "24px", fontWeight: "600"}} component="h1" variant="h4" align="center" gutterBottom>
             Setup password
             </Typography>
-
             <Typography style={{fontSize: "14px", fontWeight: "500", color: "#A1A5B7"}} component="h1" variant="h4" align="center" gutterBottom>
             Enter your New Password 
             </Typography>
-
-
             <ConfirmPasswordComponent />
           </Wrapper>
-
-
         </RightDiv>
-
       </Container>
-
     </React.Fragment>
-
   );
 }
 

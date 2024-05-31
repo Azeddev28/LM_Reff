@@ -19,7 +19,6 @@ const CustomizedTextArea = styled.textarea`
 const StyledInput = ({ inputValue, handleInputChange, label }) => {
   const [data, setData] = useState(inputValue);
   const textareaRef = useRef(null);
-
   const handleChange = (event) => {
     setData(event.target.value);
     handleInputChange(label, event.target.value);

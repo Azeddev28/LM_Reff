@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-
 import {
   Grid,
   List,
@@ -25,7 +24,6 @@ const ListItemButton = styled(MuiListItemButton)<ListItemButtonProps>`
   width: auto;
   padding-left: ${(props) => props.theme.spacing(2)};
   padding-right: ${(props) => props.theme.spacing(2)};
-
   &,
   &:hover,
   &:active {

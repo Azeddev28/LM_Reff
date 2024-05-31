@@ -16,7 +16,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import styled from "@emotion/styled";
-
 import upSvg from '/sorting-up.svg?url';
 import downSvg from '/sorting-down.svg?url';
 
@@ -69,7 +68,7 @@ const PaginatedTable = ({
 
   const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url);
-  const [loading, setLoading] = useState(false); // New loading state
+  const [loading, setLoading] = useState(false);
   const { data, isLoading, refetch } = query(url);
   const ROWS_PER_PAGE = 9;
   const [page, setPage] = useState(1);
@@ -97,7 +96,6 @@ const PaginatedTable = ({
   };
   
   const keys = extractKeys();
-
   const extractRowValues = (obj, keys) => {
     return keys
       .filter((key) => obj.hasOwnProperty(key))
@@ -123,11 +121,11 @@ const PaginatedTable = ({
   };
 
   const handleSortClick = (sortKey) => {
-    setLoading(true); // Start loading
+    setLoading(true); 
     setOrderingValue(sortKey);
     setTimeout(() => {
-      setLoading(false); // Stop loading after sorting
-    }, 500); // Adjust time based on API response time
+      setLoading(false); 
+    }, 500);
   };
 
   const StyledRow = styled(TableRow)((props) => ({
@@ -205,7 +203,6 @@ const PaginatedTable = ({
               ))}
             </TableRow>
           </TableHead>
-
           <TableBody>
             {data?.count > 0 ? (
               <>
@@ -248,7 +245,6 @@ const PaginatedTable = ({
         </Table>
       </TableContainer>
       <Pagination>
-
         <IconButton
           disabled={page === 1 || data?.count === 0}
           style={{
