@@ -14,6 +14,7 @@ const Brand = styled(Logo)`
   width: 64px;
   height: 64px;
   margin-bottom: 32px;
+  cursor: pointer;
 `;
 
 const Wrapper = styled(Paper)`      
@@ -124,6 +125,10 @@ position: relative;
 
 
 function SignIn() {
+  const handleLogoClick = () => {
+    window.location.reload();
+  };
+
   return (
     <React.Fragment>
       <Container>
@@ -163,10 +168,15 @@ function SignIn() {
 
               <Wrapper>
                 <RightDiv1>
-                  <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
+                  <a href="/" onClick={handleLogoClick}>
+                    <img src="/favicon.svg" alt="logo-image" style={{ height: '40px' }} />
+                  </a>
+                  
+                  <a href="/" style={{textDecoration: "none"}}>
                   <Typography variant="h2" align="center" style={{ fontSize: "24px", color: "#181C32", fontWeight: "500", marginLeft: "10px" }}>
                     Luminary Health
                   </Typography>
+                  </a>
                 </RightDiv1>
 
                 <SignInWrapper>

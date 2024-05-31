@@ -1,4 +1,5 @@
 import { Label } from "@mui/icons-material";
+import { isDate } from "date-fns";
 
 export const REFERRAL_DETAIL_DATA = {
   date_created: {
@@ -234,6 +235,7 @@ export const REFERRAL_HEADER_DATA = [
     key: "date_updated",
     display: "Last Updated",
     sortKey: "date_updated",
+    isDate: true,
   },
 ];
 
