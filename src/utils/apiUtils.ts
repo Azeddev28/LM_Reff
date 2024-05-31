@@ -27,16 +27,15 @@ export const prepareHeaders: PrepareHeadersFn = (headers, { getState }) => {
   return headers;
 };
 
-export const baseQueryWithReauth = (baseUrl: any) => {
+export const createBaseQueryWithReauth = (baseUrl: any) => {
   const baseQuery = fetchBaseQuery({
     baseUrl: baseUrl,
     //@ts-ignore
     prepareHeaders, //TODO
   });
 
-  let refreshPromise: Promise<any> | null = null; // Track ongoing refresh request
+  let refreshPromise: Promise<any> | null = null; 
 
-  //@ts-ignore
   const baseQueryWithReauth: BaseQueryFn<
     string | FetchArgs,
     unknown,
