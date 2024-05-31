@@ -1,14 +1,14 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getRoute } from "../../api/BackendRoutes";
-import { baseQueryWithReauth } from "../../utils/apiUtils";
+import { createBaseQueryWithReauth } from "../../utils/apiUtils";
 import { getCookie, removeCookie, setCookie } from "../../utils/cookieManager";
 
 const baseUrl = import.meta.env.VITE_URL;
 
 export const loginApi = createApi({
   reducerPath: "loginApi",
-  baseQuery:baseQueryWithReauth(baseUrl), // [UPDATED]
+  baseQuery:createBaseQueryWithReauth(baseUrl), // [UPDATED]
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
@@ -82,6 +82,7 @@ const authSlice = createSlice({
       state.userName = action.payload;
     },
     logoutUser(state) {
+      console.log("logoutUser")
       state.accessToken = null;
       state.isAuthenticated = false;
       removeCookie('refresh')
