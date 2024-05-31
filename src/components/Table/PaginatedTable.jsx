@@ -113,7 +113,7 @@ const PaginatedTable = ({
     });
     return Array.from(new Set(keys));
   };
-
+  
   const keys = extractKeys();
 
   const generateUrl = () => {
