@@ -47,7 +47,7 @@ const DropDown = ({ dropdownValue, handleInputChange, label , datatype }) => {
     switch (datatype) {
       case 'visitType':
         return [
-          { value: 'In-Person', label: 'In-Person' },
+          { value: 'In Person', label: 'In Person' },
           { value: 'Virtual', label: 'Virtual' },
         ];
       default:

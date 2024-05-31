@@ -37,11 +37,11 @@ export const REFERRAL_DETAIL_DATA = {
     editable: false,
     label: "specialty",
   },
-  referring_party: {
+  convener_name: {
     key: "Referring Party",
     value: "",
     editable: false,
-    label: "referring_party",
+    label: "convener_name",
   },
   referral_description: {
     key: "Referral Description",
@@ -62,12 +62,6 @@ export const REFERRAL_DETAIL_DATA = {
     label: "initial_consultation_date",
     datePicker: true,
   },
-  initial_consult_completed: {
-    key: "Initial Consult Completed",
-    value: "",
-    editable: true,
-    label: "initial_consult_completed",
-  },
   initial_consult_format: {
     key: "Visit Type",
     value: "",
@@ -75,6 +69,12 @@ export const REFERRAL_DETAIL_DATA = {
     label: "initial_consult_format",
     isDropDown: true,
     datatype:'visitType'
+  },
+  initial_consult_completed: {
+    key: "Initial Consult Completed",
+    value: "",
+    editable: true,
+    label: "initial_consult_completed",
   },
   initial_consult_notes: {
     key: "Initial Consult Notes",
@@ -115,14 +115,6 @@ export const REFERRAL_DETAIL_DATA = {
     editable: true,
     label: "op_scheduled_date",
     datePicker: true,
-  },
-  postop_consult_format: {
-    key: "Visit Type",
-    value: "",
-    editable: true,
-    label: "postop_consult_format",
-    isDropDown: true,
-    datatype:'visitType'
   },
   intended_procedure: {
     key: "Intended Procedure (CPT Codes)",
@@ -176,6 +168,14 @@ export const REFERRAL_DETAIL_DATA = {
     editable: true,
     label: "post_op_consult_date",
     datePicker: true,
+  },
+  postop_consult_format: {
+    key: "Visit Type",
+    value: "",
+    editable: true,
+    label: "postop_consult_format",
+    isDropDown: true,
+    datatype:'visitType'
   },
   post_op_consult_completed: {
     key: "Did patient show up to post-op consult?",
@@ -233,7 +233,7 @@ export const REFERRAL_HEADER_DATA = [
   {
     key: "date_updated",
     display: "Last Updated",
-    sortKey: "last_updated",
+    sortKey: "date_updated",
   },
 ];
 
