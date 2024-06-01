@@ -11,14 +11,18 @@ import {
   Box,
   IconButton,
   Typography,
+  TextField,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import SearchIcon from "@mui/icons-material/Search";
 import styled from "@emotion/styled";
+import { useSelector , useDispatch} from "react-redux";
 
 import upSvg from '/sorting-up.svg?url';
 import downSvg from '/sorting-down.svg?url';
+import { setCurrentPage } from "../../redux/slices/referralSlice";
 
 const ProgressWrapper = styled("div")(({ }) => ({
   display: "flex",
@@ -50,43 +54,131 @@ const Sorter = styled("div")(({ }) => ({
   justifyContent: "space-around",
 }));
 
+const SearchBox = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: "white",
+  border: "1px solid #ddd",
+  borderRadius: "4px",
+  padding: "2px 8px",
+}));
+
 const PaginatedTable = ({
   headerData,
   pageData,
   query,
   redirectToDetailPage,
 }) => {
-  const generateUrl = () => {
-    const targetUrl = new URL(pageData.url);
-    if (pageData["search"] !== null && pageData["search"] !== undefined) {
-      targetUrl.searchParams.append("search", pageData["search"]);
-    }
-    if (orderingValue !== null && orderingValue !== undefined) {
-      targetUrl.searchParams.append("ordering", orderingValue);
-    }
-    return targetUrl.toString();
-  };
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch= useDispatch()
+
+  const currentPage = useSelector((state) => state.referral.page);
 
   const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url);
-  const [loading, setLoading] = useState(false);
-  const { data, isLoading, refetch } = query(url);
-  const ROWS_PER_PAGE = 9;
-  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false); 
+  const { data , isLoading, refetch } = query(url);
+  const ROWS_PER_PAGE = 15;
+  const [offset, setOffset] = useState((currentPage - 1) * 15);
+
   const [totalPages, setTotalPages] = useState(0);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const initial_page = 1;
+  const [inputPage, setInputPage] = useState(''); 
+
+
+  // useEffect(() => {
+  //   if (pageData.search || orderingValue || offset !==null) {
+  //     const targetUrl = generateUrl();
+  //     setUrl(targetUrl);
+  //   }
+  // }, [ pageData.search, orderingValue, offset]); 
 
   useEffect(() => {
-      if (data?.count) {
-        setTotalPages(Math.ceil(data.results.length / ROWS_PER_PAGE));
+    if (data?.count) {
+      setTotalPages(Math.ceil(data?.count / ROWS_PER_PAGE));
+    }
+  }, [data]);
+
+  useEffect(()=>{
+    return()=>dispatch(setCurrentPage(1))
+  },[])
+
+    useEffect(()=>{
+      setOffset(0)
+      setInputPage('')
+      dispatch(setCurrentPage(1))
+      const targetUrl = new URL(pageData.url)
+      if (orderingValue !== null && orderingValue !== undefined && offset === 0 && !pageData["search"]) { //In case we have just ordering value
+        console.log("In case we have just ordering value")
+        targetUrl.searchParams.append("ordering", orderingValue);
       }
-      if (pageData.search || orderingValue) {
-        const targetUrl = generateUrl();
-        setUrl(targetUrl);
+      else if(orderingValue !== null && orderingValue !== undefined && offset === 0 && pageData["search"] ) {//In case we already a search string and ordering value is applied
+        console.log("In case we already a search string and ordering value is applied")
+        targetUrl.searchParams.append("ordering", orderingValue);
+        targetUrl.searchParams.append("search", pageData["search"])
       }
-  }, [data, url, pageData.search, orderingValue]);
+      console.log("url in orderingValue",targetUrl.toString())
+      setUrl(targetUrl.toString())
+    },[orderingValue])
+
+
+    useEffect(()=>{
+      const targetUrl = new URL(pageData.url)
+      if (offset !== null && offset !== undefined  && pageData["search"] && orderingValue === null) { //case where we have a active search string and Input page is changed
+        console.log("case where we have a active search string and Input page is changed")
+        targetUrl.searchParams.append("offset", offset.toString())
+        targetUrl.searchParams.append("search", pageData["search"])
+      }
+      else if (offset !== null && offset !== undefined  && orderingValue !==null && !pageData["search"] && inputPage !=='') { //case where we have a active ordering value and input page is changed
+        console.log("case where we have a active ordering value and input page is changed")
+        targetUrl.searchParams.append("offset", offset.toString())
+        targetUrl.searchParams.append("ordering", orderingValue);
+      }
+      else if (offset !== null && offset !== undefined  && orderingValue !==null && pageData["search"]) { //case where we have a active ordering value and active page searxh and input page is changed or reset
+        console.log("case where we have a active ordering value and active page searxh and input page is changed or reset")
+        targetUrl.searchParams.append("offset", offset.toString())
+        targetUrl.searchParams.append("ordering", orderingValue);
+        targetUrl.searchParams.append("search", pageData["search"])
+      }
+      else if(!pageData["search"] && !orderingValue && offset !==0){ // In case we have a input page (inputPage) 
+        console.log("In case we have a input page (inputPage)")
+        targetUrl.searchParams.append("offset", offset.toString())
+      }
+      console.log("url in offset",targetUrl.toString())
+      setUrl(targetUrl.toString())
+    },[offset])
+
+
+    
+    useEffect(()=>{
+      const targetUrl = new URL(pageData.url)
+      setOffset(0)
+      setInputPage('')
+      dispatch(setCurrentPage(1))
+      if (pageData["search"] !== null && pageData["search"] !== undefined && !orderingValue) { //Case where search string is added or removed
+        console.log("Case where search string is added or removed")
+      targetUrl.searchParams.append("search", pageData["search"]);
+      }
+      else if (pageData["search"] !== null && pageData["search"] !== undefined && orderingValue) { //Case where we already have an active ordering value and search string is added
+        console.log("Case where we already have an active ordering value and search string is added") 
+        targetUrl.searchParams.append("search", pageData["search"]);
+        targetUrl.searchParams.append("ordering", orderingValue);
+        }
+      else if(!pageData["search"] && orderingValue !==null){ //case where ordering value was there search string was applied and now removed
+          console.log("ase where ordering value was there search string was applied and now removed")
+          targetUrl.searchParams.append("ordering", orderingValue);
+        }
+      else if(!pageData["search"]){ //Case where search string is reset or first render
+        console.log("Case where search string is reset or first render")
+      targetUrl.searchParams.append("offset", offset.toString())
+      }
+      console.log("url in pageData",targetUrl.toString())
+      setUrl(targetUrl.toString())
+    
+    },[pageData.search])
+
 
   const extractKeys = () => {
     let keys = [];
@@ -97,6 +189,21 @@ const PaginatedTable = ({
   };
   
   const keys = extractKeys();
+
+  // const generateUrl = () => {
+  //   const targetUrl = new URL(pageData.url);
+  //     if (pageData["search"] !== null && pageData["search"] !== undefined) {
+  //     targetUrl.searchParams.append("search", pageData["search"]);
+  //     setOffset(0)
+  //   }
+  //   if (orderingValue !== null && orderingValue !== undefined) {
+  //     targetUrl.searchParams.append("ordering", orderingValue);
+  //   }
+  //     if (offset !== null && offset !== undefined) {
+  //     targetUrl.searchParams.append("offset", offset.toString());
+  //   }
+  //   return targetUrl.toString();
+  // };
 
   const extractRowValues = (obj, keys) => {
     return keys
@@ -111,14 +218,20 @@ const PaginatedTable = ({
   };
 
   const handleClickPrevious = () => {
-    if (page > 1) {
-      setPage(page - 1);
+    if (data?.previous) {
+      setUrl(data.previous);
+      const newPage = currentPage - 1;
+      dispatch(setCurrentPage(newPage)); 
+      setInputPage('')
     }
   };
 
   const handleClickNext = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
+    if (data?.next) {
+      setUrl(data.next);
+      const newPage = currentPage + 1;
+      dispatch(setCurrentPage(newPage)); 
+      setInputPage('')
     }
   };
 
@@ -127,7 +240,20 @@ const PaginatedTable = ({
     setOrderingValue(sortKey);
     setTimeout(() => {
       setLoading(false); 
-    }, 500);
+    }, 500); 
+  };
+
+  const handleInputChange = (e) => {
+    setInputPage(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    const newPage = parseInt(inputPage, 10);
+     if (newPage > 0 && newPage <= totalPages) {
+      const newOffset = (newPage - 1) * ROWS_PER_PAGE;
+      setOffset(newOffset);
+      dispatch(setCurrentPage(inputPage))
+    }
   };
 
   const StyledRow = styled(TableRow)((props) => ({
@@ -140,8 +266,7 @@ const PaginatedTable = ({
 
   const getDisplayedRows = () => {
     if (data?.results) {
-      const startIndex = (page - 1) * ROWS_PER_PAGE;
-      return data.results.slice(startIndex, startIndex + ROWS_PER_PAGE);
+      return data.results
     }
     return [];
   };
@@ -248,12 +373,11 @@ const PaginatedTable = ({
         </Table>
       </TableContainer>
       <Pagination>
-
         <IconButton
-          disabled={page === 1 || data?.count === 0}
+          disabled={currentPage===1}
           style={{
             cursor: "pointer",
-            color: page === 1 || data?.count === 0 ? "#BDBDBD" : "inherit",
+            color: !data?.previous ? "#BDBDBD" : "inherit",
             height: "16px",
             width: "16px",
           }}
@@ -267,19 +391,35 @@ const PaginatedTable = ({
           />
         </IconButton>
 
-        {data?.count > 1 ? (
-          <Box mx={2}>{`Page ${page} of ${totalPages}`}</Box>
-        ) : (
-          <Box>Page 0 of 0</Box>
-        )}
+        <Box mx={2}>{`Page ${currentPage} of`}</Box> 
+        <SearchBox>
+          <TextField
+            variant="standard"
+            placeholder="Page"
+            value={inputPage}
+            onChange={handleInputChange}
+            InputProps={{
+              disableUnderline: true,
+              startAdornment: (
+                <SearchIcon
+                  style={{ marginRight: "4px", color: "#BDBDBD", cursor: "pointer" }}
+                  onClick={handleSearchClick}
+                />
+              ),
+            }}
+            style={{ width: "50px", fontSize: "12px", padding: "2px 4px" }}
+          />
+        </SearchBox>
+        <Box mx={2}>{`${totalPages}`}</Box>
+
         <IconButton
           style={{
             cursor: "pointer",
-            color: page === totalPages || totalPages === 0 ? "#BDBDBD" : "inherit",
+            color: !data?.next ? "#BDBDBD" : "inherit",
             height: "16px",
             width: "16px",
           }}
-          disabled={page === totalPages || data?.count === 0}
+          disabled={currentPage===totalPages}
           onClick={handleClickNext}
         >
           <ArrowForwardIosIcon style={{ height: "16px", width: "16px" }} />
