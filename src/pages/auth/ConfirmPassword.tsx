@@ -150,7 +150,7 @@ function ConfirmPassword() {
 
         <RightDiv>
 
-          <Wrapper>
+          <Wrapper style={{width: "50%"}}>
             <Helmet title="Reset Password" />
 
             <Typography style={{fontSize: "24px", fontWeight: "600"}} component="h1" variant="h4" align="center" gutterBottom>
