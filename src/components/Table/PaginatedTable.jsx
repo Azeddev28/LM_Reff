@@ -88,12 +88,12 @@ const PaginatedTable = ({
   const [inputPage, setInputPage] = useState(''); 
 
 
-  useEffect(() => {
-    if (pageData.search || orderingValue || offset !==null) {
-      const targetUrl = generateUrl();
-      setUrl(targetUrl);
-    }
-  }, [ pageData.search, orderingValue, offset]); 
+  // useEffect(() => {
+  //   if (pageData.search || orderingValue || offset !==null) {
+  //     const targetUrl = generateUrl();
+  //     setUrl(targetUrl);
+  //   }
+  // }, [ pageData.search, orderingValue, offset]); 
 
   useEffect(() => {
     if (data?.count) {
@@ -104,6 +104,80 @@ const PaginatedTable = ({
   useEffect(()=>{
     return()=>dispatch(setCurrentPage(1))
   },[])
+
+    useEffect(()=>{
+      setOffset(0)
+      setInputPage('')
+      dispatch(setCurrentPage(1))
+      const targetUrl = new URL(pageData.url)
+      if (orderingValue !== null && orderingValue !== undefined && offset === 0 && !pageData["search"]) { //In case we have just ordering value
+        console.log("In case we have just ordering value")
+        targetUrl.searchParams.append("ordering", orderingValue);
+      }
+      else if(orderingValue !== null && orderingValue !== undefined && offset === 0 && pageData["search"] ) {//In case we already a search string and ordering value is applied
+        console.log("In case we already a search string and ordering value is applied")
+        targetUrl.searchParams.append("ordering", orderingValue);
+        targetUrl.searchParams.append("search", pageData["search"])
+      }
+      console.log("url in orderingValue",targetUrl.toString())
+      setUrl(targetUrl.toString())
+    },[orderingValue])
+
+
+    useEffect(()=>{
+      const targetUrl = new URL(pageData.url)
+      if (offset !== null && offset !== undefined  && pageData["search"] && orderingValue === null) { //case where we have a active search string and Input page is changed
+        console.log("case where we have a active search string and Input page is changed")
+        targetUrl.searchParams.append("offset", offset.toString())
+        targetUrl.searchParams.append("search", pageData["search"])
+      }
+      else if (offset !== null && offset !== undefined  && orderingValue !==null && !pageData["search"] && inputPage !=='') { //case where we have a active ordering value and input page is changed
+        console.log("case where we have a active ordering value and input page is changed")
+        targetUrl.searchParams.append("offset", offset.toString())
+        targetUrl.searchParams.append("ordering", orderingValue);
+      }
+      else if (offset !== null && offset !== undefined  && orderingValue !==null && pageData["search"]) { //case where we have a active ordering value and active page searxh and input page is changed or reset
+        console.log("case where we have a active ordering value and active page searxh and input page is changed or reset")
+        targetUrl.searchParams.append("offset", offset.toString())
+        targetUrl.searchParams.append("ordering", orderingValue);
+        targetUrl.searchParams.append("search", pageData["search"])
+      }
+      else if(!pageData["search"] && !orderingValue && offset !==0){ // In case we have a input page (inputPage) 
+        console.log("In case we have a input page (inputPage)")
+        targetUrl.searchParams.append("offset", offset.toString())
+      }
+      console.log("url in offset",targetUrl.toString())
+      setUrl(targetUrl.toString())
+    },[offset])
+
+
+    
+    useEffect(()=>{
+      const targetUrl = new URL(pageData.url)
+      setOffset(0)
+      setInputPage('')
+      dispatch(setCurrentPage(1))
+      if (pageData["search"] !== null && pageData["search"] !== undefined && !orderingValue) { //Case where search string is added or removed
+        console.log("Case where search string is added or removed")
+      targetUrl.searchParams.append("search", pageData["search"]);
+      }
+      else if (pageData["search"] !== null && pageData["search"] !== undefined && orderingValue) { //Case where we already have an active ordering value and search string is added
+        console.log("Case where we already have an active ordering value and search string is added") 
+        targetUrl.searchParams.append("search", pageData["search"]);
+        targetUrl.searchParams.append("ordering", orderingValue);
+        }
+      else if(!pageData["search"] && orderingValue !==null){ //case where ordering value was there search string was applied and now removed
+          console.log("ase where ordering value was there search string was applied and now removed")
+          targetUrl.searchParams.append("ordering", orderingValue);
+        }
+      else if(!pageData["search"]){ //Case where search string is reset or first render
+        console.log("Case where search string is reset or first render")
+      targetUrl.searchParams.append("offset", offset.toString())
+      }
+      console.log("url in pageData",targetUrl.toString())
+      setUrl(targetUrl.toString())
+    
+    },[pageData.search])
 
 
   const extractKeys = () => {
@@ -116,20 +190,20 @@ const PaginatedTable = ({
   
   const keys = extractKeys();
 
-  const generateUrl = () => {
-    const targetUrl = new URL(pageData.url);
-      if (pageData["search"] !== null && pageData["search"] !== undefined) {
-      targetUrl.searchParams.append("search", pageData["search"]);
-      setOffset(0)
-    }
-    if (orderingValue !== null && orderingValue !== undefined) {
-      targetUrl.searchParams.append("ordering", orderingValue);
-    }
-      if (offset !== null && offset !== undefined) {
-      targetUrl.searchParams.append("offset", offset.toString());
-    }
-    return targetUrl.toString();
-  };
+  // const generateUrl = () => {
+  //   const targetUrl = new URL(pageData.url);
+  //     if (pageData["search"] !== null && pageData["search"] !== undefined) {
+  //     targetUrl.searchParams.append("search", pageData["search"]);
+  //     setOffset(0)
+  //   }
+  //   if (orderingValue !== null && orderingValue !== undefined) {
+  //     targetUrl.searchParams.append("ordering", orderingValue);
+  //   }
+  //     if (offset !== null && offset !== undefined) {
+  //     targetUrl.searchParams.append("offset", offset.toString());
+  //   }
+  //   return targetUrl.toString();
+  // };
 
   const extractRowValues = (obj, keys) => {
     return keys
@@ -148,7 +222,7 @@ const PaginatedTable = ({
       setUrl(data.previous);
       const newPage = currentPage - 1;
       dispatch(setCurrentPage(newPage)); 
-      setOffset((newPage - 1) * ROWS_PER_PAGE); 
+      setInputPage('')
     }
   };
 
@@ -157,7 +231,7 @@ const PaginatedTable = ({
       setUrl(data.next);
       const newPage = currentPage + 1;
       dispatch(setCurrentPage(newPage)); 
-      setOffset((newPage - 1) * ROWS_PER_PAGE); 
+      setInputPage('')
     }
   };
 
@@ -176,11 +250,10 @@ const PaginatedTable = ({
   const handleSearchClick = () => {
     const newPage = parseInt(inputPage, 10);
      if (newPage > 0 && newPage <= totalPages) {
-      dispatch(setCurrentPage(newPage))
       const newOffset = (newPage - 1) * ROWS_PER_PAGE;
       setOffset(newOffset);
+      dispatch(setCurrentPage(inputPage))
     }
-
   };
 
   const StyledRow = styled(TableRow)((props) => ({
@@ -301,7 +374,7 @@ const PaginatedTable = ({
       </TableContainer>
       <Pagination>
         <IconButton
-          disabled={!data?.previous}
+          disabled={currentPage===1}
           style={{
             cursor: "pointer",
             color: !data?.previous ? "#BDBDBD" : "inherit",

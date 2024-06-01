@@ -77,7 +77,7 @@ const refferalSlice = createSlice({
   initialState,
   reducers: {
     setCurrentPage(state, action) {
-      console.log("action", action.payload)
+      console.log("currentpage", action.payload)
       state.page = action.payload;
     },
   },
