@@ -130,7 +130,7 @@ export const REFERRAL_DETAIL_DATA = {
     label: "facility",
   },
   overnight_stay_required: {
-    key: "Is Overnight Stay Required?",
+    key: "Is patient traveling for surgery? (Requiring hotel accommodations)",
     value: "",
     editable: true,
     label: "overnight_stay_required",

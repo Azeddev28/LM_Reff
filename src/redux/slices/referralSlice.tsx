@@ -1,14 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getAccessToken } from "./authSlice";
 import { getRoute } from "../../api/BackendRoutes";
-import { baseQueryWithReauth } from "../../utils/apiUtils";
-import { createSlice } from "@reduxjs/toolkit";
+import { createBaseQueryWithReauth } from "../../utils/apiUtils";
 
 const baseUrl = import.meta.env.VITE_URL;
 
 export const referralApi = createApi({
   reducerPath: "referralApi",
-  baseQuery:baseQueryWithReauth(baseUrl), // [UPDATED]
+  baseQuery:createBaseQueryWithReauth(baseUrl), // [UPDATED]
 
   endpoints: (builder) => ({
     getReferrals: builder.query({

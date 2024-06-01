@@ -1,9 +1,10 @@
 import { SidebarItemsType } from "../../types/sidebar";
-import ClaimsIcon from "../../../public/claims-img.svg";
-import EmployerListIcon from "../../../public/employeers-img.svg";
-import referralsSvg from "../../../public/referrals-img.svg";
-import logoutSvg from "../../../public/logout-img.svg";
-import { logoutUser } from "../../redux/slices/authSlice";
+import ClaimsIcon from "/claims-img.svg?url";
+import EmployerListIcon from "/employeers-img.svg?url";
+import referralsSvg from "/referrals-img.svg?url";
+import logoutSvg from "/logout-img.svg?url";
+import { loginApi, logoutUser } from "../../redux/slices/authSlice";
+import { referralApi } from "../../redux/slices/referralSlice";
 import { useDispatch } from "react-redux";
 
 const useNavItems = () => {
@@ -12,6 +13,8 @@ const useNavItems = () => {
   const handleLogoutClick = (event: any) => {
     event.preventDefault();
     dispatch(logoutUser());
+    dispatch(loginApi.util.resetApiState());  //TODO implement a proper logic to remove cache
+    dispatch(referralApi.util.resetApiState());
   };
 
   const pagesSection = [

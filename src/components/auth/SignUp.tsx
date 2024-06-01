@@ -11,15 +11,11 @@ import {
 } from "@mui/material";
 import { spacing } from "@mui/system";
 
-// import useAuth from "../../hooks/useAuth";
-
 const Alert = styled(MuiAlert)(spacing);
 
 const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
 
 function SignUp() {
-  // const navigate = useNavigate();
-  // const { signUp } = useAuth();
 
   return (
     <Formik
