@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import { useLoginMutation } from "../../redux/slices/authSlice";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Alert from "@mui/material/Alert"; // Import Alert component
+import Alert from "@mui/material/Alert";
 
 import { setAccessToken } from "../../redux/slices/authSlice";
 import {
@@ -32,7 +32,7 @@ function SignIn() {
 
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
-  const [snackbarSeverity, setSnackbarSeverity] = useState("success"); // New state for severity
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
 
   useEffect(() => {
@@ -40,11 +40,11 @@ function SignIn() {
       dispatch(setAccessToken(loginData));
       setSnackbarMessage("Successfully logged in");
       setSnackbarOpen(true);
-      setSnackbarSeverity("success"); // Set severity to success
+      setSnackbarSeverity("success"); 
     } else if (loginError) {
       setSnackbarMessage("Invalid credentials");
       setSnackbarOpen(true);
-      setSnackbarSeverity("error"); // Set severity to error
+      setSnackbarSeverity("error");
     }
   }, [loginSuccessFull, loginError]);
 
@@ -101,7 +101,7 @@ function SignIn() {
               onBlur={handleBlur}
               onChange={handleChange}
               my={2}
-              InputProps={{ style: { fontSize: '12px', fontWeight: "600", color: '#7E8299' } }} // Inline CSS for font size
+              InputProps={{ style: { fontSize: '12px', fontWeight: "600", color: '#7E8299' } }}
               style={{ }}
             />
             <TextField
@@ -115,7 +115,7 @@ function SignIn() {
               onBlur={handleBlur}
               onChange={handleChange}
               my={2}
-              InputProps={{ style: { fontSize: '12px', fontWeight: "600", color: '#7E8299' } }} // Inline CSS for font size
+              InputProps={{ style: { fontSize: '12px', fontWeight: "600", color: '#7E8299' } }}
               style={{ }}
             />
             <FormControlLabel
@@ -152,7 +152,6 @@ function SignIn() {
           horizontal: "center",
         }}
       >
-        {/* Render the Alert component with the appropriate severity */}
         <Alert
           action={
             <React.Fragment>

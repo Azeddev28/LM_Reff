@@ -25,7 +25,7 @@ const Brand = styled('div')`
   gap:12px;
   padding:20px 20px 20px 24px;
   align-items: center;
-
+  width: 100%
 `;
 
 const LogoText = styled('p')`
@@ -39,6 +39,7 @@ const LogoText = styled('p')`
     align-items: center;
     justify-content: center;
     font-family: 'Inter';
+    width: 100%;
 `;
 
 const MenuItem = styled('button')`
@@ -91,11 +92,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 
 
   const navigate = useNavigate();
-  const navItems=useNavItems()
+  const navItems = useNavItems()
   return (
     <Drawer variant="permanent" {...rest}>
       <Brand onClick={() => navigate("/")}>
-        <img src="/favicon-white.svg" alt="logo-image" style={{ width: "40px", marginTop: "10px" , marginBottom: "-10px" }} />
+        <img src="/favicon-white.svg" alt="logo-image" style={{ width: "40px", marginBottom: "-10px" }} />
       </Brand>
       <LogoText>Luminary</LogoText>
       <LogoText>Health</LogoText>

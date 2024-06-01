@@ -147,13 +147,6 @@ function SignIn() {
 
             <LeftDiv2>
               <ImageWrapperLeft>
-                <img src="/login-img.svg" alt="logo-image" style={{ height: '73vh', backgroundColor: "" }} />
-              </ImageWrapperLeft>
-            </LeftDiv2>
-
-
-            <LeftDiv2>
-              <ImageWrapperLeft>
                 <img src="/login-img.svg" alt="logo-image" />
               </ImageWrapperLeft>
             </LeftDiv2>

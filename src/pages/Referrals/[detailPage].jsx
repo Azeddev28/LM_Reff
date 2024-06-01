@@ -140,8 +140,8 @@ const DetailPage = () => {
     <Styled.MainWrapper>
 
 
-      <Typography variant="h2" style={{ marginBottom: "30px", marginTop: "-20px", fontSize: "25px", fontWeight: "500", marginLeft: "-4.6%", width: "108%", height: "55px", borderBottom: "1px solid #F1F1F2" }}><span style={{ marginLeft: "65px" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span></span></Typography>
-      {loader ? (
+<Typography variant="h2" style={{ marginBottom: "30px", marginTop: "0px", fontSize: "25px", fontWeight: "500", marginLeft: "-4.6%", width: "108%", height: "65px", borderBottom: "1px solid #F1F1F2" }}><span style={{ marginLeft: "65px" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span></span></Typography>
+{loader ? (
         <Styled.ProgressWrapper>
           <CircularProgress size="7rem" />
         </Styled.ProgressWrapper>
@@ -337,7 +337,6 @@ const DetailPage = () => {
                           <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                           <Styled.FileText>{item.name}</Styled.FileText>
                         </div>
-                        {/* <img src={deleteFile} alt="" /> */}
                       </Styled.UploadedFile>
 
 
