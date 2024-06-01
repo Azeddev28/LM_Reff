@@ -6,7 +6,7 @@ import { Formik } from "formik";
 import { useResetPasswordMutation } from "../../redux/slices/authSlice";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import { Fade } from "@mui/material";
+import { Fade, CircularProgress } from "@mui/material";
 
 import {
   Alert as MuiAlert,
@@ -39,6 +39,13 @@ const SnackbarWrapper = styled.div`
 
 const SnackbarContainer = styled.div`
   margin-right: 20px;
+`;
+
+const ButtonContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px; /* Set a fixed width to ensure consistency */
 `;
 
 function ResetPassword() {
@@ -83,8 +90,10 @@ function ResetPassword() {
           try {
             let email = values.email;
             formData.append("email", email);
-            resetPassword(formData);
+            await resetPassword(formData); 
 
+            setStatus({ success: true });
+            setSubmitting(false);
           } catch (error: any) {
             const message = error.message || "Something went wrong";
 
@@ -130,7 +139,9 @@ function ResetPassword() {
               color="primary"
               disabled={isSubmitting}
             >
-              Send password
+              <ButtonContent>
+                {isSubmitting ? <CircularProgress size={24} /> : "Send password"}
+              </ButtonContent>
             </Button>
           </form>
         )}
@@ -173,7 +184,6 @@ function ResetPassword() {
           </SnackbarWrapper>
         </SnackbarContainer>
       </Snackbar>
-
     </>
   );
 }
