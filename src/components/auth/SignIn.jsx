@@ -118,10 +118,6 @@ function SignIn() {
               InputProps={{ style: { fontSize: '12px', fontWeight: "600", color: '#7E8299' } }}
               style={{ }}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
