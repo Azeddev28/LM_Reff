@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { withTheme } from "@emotion/react";
-import { darken } from "polished"; // Import the darken function from polished
 
 import {
   Grid,

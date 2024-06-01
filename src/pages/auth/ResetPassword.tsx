@@ -159,7 +159,7 @@ function ResetPassword() {
               <Wrapper>
                 <Helmet title="Reset Password" />
 
-                <Typography style={{ fontSize: "24px", fontWeight: "600", color: "#181C32" }} component="h1" variant="h4"  gutterBottom>
+                <Typography style={{ fontSize: "24px", fontWeight: "600", color: "#181C32" }} component="h1" variant="h4" align="start" gutterBottom>
                   Reset Password
                 </Typography>
                 <Typography style={{ fontSize: "14px", fontWeight: "500", color: "#A1A5B7" }} component="h2" variant="body1" >

@@ -69,7 +69,7 @@ const PaginatedTable = ({
 
   const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url);
-  const [loading, setLoading] = useState(false); // New loading state
+  const [loading, setLoading] = useState(false);
   const { data, isLoading, refetch } = query(url);
   const ROWS_PER_PAGE = 9;
   const [page, setPage] = useState(1);
@@ -123,11 +123,11 @@ const PaginatedTable = ({
   };
 
   const handleSortClick = (sortKey) => {
-    setLoading(true); // Start loading
+    setLoading(true); 
     setOrderingValue(sortKey);
     setTimeout(() => {
-      setLoading(false); // Stop loading after sorting
-    }, 500); // Adjust time based on API response time
+      setLoading(false); 
+    }, 500);
   };
 
   const StyledRow = styled(TableRow)((props) => ({
