@@ -1,4 +1,5 @@
 import { Label } from "@mui/icons-material";
+import { isDate } from "date-fns";
 
 export const REFERRAL_DETAIL_DATA = {
   date_created: {
@@ -129,7 +130,7 @@ export const REFERRAL_DETAIL_DATA = {
     label: "facility",
   },
   overnight_stay_required: {
-    key: "Is Overnight Stay Required?",
+    key: "Is patient traveling for surgery? (Requiring hotel accommodations)",
     value: "",
     editable: true,
     label: "overnight_stay_required",
@@ -234,6 +235,7 @@ export const REFERRAL_HEADER_DATA = [
     key: "date_updated",
     display: "Last Updated",
     sortKey: "date_updated",
+    isDate: true,
   },
 ];
 

@@ -19,9 +19,33 @@ import DropDown from "../../components/DropDown";
 import { Styled } from "./style";
 import { useSelector } from "react-redux";
 import { color, fontSize, fontWeight } from "@mui/system";
-import dropBox from '../../../public/dropboxImg.svg';
-import attachFile from '../../../public/attachFileIcon.svg';
-import deleteFile from "../../../public/deleteIcon.svg"
+import dropBox from '/dropboxImg.svg?url';
+import attachFile from '/attachFileIcon.svg?url';
+import deleteFile from "/deleteIcon.svg?url";
+
+const Footer = ({ handleSubmitChanges, data }) => (
+  <div style={{
+    position: 'fixed',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    textAlign: 'center',
+    padding: '10px',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: '20px 70px'
+  }}>
+    <Button
+      variant="contained"
+      disabled={Object.keys(data).length === 0}
+      onClick={handleSubmitChanges}
+      style={{ width: "127px" }}
+    >
+      Save Changes
+    </Button>
+  </div>
+);
 
 
 const DetailPage = () => {
@@ -46,6 +70,7 @@ const DetailPage = () => {
     isLoading,
     isSuccess,
   } = useGetReferralDetailQuery(id);
+  
   useEffect(() => {
     setReferralDetail(referralData);
   }, [referralData]);
@@ -61,8 +86,8 @@ const DetailPage = () => {
       const updatedDetailData = {};
       for (const key in REFERRAL_DETAIL_DATA) {
         if (REFERRAL_DETAIL_DATA.hasOwnProperty(key)) {
-          if(key==="overnight_stay_required"){
-            setOverNightStay(referralDetail[key])
+          if (key === "overnight_stay_required") {
+            setOverNightStay(referralDetail[key]);
           }
           updatedDetailData[key] = {
             ...REFERRAL_DETAIL_DATA[key],
@@ -82,14 +107,13 @@ const DetailPage = () => {
 
   const referralDetailData = Object.values(detailData);
 
-
   const handleInputChange = (label, value) => {
     setData((prevData) => ({
       ...prevData,
       [label]: value,
     }));
-    if(label==="overnight_stay_required"){
-      setOverNightStay(value)
+    if (label === "overnight_stay_required") {
+      setOverNightStay(value);
     }
   };
 
@@ -105,11 +129,11 @@ const DetailPage = () => {
     if (data.hasOwnProperty('overnight_stay_required') && data.overnight_stay_required === false) {
       data.return_date = '';
       data.departure_date = '';
-  }
-  if (data.hasOwnProperty('overnight_stay_required') && data.overnight_stay_required === true && (!data.return_date || !data.departure_date)) {
-    console.log("Overnight stay is true but return_date or departure_date is not set."); //TODO add warning toast for mandatory fields
-    return
-}
+    }
+    if (data.hasOwnProperty('overnight_stay_required') && data.overnight_stay_required === true && (!data.return_date || !data.departure_date)) {
+      console.log("Overnight stay is true but return_date or departure_date is not set."); //TODO add warning toast for mandatory fields
+      return;
+    }
     try {
       setLoader(true);
       await updateReferral({ id, data });
@@ -130,17 +154,15 @@ const DetailPage = () => {
     window.open(url, "_blank");
   };
 
-
   return isLoading ? (
     <Styled.ProgressWrapper>
       <CircularProgress size="7rem" />
     </Styled.ProgressWrapper>
   ) : (
-
     <Styled.MainWrapper>
-
-
-      <Typography variant="h2" style={{ marginBottom: "30px", marginTop: "-20px", fontSize: "25px", fontWeight: "500", marginLeft: "-4.6%", width: "108%", height: "55px", borderBottom: "1px solid #F1F1F2" }}><span style={{ marginLeft: "65px" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span></span></Typography>
+      <Typography variant="h2" style={{ marginBottom: "30px", marginTop: "0px", fontSize: "25px", fontWeight: "500", marginLeft: "-4.6%", width: "108%", height: "65px", borderBottom: "1px solid #F1F1F2" }}>
+        <span style={{ marginLeft: "65px" }}>Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span></span>
+      </Typography>
       {loader ? (
         <Styled.ProgressWrapper>
           <CircularProgress size="7rem" />
@@ -148,25 +170,18 @@ const DetailPage = () => {
       ) : (
         <>
           <Styled.Container>
-
             <Styled.Column>
-
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Information
               </Styled.ColumnHeader>
-
               <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
-                These fields are maintained by Luminary and cannot be edited
+                These fields are maintained by Luminary and cannot be edited. Please contact Luminary if this referral needs to be assigned to a different provider
               </h>
-
               <Styled.ContentWrapper>
-
                 {referralDetailData.slice(0, 8).map((item, index) => (
                   <div key={index}>
                     {item.key === "Referral Description" ? (
-
                       <Styled.DescriptionWrapper>
-
                         <Styled.Label>{item.key}</Styled.Label>
                         <Styled.ValueWrapper>{item.value}</Styled.ValueWrapper>
                       </Styled.DescriptionWrapper>
@@ -188,10 +203,8 @@ const DetailPage = () => {
                     )}
                   </div>
                 ))}
-
               </Styled.ContentWrapper>
-
-              <Styled.CheckWrapper style={{marginTop: "30px"}}>
+              <Styled.CheckWrapper style={{ marginTop: "30px" }}>
                 <Styled.Checked
                   control={
                     <Checkbox
@@ -203,8 +216,6 @@ const DetailPage = () => {
                   label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Preauthorization Required</span>}
                 />
               </Styled.CheckWrapper>
-
-
               <Styled.CheckWrapper>
                 <Styled.Checked
                   control={
@@ -217,81 +228,69 @@ const DetailPage = () => {
                   label={<span style={{ fontSize: "13px", fontWeight: "600", color: "#5E6278" }}>Procedure Cancelled</span>}
                 />
               </Styled.CheckWrapper>
-
-
             </Styled.Column>
-
             <Styled.Column>
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Details
-              </Styled.ColumnHeader>  
-
+              </Styled.ColumnHeader>
               <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
-                These fields should be updated by the Practice to update Luminary along the patient journey
+                Please update the fields below to indicate your acceptance of this referral. Please also provide at least weekly updates to indicate the patient's progress toward surgery. Use the "Practice Notes" filed to explain any updates not captured elsewhere on this form.
               </h>
-
               <Styled.ContentWrapper>
-
                 {referralDetailData.slice(8, 29).map((item, index) => {
-                return (
-                    !item?.inVisible ?  (
+                  return (
+                    !item?.inVisible ? (
                       <Styled.Card key={index}>
-                      <Styled.Label>{item.key}</Styled.Label>
-                      {typeof item.value === "boolean" || item?.isDropDown ? (
-                        <DropDown
-                          dropdownValue={item.value}
-                          handleInputChange={handleInputChange}
-                          label={item.label}
-                          datatype={item?.datatype}
-                        />
-                      ) : item.datePicker === true ? (
-                        <DatePickerComponent
-                          date={item.value}
-                          handleInputChange={handleInputChange}
-                          label={item.label}
-                        />
-                      ) : item.editable === true ? (
-                        <StyledInput
-                          inputValue={item.value}
-                          handleInputChange={handleInputChange}
-                          label={item.label}
-                        />
-                      ) : (
-                        <Styled.Value variant="h">{item.value}</Styled.Value>
-                      )}
-                    </Styled.Card>
-                    ) :(
-                      <>
-                      {overNightStay ?
-                      (
-                        <Styled.Card key={index}>
                         <Styled.Label>{item.key}</Styled.Label>
-                        <DatePickerComponent
+                        {typeof item.value === "boolean" || item?.isDropDown ? (
+                          <DropDown
+                            dropdownValue={item.value}
+                            handleInputChange={handleInputChange}
+                            label={item.label}
+                            datatype={item?.datatype}
+                          />
+                        ) : item.datePicker === true ? (
+                          <DatePickerComponent
                             date={item.value}
                             handleInputChange={handleInputChange}
                             label={item.label}
                           />
+                        ) : item.editable === true ? (
+                          <StyledInput
+                            inputValue={item.value}
+                            handleInputChange={handleInputChange}
+                            label={item.label}
+                          />
+                        ) : (
+                          <Styled.Value variant="h">{item.value}</Styled.Value>
+                        )}
                       </Styled.Card>
-                      ) : (null)}
+                    ) : (
+                      <>
+                        {overNightStay ?
+                          (
+                            <Styled.Card key={index}>
+                              <Styled.Label>{item.key}</Styled.Label>
+                              <DatePickerComponent
+                                date={item.value}
+                                handleInputChange={handleInputChange}
+                                label={item.label}
+                              />
+                            </Styled.Card>
+                          ) : (null)}
                       </>
-                    ) 
-                  )
+                    )
+                  );
                 })}
-
               </Styled.ContentWrapper>
-
             </Styled.Column>
-
             <Styled.Column>
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Attachments
               </Styled.ColumnHeader>
-
               <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 View your referral documents and add any additional documents requested by the payer here
               </h>
-
-
               <Styled.ContentWrapperV2>
                 <Styled.FileUploadWrapper>
                   <Dropzone
@@ -319,15 +318,10 @@ const DetailPage = () => {
                       </section>
                     )}
                   </Dropzone>
-
                 </Styled.FileUploadWrapper>
-
                 <Styled.UploadedFileSection>
-
                   <Styled.UploadedFiles>
-
                     {fileList.map((item, index) => (
-
                       <Styled.UploadedFile
                         key={index}
                         onClick={() => handleViewFile(item.url)}
@@ -337,54 +331,28 @@ const DetailPage = () => {
                           <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                           <Styled.FileText>{item.name}</Styled.FileText>
                         </div>
-                        {/* <img src={deleteFile} alt="" /> */}
                       </Styled.UploadedFile>
-
-
                     ))}
-
                     {referralDetailData.slice(29, 30).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
-
                           <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-
-                              <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
-
                               <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                               <Styled.FileText>
                                 {getFileNameFromURL(innerItem?.filename ? innerItem?.filename : "")}
                               </Styled.FileText>
                             </div>
-                            {/* <img src={deleteFile} style={{}} alt="" /> */}
                           </Styled.UploadedFile>
-
                         ))}
                       </React.Fragment>
                     ))}
                   </Styled.UploadedFiles>
-
                 </Styled.UploadedFileSection>
-
               </Styled.ContentWrapperV2>
             </Styled.Column>
-
           </Styled.Container>
-          <Styled.ButtonWrapper>
-            <Button
-              variant="contained"
-              disabled={Object.keys(data).length === 0}
-              onClick={handleSubmitChanges}
-              style={{
-                marginTop: "35px",
-                verticalAlign: "end",
-                width: "127px",
-              }}
-            >
-              Save Changes
-            </Button>
-          </Styled.ButtonWrapper>
+          <Footer handleSubmitChanges={handleSubmitChanges} data={data} />
         </>
       )}
     </Styled.MainWrapper>

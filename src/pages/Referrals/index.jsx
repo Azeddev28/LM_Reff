@@ -33,7 +33,7 @@ const Referrals = () => {
             Greetings, <span style={{ color: '#3B5CA9' }}>{userName}.</span>
           </>
         }
-        subHeading="Referral Trackers"
+        subHeading="Your Referrals"
         placeHolder="Search by patient name"
         setSearchValue={setSearchValue}
       />

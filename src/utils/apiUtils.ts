@@ -27,16 +27,15 @@ export const prepareHeaders: PrepareHeadersFn = (headers, { getState }) => {
   return headers;
 };
 
-export const baseQueryWithReauth = (baseUrl: any) => {
+export const createBaseQueryWithReauth = (baseUrl: any) => {
   const baseQuery = fetchBaseQuery({
     baseUrl: baseUrl,
     //@ts-ignore
     prepareHeaders, //TODO
   });
 
-  let refreshPromise: Promise<any> | null = null; // Track ongoing refresh request
+  let refreshPromise: Promise<any> | null = null; 
 
-  //@ts-ignore
   const baseQueryWithReauth: BaseQueryFn<
     string | FetchArgs,
     unknown,
@@ -52,9 +51,7 @@ export const baseQueryWithReauth = (baseUrl: any) => {
     let result = await baseQuery(args, api, extraOptions);
 
     if (result.error && result.error.status === 401) {
-      // Check if refresh process is ongoing
       if (!refreshPromise) {
-        // Fetch the refresh token
         refreshPromise = (async () => {
           const refreshToken = getRefreshToken();
           if (refreshToken) {
@@ -70,22 +67,19 @@ export const baseQueryWithReauth = (baseUrl: any) => {
             if (refreshResult?.data?.access) {
               api.dispatch(setAccessToken(refreshResult.data));
             } else {
-              // Handle refresh failure
               api.dispatch(logoutUser());
             }
           } else {
             api.dispatch(logoutUser());
           }
-          refreshPromise = null; // Reset the refreshPromise after it completes
+          refreshPromise = null;
         })();
       }
       if (refreshPromise) {
         try {
-            await refreshPromise; // Wait for the refresh to complete
-            // Retry the original request after successful refresh
+            await refreshPromise;
             return result = await baseQuery(args, api, extraOptions);
         } catch (error) {
-            // Handle any errors during the refresh process
         }
     }
   }

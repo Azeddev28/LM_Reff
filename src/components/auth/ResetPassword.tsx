@@ -31,12 +31,15 @@ const SnackbarWrapper = styled.div`
     bottom: 0;
     width: 100%;
     height: 8px;
-    background-color: #01E17B; // Change border color to green
-    border-bottom-left-radius: 10px; // Match border radius of the alert
-    border-bottom-right-radius: 10px; // Match border radius of the alert
+    background-color: #01E17B;
+    border-bottom-left-radius: 10px; 
+    border-bottom-right-radius: 10px; 
   }
 `;
-// a
+
+const SnackbarContainer = styled.div`
+  margin-right: 20px;
+`;
 
 function ResetPassword() {
   const navigate = useNavigate();
@@ -65,7 +68,6 @@ function ResetPassword() {
 
   return (
     <>
-
       <Formik
         initialValues={{
           email: "",
@@ -81,7 +83,7 @@ function ResetPassword() {
           try {
             let email = values.email;
             formData.append("email", email);
-            resetPassword(formData); //TODO add toast for email successfully sent
+            resetPassword(formData);
 
           } catch (error: any) {
             const message = error.message || "Something went wrong";
@@ -142,37 +144,37 @@ function ResetPassword() {
         message={snackbarMessage}
         anchorOrigin={{
           vertical: "top",
-          horizontal: "center",
+          horizontal: "right",
         }}
       >
-        {/* Render the Alert component with the appropriate severity */}
-        <SnackbarWrapper>
-          <Alert
-            action={
-              <React.Fragment>
-                <IconButton
-                  size="small"
-                  aria-label="close"
-                  color="inherit"
-                  onClick={handleCloseSnackbar}
-                >
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              </React.Fragment>
-            }
-            severity={snackbarSeverity}
-          >
-            <span style={{ fontSize: "14px" }}>Email Sent Successfully <br /></span>
-            <span style={{ fontSize: "12px" }}>
-              Reset Password link have been sent to <br />
-              your email successfully
-            </span>
-          </Alert>
-        </SnackbarWrapper>
+        <SnackbarContainer>
+          <SnackbarWrapper>
+            <Alert
+              action={
+                <React.Fragment>
+                  <IconButton
+                    size="small"
+                    aria-label="close"
+                    color="inherit"
+                    onClick={handleCloseSnackbar}
+                  >
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </React.Fragment>
+              }
+              severity={snackbarSeverity}
+            >
+              <span style={{ fontSize: "14px" }}>Email Sent Successfully <br /></span>
+              <span style={{ fontSize: "12px" }}>
+                Reset Password link have been sent to <br />
+                your email successfully
+              </span>
+            </Alert>
+          </SnackbarWrapper>
+        </SnackbarContainer>
       </Snackbar>
 
     </>
-
   );
 }
 
