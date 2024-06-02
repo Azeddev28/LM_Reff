@@ -121,11 +121,11 @@ const PaginatedTable = ({
     setInputPage('')
     dispatch(setCurrentPage(1))
     const targetUrl = new URL(pageData.url)
-    if (orderingValue !== null && orderingValue !== undefined && offset === 0 && !pageData["search"]) { //In case we have just ordering value
+    if (orderingValue !== null && orderingValue !== undefined && offset === 0 && !pageData["search"]) { 
       console.log("In case we have just ordering value")
       targetUrl.searchParams.append("ordering", orderingValue);
     }
-    else if (orderingValue !== null && orderingValue !== undefined && offset === 0 && pageData["search"]) {//In case we already a search string and ordering value is applied
+    else if (orderingValue !== null && orderingValue !== undefined && offset === 0 && pageData["search"]) {
       console.log("In case we already a search string and ordering value is applied")
       targetUrl.searchParams.append("ordering", orderingValue);
       targetUrl.searchParams.append("search", pageData["search"])
@@ -137,23 +137,23 @@ const PaginatedTable = ({
 
   useEffect(() => {
     const targetUrl = new URL(pageData.url)
-    if (offset !== null && offset !== undefined && pageData["search"] && orderingValue === null) { //case where we have a active search string and Input page is changed
+    if (offset !== null && offset !== undefined && pageData["search"] && orderingValue === null) {
       console.log("case where we have a active search string and Input page is changed")
       targetUrl.searchParams.append("offset", offset.toString())
       targetUrl.searchParams.append("search", pageData["search"])
     }
-    else if (offset !== null && offset !== undefined && orderingValue !== null && !pageData["search"] && inputPage !== '') { //case where we have a active ordering value and input page is changed
+    else if (offset !== null && offset !== undefined && orderingValue !== null && !pageData["search"] && inputPage !== '') {
       console.log("case where we have a active ordering value and input page is changed")
       targetUrl.searchParams.append("offset", offset.toString())
       targetUrl.searchParams.append("ordering", orderingValue);
     }
-    else if (offset !== null && offset !== undefined && orderingValue !== null && pageData["search"]) { //case where we have a active ordering value and active page searxh and input page is changed or reset
+    else if (offset !== null && offset !== undefined && orderingValue !== null && pageData["search"]) { 
       console.log("case where we have a active ordering value and active page searxh and input page is changed or reset")
       targetUrl.searchParams.append("offset", offset.toString())
       targetUrl.searchParams.append("ordering", orderingValue);
       targetUrl.searchParams.append("search", pageData["search"])
     }
-    else if (!pageData["search"] && !orderingValue && offset !== 0) { // In case we have a input page (inputPage) 
+    else if (!pageData["search"] && !orderingValue && offset !== 0) { 
       console.log("In case we have a input page (inputPage)")
       targetUrl.searchParams.append("offset", offset.toString())
     }
@@ -168,20 +168,20 @@ const PaginatedTable = ({
     setOffset(0)
     setInputPage('')
     dispatch(setCurrentPage(1))
-    if (pageData["search"] !== null && pageData["search"] !== undefined && !orderingValue) { //Case where search string is added or removed
+    if (pageData["search"] !== null && pageData["search"] !== undefined && !orderingValue) { 
       console.log("Case where search string is added or removed")
       targetUrl.searchParams.append("search", pageData["search"]);
     }
-    else if (pageData["search"] !== null && pageData["search"] !== undefined && orderingValue) { //Case where we already have an active ordering value and search string is added
+    else if (pageData["search"] !== null && pageData["search"] !== undefined && orderingValue) { 
       console.log("Case where we already have an active ordering value and search string is added")
       targetUrl.searchParams.append("search", pageData["search"]);
       targetUrl.searchParams.append("ordering", orderingValue);
     }
-    else if (!pageData["search"] && orderingValue !== null) { //case where ordering value was there search string was applied and now removed
+    else if (!pageData["search"] && orderingValue !== null) { 
       console.log("ase where ordering value was there search string was applied and now removed")
       targetUrl.searchParams.append("ordering", orderingValue);
     }
-    else if (!pageData["search"]) { //Case where search string is reset or first render
+    else if (!pageData["search"]) { 
       console.log("Case where search string is reset or first render")
       targetUrl.searchParams.append("offset", offset.toString())
     }
@@ -250,10 +250,10 @@ const PaginatedTable = ({
       const newOffset = (newPage - 1) * ROWS_PER_PAGE;
       setOffset(newOffset);
       dispatch(setCurrentPage(newPage));
-      setInputPage(''); // Clear input after search
-      setShowAlert(false); // Hide alert if it was previously shown
+      setInputPage(''); 
+      setShowAlert(false); 
     } else {
-      setShowAlert(true); // Show alert if the page doesn't exist
+      setShowAlert(true); 
     }
   };
 
