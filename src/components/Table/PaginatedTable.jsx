@@ -65,17 +65,18 @@ const SearchBox = styled("div")(({ theme }) => ({
   padding: "2px 8px",
 }));
 
-const PageNumber = styled(Box)(({ theme }) => ({
-  backgroundColor: "#1976d2",
-  color: "white",
+const PageNumber = styled(Box)(({ theme, isHighlighted }) => ({
+  backgroundColor: isHighlighted ? "#1976d2" : "transparent",
+  color: isHighlighted ? "white" : "black",
   padding: "4px 8px",
   borderRadius: "4px",
   minWidth: "24px",
   textAlign: "center",
 }));
 
-const PageNumberWithoutBackground = styled(Box)(({ theme }) => ({
-  color: "black",
+const PageNumberWithoutBackground = styled(Box)(({ theme, isHighlighted }) => ({
+  color: isHighlighted ? "white" : "black",
+  backgroundColor: isHighlighted ? "#1976d2" : "transparent",
   padding: "4px 8px",
   borderRadius: "4px",
   minWidth: "24px",
@@ -121,7 +122,7 @@ const PaginatedTable = ({
     setInputPage('')
     dispatch(setCurrentPage(1))
     const targetUrl = new URL(pageData.url)
-    if (orderingValue !== null && orderingValue !== undefined && offset === 0 && !pageData["search"]) { 
+    if (orderingValue !== null && orderingValue !== undefined && offset === 0 && !pageData["search"]) {
       console.log("In case we have just ordering value")
       targetUrl.searchParams.append("ordering", orderingValue);
     }
@@ -147,13 +148,13 @@ const PaginatedTable = ({
       targetUrl.searchParams.append("offset", offset.toString())
       targetUrl.searchParams.append("ordering", orderingValue);
     }
-    else if (offset !== null && offset !== undefined && orderingValue !== null && pageData["search"]) { 
+    else if (offset !== null && offset !== undefined && orderingValue !== null && pageData["search"]) {
       console.log("case where we have a active ordering value and active page searxh and input page is changed or reset")
       targetUrl.searchParams.append("offset", offset.toString())
       targetUrl.searchParams.append("ordering", orderingValue);
       targetUrl.searchParams.append("search", pageData["search"])
     }
-    else if (!pageData["search"] && !orderingValue && offset !== 0) { 
+    else if (!pageData["search"] && !orderingValue && offset !== 0) {
       console.log("In case we have a input page (inputPage)")
       targetUrl.searchParams.append("offset", offset.toString())
     }
@@ -168,20 +169,20 @@ const PaginatedTable = ({
     setOffset(0)
     setInputPage('')
     dispatch(setCurrentPage(1))
-    if (pageData["search"] !== null && pageData["search"] !== undefined && !orderingValue) { 
+    if (pageData["search"] !== null && pageData["search"] !== undefined && !orderingValue) {
       console.log("Case where search string is added or removed")
       targetUrl.searchParams.append("search", pageData["search"]);
     }
-    else if (pageData["search"] !== null && pageData["search"] !== undefined && orderingValue) { 
+    else if (pageData["search"] !== null && pageData["search"] !== undefined && orderingValue) {
       console.log("Case where we already have an active ordering value and search string is added")
       targetUrl.searchParams.append("search", pageData["search"]);
       targetUrl.searchParams.append("ordering", orderingValue);
     }
-    else if (!pageData["search"] && orderingValue !== null) { 
+    else if (!pageData["search"] && orderingValue !== null) {
       console.log("ase where ordering value was there search string was applied and now removed")
       targetUrl.searchParams.append("ordering", orderingValue);
     }
-    else if (!pageData["search"]) { 
+    else if (!pageData["search"]) {
       console.log("Case where search string is reset or first render")
       targetUrl.searchParams.append("offset", offset.toString())
     }
@@ -236,24 +237,24 @@ const PaginatedTable = ({
     setOffset(0);
     setInputPage('')
     setTimeout(() => {
-      refetch();
-    }, 500);
+      dispatch(setCurrentPage(1));
+    }, 1000)
   };
 
-  const handleInputChange = (e) => {
-    setInputPage(e.target.value);
+  const handleInputChange = (event) => {
+    setInputPage(event.target.value);
   };
 
   const handleSearchClick = () => {
     const newPage = parseInt(inputPage, 10);
-    if (newPage > 0 && newPage <= totalPages) {
+    if (!isNaN(newPage) && newPage > 0 && newPage <= totalPages) {
       const newOffset = (newPage - 1) * ROWS_PER_PAGE;
       setOffset(newOffset);
       dispatch(setCurrentPage(newPage));
-      setInputPage(''); 
-      setShowAlert(false); 
+      setInputPage('');
+      setShowAlert(false);
     } else {
-      setShowAlert(true); 
+      setShowAlert(true);
     }
   };
 
@@ -384,29 +385,7 @@ const PaginatedTable = ({
           </Table>
         </TableContainer>
         <Pagination>
-          <SearchBox style={{ height: "30px", marginRight: "30px" }}>
-            <TextField
-              variant="standard"
-              placeholder="Page"
-              value={inputPage}
-              onChange={handleInputChange}
-              onKeyPress={(event) => {
-                if (event.key === 'Enter') {
-                  handleSearchClick();
-                }
-              }}
-              InputProps={{
-                disableUnderline: true,
-                startAdornment: (
-                  <SearchIcon
-                    style={{ marginRight: "4px", color: "#2F65CB", cursor: "pointer" }}
-                    onClick={handleSearchClick}
-                  />
-                ),
-              }}
-              style={{ width: "50px", fontSize: "12px", padding: "2px 4px" }}
-            />
-          </SearchBox>
+
           <IconButton
             disabled={currentPage === 1}
             style={{
@@ -426,14 +405,57 @@ const PaginatedTable = ({
           </IconButton>
 
           <Box mx={0.5} style={{ display: "flex", alignItems: "center" }}>
-            <PageNumber>{currentPage}</PageNumber>
+            {/* left page */}
+            <PageNumber isHighlighted={currentPage === 1}>1</PageNumber>
+
+            {/* mid page */}
+            {totalPages > 2 && (
+              <PageNumber isHighlighted={!((currentPage === 1) || (currentPage === totalPages))}>
+                {currentPage === 1 ? currentPage + 1 : currentPage === totalPages ? totalPages - 1 : currentPage}
+              </PageNumber>
+            )}
+
+            <SearchBox style={{ height: "30px", marginRight: "10px", marginLeft: "10px" }}>
+              <TextField
+                variant="standard"
+                placeholder="Page"
+                value={inputPage}
+                onChange={handleInputChange}
+                onKeyPress={(event) => {
+                  if (event.key === 'Enter') {
+                    handleSearchClick();
+                  }
+                }}
+                InputProps={{
+                  disableUnderline: true,
+                  startAdornment: (
+                    <SearchIcon
+                      style={{ marginRight: "4px", color: "#2F65CB", cursor: "pointer" }}
+                      onClick={handleSearchClick}
+                    />
+                  ),
+                }}
+                style={{ width: "50px", fontSize: "12px", padding: "2px 4px" }}
+              />
+            </SearchBox>
+
+            <Typography style={{marginRight: "10px"}}>.......</Typography>
+
+            {/* right page */}
+            {totalPages > 2 && (
+              <>
+                {currentPage === totalPages ? (
+                  <PageNumberWithoutBackground isHighlighted={true}>{totalPages}</PageNumberWithoutBackground>
+                ) : (
+                  <PageNumber isHighlighted={false}>{totalPages}</PageNumber>
+                )}
+              </>
+            )}
           </Box>
 
-          {currentPage < totalPages && (
-            <Box mx={0.5} style={{ display: "flex", alignItems: "center" }}>
-              <PageNumberWithoutBackground>{currentPage + 1}</PageNumberWithoutBackground>
-            </Box>
-          )}
+
+
+
 
           <IconButton
             style={{
