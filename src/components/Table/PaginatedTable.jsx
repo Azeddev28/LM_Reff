@@ -12,13 +12,14 @@ import {
   IconButton,
   Typography,
   TextField,
+  Alert,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import SearchIcon from "@mui/icons-material/Search";
 import styled from "@emotion/styled";
-import { useSelector , useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import upSvg from '/sorting-up.svg?url';
 import downSvg from '/sorting-down.svg?url';
@@ -39,6 +40,7 @@ const Pagination = styled("div")(({ }) => ({
   flexDirection: "row",
   height: "40px",
   gap: "0px",
+  padding: "30px 0px",
 }));
 
 const Header = styled("div")(({ }) => ({
@@ -63,6 +65,24 @@ const SearchBox = styled("div")(({ theme }) => ({
   padding: "2px 8px",
 }));
 
+const PageNumber = styled(Box)(({ theme, isHighlighted }) => ({
+  backgroundColor: isHighlighted ? "#1976d2" : "transparent",
+  color: isHighlighted ? "white" : "black",
+  padding: "4px 8px",
+  borderRadius: "4px",
+  minWidth: "24px",
+  textAlign: "center",
+}));
+
+const PageNumberWithoutBackground = styled(Box)(({ theme, isHighlighted }) => ({
+  color: isHighlighted ? "white" : "black",
+  backgroundColor: isHighlighted ? "#1976d2" : "transparent",
+  padding: "4px 8px",
+  borderRadius: "4px",
+  minWidth: "24px",
+  textAlign: "center",
+}));
+
 const PaginatedTable = ({
   headerData,
   pageData,
@@ -70,30 +90,22 @@ const PaginatedTable = ({
   redirectToDetailPage,
 }) => {
 
-
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch= useDispatch()
+  const dispatch = useDispatch()
 
   const currentPage = useSelector((state) => state.referral.page);
 
   const [orderingValue, setOrderingValue] = useState(null);
   const [url, setUrl] = useState(pageData.url);
-  const [loading, setLoading] = useState(false); 
-  const { data , isLoading, refetch } = query(url);
+  const [loading, setLoading] = useState(false);
+  const { data, isLoading, refetch } = query(url);
   const ROWS_PER_PAGE = 15;
   const [offset, setOffset] = useState((currentPage - 1) * 15);
 
   const [totalPages, setTotalPages] = useState(0);
-  const [inputPage, setInputPage] = useState(''); 
-
-
-  // useEffect(() => {
-  //   if (pageData.search || orderingValue || offset !==null) {
-  //     const targetUrl = generateUrl();
-  //     setUrl(targetUrl);
-  //   }
-  // }, [ pageData.search, orderingValue, offset]); 
+  const [inputPage, setInputPage] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     if (data?.count) {
@@ -101,83 +113,83 @@ const PaginatedTable = ({
     }
   }, [data]);
 
-  useEffect(()=>{
-    return()=>dispatch(setCurrentPage(1))
-  },[])
+  useEffect(() => {
+    return () => dispatch(setCurrentPage(1))
+  }, [])
 
-    useEffect(()=>{
-      setOffset(0)
-      setInputPage('')
-      dispatch(setCurrentPage(1))
-      const targetUrl = new URL(pageData.url)
-      if (orderingValue !== null && orderingValue !== undefined && offset === 0 && !pageData["search"]) { //In case we have just ordering value
-        console.log("In case we have just ordering value")
-        targetUrl.searchParams.append("ordering", orderingValue);
-      }
-      else if(orderingValue !== null && orderingValue !== undefined && offset === 0 && pageData["search"] ) {//In case we already a search string and ordering value is applied
-        console.log("In case we already a search string and ordering value is applied")
-        targetUrl.searchParams.append("ordering", orderingValue);
-        targetUrl.searchParams.append("search", pageData["search"])
-      }
-      console.log("url in orderingValue",targetUrl.toString())
-      setUrl(targetUrl.toString())
-    },[orderingValue])
-
-
-    useEffect(()=>{
-      const targetUrl = new URL(pageData.url)
-      if (offset !== null && offset !== undefined  && pageData["search"] && orderingValue === null) { //case where we have a active search string and Input page is changed
-        console.log("case where we have a active search string and Input page is changed")
-        targetUrl.searchParams.append("offset", offset.toString())
-        targetUrl.searchParams.append("search", pageData["search"])
-      }
-      else if (offset !== null && offset !== undefined  && orderingValue !==null && !pageData["search"] && inputPage !=='') { //case where we have a active ordering value and input page is changed
-        console.log("case where we have a active ordering value and input page is changed")
-        targetUrl.searchParams.append("offset", offset.toString())
-        targetUrl.searchParams.append("ordering", orderingValue);
-      }
-      else if (offset !== null && offset !== undefined  && orderingValue !==null && pageData["search"]) { //case where we have a active ordering value and active page searxh and input page is changed or reset
-        console.log("case where we have a active ordering value and active page searxh and input page is changed or reset")
-        targetUrl.searchParams.append("offset", offset.toString())
-        targetUrl.searchParams.append("ordering", orderingValue);
-        targetUrl.searchParams.append("search", pageData["search"])
-      }
-      else if(!pageData["search"] && !orderingValue && offset !==0){ // In case we have a input page (inputPage) 
-        console.log("In case we have a input page (inputPage)")
-        targetUrl.searchParams.append("offset", offset.toString())
-      }
-      console.log("url in offset",targetUrl.toString())
-      setUrl(targetUrl.toString())
-    },[offset])
+  useEffect(() => {
+    setOffset(0)
+    setInputPage('')
+    dispatch(setCurrentPage(1))
+    const targetUrl = new URL(pageData.url)
+    if (orderingValue !== null && orderingValue !== undefined && offset === 0 && !pageData["search"]) {
+      console.log("In case we have just ordering value")
+      targetUrl.searchParams.append("ordering", orderingValue);
+    }
+    else if (orderingValue !== null && orderingValue !== undefined && offset === 0 && pageData["search"]) {
+      console.log("In case we already a search string and ordering value is applied")
+      targetUrl.searchParams.append("ordering", orderingValue);
+      targetUrl.searchParams.append("search", pageData["search"])
+    }
+    console.log("url in orderingValue", targetUrl.toString())
+    setUrl(targetUrl.toString())
+  }, [orderingValue])
 
 
-    
-    useEffect(()=>{
-      const targetUrl = new URL(pageData.url)
-      setOffset(0)
-      setInputPage('')
-      dispatch(setCurrentPage(1))
-      if (pageData["search"] !== null && pageData["search"] !== undefined && !orderingValue) { //Case where search string is added or removed
-        console.log("Case where search string is added or removed")
-      targetUrl.searchParams.append("search", pageData["search"]);
-      }
-      else if (pageData["search"] !== null && pageData["search"] !== undefined && orderingValue) { //Case where we already have an active ordering value and search string is added
-        console.log("Case where we already have an active ordering value and search string is added") 
-        targetUrl.searchParams.append("search", pageData["search"]);
-        targetUrl.searchParams.append("ordering", orderingValue);
-        }
-      else if(!pageData["search"] && orderingValue !==null){ //case where ordering value was there search string was applied and now removed
-          console.log("ase where ordering value was there search string was applied and now removed")
-          targetUrl.searchParams.append("ordering", orderingValue);
-        }
-      else if(!pageData["search"]){ //Case where search string is reset or first render
-        console.log("Case where search string is reset or first render")
+  useEffect(() => {
+    const targetUrl = new URL(pageData.url)
+    if (offset !== null && offset !== undefined && pageData["search"] && orderingValue === null) {
+      console.log("case where we have a active search string and Input page is changed")
       targetUrl.searchParams.append("offset", offset.toString())
-      }
-      console.log("url in pageData",targetUrl.toString())
-      setUrl(targetUrl.toString())
-    
-    },[pageData.search])
+      targetUrl.searchParams.append("search", pageData["search"])
+    }
+    else if (offset !== null && offset !== undefined && orderingValue !== null && !pageData["search"] && inputPage !== '') {
+      console.log("case where we have a active ordering value and input page is changed")
+      targetUrl.searchParams.append("offset", offset.toString())
+      targetUrl.searchParams.append("ordering", orderingValue);
+    }
+    else if (offset !== null && offset !== undefined && orderingValue !== null && pageData["search"]) {
+      console.log("case where we have a active ordering value and active page searxh and input page is changed or reset")
+      targetUrl.searchParams.append("offset", offset.toString())
+      targetUrl.searchParams.append("ordering", orderingValue);
+      targetUrl.searchParams.append("search", pageData["search"])
+    }
+    else if (!pageData["search"] && !orderingValue && offset !== 0) {
+      console.log("In case we have a input page (inputPage)")
+      targetUrl.searchParams.append("offset", offset.toString())
+    }
+    console.log("url in offset", targetUrl.toString())
+    setUrl(targetUrl.toString())
+  }, [offset])
+
+
+
+  useEffect(() => {
+    const targetUrl = new URL(pageData.url)
+    setOffset(0)
+    setInputPage('')
+    dispatch(setCurrentPage(1))
+    if (pageData["search"] !== null && pageData["search"] !== undefined && !orderingValue) {
+      console.log("Case where search string is added or removed")
+      targetUrl.searchParams.append("search", pageData["search"]);
+    }
+    else if (pageData["search"] !== null && pageData["search"] !== undefined && orderingValue) {
+      console.log("Case where we already have an active ordering value and search string is added")
+      targetUrl.searchParams.append("search", pageData["search"]);
+      targetUrl.searchParams.append("ordering", orderingValue);
+    }
+    else if (!pageData["search"] && orderingValue !== null) {
+      console.log("ase where ordering value was there search string was applied and now removed")
+      targetUrl.searchParams.append("ordering", orderingValue);
+    }
+    else if (!pageData["search"]) {
+      console.log("Case where search string is reset or first render")
+      targetUrl.searchParams.append("offset", offset.toString())
+    }
+    console.log("url in pageData", targetUrl.toString())
+    setUrl(targetUrl.toString())
+
+  }, [pageData.search])
 
 
   const extractKeys = () => {
@@ -187,23 +199,8 @@ const PaginatedTable = ({
     });
     return Array.from(new Set(keys));
   };
-  
-  const keys = extractKeys();
 
-  // const generateUrl = () => {
-  //   const targetUrl = new URL(pageData.url);
-  //     if (pageData["search"] !== null && pageData["search"] !== undefined) {
-  //     targetUrl.searchParams.append("search", pageData["search"]);
-  //     setOffset(0)
-  //   }
-  //   if (orderingValue !== null && orderingValue !== undefined) {
-  //     targetUrl.searchParams.append("ordering", orderingValue);
-  //   }
-  //     if (offset !== null && offset !== undefined) {
-  //     targetUrl.searchParams.append("offset", offset.toString());
-  //   }
-  //   return targetUrl.toString();
-  // };
+  const keys = extractKeys();
 
   const extractRowValues = (obj, keys) => {
     return keys
@@ -221,7 +218,7 @@ const PaginatedTable = ({
     if (data?.previous) {
       setUrl(data.previous);
       const newPage = currentPage - 1;
-      dispatch(setCurrentPage(newPage)); 
+      dispatch(setCurrentPage(newPage));
       setInputPage('')
     }
   };
@@ -230,29 +227,34 @@ const PaginatedTable = ({
     if (data?.next) {
       setUrl(data.next);
       const newPage = currentPage + 1;
-      dispatch(setCurrentPage(newPage)); 
+      dispatch(setCurrentPage(newPage));
       setInputPage('')
     }
   };
 
-  const handleSortClick = (sortKey) => {
-    setLoading(true); 
-    setOrderingValue(sortKey);
+  const handleSortClick = (key) => {
+    setOrderingValue(key);
+    setOffset(0);
+    setInputPage('')
     setTimeout(() => {
-      setLoading(false); 
-    }, 500); 
+      dispatch(setCurrentPage(1));
+    }, 1000)
   };
 
-  const handleInputChange = (e) => {
-    setInputPage(e.target.value);
+  const handleInputChange = (event) => {
+    setInputPage(event.target.value);
   };
 
   const handleSearchClick = () => {
     const newPage = parseInt(inputPage, 10);
-     if (newPage > 0 && newPage <= totalPages) {
+    if (!isNaN(newPage) && newPage > 0 && newPage <= totalPages) {
       const newOffset = (newPage - 1) * ROWS_PER_PAGE;
       setOffset(newOffset);
-      dispatch(setCurrentPage(inputPage))
+      dispatch(setCurrentPage(newPage));
+      setInputPage('');
+      setShowAlert(false);
+    } else {
+      setShowAlert(true);
     }
   };
 
@@ -276,156 +278,200 @@ const PaginatedTable = ({
       <CircularProgress size={"7rem"} />
     </ProgressWrapper>
   ) : (
-    <Paper>
-      <TableContainer sx={{ marginTop: '-20px', border: '1px solid #F1F1F2' }}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead sx={{ backgroundColor: '#F9F9F9' }}>
-            <TableRow>
-              {headerData.map((columnInfo) => (
-                <TableCell key={columnInfo.key} sx={{ minWidth: 150 }}>
-                  <Header style={{ fontSize: "13px", color: "#7E8299", fontWeight: "600" }}>
-                    {columnInfo.display}
-                    <Sorter>
-                      <img
-                        src={downSvg}
-                        alt="Sort Ascending"
-                        style={{
-                          cursor: 'pointer',
-                          height: '7px',
-                          width: '14px',
-                          transition: 'height 0.3s, width 0.3s',
-                        }}
-                        onMouseOver={(e) => {
-                          e.target.style.height = '10px';
-                        }}
-                        onMouseOut={(e) => {
-                          e.target.style.height = '7px';
-                        }}
-                        onClick={() => {
-                          handleSortClick(columnInfo.sortKey);
-                        }}
-                      />
-                      <img
-                        src={upSvg}
-                        alt="Sort Descending"
-                        style={{
-                          cursor: 'pointer',
-                          height: '7px',
-                          width: '14px',
-                          transition: 'height 0.3s, width 0.3s',
-                        }}
-                        onMouseOver={(e) => {
-                          e.target.style.height = '10px';
-                        }}
-                        onMouseOut={(e) => {
-                          e.target.style.height = '7px';
-                        }}
-                        onClick={() => {
-                          handleSortClick(`-${columnInfo.sortKey}`);
-                        }}
-                      />
-                    </Sorter>
-                  </Header>
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-
-          <TableBody>
-            {data?.count > 0 ? (
-              <>
-                {getDisplayedRows().map((obj, index) => (
-                  <StyledRow
-                    key={index}
-                    redirectToDetailPage={redirectToDetailPage}
-                    style={{
-                      cursor: redirectToDetailPage ? "pointer" : "default",
-                    }}
-                    onClick={() => {
-                      if (redirectToDetailPage) {
-                        handleDetailPage(obj);
-                      }
-                    }}
-                  >
-                    {extractRowValues(obj, keys)?.map(
-                      (item, index) =>
-                        item.key !== "uuid" && (
-                          <TableCell key={index} style={{ color: "#A1A5B7", fontWeight: "600", fontSize: "12px" }}>{item.value}</TableCell>
-                        )
-                    )}
-                  </StyledRow>
-                ))}
-              </>
-            ) : (
-              <TableRow
-                variant="h4"
-                style={{ margin: "20px auto", textAlign: "center", }}
-              >
-                <TableCell
-                  colSpan={headerData.length}
-                  style={{ textAlign: "center" }}
-                >
-                  <Typography variant="h6">No Record Found</Typography>
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Pagination>
-        <IconButton
-          disabled={currentPage===1}
-          style={{
-            cursor: "pointer",
-            color: !data?.previous ? "#BDBDBD" : "inherit",
-            height: "16px",
-            width: "16px",
-          }}
-          onClick={handleClickPrevious}
+    <>
+      {showAlert && (
+        <Alert
+          onClose={() => setShowAlert(false)}
+          severity="error"
+          sx={{ position: 'fixed', top: '40px', left: '50%', transform: 'translateX(-50%)', zIndex: 1000 }}
         >
-          <ArrowBackIosNewIcon
+          Page doesn't exist, Maximum number of page is {totalPages}
+        </Alert>
+      )}
+      <Paper>
+        <TableContainer sx={{ marginTop: '-20px', border: '1px solid #F1F1F2' }}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead sx={{ backgroundColor: '#F9F9F9' }}>
+              <TableRow>
+                {headerData.map((columnInfo) => (
+                  <TableCell key={columnInfo.key} sx={{ minWidth: 150 }}>
+                    <Header style={{ fontSize: "13px", color: "#7E8299", fontWeight: "600" }}>
+                      {columnInfo.display}
+                      <Sorter>
+                        <img
+                          src={downSvg}
+                          alt="Sort Ascending"
+                          style={{
+                            cursor: 'pointer',
+                            height: '7px',
+                            width: '14px',
+                            transition: 'height 0.3s, width 0.3s',
+                          }}
+                          onMouseOver={(e) => {
+                            e.target.style.height = '10px';
+                          }}
+                          onMouseOut={(e) => {
+                            e.target.style.height = '7px';
+                          }}
+                          onClick={() => {
+                            handleSortClick(columnInfo.sortKey);
+                          }}
+                        />
+                        <img
+                          src={upSvg}
+                          alt="Sort Descending"
+                          style={{
+                            cursor: 'pointer',
+                            height: '7px',
+                            width: '14px',
+                            transition: 'height 0.3s, width 0.3s',
+                          }}
+                          onMouseOver={(e) => {
+                            e.target.style.height = '10px';
+                          }}
+                          onMouseOut={(e) => {
+                            e.target.style.height = '7px';
+                          }}
+                          onClick={() => {
+                            handleSortClick(`-${columnInfo.sortKey}`);
+                          }}
+                        />
+                      </Sorter>
+                    </Header>
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+
+            <TableBody>
+              {data?.count > 0 ? (
+                <>
+                  {getDisplayedRows().map((obj, index) => (
+                    <StyledRow
+                      key={index}
+                      redirectToDetailPage={redirectToDetailPage}
+                      style={{
+                        cursor: redirectToDetailPage ? "pointer" : "default",
+                      }}
+                      onClick={() => {
+                        if (redirectToDetailPage) {
+                          handleDetailPage(obj);
+                        }
+                      }}
+                    >
+                      {extractRowValues(obj, keys)?.map(
+                        (item, index) =>
+                          item.key !== "uuid" && (
+                            <TableCell key={index} style={{ color: "#A1A5B7", fontWeight: "600", fontSize: "12px" }}>{item.value}</TableCell>
+                          )
+                      )}
+                    </StyledRow>
+                  ))}
+                </>
+              ) : (
+                <TableRow
+                  variant="h4"
+                  style={{ margin: "20px auto", textAlign: "center", }}
+                >
+                  <TableCell
+                    colSpan={headerData.length}
+                    style={{ textAlign: "center" }}
+                  >
+                    <Typography variant="h6">No Record Found</Typography>
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Pagination>
+
+          <IconButton
+            disabled={currentPage === 1}
             style={{
+              cursor: "pointer",
+              color: !data?.previous ? "#BDBDBD" : "inherit",
               height: "16px",
               width: "16px",
             }}
-          />
-        </IconButton>
+            onClick={handleClickPrevious}
+          >
+            <ArrowBackIosNewIcon
+              style={{
+                height: "16px",
+                width: "16px",
+              }}
+            />
+          </IconButton>
 
-        <Box mx={2}>{`Page ${currentPage} of`}</Box> 
-        <SearchBox>
-          <TextField
-            variant="standard"
-            placeholder="Page"
-            value={inputPage}
-            onChange={handleInputChange}
-            InputProps={{
-              disableUnderline: true,
-              startAdornment: (
-                <SearchIcon
-                  style={{ marginRight: "4px", color: "#BDBDBD", cursor: "pointer" }}
-                  onClick={handleSearchClick}
-                />
-              ),
+          <Box mx={0.5} style={{ display: "flex", alignItems: "center" }}>
+            {/* left page */}
+            <PageNumber isHighlighted={currentPage === 1}>1</PageNumber>
+
+            {/* mid page */}
+            {totalPages > 2 && (
+              <PageNumber isHighlighted={!((currentPage === 1) || (currentPage === totalPages))}>
+                {currentPage === 1 ? currentPage + 1 : currentPage === totalPages ? totalPages - 1 : currentPage}
+              </PageNumber>
+            )}
+
+            <SearchBox style={{ height: "30px", marginRight: "10px", marginLeft: "10px" }}>
+              <TextField
+                variant="standard"
+                placeholder="Page"
+                value={inputPage}
+                onChange={handleInputChange}
+                onKeyPress={(event) => {
+                  if (event.key === 'Enter') {
+                    handleSearchClick();
+                  }
+                }}
+                InputProps={{
+                  disableUnderline: true,
+                  startAdornment: (
+                    <SearchIcon
+                      style={{ marginRight: "4px", color: "#2F65CB", cursor: "pointer" }}
+                      onClick={handleSearchClick}
+                    />
+                  ),
+                }}
+                style={{ width: "50px", fontSize: "12px", padding: "2px 4px" }}
+              />
+            </SearchBox>
+
+            <Typography style={{marginRight: "10px"}}>.......</Typography>
+
+            {/* right page */}
+            {totalPages > 2 && (
+              <>
+                {currentPage === totalPages ? (
+                  <PageNumberWithoutBackground isHighlighted={true}>{totalPages}</PageNumberWithoutBackground>
+                ) : (
+                  <PageNumber isHighlighted={false}>{totalPages}</PageNumber>
+                )}
+              </>
+            )}
+          </Box>
+
+
+
+
+
+          <IconButton
+            style={{
+              cursor: "pointer",
+              color: !data?.next ? "#BDBDBD" : "inherit",
+              height: "16px",
+              width: "16px",
             }}
-            style={{ width: "50px", fontSize: "12px", padding: "2px 4px" }}
-          />
-        </SearchBox>
-        <Box mx={2}>{`${totalPages}`}</Box>
-
-        <IconButton
-          style={{
-            cursor: "pointer",
-            color: !data?.next ? "#BDBDBD" : "inherit",
-            height: "16px",
-            width: "16px",
-          }}
-          disabled={currentPage===totalPages}
-          onClick={handleClickNext}
-        >
-          <ArrowForwardIosIcon style={{ height: "16px", width: "16px" }} />
-        </IconButton>
-      </Pagination>
-    </Paper>
+            disabled={currentPage === totalPages}
+            onClick={handleClickNext}
+          >
+            <ArrowForwardIosIcon style={{ height: "16px", width: "16px" }} />
+          </IconButton>
+        </Pagination>
+      </Paper>
+    </>
   );
 };
 
