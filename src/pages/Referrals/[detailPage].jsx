@@ -30,7 +30,6 @@ const Footer = ({ handleSubmitChanges, data }) => (
     bottom: 0,
     width: '100%',
     textAlign: 'center',
-    padding: '10px',
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
