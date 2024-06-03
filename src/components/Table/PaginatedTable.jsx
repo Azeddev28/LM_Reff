@@ -452,11 +452,6 @@ const PaginatedTable = ({
             </Box>
           )}
 
-
-
-
-
-
           <IconButton
             style={{
               cursor: "pointer",
