@@ -7,24 +7,30 @@ import { useLoginMutation } from "../../redux/slices/authSlice";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Alert from "@mui/material/Alert";
-
 import { setAccessToken } from "../../redux/slices/authSlice";
 import {
-  Checkbox,
-  FormControlLabel,
   Button,
   TextField as MuiTextField,
   Snackbar,
+  CircularProgress
 } from "@mui/material";
 import { spacing } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
 const TextField = styled(MuiTextField)(({ }) => ({
   margin: "16px 0px",
 }));
 
+const ButtonContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px; /* Set a fixed width to ensure consistency */
+`;
+
 function SignIn() {
   const dispatch = useDispatch();
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const [
     login,
     { data: loginData, isSuccess: loginSuccessFull, isError: loginError },
@@ -34,19 +40,19 @@ function SignIn() {
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
-
   useEffect(() => {
     if (loginSuccessFull) {
       dispatch(setAccessToken(loginData));
       setSnackbarMessage("Successfully logged in");
       setSnackbarOpen(true);
       setSnackbarSeverity("success"); 
+      navigate('/dashboard'); // Navigate to the dashboard or any other page
     } else if (loginError) {
       setSnackbarMessage("Invalid credentials");
       setSnackbarOpen(true);
       setSnackbarSeverity("error");
     }
-  }, [loginSuccessFull, loginError]);
+  }, [loginSuccessFull, loginError, dispatch, loginData, navigate]);
 
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
@@ -69,9 +75,14 @@ function SignIn() {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            login({ email: values.email, password: values.password });
+            await login({ email: values.email, password: values.password });
+            setStatus({ success: true });
+            setSubmitting(false);
           } catch (error) {
             console.log("Error", error);
+            setStatus({ success: false });
+            setErrors({ submit: error.message });
+            setSubmitting(false);
           }
         }}
       >
@@ -125,7 +136,9 @@ function SignIn() {
               color="primary"
               disabled={isSubmitting}
             >
-              Login
+              <ButtonContent>
+                {isSubmitting ? <CircularProgress size={24} /> : "Login"}
+              </ButtonContent>
             </Button>
             <Button
               component={Link}

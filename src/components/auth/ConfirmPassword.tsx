@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -7,46 +7,43 @@ import {
   useConfirmPasswordMutation,
   useValidatePasswordMutation,
 } from "../../redux/slices/authSlice";
-
 import {
   Alert as MuiAlert,
   Button,
   TextField as MuiTextField,
   Snackbar,
   IconButton,
-  InputAdornment
+  InputAdornment,
+  CircularProgress,
+  Fade,
 } from "@mui/material";
 import { spacing } from "@mui/system";
-import { useParams } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { Fade } from "@mui/material";
 
 interface ConfirmPasswordBody {
   new_password1: string;
   new_password2: string;
 }
 
-
 const SnackbarWrapper = styled.div`
   position: relative;
   &:after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
     height: 8px;
-    background-color: #01E17B;
-    border-bottom-left-radius: 10px; 
-    border-bottom-right-radius: 10px; 
+    background-color: #01e17b;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 `;
 
-
 const Alert = styled(MuiAlert)(spacing, {
-  backgroundColor: "white", 
+  backgroundColor: "white",
   borderRadius: "10px",
 });
 
@@ -54,8 +51,14 @@ const SnackbarContainer = styled.div`
   margin-right: 20px;
 `;
 
-
 const TextField = styled(MuiTextField)<{ my?: number }>(spacing);
+
+const ButtonContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px; /* Set a fixed width to ensure consistency */
+`;
 
 function ConfirmPassword() {
   const params = useParams();
@@ -66,7 +69,7 @@ function ConfirmPassword() {
       data: confirmPasswordData,
       isSuccess: confirmPasswordSuccess,
       isError: confirmPasswordError,
-      error: confirmPasswordMutationError
+      error: confirmPasswordMutationError,
     },
   ] = useConfirmPasswordMutation();
   const [validatePassword, { data, isSuccess, isError }] =
@@ -77,6 +80,7 @@ function ConfirmPassword() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
   const [snackbarSeverity, setSnackbarSeverity] = useState<any>("success");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
@@ -93,19 +97,20 @@ function ConfirmPassword() {
 
   useEffect(() => {
     validatePassword(params);
-  }, []);
+  }, [params, validatePassword]);
 
   useEffect(() => {
     if (isError) {
       navigate("/404");
     }
-  }, [isError]);
+  }, [isError, navigate]);
 
   useEffect(() => {
     if (confirmPasswordSuccess) {
       setSnackbarMessage("Password Changed Successfully");
       setSnackbarOpen(true);
       setSnackbarSeverity("success");
+      setIsSubmitting(false);
       setTimeout(() => {
         navigate("/auth/sign-in");
       }, 1000);
@@ -115,8 +120,9 @@ function ConfirmPassword() {
       setSnackbarMessage(confirmPasswordMutationError?.data?.new_password2 ? confirmPasswordMutationError?.data?.new_password2 : "Something Went Wrong, Try again Later");
       setSnackbarOpen(true);
       setSnackbarSeverity("error");
+      setIsSubmitting(false);
     }
-  }, [confirmPasswordError, confirmPasswordSuccess]);
+  }, [confirmPasswordError, confirmPasswordSuccess, confirmPasswordMutationError, navigate]);
 
   return (
     <>
@@ -140,6 +146,7 @@ function ConfirmPassword() {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
+            setIsSubmitting(true); 
             let body: ConfirmPasswordBody = {
               new_password1: values?.password,
               new_password2: values?.confirmPassword,
@@ -163,6 +170,7 @@ function ConfirmPassword() {
             setStatus({ success: false });
             setErrors({ submit: message });
             setSubmitting(false);
+            setIsSubmitting(false); 
           }
         }}
       >
@@ -171,7 +179,6 @@ function ConfirmPassword() {
           handleBlur,
           handleChange,
           handleSubmit,
-          isSubmitting,
           touched,
           values,
         }) => (
@@ -246,7 +253,9 @@ function ConfirmPassword() {
               color="primary"
               disabled={isSubmitting}
             >
-              Submit
+              <ButtonContent>
+                {isSubmitting ? <CircularProgress size={24} /> : "Submit"}
+              </ButtonContent>
             </Button>
           </form>
         )}
@@ -263,29 +272,26 @@ function ConfirmPassword() {
         }}
       >
         <SnackbarContainer>
-        <SnackbarWrapper>
-        <Alert
-          action={
-            <React.Fragment>
-              <IconButton
-                size="small"
-                aria-label="close"
-                color="inherit"
-                onClick={handleCloseSnackbar}
-              >
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </React.Fragment>
-          }
-          severity={snackbarSeverity}
-        >
-          {snackbarMessage}
-        </Alert>
-        </SnackbarWrapper>
-        
+          <SnackbarWrapper>
+            <Alert
+              action={
+                <React.Fragment>
+                  <IconButton
+                    size="small"
+                    aria-label="close"
+                    color="inherit"
+                    onClick={handleCloseSnackbar}
+                  >
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </React.Fragment>
+              }
+              severity={snackbarSeverity}
+            >
+              {snackbarMessage}
+            </Alert>
+          </SnackbarWrapper>
         </SnackbarContainer>
-       
-
       </Snackbar>
     </>
   );
