@@ -12,7 +12,7 @@ import { getRoute } from "../../api/BackendRoutes";
 
 
 
-const TableWrapper = styled("div")(({}) => ({
+const TableWrapper = styled("div")(({ }) => ({
   marginTop: "20px",
 }));
 
@@ -42,7 +42,7 @@ const Referrals = () => {
           query={useGetReferralsQuery}
           headerData={REFERRAL_HEADER_DATA}
           pageData={{
-            url:`${import.meta.env.VITE_URL}${getRoute('referralList')}`,
+            url: `${import.meta.env.VITE_URL}${getRoute('referralList')}`,
             search: searchValue,
           }}
           redirectToDetailPage={true}
