@@ -7,7 +7,7 @@ const baseUrl = import.meta.env.VITE_URL;
 
 export const referralApi = createApi({
   reducerPath: "referralApi",
-  baseQuery:createBaseQueryWithReauth(baseUrl), // [UPDATED]
+  baseQuery:createBaseQueryWithReauth({baseUrl, authRoute:false }), // [UPDATED]
 
   endpoints: (builder) => ({
     getReferrals: builder.query({

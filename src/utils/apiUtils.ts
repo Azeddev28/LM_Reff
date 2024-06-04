@@ -14,24 +14,30 @@ import {
 import { getRoute } from "../api/BackendRoutes";
 import { RootState } from "../redux/store";
 
+type PARAMS={
+  baseUrl:string,
+  authRoute:boolean
+}
 type PrepareHeadersFn = (
   headers: Headers,
-  api: { getState: () => RootState }
+  authRoute: boolean
+
 ) => Headers;
 
-export const prepareHeaders: PrepareHeadersFn = (headers, { getState }) => {
-  const accessToken = getAccessToken();
-  if (accessToken) {
-    headers.set("Authorization", `Bearer ${accessToken}`);
+export const prepareHeaders: PrepareHeadersFn = (headers,authRoute) => {
+  if (!authRoute) {
+    const accessToken = getAccessToken();
+    if (accessToken) {
+      headers.set("Authorization", `Bearer ${accessToken}`);
+    }
   }
   return headers;
 };
 
-export const createBaseQueryWithReauth = (baseUrl: any) => {
+export const createBaseQueryWithReauth = (params:PARAMS) => {
   const baseQuery = fetchBaseQuery({
-    baseUrl: baseUrl,
-    //@ts-ignore
-    prepareHeaders, //TODO
+    baseUrl: params?.baseUrl,
+    prepareHeaders: (headers) => prepareHeaders(headers, params.authRoute),
   });
 
   let refreshPromise: Promise<any> | null = null; 

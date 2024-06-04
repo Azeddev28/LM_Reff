@@ -8,7 +8,7 @@ const baseUrl = import.meta.env.VITE_URL;
 
 export const loginApi = createApi({
   reducerPath: "loginApi",
-  baseQuery:createBaseQueryWithReauth(baseUrl), // [UPDATED]
+  baseQuery:createBaseQueryWithReauth({baseUrl,authRoute:true }), // [UPDATED]
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
