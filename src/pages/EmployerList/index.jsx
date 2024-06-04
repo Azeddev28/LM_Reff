@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { useSelector } from "react-redux";
 import { getRoute } from "../../api/BackendRoutes";
 
-const TableWrapper = styled("div")(({}) => ({
+const TableWrapper = styled("div")(({ }) => ({
   marginTop: "20px",
 }));
 
@@ -30,7 +30,7 @@ const EmployerList = () => {
       <TableWrapper>
         <PaginatedTable
           pageData={{
-            url:`${import.meta.env.VITE_URL}${getRoute('employerList')}`,
+            url: `${import.meta.env.VITE_URL}${getRoute('employerList')}`,
             search: searchValue,
           }}
           query={useGetEmployeesQuery}
