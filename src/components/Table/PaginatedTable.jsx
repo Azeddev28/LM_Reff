@@ -404,58 +404,53 @@ const PaginatedTable = ({
             />
           </IconButton>
 
-          <Box mx={0.5} style={{ display: "flex", alignItems: "center" }}>
-            {/* left page */}
-            <PageNumber isHighlighted={currentPage === 1}>1</PageNumber>
+          {totalPages > 0 && (
+            <Box mx={0.5} style={{ display: "flex", alignItems: "center" }}>
 
-            {/* mid page */}
-            {totalPages > 2 && (
-              <PageNumber isHighlighted={!((currentPage === 1) || (currentPage === totalPages))}>
-                {currentPage === 1 ? currentPage + 1 : currentPage === totalPages ? totalPages - 1 : currentPage}
-              </PageNumber>
-            )}
+              <PageNumber isHighlighted={currentPage === 1}>1</PageNumber>
 
-            <SearchBox style={{ height: "30px", marginRight: "10px", marginLeft: "10px" }}>
-              <TextField
-                variant="standard"
-                placeholder="Page"
-                value={inputPage}
-                onChange={handleInputChange}
-                onKeyPress={(event) => {
-                  if (event.key === 'Enter') {
-                    handleSearchClick();
-                  }
-                }}
-                InputProps={{
-                  disableUnderline: true,
-                  startAdornment: (
-                    <SearchIcon
-                      style={{ marginRight: "4px", color: "#2F65CB", cursor: "pointer" }}
-                      onClick={handleSearchClick}
-                    />
-                  ),
-                }}
-                style={{ width: "50px", fontSize: "12px", padding: "2px 4px" }}
-              />
-            </SearchBox>
+              {totalPages > 2 && (
+                <PageNumber isHighlighted={!((currentPage === 1) || (currentPage === totalPages))}>
+                  {currentPage === 1 ? currentPage + 1 : currentPage === totalPages ? totalPages - 1 : currentPage}
+                </PageNumber>
+              )}
 
-            <Typography style={{marginRight: "10px"}}>.......</Typography>
+              <SearchBox style={{ height: "30px", marginRight: "10px", marginLeft: "10px" }}>
+                <TextField
+                  variant="standard"
+                  value={inputPage}
+                  onChange={handleInputChange}
+                  onKeyPress={(event) => {
+                    if (event.key === 'Enter') {
+                      handleSearchClick();
+                    }
+                  }}
+                  InputProps={{
+                    disableUnderline: true,
+                    startAdornment: (
+                      <SearchIcon
+                        style={{ marginRight: "4px", color: "#2F65CB", cursor: "pointer" }}
+                        onClick={handleSearchClick}
+                      />
+                    ),
+                  }}
+                  style={{ width: "50px", fontSize: "12px", padding: "2px 4px" }}
+                />
+              </SearchBox>
 
-            {/* right page */}
-            {totalPages > 2 && (
-              <>
-                {currentPage === totalPages ? (
-                  <PageNumberWithoutBackground isHighlighted={true}>{totalPages}</PageNumberWithoutBackground>
-                ) : (
-                  <PageNumber isHighlighted={false}>{totalPages}</PageNumber>
-                )}
-              </>
-            )}
-          </Box>
+              <Typography style={{ marginRight: "10px" }}>.......</Typography>
 
-
-
-
+              {totalPages > 2 && (
+                <>
+                  {currentPage === totalPages ? (
+                    <PageNumberWithoutBackground isHighlighted={true}>{totalPages}</PageNumberWithoutBackground>
+                  ) : (
+                    <PageNumber isHighlighted={false}>{totalPages}</PageNumber>
+                  )}
+                </>
+              )}
+            </Box>
+          )}
 
           <IconButton
             style={{
