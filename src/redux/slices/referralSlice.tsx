@@ -1,9 +1,7 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getAccessToken } from "./authSlice";
 import { getRoute } from "../../api/BackendRoutes";
 import { createBaseQueryWithReauth } from "../../utils/apiUtils";
-import { createSlice } from "@reduxjs/toolkit";
 
 const baseUrl = import.meta.env.VITE_URL;
 

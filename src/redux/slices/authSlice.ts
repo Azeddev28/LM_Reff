@@ -94,17 +94,9 @@ const authSlice = createSlice({
 export const { setAuthenticated, setAccessToken, setUserName, logoutUser } =
   authSlice.actions;
 
-// TODO authentication needs to be check
-export const getAccessToken = createSelector(
-  (state) => state.auth.accessToken,
-  (accessToken) => {
-    if (!accessToken) {
-      return  getCookie("access") || null
-    }
-    return accessToken;
+export const getAccessToken = ()=> {
+  return  getCookie("access") || null
   }
-);
-
 export const getRefreshToken = () => {
   return  getCookie("refresh") || null
 };

@@ -20,7 +20,7 @@ type PrepareHeadersFn = (
 ) => Headers;
 
 export const prepareHeaders: PrepareHeadersFn = (headers, { getState }) => {
-  const accessToken = getAccessToken(getState());
+  const accessToken = getAccessToken();
   if (accessToken) {
     headers.set("Authorization", `Bearer ${accessToken}`);
   }
