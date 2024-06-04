@@ -8,7 +8,7 @@ const baseUrl = import.meta.env.VITE_URL;
 
 export const loginApi = createApi({
   reducerPath: "loginApi",
-  baseQuery:createBaseQueryWithReauth(baseUrl), // [UPDATED]
+  baseQuery:createBaseQueryWithReauth({baseUrl,authRoute:true }), // [UPDATED]
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({
@@ -94,17 +94,9 @@ const authSlice = createSlice({
 export const { setAuthenticated, setAccessToken, setUserName, logoutUser } =
   authSlice.actions;
 
-// TODO authentication needs to be check
-export const getAccessToken = createSelector(
-  (state) => state.auth.accessToken,
-  (accessToken) => {
-    if (!accessToken) {
-      return  getCookie("access") || null
-    }
-    return accessToken;
+export const getAccessToken = ()=> {
+  return  getCookie("access") || null
   }
-);
-
 export const getRefreshToken = () => {
   return  getCookie("refresh") || null
 };
