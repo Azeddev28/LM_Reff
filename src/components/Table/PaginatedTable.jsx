@@ -114,6 +114,7 @@ const PaginatedTable = ({
   }, [data]);
 
   useEffect(() => {
+    refetch()
     return () => dispatch(setCurrentPage(1))
   }, [])
 
