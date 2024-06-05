@@ -243,7 +243,7 @@ export const CLAIMS_HEADER_DATA = [
   {
     key: "patient_name",
     display: "Patient Name",
-    sortKey: "patient__name",
+    sortKey: "patient_name",
   },
   {
     key: "date_of_service",
