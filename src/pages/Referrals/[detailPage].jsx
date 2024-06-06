@@ -22,6 +22,7 @@ import { color, fontSize, fontWeight } from "@mui/system";
 import dropBox from '/dropboxImg.svg?url';
 import attachFile from '/attachFileIcon.svg?url';
 import deleteFile from "/deleteIcon.svg?url";
+import downloadFile from "../../utils/downloadFile";
 
 const Footer = ({ handleSubmitChanges, data }) => (
   <div style={{
@@ -69,7 +70,7 @@ const DetailPage = () => {
     isLoading,
     isSuccess,
   } = useGetReferralDetailQuery(id);
-  
+
   useEffect(() => {
     setReferralDetail(referralData);
   }, [referralData]);
@@ -149,8 +150,9 @@ const DetailPage = () => {
     return url.substring(url.lastIndexOf("/") + 1);
   };
 
-  const handleViewFile = (url) => {
-    window.open(url, "_blank");
+
+  const handleViewFile = async (url, fileName) => {
+    await downloadFile(url, fileName);
   };
 
   return isLoading ? (
@@ -173,7 +175,7 @@ const DetailPage = () => {
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Information
               </Styled.ColumnHeader>
-              <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
+              <h variant="h3" style={{ marginLeft: '16px', marginRight: '20px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 These fields are maintained by Luminary and cannot be edited. Please contact Luminary if this referral needs to be assigned to a different provider
               </h>
               <Styled.ContentWrapper>
@@ -232,8 +234,8 @@ const DetailPage = () => {
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Details
               </Styled.ColumnHeader>
-              <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
-                Please update the fields below to indicate your acceptance of this referral. Please also provide at least weekly updates to indicate the patient's progress toward surgery. Use the "Practice Notes" filed to explain any updates not captured elsewhere on this form.
+              <h variant="h3" style={{ marginLeft: '16px', marginRight: '20px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
+                Please update the fields below to indicate your acceptance of this referral. Please also provide at least weekly updates to indicate the patient's progress toward surgery. Use the "Practice Notes" to explain any updates not captured elsewhere on this form.
               </h>
               <Styled.ContentWrapper>
                 {referralDetailData.slice(8, 29).map((item, index) => {
@@ -287,7 +289,7 @@ const DetailPage = () => {
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Attachments
               </Styled.ColumnHeader>
-              <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
+              <h variant="h3" style={{ marginLeft: '16px', marginRight: '20px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 View your referral documents and add any additional documents requested by the payer here
               </h>
               <Styled.ContentWrapperV2>
@@ -323,7 +325,7 @@ const DetailPage = () => {
                     {fileList.map((item, index) => (
                       <Styled.UploadedFile
                         key={index}
-                        onClick={() => handleViewFile(item.url)}
+                        onClick={() => handleViewFile(item.url , item?.name)}
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -335,7 +337,7 @@ const DetailPage = () => {
                     {referralDetailData.slice(29, 30).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
-                          <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                          <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment , getFileNameFromURL(innerItem?.filename ? innerItem?.filename : ""))} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                               <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                               <Styled.FileText>
