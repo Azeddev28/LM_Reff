@@ -19,7 +19,7 @@ export const authRoutes = [
     element:<Auth><ResetPassword/></Auth>,
   },
   {
-    path:"/:uid/:token",
+    path:"/:id/:token",
     element:<Auth><ConfirmPassword/></Auth>,
   },
   {

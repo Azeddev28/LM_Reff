@@ -41,9 +41,8 @@ function App({ emotionCache = clientSideEmotionCache }) {
     return params;
   };
   
-  const params = extractParams(location.pathname, "/:uid/:token");
-  const { uid, token } = params;
-
+  const params = extractParams(location.pathname, "/:id/:token");
+  const { id, token } = params;
   const access =  getCookie("access") 
   useEffect(() => {
     if (access) {      
@@ -51,7 +50,7 @@ function App({ emotionCache = clientSideEmotionCache }) {
     }
   }, []);
 
-  useEffect(() =>{
+  useEffect(() =>{ //check for situations where the user navigates back and encounters an inaccessible URL
     if(!content && isAuthenticated){
       navigate("/");
     }
@@ -64,10 +63,15 @@ function App({ emotionCache = clientSideEmotionCache }) {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      if(id){
+        navigate(`/${id}`)
+      }
+      else{
+        navigate("/")
+      }
     } else {
-      if (uid && token && !location.pathname.includes("/auth")){
-        navigate(`/${uid}/${token}`)
+      if (id && token && !location.pathname.includes("/auth")){
+        navigate(`/${id}/${token}`)
       }
       else{
         navigate("auth/sign-in");
