@@ -173,7 +173,7 @@ const DetailPage = () => {
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Information
               </Styled.ColumnHeader>
-              <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
+              <h variant="h3" style={{ marginLeft: '16px', marginRight: '20px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 These fields are maintained by Luminary and cannot be edited. Please contact Luminary if this referral needs to be assigned to a different provider
               </h>
               <Styled.ContentWrapper>
@@ -232,8 +232,8 @@ const DetailPage = () => {
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Details
               </Styled.ColumnHeader>
-              <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
-                Please update the fields below to indicate your acceptance of this referral. Please also provide at least weekly updates to indicate the patient's progress toward surgery. Use the "Practice Notes" filed to explain any updates not captured elsewhere on this form.
+              <h variant="h3" style={{ marginLeft: '16px', marginRight: '20px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
+                Please update the fields below to indicate your acceptance of this referral. Please also provide at least weekly updates to indicate the patient's progress toward surgery. Use the "Practice Notes" to explain any updates not captured elsewhere on this form.
               </h>
               <Styled.ContentWrapper>
                 {referralDetailData.slice(8, 29).map((item, index) => {
@@ -287,7 +287,7 @@ const DetailPage = () => {
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Attachments
               </Styled.ColumnHeader>
-              <h variant="h3" style={{ marginLeft: '16px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
+              <h variant="h3" style={{ marginLeft: '16px', marginRight: '20px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 View your referral documents and add any additional documents requested by the payer here
               </h>
               <Styled.ContentWrapperV2>
