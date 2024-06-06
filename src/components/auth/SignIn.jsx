@@ -46,7 +46,7 @@ function SignIn() {
       setSnackbarMessage("Successfully logged in");
       setSnackbarOpen(true);
       setSnackbarSeverity("success"); 
-      navigate('/dashboard'); // Navigate to the dashboard or any other page
+      navigate('/'); // Navigate to the dashboard or any other page
     } else if (loginError) {
       setSnackbarMessage("Invalid credentials");
       setSnackbarOpen(true);
