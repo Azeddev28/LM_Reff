@@ -72,9 +72,9 @@ const DatePickerComponent = ({ date, handleInputChange, label }) => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={["DatePicker", "DatePicker"]}>
         <StyledDatePicker
+          minDate={today}
           value={selectedDate}
           onChange={handleDateChange}
-          minDate={today}
         />
       </DemoContainer>
     </LocalizationProvider>
