@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthenticated } from "../../redux/slices/authSlice";
 import { getCookie } from "../../utils/cookieManager";
+import { authRoutes } from "../../routes";
 
 interface AuthGuardType {
   children: React.ReactNode;
@@ -46,7 +47,7 @@ function AuthGuard({ children }: AuthGuardType) {
         navigate(`/${uid}/${token}`)
       }
       else{
-        navigate("/auth/sign-in");
+        navigate(authRoutes.login.path);
       }
     }
   }, [isAuthenticated]);

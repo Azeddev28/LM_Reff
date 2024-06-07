@@ -6,6 +6,7 @@ import logoutSvg from "/logout-img.svg?url";
 import { loginApi, logoutUser } from "../../redux/slices/authSlice";
 import { referralApi } from "../../redux/slices/referralSlice";
 import { useDispatch } from "react-redux";
+import { authRoutes } from "../../routes";
 
 const useNavItems = () => {
   const dispatch = useDispatch();
@@ -29,12 +30,12 @@ const useNavItems = () => {
       title: "Claims",
     },
     {
-      href: "/employe-list",
+      href: "/employer-list",
       icon: EmployerListIcon,
       title: "Employers",
     },
     {
-      href: "/auth/sign-in",
+      href: authRoutes.login.path,
       icon: logoutSvg,
       title: "Logout",
       onClick: handleLogoutClick,
