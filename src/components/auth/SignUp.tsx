@@ -53,7 +53,6 @@ function SignUp() {
           //   values.firstName,
           //   values.lastName
           // );
-          // navigate("/auth/sign-in");
         } catch (error: any) {
           const message = error.message || "Something went wrong";
 

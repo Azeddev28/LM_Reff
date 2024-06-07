@@ -70,7 +70,7 @@ const DetailPage = () => {
     isSuccess,
     refetch
   } = useGetReferralDetailQuery(id);
-  
+
   useEffect(() => {
     refetch()
   }, [])
@@ -157,6 +157,7 @@ const DetailPage = () => {
     window.open(url, "_blank");
   };
 
+
   return isLoading ? (
     <Styled.ProgressWrapper>
       <CircularProgress size="7rem" />
@@ -232,6 +233,7 @@ const DetailPage = () => {
                 />
               </Styled.CheckWrapper>
             </Styled.Column>
+
             <Styled.Column>
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Details
@@ -239,6 +241,7 @@ const DetailPage = () => {
               <h variant="h3" style={{ marginLeft: '16px', marginRight: '20px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
                 Please update the fields below to indicate your acceptance of this referral. Please also provide at least weekly updates to indicate the patient's progress toward surgery. Use the "Practice Notes" to explain any updates not captured elsewhere on this form.
               </h>
+
               <Styled.ContentWrapper>
                 {referralDetailData.slice(8, 29).map((item, index) => {
                   return (
@@ -286,7 +289,9 @@ const DetailPage = () => {
                   );
                 })}
               </Styled.ContentWrapper>
+              
             </Styled.Column>
+
             <Styled.Column>
               <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
                 Referral Attachments
@@ -323,6 +328,7 @@ const DetailPage = () => {
                   </Dropzone>
                 </Styled.FileUploadWrapper>
                 <Styled.UploadedFileSection>
+
                   <Styled.UploadedFiles>
                     {fileList.map((item, index) => (
                       <Styled.UploadedFile
@@ -351,10 +357,12 @@ const DetailPage = () => {
                       </React.Fragment>
                     ))}
                   </Styled.UploadedFiles>
+
                 </Styled.UploadedFileSection>
               </Styled.ContentWrapperV2>
             </Styled.Column>
           </Styled.Container>
+
           <Footer handleSubmitChanges={handleSubmitChanges} data={data} />
         </>
       )}

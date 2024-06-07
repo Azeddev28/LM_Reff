@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useLocation, useNavigate, useRoutes } from "react-router-dom";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { useNavigate, useRoutes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { CacheProvider } from "@emotion/react";
 
@@ -20,61 +20,20 @@ const clientSideEmotionCache = createEmotionCache();
 
 function App({ emotionCache = clientSideEmotionCache }) {
   const { isAuthenticated } = useSelector((state: any) => state.auth);
-  const content = useRoutes(isAuthenticated ? appRoutes : authRoutes);
+  const content = useRoutes(isAuthenticated ? appRoutes : Object.values(authRoutes));
 
   const { theme } = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
-
-  const extractParams = (pathname: string, pattern: string) => {
-    const patternParts = pattern.split('/');
-    const pathParts = pathname.split('/');
-    const params: Record<string, string> = {};
-
-    patternParts.forEach((part, index) => {
-      if (part.startsWith(':')) {
-        const paramName = part.slice(1);
-        params[paramName] = pathParts[index];
-      }
-    });
-    return params;
-  };
-  
-  const params = extractParams(location.pathname, "/:id/:token");
-  const { id, token } = params;
   const access =  getCookie("access") 
-  useEffect(() => {
-    if (access) {      
-      dispatch(setAuthenticated(true));
-    }
-  }, []);
-
-  useEffect(() =>{ //check for situations where the user navigates back and encounters an inaccessible URL
-    if(!content && isAuthenticated){
-      navigate("/");
-    }
-    else if (!content && !isAuthenticated){
-      navigate("auth/sign-in");
-    }
-
-  },[navigate])
-
 
   useEffect(() => {
-    if (isAuthenticated) {
-      if(id){
-        navigate(`/${id}`)
+    if (!isAuthenticated) {
+      if (access) {
+        dispatch(setAuthenticated(true));
       }
       else{
-        navigate("/")
-      }
-    } else {
-      if (id && token && !location.pathname.includes("/auth")){
-        navigate(`/${id}/${token}`)
-      }
-      else{
-        navigate("auth/sign-in");
+        navigate(authRoutes.login.path);
       }
     }
   }, [isAuthenticated]);
