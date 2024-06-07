@@ -10,12 +10,16 @@ import ConfirmPassword from "./pages/auth/ConfirmPassword";
 import Page404 from "./pages/auth/Page404";
 
 export const authRoutes = {
+  baseUrl: {
+    path:"/",
+    element:<Auth><SignIn/></Auth>,
+  },
   login: {
     path:"/auth/sign-in",
     element:<Auth><SignIn/></Auth>,
   },
   resetPassword: {
-    path:"auth/reset-password",
+    path:"/auth/reset-password",
     element:<Auth><ResetPassword/></Auth>,
   },
   confirmPassword: {
@@ -29,23 +33,23 @@ export const authRoutes = {
   
 };
 
-export const appRoutes = [
-  {
-    path: "/",
+export const appRoutes = {
+  dashboard: {
+    path: "/dashboard",
     element:  <DashboardLayout> <Referrals /></DashboardLayout> ,
     
   },
-  {
-    path: "claims",
+  claims: {
+    path: "/claims",
     element: <DashboardLayout><Claims /></DashboardLayout>,
   },
-  {
-    path: "employer-list",
+  employerList: {
+    path: "/employer-list",
     element: <DashboardLayout ><EmployerList /></DashboardLayout> ,
   },
-  {
+  referralDetail: {
     path: "/:id", 
     element: <DashboardLayout><DetailPage /></DashboardLayout>,
   },
   
-];
+};

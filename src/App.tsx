@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate, useRoutes } from "react-router-dom";
+import { useLocation, useNavigate, useRoutes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { CacheProvider } from "@emotion/react";
@@ -15,27 +15,34 @@ import createEmotionCache from "./utils/createEmotionCache";
 import { setAuthenticated } from "./redux/slices/authSlice";
 import { getCookie } from "./utils/cookieManager";
 import { authRoutes, appRoutes } from "./routes";
+import { checkPathAgainstRoutes } from "./utils/routeUtils";
 
 const clientSideEmotionCache = createEmotionCache();
 
 function App({ emotionCache = clientSideEmotionCache }) {
   const { isAuthenticated } = useSelector((state: any) => state.auth);
-  const content = useRoutes(isAuthenticated ? appRoutes : Object.values(authRoutes));
-
+  const content = useRoutes(Object.values(appRoutes).concat(Object.values(authRoutes)));
+  const location = useLocation();
   const { theme } = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const access =  getCookie("access") 
+  const access = getCookie("access")
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (isAuthenticated === false) {
       if (access) {
         dispatch(setAuthenticated(true));
       }
-      else{
-        navigate(authRoutes.login.path);
-      }
     }
+
+    if (isAuthenticated === true && checkPathAgainstRoutes(location.pathname, authRoutes)) {
+      navigate(appRoutes.dashboard.path);
+    }
+    else if (isAuthenticated === false && checkPathAgainstRoutes(location.pathname, appRoutes)) {
+      navigate(authRoutes.login.path);
+    }
+
+
   }, [isAuthenticated]);
 
   return (
@@ -44,11 +51,11 @@ function App({ emotionCache = clientSideEmotionCache }) {
         <Helmet
           defaultTitle="Luminary Health"
         />
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <MuiThemeProvider theme={createTheme(theme)}>
-              <React.Fragment>{content}</React.Fragment>
-            </MuiThemeProvider>
-          </LocalizationProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <MuiThemeProvider theme={createTheme(theme)}>
+            <React.Fragment>{content}</React.Fragment>
+          </MuiThemeProvider>
+        </LocalizationProvider>
       </HelmetProvider>
     </CacheProvider>
   );

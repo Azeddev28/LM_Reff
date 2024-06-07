@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
-import { Helmet } from "react-helmet-async";
 
 
-import { Avatar, Paper, Typography } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 
 import { ReactComponent as Logo } from "../../vendor/logo.svg";
 import SignInComponent from "../../components/auth/SignIn";
+import { authRoutes } from "../../routes";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const Brand = styled(Logo)`
@@ -128,6 +129,14 @@ function SignIn() {
   const handleLogoClick = () => {
     window.location.reload();
   };
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(()=> {
+    if(authRoutes.baseUrl.path === location.pathname){
+      navigate(authRoutes.login.path)
+    }
+  }, [])
 
   return (
     <React.Fragment>
