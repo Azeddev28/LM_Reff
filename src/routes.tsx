@@ -9,25 +9,25 @@ import DetailPage from "./pages/Referrals/[detailPage]";
 import ConfirmPassword from "./pages/auth/ConfirmPassword";
 import Page404 from "./pages/auth/Page404";
 
-export const authRoutes = [
-  {
-    path:"auth/sign-in",
+export const authRoutes = {
+  login: {
+    path:"/auth/sign-in",
     element:<Auth><SignIn/></Auth>,
   },
-  {
+  resetPassword: {
     path:"auth/reset-password",
     element:<Auth><ResetPassword/></Auth>,
   },
-  {
+  confirmPassword: {
     path:"/:id/:token",
     element:<Auth><ConfirmPassword/></Auth>,
   },
-  {
+  notFound: {
     path: "/404", 
     element: <Page404 />,
   },
   
-];
+};
 
 export const appRoutes = [
   {
@@ -36,11 +36,11 @@ export const appRoutes = [
     
   },
   {
-    path: "/claims",
+    path: "claims",
     element: <DashboardLayout><Claims /></DashboardLayout>,
   },
   {
-    path: "employe-list",
+    path: "employer-list",
     element: <DashboardLayout ><EmployerList /></DashboardLayout> ,
   },
   {
