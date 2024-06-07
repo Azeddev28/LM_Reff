@@ -23,7 +23,7 @@ export const authRoutes = {
     element:<Auth><ResetPassword/></Auth>,
   },
   confirmPassword: {
-    path:"/:id/:token",
+    path:"/confirm/:id/:token",
     element:<Auth><ConfirmPassword/></Auth>,
   },
   notFound: {
@@ -48,7 +48,7 @@ export const appRoutes = {
     element: <DashboardLayout ><EmployerList /></DashboardLayout> ,
   },
   referralDetail: {
-    path: "/:id", 
+    path: "/detail/:id", 
     element: <DashboardLayout><DetailPage /></DashboardLayout>,
   },
   

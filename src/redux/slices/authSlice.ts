@@ -27,7 +27,7 @@ export const loginApi = createApi({
     confirmPassword: builder.mutation({
       query: (params) => {
         return {
-          url:  `/auth/password/reset/confirm/${params?.uid}/${params?.token}/`, //TODO customize getRoute func to accept params
+          url:  `/auth/password/reset/confirm/${params?.id}/${params?.token}/`, //TODO customize getRoute func to accept params
           method: "POST",
           body: params?.body,
         }
@@ -36,7 +36,7 @@ export const loginApi = createApi({
     validatePassword: builder.mutation({
       query: (params) => {
         return {
-          url: `/auth/validate/reset/${params?.uid}/${params?.token}/`,//TODO customize getRoute func to accept params
+          url: `/auth/validate/reset/${params?.id}/${params?.token}/`,//TODO customize getRoute func to accept params
           method: "POST",      
         }
       },
