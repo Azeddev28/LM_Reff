@@ -68,8 +68,12 @@ const DetailPage = () => {
     data: referralData,
     isLoading,
     isSuccess,
+    refetch
   } = useGetReferralDetailQuery(id);
 
+  useEffect(() => {
+    refetch()
+  }, [])
   useEffect(() => {
     setReferralDetail(referralData);
   }, [referralData]);
