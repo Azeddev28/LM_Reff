@@ -161,7 +161,7 @@ function ConfirmPassword() {
             );
             let confirmPasswordParams = {
               body,
-              uid: params?.uid,
+              id: params?.id,
               token: params?.token,
             };
             confirmPassword(confirmPasswordParams);
