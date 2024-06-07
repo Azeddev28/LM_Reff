@@ -48,9 +48,6 @@ const Navbar: React.FC<NavbarProps> = ({ onDrawerToggle }) => {
               </IconButton>
             </Grid>
             <Grid item xs />
-            {/* <Grid item>
-              <Typography variant='h4'>Luminary Health Providers</Typography>
-            </Grid> */}
             <Grid item xs />
             <Grid item>
               <NavbarUserDropdown />

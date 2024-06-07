@@ -102,7 +102,7 @@ function ConfirmPassword() {
 
   useEffect(() => {
     if (isError) {
-      navigate("/404");
+      navigate(authRoutes.notFound.path);
     }
   }, [isError, navigate]);
 
