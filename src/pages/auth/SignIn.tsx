@@ -129,14 +129,7 @@ function SignIn() {
   const handleLogoClick = () => {
     window.location.reload();
   };
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  useEffect(()=> {
-    if(authRoutes.baseUrl.path === location.pathname){
-      navigate(authRoutes.login.path)
-    }
-  }, [])
 
   return (
     <React.Fragment>
