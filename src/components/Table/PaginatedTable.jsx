@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 import upSvg from '/sorting-up.svg?url';
 import downSvg from '/sorting-down.svg?url';
 import { setCurrentPage } from "../../redux/slices/referralSlice";
+import { appRoutes } from "../../routes";
 
 const ProgressWrapper = styled("div")(({ }) => ({
   display: "flex",
@@ -211,8 +212,8 @@ const PaginatedTable = ({
 
   const handleDetailPage = (data) => {
     const id = data.uuid;
-    const currentUrl = location.pathname;
-    navigate(`${currentUrl}${id}`, { state: { data: id } });
+    const detailRoute = appRoutes.referralDetail.path.replace(`:id`, id)
+    navigate(detailRoute, { state: { data: id } });
   };
 
   const handleClickPrevious = () => {
