@@ -114,6 +114,7 @@ const PaginatedTable = ({
   }, [data]);
 
   useEffect(() => {
+    refetch()
     return () => dispatch(setCurrentPage(1))
   }, [])
 
@@ -451,6 +452,11 @@ const PaginatedTable = ({
               )}
             </Box>
           )}
+
+
+
+
+
 
           <IconButton
             style={{
