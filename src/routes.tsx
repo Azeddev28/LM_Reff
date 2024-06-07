@@ -10,10 +10,6 @@ import ConfirmPassword from "./pages/auth/ConfirmPassword";
 import Page404 from "./pages/auth/Page404";
 
 export const authRoutes = {
-  baseUrl: {
-    path:"/",
-    element:<Auth><SignIn/></Auth>,
-  },
   login: {
     path:"/auth/sign-in",
     element:<Auth><SignIn/></Auth>,

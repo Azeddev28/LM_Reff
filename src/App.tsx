@@ -21,7 +21,8 @@ const clientSideEmotionCache = createEmotionCache();
 
 function App({ emotionCache = clientSideEmotionCache }) {
   const { isAuthenticated } = useSelector((state: any) => state.auth);
-  const content = useRoutes(Object.values(appRoutes).concat(Object.values(authRoutes)));
+  const content = useRoutes(isAuthenticated ? Object.values(appRoutes) : Object.values(authRoutes));
+
   const location = useLocation();
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -45,6 +46,16 @@ function App({ emotionCache = clientSideEmotionCache }) {
 
   }, [isAuthenticated]);
 
+  useEffect(() =>{ //check for situations where the user navigates back and encounters an inaccessible URL
+    if(!content && isAuthenticated){
+      navigate("/dashboard");
+    }
+    else if (!content && !isAuthenticated){
+      navigate("/auth/sign-in");
+    }
+
+  },[navigate])
+  
   return (
     <CacheProvider value={emotionCache}>
       <HelmetProvider>
