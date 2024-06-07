@@ -232,6 +232,11 @@ export const REFERRAL_HEADER_DATA = [
     sortKey: "referral_description",
   },
   {
+    key: "status",
+    display: "Referral Status",
+    sortKey: "status"
+  },
+  {
     key: "date_updated",
     display: "Last Updated",
     sortKey: "date_updated",

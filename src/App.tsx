@@ -32,16 +32,16 @@ function App({ emotionCache = clientSideEmotionCache }) {
     if (isAuthenticated === false) {
       if (access) {
         dispatch(setAuthenticated(true));
+        if(checkPathAgainstRoutes(location.pathname, authRoutes)){
+          navigate(appRoutes.dashboard.path);
+        }
+      }
+      else{
+        if(checkPathAgainstRoutes(location.pathname, appRoutes)){
+          navigate(authRoutes.login.path);
+        }
       }
     }
-
-    if (isAuthenticated === true && checkPathAgainstRoutes(location.pathname, authRoutes)) {
-      navigate(appRoutes.dashboard.path);
-    }
-    else if (isAuthenticated === false && checkPathAgainstRoutes(location.pathname, appRoutes)) {
-      navigate(authRoutes.login.path);
-    }
-
 
   }, [isAuthenticated]);
 
