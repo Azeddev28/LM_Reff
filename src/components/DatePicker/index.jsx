@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import dayjs, { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import styled from "@emotion/styled";
+import ClearIcon from '@mui/icons-material/Clear';
 
 const StyledDatePicker = styled(DatePicker)({
   width: "100%",
@@ -56,26 +57,40 @@ const StyledDatePicker = styled(DatePicker)({
 });
 
 const DatePickerComponent = ({ date, handleInputChange, label }) => {
-  const [selectedDate, setSelectedDate] = useState(dayjs(date));
-  const today = dayjs();
+  const [selectedDate, setSelectedDate] = useState(date);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-    handleInputChange(label, date.format("YYYY-MM-DD"));
+    handleInputChange(label, date ? date.format("YYYY-MM-DD") : "");
+  };
+  const handleClear = () => {
+    setSelectedDate("");
+    handleInputChange(label, "");
   };
 
   useEffect(() => {
-    setSelectedDate(dayjs(date));
+    setSelectedDate(date);
   }, [date]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={["DatePicker", "DatePicker"]}>
-        <StyledDatePicker
-          value={selectedDate}
-          onChange={handleDateChange}
-          minDate={today}
-        />
+        <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "-5px", alignItems: "center" }}>
+
+          <StyledDatePicker
+            value={dayjs(selectedDate)}
+            onChange={handleDateChange}
+            renderInput={(params) => <input {...params} />}
+          />
+          {selectedDate ? (
+            <ClearIcon
+              style={{ height: "20px", alignSelf: "flex-end", marginBottom: "2px", cursor: "pointer", color: "#7E8299" }}
+              onClick={handleClear}
+              title="Clear Dates"
+            />
+          ) : null}
+
+        </div>
       </DemoContainer>
     </LocalizationProvider>
   );
