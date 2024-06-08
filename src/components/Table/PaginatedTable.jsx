@@ -203,6 +203,7 @@ const PaginatedTable = ({
   };
 
   const handleClickPrevious = () => {
+    setLoading(true); 
     if (data?.previous) {
       setUrl(data.previous);
       const newPage = currentPage - 1;
@@ -212,6 +213,7 @@ const PaginatedTable = ({
   };
 
   const handleClickNext = () => {
+    setLoading(true); 
     if (data?.next) {
       setUrl(data.next);
       const newPage = currentPage + 1;
@@ -219,6 +221,13 @@ const PaginatedTable = ({
       setInputPage('')
     }
   };
+  
+  useEffect(() => {
+    if (data) {
+      setLoading(false);
+    }
+  }, [data]);
+  
 
   const handleSortClick = (key) => {
     setLoading(true); 
@@ -236,6 +245,7 @@ const PaginatedTable = ({
   };
 
   const handleSearchClick = () => {
+    setLoading(true); 
     const newPage = parseInt(inputPage, 10);
     if (!isNaN(newPage) && newPage > 0 && newPage <= totalPages) {
       const newOffset = (newPage - 1) * ROWS_PER_PAGE;
@@ -275,7 +285,7 @@ const PaginatedTable = ({
           severity="error"
           sx={{ position: 'fixed', top: '40px', left: '50%', transform: 'translateX(-50%)', zIndex: 1000 }}
         >
-          Page doesn't exist, Maximum number of page is {totalPages}
+          Page doesn't exist, Maximum pages are {totalPages}
         </Alert>
       )}
       <Paper>

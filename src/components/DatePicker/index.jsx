@@ -84,7 +84,7 @@ const DatePickerComponent = ({ date, handleInputChange, label }) => {
           />
           {selectedDate ? (
             <ClearIcon
-              style={{ height: "20px", alignSelf: "flex-end", marginBottom: "2px", cursor: "pointer", color: "#7E8299" }}
+              style={{ height: "20px", alignSelf: "flex-end", marginBottom: "2px", cursor: "pointer", color: "red" }}
               onClick={handleClear}
               title="Clear Dates"
             />

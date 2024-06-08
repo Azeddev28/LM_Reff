@@ -33,7 +33,7 @@ const Footer = ({ handleSubmitChanges, data }) => (
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    padding: '20px 70px'
+    padding: '70px 70px'
   }}>
     <Button
       variant="contained"
