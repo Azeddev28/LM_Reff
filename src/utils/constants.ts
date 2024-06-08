@@ -42,7 +42,7 @@ export const REFERRAL_DETAIL_DATA = {
     key: "Referring Party",
     value: "",
     editable: false,
-    label: "convener_name",
+    label: "convener__name",
   },
   referral_description: {
     key: "Referral Description",
@@ -218,7 +218,7 @@ export const REFERRAL_HEADER_DATA = [
   {
     key: "referral_date",
     display: "Referral Date",
-    sortKey: "referral_receipt_date",
+    sortKey: "date_created",
     isTimestamp: true
   },
   {
