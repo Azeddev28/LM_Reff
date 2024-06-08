@@ -15,7 +15,7 @@ import createEmotionCache from "./utils/createEmotionCache";
 import { setAuthenticated } from "./redux/slices/authSlice";
 import { getCookie } from "./utils/cookieManager";
 import { authRoutes, appRoutes } from "./routes";
-import { checkPathAgainstRoutes } from "./utils/routeUtils";
+import { checkPathAgainstRoutes, extractParamsFromRoutes } from "./utils/routeUtils";
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -28,34 +28,43 @@ function App({ emotionCache = clientSideEmotionCache }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const access = getCookie("access")
+  const params = extractParamsFromRoutes(location.pathname)
+  const paramsArray=Object.values(params)
+
 
   useEffect(() => {
     if (isAuthenticated === false) {
       if (access) {
         dispatch(setAuthenticated(true));
-        if(checkPathAgainstRoutes(location.pathname, authRoutes)){
+        if(params?.detail){
+          navigate(`/detail/${paramsArray[1]}`)
+        }
+        else if(checkPathAgainstRoutes(location.pathname, authRoutes)){
           navigate(appRoutes.dashboard.path);
         }
       }
       else{
-        if(checkPathAgainstRoutes(location.pathname, appRoutes)){
+        if(params?.confirm){
+          console.log("4")
+          navigate(`/confirm/${paramsArray[1]}/${paramsArray[2]}`)
+        }
+        else {
+          console.log("5")
           navigate(authRoutes.login.path);
         }
       }
     }
-
   }, [isAuthenticated]);
 
   useEffect(() =>{ //check for situations where the user navigates back and encounters an inaccessible URL
-    if(!content && isAuthenticated){
+      if(!content && isAuthenticated && !params?.detail && !params.confirm){
       navigate("/dashboard");
     }
-    else if (!content && !isAuthenticated){
+    else if (!content && !isAuthenticated && !params.confirm && !params?.detail){
       navigate("/auth/sign-in");
     }
-
   },[navigate])
-  
+
   return (
     <CacheProvider value={emotionCache}>
       <HelmetProvider>
