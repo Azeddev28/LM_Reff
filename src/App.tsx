@@ -39,31 +39,20 @@ function App({ emotionCache = clientSideEmotionCache }) {
         if(params?.detail){
           navigate(`/detail/${paramsArray[1]}`)
         }
-        else if(checkPathAgainstRoutes(location.pathname, authRoutes)){
+        else{
           navigate(appRoutes.dashboard.path);
         }
       }
       else{
         if(params?.confirm){
-          console.log("4")
           navigate(`/confirm/${paramsArray[1]}/${paramsArray[2]}`)
         }
-        else {
-          console.log("5")
+          else if(!content && !isAuthenticated && !params.confirm) {
           navigate(authRoutes.login.path);
         }
       }
     }
-  }, [isAuthenticated]);
-
-  useEffect(() =>{ //check for situations where the user navigates back and encounters an inaccessible URL
-      if(!content && isAuthenticated && !params?.detail && !params.confirm){
-      navigate("/dashboard");
-    }
-    else if (!content && !isAuthenticated && !params.confirm && !params?.detail){
-      navigate("/auth/sign-in");
-    }
-  },[navigate])
+  }, [isAuthenticated, navigate]);
 
   return (
     <CacheProvider value={emotionCache}>
