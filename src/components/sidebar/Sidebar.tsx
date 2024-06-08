@@ -99,8 +99,8 @@ const Sidebar: React.FC<SidebarProps> = ({
       <Brand onClick={() => navigate(appRoutes.dashboard.path)}>
         <img src="/favicon-white.svg" alt="logo-image" style={{ width: "40px", marginBottom: "-10px" }} />
       </Brand>
-      <LogoText style={{cursor: "pointer"}} onClick={() => navigate(appRoutes.dashboard.path)}>Luminary</LogoText>
-      <LogoText style={{cursor: "pointer"}} onClick={() => navigate(appRoutes.dashboard.path)}>Health</LogoText>
+      <LogoText>Luminary</LogoText>
+      <LogoText>Health</LogoText>
       <SidebarNav items={navItems} />
     </Drawer>
   );

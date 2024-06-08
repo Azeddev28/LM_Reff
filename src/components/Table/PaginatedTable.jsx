@@ -254,6 +254,7 @@ const PaginatedTable = ({
       setInputPage('');
       setShowAlert(false);
     } else {
+      setLoading(false); 
       setShowAlert(true);
     }
   };
@@ -440,7 +441,7 @@ const PaginatedTable = ({
 
               <Typography style={{ marginRight: "10px" }}>.......</Typography>
 
-              {totalPages > 2 && (
+              {totalPages >= 2 && (
                 <>
                   {currentPage === totalPages ? (
                     <PageNumberWithoutBackground isHighlighted={true}>{totalPages}</PageNumberWithoutBackground>
