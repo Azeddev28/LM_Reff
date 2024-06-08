@@ -125,42 +125,33 @@ const PaginatedTable = ({
     dispatch(setCurrentPage(1))
     const targetUrl = new URL(pageData.url)
     if (orderingValue !== null && orderingValue !== undefined && offset === 0 && !pageData["search"]) {
-      console.log("In case we have just ordering value")
       targetUrl.searchParams.append("ordering", orderingValue);
     }
     else if (orderingValue !== null && orderingValue !== undefined && offset === 0 && pageData["search"]) {
-      console.log("In case we already a search string and ordering value is applied")
       targetUrl.searchParams.append("ordering", orderingValue);
       targetUrl.searchParams.append("search", pageData["search"])
     }
-    console.log("url in orderingValue", targetUrl.toString())
     setUrl(targetUrl.toString())
   }, [orderingValue])
-
 
   useEffect(() => {
     const targetUrl = new URL(pageData.url)
     if (offset !== null && offset !== undefined && pageData["search"] && orderingValue === null) {
-      console.log("case where we have a active search string and Input page is changed")
       targetUrl.searchParams.append("offset", offset.toString())
       targetUrl.searchParams.append("search", pageData["search"])
     }
     else if (offset !== null && offset !== undefined && orderingValue !== null && !pageData["search"] && inputPage !== '') {
-      console.log("case where we have a active ordering value and input page is changed")
       targetUrl.searchParams.append("offset", offset.toString())
       targetUrl.searchParams.append("ordering", orderingValue);
     }
     else if (offset !== null && offset !== undefined && orderingValue !== null && pageData["search"]) {
-      console.log("case where we have a active ordering value and active page searxh and input page is changed or reset")
       targetUrl.searchParams.append("offset", offset.toString())
       targetUrl.searchParams.append("ordering", orderingValue);
       targetUrl.searchParams.append("search", pageData["search"])
     }
     else if (!pageData["search"] && !orderingValue && offset !== 0) {
-      console.log("In case we have a input page (inputPage)")
       targetUrl.searchParams.append("offset", offset.toString())
     }
-    console.log("url in offset", targetUrl.toString())
     setUrl(targetUrl.toString())
   }, [offset])
 
@@ -172,23 +163,18 @@ const PaginatedTable = ({
     setInputPage('')
     dispatch(setCurrentPage(1))
     if (pageData["search"] !== null && pageData["search"] !== undefined && !orderingValue) {
-      console.log("Case where search string is added or removed")
       targetUrl.searchParams.append("search", pageData["search"]);
     }
     else if (pageData["search"] !== null && pageData["search"] !== undefined && orderingValue) {
-      console.log("Case where we already have an active ordering value and search string is added")
       targetUrl.searchParams.append("search", pageData["search"]);
       targetUrl.searchParams.append("ordering", orderingValue);
     }
     else if (!pageData["search"] && orderingValue !== null) {
-      console.log("ase where ordering value was there search string was applied and now removed")
       targetUrl.searchParams.append("ordering", orderingValue);
     }
     else if (!pageData["search"]) {
-      console.log("Case where search string is reset or first render")
       targetUrl.searchParams.append("offset", offset.toString())
     }
-    console.log("url in pageData", targetUrl.toString())
     setUrl(targetUrl.toString())
 
   }, [pageData.search])
@@ -217,6 +203,7 @@ const PaginatedTable = ({
   };
 
   const handleClickPrevious = () => {
+    setLoading(true); 
     if (data?.previous) {
       setUrl(data.previous);
       const newPage = currentPage - 1;
@@ -226,6 +213,7 @@ const PaginatedTable = ({
   };
 
   const handleClickNext = () => {
+    setLoading(true); 
     if (data?.next) {
       setUrl(data.next);
       const newPage = currentPage + 1;
@@ -233,21 +221,31 @@ const PaginatedTable = ({
       setInputPage('')
     }
   };
+  
+  useEffect(() => {
+    if (data) {
+      setLoading(false);
+    }
+  }, [data]);
+  
 
   const handleSortClick = (key) => {
+    setLoading(true); 
     setOrderingValue(key);
     setOffset(0);
-    setInputPage('')
+    setInputPage('');
     setTimeout(() => {
       dispatch(setCurrentPage(1));
-    }, 1000)
+      setLoading(false); 
+    }, 1000);
   };
-
+  
   const handleInputChange = (event) => {
     setInputPage(event.target.value);
   };
 
   const handleSearchClick = () => {
+    setLoading(true); 
     const newPage = parseInt(inputPage, 10);
     if (!isNaN(newPage) && newPage > 0 && newPage <= totalPages) {
       const newOffset = (newPage - 1) * ROWS_PER_PAGE;
@@ -287,7 +285,7 @@ const PaginatedTable = ({
           severity="error"
           sx={{ position: 'fixed', top: '40px', left: '50%', transform: 'translateX(-50%)', zIndex: 1000 }}
         >
-          Page doesn't exist, Maximum number of page is {totalPages}
+          Page doesn't exist, Maximum pages are {totalPages}
         </Alert>
       )}
       <Paper>

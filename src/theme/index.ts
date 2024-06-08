@@ -11,7 +11,6 @@ const createTheme = (name: string) => {
   let themeConfig = variants.find((variant) => variant.name === name);
 
   if (!themeConfig) {
-    console.warn(new Error(`The theme ${name} is not valid`));
     themeConfig = variants[0];
   }
 
