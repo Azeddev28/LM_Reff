@@ -22,6 +22,7 @@ import { color, fontSize, fontWeight } from "@mui/system";
 import dropBox from '/dropboxImg.svg?url';
 import attachFile from '/attachFileIcon.svg?url';
 import deleteFile from "/deleteIcon.svg?url";
+import downloadFile from "../../utils/downloadFile";
 
 const Footer = ({ handleSubmitChanges, data }) => (
   <div style={{
@@ -152,8 +153,9 @@ const DetailPage = () => {
     return url.substring(url.lastIndexOf("/") + 1);
   };
 
-  const handleViewFile = (url) => {
-    window.open(url, "_blank");
+
+  const handleViewFile = async (url, fileName) => {
+    await downloadFile(url, fileName);
   };
 
 
@@ -332,7 +334,7 @@ const DetailPage = () => {
                     {fileList.map((item, index) => (
                       <Styled.UploadedFile
                         key={index}
-                        onClick={() => handleViewFile(item.url)}
+                        onClick={() => handleViewFile(item.url , item?.name)}
                         style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
                       >
                         <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -344,7 +346,7 @@ const DetailPage = () => {
                     {referralDetailData.slice(29, 30).map((item, index) => (
                       <React.Fragment key={index}>
                         {item?.value?.map((innerItem, innerIndex) => (
-                          <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                          <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment , getFileNameFromURL(innerItem?.filename ? innerItem?.filename : ""))} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                               <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
                               <Styled.FileText>
