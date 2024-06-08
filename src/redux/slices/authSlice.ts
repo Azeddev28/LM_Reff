@@ -82,7 +82,6 @@ const authSlice = createSlice({
       state.userName = action.payload;
     },
     logoutUser(state) {
-      console.log("logoutUser")
       state.accessToken = null;
       state.isAuthenticated = false;
       removeCookie('refresh')

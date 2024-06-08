@@ -33,7 +33,7 @@ const Footer = ({ handleSubmitChanges, data }) => (
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    padding: '20px 70px'
+    padding: '70px 70px'
   }}>
     <Button
       variant="contained"
@@ -134,7 +134,6 @@ const DetailPage = () => {
       data.departure_date = '';
     }
     if (data.hasOwnProperty('overnight_stay_required') && data.overnight_stay_required === true && (!data.return_date || !data.departure_date)) {
-      console.log("Overnight stay is true but return_date or departure_date is not set."); //TODO add warning toast for mandatory fields
       return;
     }
     try {

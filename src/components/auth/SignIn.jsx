@@ -80,7 +80,6 @@ function SignIn() {
             setStatus({ success: true });
             setSubmitting(false);
           } catch (error) {
-            console.log("Error", error);
             setStatus({ success: false });
             setErrors({ submit: error.message });
             setSubmitting(false);
