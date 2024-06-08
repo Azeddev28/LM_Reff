@@ -9,43 +9,43 @@ import DetailPage from "./pages/Referrals/[detailPage]";
 import ConfirmPassword from "./pages/auth/ConfirmPassword";
 import Page404 from "./pages/auth/Page404";
 
-export const authRoutes = [
-  {
-    path:"auth/sign-in",
+export const authRoutes = {
+  login: {
+    path:"/auth/sign-in",
     element:<Auth><SignIn/></Auth>,
   },
-  {
-    path:"auth/reset-password",
+  resetPassword: {
+    path:"/auth/reset-password",
     element:<Auth><ResetPassword/></Auth>,
   },
-  {
-    path:"/:uid/:token",
+  confirmPassword: {
+    path:"/confirm/:id/:token",
     element:<Auth><ConfirmPassword/></Auth>,
   },
-  {
+  notFound: {
     path: "/404", 
     element: <Page404 />,
   },
   
-];
+};
 
-export const appRoutes = [
-  {
-    path: "/",
+export const appRoutes = {
+  dashboard: {
+    path: "/dashboard",
     element:  <DashboardLayout> <Referrals /></DashboardLayout> ,
     
   },
-  {
+  claims: {
     path: "/claims",
     element: <DashboardLayout><Claims /></DashboardLayout>,
   },
-  {
-    path: "employe-list",
+  employerList: {
+    path: "/employer-list",
     element: <DashboardLayout ><EmployerList /></DashboardLayout> ,
   },
-  {
-    path: "/:id", 
+  referralDetail: {
+    path: "/detail/:id", 
     element: <DashboardLayout><DetailPage /></DashboardLayout>,
   },
   
-];
+};

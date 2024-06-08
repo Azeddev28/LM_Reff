@@ -232,6 +232,11 @@ export const REFERRAL_HEADER_DATA = [
     sortKey: "referral_description",
   },
   {
+    key: "status",
+    display: "Referral Status",
+    sortKey: "status"
+  },
+  {
     key: "date_updated",
     display: "Last Updated",
     sortKey: "date_updated",
@@ -243,7 +248,7 @@ export const CLAIMS_HEADER_DATA = [
   {
     key: "patient_name",
     display: "Patient Name",
-    sortKey: "patient__name",
+    sortKey: "patient_name",
   },
   {
     key: "date_of_service",

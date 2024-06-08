@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation, useNavigate, useRoutes } from "react-router-dom";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { HelmetProvider, Helmet } from "react-helmet-async";
 import { CacheProvider } from "@emotion/react";
 
@@ -15,77 +15,58 @@ import createEmotionCache from "./utils/createEmotionCache";
 import { setAuthenticated } from "./redux/slices/authSlice";
 import { getCookie } from "./utils/cookieManager";
 import { authRoutes, appRoutes } from "./routes";
+import { checkPathAgainstRoutes } from "./utils/routeUtils";
 
 const clientSideEmotionCache = createEmotionCache();
 
 function App({ emotionCache = clientSideEmotionCache }) {
   const { isAuthenticated } = useSelector((state: any) => state.auth);
-  const content = useRoutes(isAuthenticated ? appRoutes : authRoutes);
+  const content = useRoutes(isAuthenticated ? Object.values(appRoutes) : Object.values(authRoutes));
 
+  const location = useLocation();
   const { theme } = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const location = useLocation();
+  const access = getCookie("access")
 
-  const extractParams = (pathname: string, pattern: string) => {
-    const patternParts = pattern.split('/');
-    const pathParts = pathname.split('/');
-    const params: Record<string, string> = {};
-
-    patternParts.forEach((part, index) => {
-      if (part.startsWith(':')) {
-        const paramName = part.slice(1);
-        params[paramName] = pathParts[index];
-      }
-    });
-    return params;
-  };
-  
-  const params = extractParams(location.pathname, "/:uid/:token");
-  const { uid, token } = params;
-
-  const access =  getCookie("access") 
   useEffect(() => {
-    if (access) {      
-      dispatch(setAuthenticated(true));
+    if (isAuthenticated === false) {
+      if (access) {
+        dispatch(setAuthenticated(true));
+        if(checkPathAgainstRoutes(location.pathname, authRoutes)){
+          navigate(appRoutes.dashboard.path);
+        }
+      }
+      else{
+        if(checkPathAgainstRoutes(location.pathname, appRoutes)){
+          navigate(authRoutes.login.path);
+        }
+      }
     }
-  }, []);
 
-  useEffect(() =>{
+  }, [isAuthenticated]);
+
+  useEffect(() =>{ //check for situations where the user navigates back and encounters an inaccessible URL
     if(!content && isAuthenticated){
-      navigate("/");
+      navigate("/dashboard");
     }
     else if (!content && !isAuthenticated){
-      navigate("auth/sign-in");
+      navigate("/auth/sign-in");
     }
 
   },[navigate])
-
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
-    } else {
-      if (uid && token && !location.pathname.includes("/auth")){
-        navigate(`/${uid}/${token}`)
-      }
-      else{
-        navigate("auth/sign-in");
-      }
-    }
-  }, [isAuthenticated]);
-
+  
   return (
     <CacheProvider value={emotionCache}>
       <HelmetProvider>
         <Helmet
           defaultTitle="Luminary Health"
         />
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <MuiThemeProvider theme={createTheme(theme)}>
-              <React.Fragment>{content}</React.Fragment>
-            </MuiThemeProvider>
-          </LocalizationProvider>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <MuiThemeProvider theme={createTheme(theme)}>
+            <React.Fragment>{content}</React.Fragment>
+          </MuiThemeProvider>
+        </LocalizationProvider>
       </HelmetProvider>
     </CacheProvider>
   );

@@ -21,6 +21,7 @@ import { spacing } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { authRoutes } from "../../routes";
 
 interface ConfirmPasswordBody {
   new_password1: string;
@@ -101,7 +102,7 @@ function ConfirmPassword() {
 
   useEffect(() => {
     if (isError) {
-      navigate("/404");
+      navigate(authRoutes.notFound.path);
     }
   }, [isError, navigate]);
 
@@ -112,7 +113,7 @@ function ConfirmPassword() {
       setSnackbarSeverity("success");
       setIsSubmitting(false);
       setTimeout(() => {
-        navigate("/auth/sign-in");
+        navigate(authRoutes.login.path);
       }, 1000);
     }
     if (confirmPasswordError) {
@@ -160,7 +161,7 @@ function ConfirmPassword() {
             );
             let confirmPasswordParams = {
               body,
-              uid: params?.uid,
+              id: params?.id,
               token: params?.token,
             };
             confirmPassword(confirmPasswordParams);

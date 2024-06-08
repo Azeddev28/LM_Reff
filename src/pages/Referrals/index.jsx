@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DashboardHeader from "../../components/DashboardHeader";
 import { REFERRAL_HEADER_DATA } from "../../utils/constants";
 import PaginatedTable from "../../components/Table/PaginatedTable";
@@ -19,11 +19,17 @@ const TableWrapper = styled("div")(({ }) => ({
 const Referrals = () => {
   const [searchValue, setSearchValue] = useState(null);
   const dispatch = useDispatch();
-  const { data, isSuccess } = useGetProfileQuery();
+  const { data, isSuccess, refetch } = useGetProfileQuery();
   const userName = isSuccess ? data.name : "";
-  if ((isSuccess, data)) {
-    dispatch(setUserName(data.name));
-  }
+  useEffect(() => {
+    refetch()
+  }, [])
+
+  useEffect(() => {
+    if ((isSuccess, data)) {
+      dispatch(setUserName(data.name));
+    }
+  }, [data, isSuccess])
 
   return (
     <div>

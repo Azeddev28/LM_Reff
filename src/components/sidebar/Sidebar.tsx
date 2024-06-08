@@ -5,6 +5,7 @@ import { SidebarItemsType } from "../../types/sidebar";
 import SidebarNav from "./SidebarNav";
 import { useNavigate } from "react-router-dom";
 import useNavItems from "./dashboardItems";
+import { appRoutes } from "../../routes";
 
 const Drawer = styled(MuiDrawer)`
   border-right: 0;
@@ -95,7 +96,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const navItems = useNavItems()
   return (
     <Drawer variant="permanent" {...rest}>
-      <Brand onClick={() => navigate("/")}>
+      <Brand onClick={() => navigate(appRoutes.dashboard.path)}>
         <img src="/favicon-white.svg" alt="logo-image" style={{ width: "40px", marginBottom: "-10px" }} />
       </Brand>
       <LogoText>Luminary</LogoText>

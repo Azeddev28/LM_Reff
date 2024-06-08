@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { spacing } from "@mui/system";
 import { useDispatch } from "react-redux";
+import { appRoutes } from "../../routes";
 
 const TextField = styled(MuiTextField)(({ }) => ({
   margin: "16px 0px",
@@ -46,7 +47,7 @@ function SignIn() {
       setSnackbarMessage("Successfully logged in");
       setSnackbarOpen(true);
       setSnackbarSeverity("success"); 
-      navigate('/'); // Navigate to the dashboard or any other page
+      navigate(appRoutes.dashboard.path,  { replace: true });
     } else if (loginError) {
       setSnackbarMessage("Invalid credentials");
       setSnackbarOpen(true);
@@ -79,7 +80,6 @@ function SignIn() {
             setStatus({ success: true });
             setSubmitting(false);
           } catch (error) {
-            console.log("Error", error);
             setStatus({ success: false });
             setErrors({ submit: error.message });
             setSubmitting(false);
