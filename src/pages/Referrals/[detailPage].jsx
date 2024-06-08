@@ -27,14 +27,13 @@ import downloadFile from "../../utils/downloadFile";
 const Footer = ({ handleSubmitChanges, data }) => (
   <div style={{
     position: 'fixed',
-    left: 0,
-    bottom: 0,
-    width: '100%',
+    right: 60,
+    bottom: 60,
+    width: 'auto',
     textAlign: 'center',
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    padding: '70px 70px'
   }}>
     <Button
       variant="contained"
@@ -120,15 +119,13 @@ const DetailPage = () => {
       setOverNightStay(value);
     }
   };
-
+  
   const handleFiles = (files) => {
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      handleInputChange("attachments", file);
-      setFileList((prevFileList) => [...prevFileList, file]);
-    }
+    const newFiles = Array.from(files);
+    setFileList((prevFileList) => [...prevFileList, ...newFiles]);
+    handleInputChange("attachments", [...fileList, ...newFiles]);
   };
-
+  
   const handleSubmitChanges = async () => {
     if (data.hasOwnProperty('overnight_stay_required') && data.overnight_stay_required === false) {
       data.return_date = '';
@@ -139,6 +136,9 @@ const DetailPage = () => {
     }
     try {
       setLoader(true);
+      if (data.attachments) {
+        data.attachments = fileList; 
+      }
       await updateReferral({ id, data });
       await updatedReferralData(id);
       setLoader(false);
@@ -148,16 +148,15 @@ const DetailPage = () => {
       setLoader(false);
     }
   };
-
+  
   const getFileNameFromURL = (url) => {
     return url.substring(url.lastIndexOf("/") + 1);
   };
-
-
+  
   const handleViewFile = async (url, fileName) => {
     await downloadFile(url, fileName);
   };
-
+  
 
   return isLoading ? (
     <Styled.ProgressWrapper>
@@ -293,75 +292,56 @@ const DetailPage = () => {
               
             </Styled.Column>
 
-            <Styled.Column>
-              <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
-                Referral Attachments
-              </Styled.ColumnHeader>
-              <h variant="h3" style={{ marginLeft: '16px', marginRight: '20px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
-                View your referral documents and add any additional documents requested by the payer here
-              </h>
-              <Styled.ContentWrapperV2>
-                <Styled.FileUploadWrapper>
-                  <Dropzone
-                    onDrop={(acceptedFiles) => handleFiles(acceptedFiles)}
-                  >
-                    {({ getRootProps, getInputProps }) => (
-                      <section>
-                        <div
-                          {...getRootProps()}
-                          style={{
-                            height: "185px",
-                            width: "100%",
-                            display: "flex",
-                            justifyContent: "end",
-                          }}
-                        >
-                          <input {...getInputProps()} />
-                          <Styled.DropZoneContent>
-                            <img src={dropBox} alt="" />
-                            <Styled.DropzoneText>
-                              Click or drag file to this area to upload
-                            </Styled.DropzoneText>
-                          </Styled.DropZoneContent>
-                        </div>
-                      </section>
-                    )}
-                  </Dropzone>
-                </Styled.FileUploadWrapper>
-                <Styled.UploadedFileSection>
-
-                  <Styled.UploadedFiles>
-                    {fileList.map((item, index) => (
-                      <Styled.UploadedFile
-                        key={index}
-                        onClick={() => handleViewFile(item.url , item?.name)}
-                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                          <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
-                          <Styled.FileText>{item.name}</Styled.FileText>
-                        </div>
-                      </Styled.UploadedFile>
-                    ))}
-                    {referralDetailData.slice(29, 30).map((item, index) => (
-                      <React.Fragment key={index}>
-                        {item?.value?.map((innerItem, innerIndex) => (
-                          <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment , getFileNameFromURL(innerItem?.filename ? innerItem?.filename : ""))} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                              <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
-                              <Styled.FileText>
-                                {getFileNameFromURL(innerItem?.filename ? innerItem?.filename : "")}
-                              </Styled.FileText>
-                            </div>
-                          </Styled.UploadedFile>
-                        ))}
-                      </React.Fragment>
-                    ))}
-                  </Styled.UploadedFiles>
-
-                </Styled.UploadedFileSection>
-              </Styled.ContentWrapperV2>
+            <Styled.Column >
+             <Styled.ColumnHeader variant="h3" style={{ fontSize: "15px", fontWeight: "600" }}>
+               Referral Attachments
+             </Styled.ColumnHeader>
+             <h variant="h3" style={{ marginLeft: '16px', marginRight: '20px', marginTop: '-10px', fontWeight: '600', color: '#7E8299', fontSize: '11px' }}>
+               View your referral documents and add any additional documents requested by the payer here
+             </h>
+             <Styled.ContentWrapperV2>
+               <Styled.FileUploadWrapper>
+                 <Dropzone onDrop={(acceptedFiles) => handleFiles(acceptedFiles)}>
+                   {({ getRootProps, getInputProps }) => (
+                     <section>
+                       <div {...getRootProps()} style={{ height: "185px", width: "100%", display: "flex", justifyContent: "end" }}>
+                         <input {...getInputProps()} />
+                         <Styled.DropZoneContent>
+                           <img src={dropBox} alt="" />
+                           <Styled.DropzoneText>Click or drag file to this area to upload</Styled.DropzoneText>
+                         </Styled.DropZoneContent>
+                       </div>
+                     </section>
+                   )}
+                 </Dropzone>
+               </Styled.FileUploadWrapper>
+               <Styled.UploadedFileSection>
+      <Styled.UploadedFiles>
+        {fileList.map((item, index) => (
+          <Styled.UploadedFile key={index} onClick={() => handleViewFile(item.url , item?.name)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
+              <Styled.FileText>{item.name}</Styled.FileText>
+            </div>
+          </Styled.UploadedFile>
+        ))}
+        {referralDetailData.slice(29, 30).map((item, index) => (
+          <React.Fragment key={index}>
+            {item?.value?.map((innerItem, innerIndex) => (
+              <Styled.UploadedFile key={innerIndex} onClick={() => handleViewFile(innerItem.attachment , getFileNameFromURL(innerItem?.filename ? innerItem?.filename : ""))} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img src={attachFile} style={{ height: '20px', marginRight: "20px" }} alt="" />
+                  <Styled.FileText>{getFileNameFromURL(innerItem?.filename ? innerItem?.filename : "")}</Styled.FileText>
+                </div>
+              </Styled.UploadedFile>
+            ))}
+          </React.Fragment>
+        ))}
+      </Styled.UploadedFiles>
+               </Styled.UploadedFileSection>
+             </Styled.ContentWrapperV2>
             </Styled.Column>
+
           </Styled.Container>
 
           <Footer handleSubmitChanges={handleSubmitChanges} data={data} />
