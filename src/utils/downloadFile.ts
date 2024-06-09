@@ -1,7 +1,7 @@
 import axios from 'axios';
-// import { saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
 
-const downloadFile = async (url , fileName) => {
+const downloadFile = async (url: string , fileName: any) => {
   console.log("url , fileName", url , fileName)
   try {
     const response = await axios.get(url, {
@@ -9,7 +9,7 @@ const downloadFile = async (url , fileName) => {
     });
     const blob = new Blob([response.data], { type: response.data.type });
     saveAs(blob, fileName);
-  } catch (error) {
+  } catch (error:any) {
     if (error.response) {
         console.error('Error response:', error.response);
       } else if (error.request) {
@@ -20,3 +20,4 @@ const downloadFile = async (url , fileName) => {
 };
 
 export default downloadFile;
+
