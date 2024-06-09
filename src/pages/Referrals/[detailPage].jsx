@@ -26,15 +26,14 @@ import downloadFile from "../../utils/downloadFile";
 
 const Footer = ({ handleSubmitChanges, data }) => (
   <div style={{
-    position: 'fixed',
-    left: 0,
-    bottom: 0,
-    width: '100%',
-    textAlign: 'center',
-    display: 'flex',
-    justifyContent: 'flex-end',
+    position: 'fixed', 
+    right: 60, 
+    bottom: 60, 
+    width: 'auto', 
+    textAlign: 'center', 
+    display: 'flex', 
+    justifyContent: 'flex-end', 
     alignItems: 'center',
-    padding: '70px 70px'
   }}>
     <Button
       variant="contained"
@@ -46,7 +45,6 @@ const Footer = ({ handleSubmitChanges, data }) => (
     </Button>
   </div>
 );
-
 
 const DetailPage = () => {
   const { id } = useParams();
@@ -120,15 +118,13 @@ const DetailPage = () => {
       setOverNightStay(value);
     }
   };
-
+  
   const handleFiles = (files) => {
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      handleInputChange("attachments", file);
-      setFileList((prevFileList) => [...prevFileList, file]);
-    }
+    const newFiles = Array.from(files);
+    setFileList((prevFileList) => [...prevFileList, ...newFiles]);
+    handleInputChange("attachments", [...fileList, ...newFiles]);
   };
-
+  
   const handleSubmitChanges = async () => {
     if (data.hasOwnProperty('overnight_stay_required') && data.overnight_stay_required === false) {
       data.return_date = '';
@@ -139,6 +135,9 @@ const DetailPage = () => {
     }
     try {
       setLoader(true);
+      if (data.attachments) {
+        data.attachments = fileList; 
+      }
       await updateReferral({ id, data });
       await updatedReferralData(id);
       setLoader(false);
@@ -148,16 +147,16 @@ const DetailPage = () => {
       setLoader(false);
     }
   };
-
+  
   const getFileNameFromURL = (url) => {
     return url.substring(url.lastIndexOf("/") + 1);
   };
-
-
+  
   const handleViewFile = async (url, fileName) => {
+    window.open(url, '_blank');
     await downloadFile(url, fileName);
   };
-
+  
 
   return isLoading ? (
     <Styled.ProgressWrapper>
