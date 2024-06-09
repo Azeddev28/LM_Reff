@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { saveAs } from 'file-saver';
 
-const downloadFile = async (url: string , fileName: any) => {
+const downloadFile = async (url: string , fileName: string) => {
   console.log("url , fileName", url , fileName)
   try {
     const response = await axios.get(url, {
